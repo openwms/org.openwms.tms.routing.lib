@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: routing-service
+server:
+  port: ${PORT:8081}
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${vcap.services.eureka-service.credentials.uri:http://127.0.0.1:8761}/eureka/
