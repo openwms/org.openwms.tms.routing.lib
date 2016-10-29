@@ -45,3 +45,7 @@ eureka:
     healthCheckUrl: https://${eureka.instance.hostName}/health
     homePageUrl: https://${eureka.instance.hostName}/
     non-secure-port: ${PORT:8081}
+    metadata-map:
+      username: user
+      password: sa
+
