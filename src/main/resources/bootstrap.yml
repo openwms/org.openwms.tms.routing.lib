@@ -11,15 +11,15 @@ spring:
     banner-mode: off
   application:
     name: routing-service
-  cloud:
-    config:
-      label: ${owms.tenant:master}
-      fail-fast: true
-      discovery:
-        enabled: true
-        service-id: openwms-config
-      username: ${owms.config.username}
-      password: ${owms.config.password}
+#  cloud:
+#    config:
+#      label: ${owms.tenant:master}
+#      fail-fast: true
+#      discovery:
+#        enabled: true
+#        service-id: openwms-config
+#      username: ${owms.config.username}
+#      password: ${owms.config.password}
 
 server:
   port: ${PORT:8081}
