@@ -48,8 +48,3 @@ eureka:
     metadata-map:
       username: user
       password: sa
-
-security:
-  user:
-    password: sa
-
