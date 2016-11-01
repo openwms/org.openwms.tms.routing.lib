@@ -22,10 +22,6 @@ spring:
 server:
   port: ${PORT:8081}
 
-security:
-  user:
-    password: sa
-
 eureka:
   client:
     serviceUrl:
@@ -44,3 +40,12 @@ eureka:
       # need to be overridden in the cloud environment props!
       username: user
       password: sa
+
+---
+spring:
+  profiles: DEV
+
+security:
+  user:
+    password: sa
+
