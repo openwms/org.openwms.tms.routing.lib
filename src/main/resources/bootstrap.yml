@@ -22,6 +22,10 @@ spring:
 server:
   port: ${PORT:8081}
 
+security:
+  user:
+    password: sa
+
 eureka:
   client:
     serviceUrl:
@@ -32,10 +36,10 @@ eureka:
     # need to be overridden in the cloud environment props!
     secure-port-enabled: true
     non-secure-port-enabled: false
+    non-secure-port: ${PORT:8081}
     statusPageUrl: https://${eureka.instance.hostName}/info
     healthCheckUrl: https://${eureka.instance.hostName}/health
     homePageUrl: https://${eureka.instance.hostName}/
-    non-secure-port: ${PORT:8081}
     metadata-map:
       # need to be overridden in the cloud environment props!
       username: user
