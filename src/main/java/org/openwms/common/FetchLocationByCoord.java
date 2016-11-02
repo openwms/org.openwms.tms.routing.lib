@@ -51,7 +51,7 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
     private static final Logger LOGGER = LoggerFactory.getLogger(FetchLocationByCoord.class);
 
     @Autowired
-    private RestTemplate simpleRestTemplate;
+    private RestTemplate aLoadBalanced;
     @Value("${owms.common-service.service-id}")
     private String serviceId;
     @Value("${owms.common-service.protocol}")
@@ -70,11 +70,11 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
         maps.put("locationPK", coordinate);
         ServiceInstance instance = loadBalancer.choose(serviceId);
         instance.getMetadata().entrySet().forEach(p -> LOGGER.debug("Entry/Value:" + p.getKey() + p.getValue()));
-        endpoint = protocol + "://" + username + ":" + password + "@" + instance.getHost()+":"+instance.getPort();
+        endpoint = protocol + "://" +serviceId;
         try {
             LOGGER.debug(endpoint + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate);
             ResponseEntity<LocationVO> exchange =
-                    simpleRestTemplate.exchange(
+                    aLoadBalanced.exchange(
                             endpoint + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate,
                             HttpMethod.GET,
                             new HttpEntity<LocationVO>(createHeaders(username, password)),
