@@ -48,10 +48,9 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
         Map<String, Object> maps = new HashMap<>();
         maps.put("locationPK", coordinate);
         try {
-
             ResponseEntity<LocationVO> exchange =
                     restTemplate.exchange(
-                            "http://common-service" + CommonConstants.API_LOCATIONS+"?locationPK="+coordinate,
+                            "https://common-service" + CommonConstants.API_LOCATIONS+"?locationPK="+coordinate,
                             HttpMethod.GET,
                             null,
                             LocationVO.class,

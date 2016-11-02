@@ -50,7 +50,7 @@ public class FetchLocationGroupByName implements Function<String, LocationGroupV
 
             ResponseEntity<LocationGroupVO> exchange =
                     restTemplate.exchange(
-                            "http://common-service" + CommonConstants.API_LOCATIONGROUPS+"?name="+name,
+                            "https://common-service" + CommonConstants.API_LOCATIONGROUPS+"?name="+name,
                             HttpMethod.GET,
                             null,
                             LocationGroupVO.class,
