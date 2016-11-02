@@ -21,16 +21,21 @@
  */
 package org.openwms.common;
 
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -64,14 +69,15 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
         Map<String, Object> maps = new HashMap<>();
         maps.put("locationPK", coordinate);
         ServiceInstance instance = loadBalancer.choose(serviceId);
-        //instance.getMetadata().entrySet().forEach(p -> LOGGER.debug("Entry/Value:" + p.getKey() + p.getValue()));
-        //URI storesUri = URI.create(String.format("https://%s:%s", instance.getHost(), instance.getPort()));
+        instance.getMetadata().entrySet().forEach(p -> LOGGER.debug("Entry/Value:" + p.getKey() + p.getValue()));
         endpoint = protocol + "://" + username + ":" + password + "@" + instance.getHost()+":"+instance.getPort();
         try {
             LOGGER.debug(endpoint + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate);
             ResponseEntity<LocationVO> exchange =
-                    simpleRestTemplate.getForEntity(
+                    simpleRestTemplate.exchange(
                             endpoint + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate,
+                            HttpMethod.GET,
+                            new HttpEntity<LocationVO>(createHeaders(username, password)),
                             LocationVO.class,
                             maps);
             return exchange.getBody();
@@ -80,4 +86,18 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
             throw e;
         }
     }
+
+    HttpHeaders createHeaders( String username, String password ){
+        return new HttpHeaders(){
+            {
+                String auth = username + ":" + password;
+                byte[] encodedAuth = Base64.encodeBase64(
+                        auth.getBytes(Charset.forName("UTF-8")) );
+                String authHeader = "Basic " + new String( encodedAuth );
+                set( "Authorization", authHeader );
+            }
+        };
+    }
+
+
 }
