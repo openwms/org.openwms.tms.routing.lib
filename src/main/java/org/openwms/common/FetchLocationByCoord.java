@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -40,6 +42,8 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class FetchLocationByCoord implements Function<String, LocationVO> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(FetchLocationByCoord.class);
+
     @Autowired
     private RestTemplate aLoadBalanced;
     @Value("${owms.common-service.serviceId}")
@@ -52,6 +56,7 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
         Map<String, Object> maps = new HashMap<>();
         maps.put("locationPK", coordinate);
         try {
+            LOGGER.debug(protocol + "://" + serviceId + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate);
             ResponseEntity<LocationVO> exchange =
                     aLoadBalanced.exchange(
                             protocol + "://" + serviceId + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate,
