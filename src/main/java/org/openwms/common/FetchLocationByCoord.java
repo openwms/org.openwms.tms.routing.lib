@@ -50,16 +50,22 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
     private String serviceId;
     @Value("${owms.common-service.protocol}")
     private String protocol;
+    @Value("${owms.common-service.username}")
+    private String username;
+    @Value("${owms.common-service.password}")
+    private String password;
+    private String endpoint;
 
     @Override
     public LocationVO apply(String coordinate) {
         Map<String, Object> maps = new HashMap<>();
         maps.put("locationPK", coordinate);
+        endpoint = protocol+"://"+username+":"+password+"@"+"serviceId";
         try {
-            LOGGER.debug(protocol + "://" + serviceId + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate);
+            LOGGER.debug(endpoint + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate);
             ResponseEntity<LocationVO> exchange =
                     aLoadBalanced.exchange(
-                            protocol + "://" + serviceId + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate,
+                            endpoint + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate,
                             HttpMethod.GET,
                             null,
                             LocationVO.class,
