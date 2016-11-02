@@ -1,9 +1,3 @@
-owms:
-  config:
-    # need to be overridden in the cloud environment props!
-    username: user
-    password: sa
-
 spring:
   main:
     banner-mode: off
@@ -16,8 +10,6 @@ spring:
       discovery:
         enabled: true
         service-id: openwms-config
-      username: ${owms.config.username}
-      password: ${owms.config.password}
 
 server:
   port: ${PORT:8081}
@@ -29,7 +21,6 @@ eureka:
       defaultZone: ${owms.eureka.url}/eureka
   instance:
     hostname: openwms-routing-service.herokuapp.com
-    # need to be overridden in the cloud environment props!
     secure-port-enabled: true
     non-secure-port-enabled: false
     non-secure-port: ${PORT:8081}
@@ -45,7 +36,20 @@ eureka:
 spring:
   profiles: DEV
 
+owms:
+  eureka:
+    url: :http://user:sa@localhost:8761
+
+eureka:
+  instance:
+    hostname: localhost
+    secure-port-enabled: false
+    non-secure-port-enabled: true
+    non-secure-port: ${PORT:8081}
+    statusPageUrl: http://${eureka.instance.hostName}/info
+    healthCheckUrl: http://${eureka.instance.hostName}/health
+    homePageUrl: http://${eureka.instance.hostName}/
+
 security:
   user:
     password: sa
-

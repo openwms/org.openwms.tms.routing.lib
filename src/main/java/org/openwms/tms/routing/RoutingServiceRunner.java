@@ -21,14 +21,18 @@
  */
 package org.openwms.tms.routing;
 
+import org.activiti.engine.IdentityService;
 import org.ameba.app.SolutionApp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 /**
  * A RoutingServiceRunner.
@@ -38,8 +42,13 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication(scanBasePackageClasses = SolutionApp.class, scanBasePackages = "org.openwms")
 @EnableEurekaClient
 @EnableFeignClients
+@EnableDiscoveryClient
 @EntityScan(basePackages = "org.openwms")
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class RoutingServiceRunner {
+
+    @Autowired
+    private IdentityService identityService;
 
     /**
      * Boot up!
@@ -47,9 +56,7 @@ public class RoutingServiceRunner {
      * @param args Some args
      */
     public static void main(String[] args) {
-        new SpringApplicationBuilder(RoutingServiceRunner.class)
-                .web(true)
-                .run(args);
+        SpringApplication.run(RoutingServiceRunner.class, args);
     }
 
     @Bean
