@@ -66,7 +66,7 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
         ServiceInstance instance = loadBalancer.choose(serviceId);
         //instance.getMetadata().entrySet().forEach(p -> LOGGER.debug("Entry/Value:" + p.getKey() + p.getValue()));
         //URI storesUri = URI.create(String.format("https://%s:%s", instance.getHost(), instance.getPort()));
-        endpoint = protocol + "://" + username + ":" + password + "@" + instance.getHost()+ instance.getPort();
+        endpoint = protocol + "://" + username + ":" + password + "@" + instance.getHost()+":"+instance.getPort();
         try {
             LOGGER.debug(endpoint + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate);
             ResponseEntity<LocationVO> exchange =
