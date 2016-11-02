@@ -21,7 +21,6 @@
  */
 package org.openwms.common;
 
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -66,7 +65,7 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
         maps.put("locationPK", coordinate);
         ServiceInstance instance = loadBalancer.choose(serviceId);
         //instance.getMetadata().entrySet().forEach(p -> LOGGER.debug("Entry/Value:" + p.getKey() + p.getValue()));
-        URI storesUri = URI.create(String.format("https://%s:%s", instance.getHost(), instance.getPort()));
+        //URI storesUri = URI.create(String.format("https://%s:%s", instance.getHost(), instance.getPort()));
         endpoint = protocol + "://" + username + ":" + password + "@" + instance.getHost()+ instance.getPort();
         try {
             LOGGER.debug(endpoint + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate);
