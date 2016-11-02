@@ -32,7 +32,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -68,14 +67,12 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
         ServiceInstance instance = loadBalancer.choose(serviceId);
         instance.getMetadata().entrySet().forEach(p -> LOGGER.debug("Entry/Value:" + p.getKey() + p.getValue()));
         URI storesUri = URI.create(String.format("https://%s:%s", instance.getHost(), instance.getPort()));
-        endpoint = protocol + "://" + username + ":" + password + "@" + serviceId;
+        endpoint = protocol + "://" + username + ":" + password + "@" + instance.getHost()+ instance.getPort();
         try {
             LOGGER.debug(endpoint + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate);
             ResponseEntity<LocationVO> exchange =
-                    aLoadBalanced.exchange(
+                    aLoadBalanced.getForEntity(
                             endpoint + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate,
-                            HttpMethod.GET,
-                            null,
                             LocationVO.class,
                             maps);
             return exchange.getBody();
