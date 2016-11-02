@@ -46,7 +46,7 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
 
     @Autowired
     private RestTemplate aLoadBalanced;
-    @Value("${owms.common-service.serviceId}")
+    @Value("${owms.common-service.service-id}")
     private String serviceId;
     @Value("${owms.common-service.protocol}")
     private String protocol;
