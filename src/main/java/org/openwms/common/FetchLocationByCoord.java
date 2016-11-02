@@ -65,7 +65,7 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
         Map<String, Object> maps = new HashMap<>();
         maps.put("locationPK", coordinate);
         ServiceInstance instance = loadBalancer.choose(serviceId);
-        instance.getMetadata().entrySet().forEach(p -> LOGGER.debug("Entry/Value:" + p.getKey() + p.getValue()));
+        //instance.getMetadata().entrySet().forEach(p -> LOGGER.debug("Entry/Value:" + p.getKey() + p.getValue()));
         URI storesUri = URI.create(String.format("https://%s:%s", instance.getHost(), instance.getPort()));
         endpoint = protocol + "://" + username + ":" + password + "@" + instance.getHost()+ instance.getPort();
         try {
