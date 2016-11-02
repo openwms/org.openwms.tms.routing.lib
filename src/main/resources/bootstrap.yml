@@ -19,6 +19,8 @@ eureka:
     serviceUrl:
        # need to be overridden in the cloud environment props!
       defaultZone: ${owms.eureka.url}/eureka
+    healthcheck:
+      enabled: true
   instance:
     hostname: openwms-routing-service.herokuapp.com
     secure-port-enabled: true

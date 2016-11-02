@@ -21,6 +21,7 @@
  */
 package org.openwms.common;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -29,6 +30,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -55,12 +58,17 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
     @Value("${owms.common-service.password}")
     private String password;
     private String endpoint;
+    @Autowired
+    private LoadBalancerClient loadBalancer;
 
     @Override
     public LocationVO apply(String coordinate) {
         Map<String, Object> maps = new HashMap<>();
         maps.put("locationPK", coordinate);
-        endpoint = protocol+"://"+username+":"+password+"@"+serviceId;
+        ServiceInstance instance = loadBalancer.choose(serviceId);
+        instance.getMetadata().entrySet().forEach(p -> LOGGER.debug("Entry/Value:" + p.getKey() + p.getValue()));
+        URI storesUri = URI.create(String.format("https://%s:%s", instance.getHost(), instance.getPort()));
+        endpoint = protocol + "://" + username + ":" + password + "@" + serviceId;
         try {
             LOGGER.debug(endpoint + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate);
             ResponseEntity<LocationVO> exchange =
