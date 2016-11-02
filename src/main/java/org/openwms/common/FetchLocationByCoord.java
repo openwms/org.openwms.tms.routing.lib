@@ -60,7 +60,7 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
     public LocationVO apply(String coordinate) {
         Map<String, Object> maps = new HashMap<>();
         maps.put("locationPK", coordinate);
-        endpoint = protocol+"://"+username+":"+password+"@"+"serviceId";
+        endpoint = protocol+"://"+username+":"+password+"@"+serviceId;
         try {
             LOGGER.debug(endpoint + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate);
             ResponseEntity<LocationVO> exchange =
