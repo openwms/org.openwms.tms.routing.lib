@@ -46,7 +46,7 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
     private static final Logger LOGGER = LoggerFactory.getLogger(FetchLocationByCoord.class);
 
     @Autowired
-    private RestTemplate aLoadBalanced;
+    private RestTemplate simpleRestTemplate;
     @Value("${owms.common-service.service-id}")
     private String serviceId;
     @Value("${owms.common-service.protocol}")
@@ -70,7 +70,7 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
         try {
             LOGGER.debug(endpoint + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate);
             ResponseEntity<LocationVO> exchange =
-                    aLoadBalanced.getForEntity(
+                    simpleRestTemplate.getForEntity(
                             endpoint + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate,
                             LocationVO.class,
                             maps);
