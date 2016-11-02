@@ -41,12 +41,12 @@ import org.springframework.web.client.RestTemplate;
 public class FetchStartedTransportOrder implements Function<String, TransportOrder> {
 
     @Autowired
-    private RestTemplate restTemplate;
+    private RestTemplate aLoadBalanced;
 
     @Override
     public TransportOrder apply(String barcode) {
         ResponseEntity<List<TransportOrder>> exchange =
-                restTemplate.exchange(
+                aLoadBalanced.exchange(
                         "http://tms-service/v1/transportorders?barcode=" + barcode + "&state=STARTED",
                         HttpMethod.GET,
                         null,

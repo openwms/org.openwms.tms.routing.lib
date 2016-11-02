@@ -40,7 +40,7 @@ import org.springframework.web.client.RestTemplate;
 public class FetchLocationGroupByName implements Function<String, LocationGroupVO> {
 
     @Autowired
-    private RestTemplate restTemplate;
+    private RestTemplate aLoadBalanced;
 
     @Override
     public LocationGroupVO apply(String name) {
@@ -49,7 +49,7 @@ public class FetchLocationGroupByName implements Function<String, LocationGroupV
         try {
 
             ResponseEntity<LocationGroupVO> exchange =
-                    restTemplate.exchange(
+                    aLoadBalanced.exchange(
                             "https://common-service" + CommonConstants.API_LOCATIONGROUPS+"?name="+name,
                             HttpMethod.GET,
                             null,
