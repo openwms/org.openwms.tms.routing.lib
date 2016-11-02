@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -40,22 +41,24 @@ import org.springframework.web.client.RestTemplate;
 public class FetchLocationByCoord implements Function<String, LocationVO> {
 
     @Autowired
-    private RestTemplate restTemplate;
+    private RestTemplate aLoadBalanced;
+    @Value("${owms.common-service.serviceId}")
+    private String serviceId;
+    @Value("${owms.common-service.protocol}")
+    private String protocol;
 
     @Override
     public LocationVO apply(String coordinate) {
-
         Map<String, Object> maps = new HashMap<>();
         maps.put("locationPK", coordinate);
         try {
             ResponseEntity<LocationVO> exchange =
-                    restTemplate.exchange(
-                            "https://common-service" + CommonConstants.API_LOCATIONS+"?locationPK="+coordinate,
+                    aLoadBalanced.exchange(
+                            protocol + "://" + serviceId + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate,
                             HttpMethod.GET,
                             null,
                             LocationVO.class,
                             maps);
-            System.out.println(exchange);
             return exchange.getBody();
         } catch (Exception e) {
             e.printStackTrace();

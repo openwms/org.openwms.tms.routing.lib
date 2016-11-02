@@ -37,7 +37,7 @@ class ModuleConfig {
     public
     @LoadBalanced
     @Bean
-    RestTemplate restTemplate() {
+    RestTemplate aLoadBalanced() {
         return new RestTemplate();
     }
 
