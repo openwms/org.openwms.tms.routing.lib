@@ -35,6 +35,7 @@ import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.ProgramResult;
 import org.openwms.tms.routing.Route;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,6 +63,7 @@ class RequestMessageController {
      * Takes the passed message, and hands over to the service.
      */
     @PostMapping("/v1/req")
+    @Transactional
     public void handleREQ(@RequestBody RequestVO req) {
 
         /*
