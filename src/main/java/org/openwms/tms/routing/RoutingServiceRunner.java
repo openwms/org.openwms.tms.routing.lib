@@ -29,6 +29,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 /**
  * A RoutingServiceRunner.
@@ -50,6 +51,7 @@ public class RoutingServiceRunner {
         SpringApplication.run(RoutingServiceRunner.class, args);
     }
 
+    @Profile("H2")
     @Bean
     public CommandLineRunner init(final ActionRepository repo, final RouteRepository routeRepository) {
 
