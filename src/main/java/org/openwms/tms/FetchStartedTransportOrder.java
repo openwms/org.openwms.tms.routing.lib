@@ -61,7 +61,7 @@ public class FetchStartedTransportOrder implements Function<String, TransportOrd
         }
         ServiceInstance si = list.get(0);
         String endpoint = si.getMetadata().get("protocol") + "://tms-service/v1/transportorders?barcode=" + barcode + "&state=STARTED";
-        LOGGER.debug("Calling common-service URL [{}]", endpoint);
+        LOGGER.debug("Calling tms-service URL [{}]", endpoint);
         ResponseEntity<List<TransportOrder>> exchange =
                 aLoadBalanced.exchange(
                         endpoint,
