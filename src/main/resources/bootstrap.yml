@@ -1,8 +1,8 @@
 spring:
-  main:
-    banner-mode: off
   application:
     name: routing-service
+  main:
+    banner-mode: OFF
   cloud:
     config:
       label: ${owms.tenant:master}
@@ -11,45 +11,39 @@ spring:
         enabled: true
         service-id: openwms-config
 
-server:
-  port: ${PORT:8081}
-
-eureka:
-  client:
-    serviceUrl:
-       # need to be overridden in the cloud environment props!
-      defaultZone: ${owms.eureka.url}/eureka
-  instance:
-    hostname: openwms-routing-service.herokuapp.com
-    secure-port-enabled: true
-    non-secure-port-enabled: false
-    non-secure-port: ${PORT:8081}
-    statusPageUrl: https://${eureka.instance.hostName}/info
-    healthCheckUrl: https://${eureka.instance.hostName}/health
-    homePageUrl: https://${eureka.instance.hostName}/
-    metadata-map:
-      # need to be overridden in the cloud environment props!
-      username: user
-      password: sa
-
----
-spring:
-  profiles: DEV
-
 owms:
   eureka:
+    # need to be overridden in the cloud environment props!
     url: http://user:sa@localhost:8761
 
-eureka:
-  instance:
-    hostname: localhost
-    secure-port-enabled: false
-    non-secure-port-enabled: true
-    non-secure-port: ${PORT:8081}
-    statusPageUrl: http://${eureka.instance.hostName}/info
-    healthCheckUrl: http://${eureka.instance.hostName}/health
-    homePageUrl: http://${eureka.instance.hostName}/
+server:
+  port: ${PORT:8081}
 
 security:
   user:
     password: sa
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${owms.eureka.url}/eureka
+  instance:
+    secure-port-enabled: false
+    non-secure-port-enabled: true
+    metadata-map:
+      # need to be overridden in the cloud environment props!
+      username: user
+      password: ${security.user.password}
+
+---
+spring:
+  profiles: CLOUD
+
+eureka:
+  instance:
+    hostname: openwms-routing-service.herokuapp.com
+    secure-port-enabled: true
+    non-secure-port-enabled: false
+    statusPageUrl: https://${eureka.instance.hostName}/info
+    healthCheckUrl: https://${eureka.instance.hostName}/health
+    homePageUrl: https://${eureka.instance.hostName}/
