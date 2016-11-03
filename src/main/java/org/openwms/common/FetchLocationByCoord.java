@@ -31,8 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -61,18 +59,13 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
     @Value("${owms.common-service.password}")
     private String password;
     private String endpoint;
-    @Autowired
-    private LoadBalancerClient loadBalancer;
 
     @Override
     public LocationVO apply(String coordinate) {
         Map<String, Object> maps = new HashMap<>();
         maps.put("locationPK", coordinate);
-        ServiceInstance instance = loadBalancer.choose(serviceId);
-        instance.getMetadata().entrySet().forEach(p -> LOGGER.debug("Entry/Value:" + p.getKey() + p.getValue()));
-        endpoint = protocol + "://" +serviceId;
+        endpoint = protocol + "://" + serviceId;
         try {
-            LOGGER.debug(endpoint + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate);
             ResponseEntity<LocationVO> exchange =
                     aLoadBalanced.exchange(
                             endpoint + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate,
@@ -87,17 +80,15 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
         }
     }
 
-    HttpHeaders createHeaders( String username, String password ){
-        return new HttpHeaders(){
+    HttpHeaders createHeaders(String username, String password) {
+        return new HttpHeaders() {
             {
                 String auth = username + ":" + password;
                 byte[] encodedAuth = Base64.encodeBase64(
-                        auth.getBytes(Charset.forName("UTF-8")) );
-                String authHeader = "Basic " + new String( encodedAuth );
-                set( "Authorization", authHeader );
+                        auth.getBytes(Charset.forName("UTF-8")));
+                String authHeader = "Basic " + new String(encodedAuth);
+                set("Authorization", authHeader);
             }
         };
     }
-
-
 }
