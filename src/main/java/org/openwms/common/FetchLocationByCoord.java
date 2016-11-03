@@ -59,7 +59,7 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
         Map<String, Object> maps = new HashMap<>();
         maps.put("locationPK", coordinate);
         ServiceInstance si = list.get(0);
-        String endpoint = si.getMetadata().get("protocol") + "://routing-service";// + si.getServiceId();
+        String endpoint = si.getMetadata().get("protocol") + "://routing-service";
         ResponseEntity<LocationVO> exchange =
                 aLoadBalanced.exchange(
                         endpoint + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate,

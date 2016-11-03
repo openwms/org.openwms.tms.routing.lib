@@ -21,16 +21,17 @@
  */
 package org.openwms.common;
 
-import java.nio.charset.Charset;
+import static org.openwms.SecurityUtils.createHeaders;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -46,47 +47,28 @@ public class FetchLocationGroupByName implements Function<String, LocationGroupV
 
     @Autowired
     private RestTemplate aLoadBalanced;
-    @Value("${owms.common-service.service-id}")
-    private String serviceId;
-    @Value("${owms.common-service.protocol}")
-    private String protocol;
-    @Value("${owms.common-service.username}")
-    private String username;
-    @Value("${owms.common-service.password}")
-    private String password;
-    private String endpoint;
+    @Autowired
+    private DiscoveryClient dc;
 
     @Override
     public LocationGroupVO apply(String name) {
+        List<ServiceInstance> list = dc.getInstances("routing-service");
+        if (list == null || list.size() == 0) {
+            throw new RuntimeException("No deployed service with name routing-service found");
+        }
         Map<String, Object> maps = new HashMap<>();
         maps.put("name", name);
-        endpoint = protocol + "://" + serviceId;
-        try {
-            ResponseEntity<LocationGroupVO> exchange =
-                    aLoadBalanced.exchange(
-                            endpoint + CommonConstants.API_LOCATIONGROUPS + "?name=" + name,
-                            HttpMethod.GET,
-                            new HttpEntity<LocationVO>(createHeaders(username, password)),
-                            LocationGroupVO.class,
-                            maps);
+        ServiceInstance si = list.get(0);
+        String endpoint = si.getMetadata().get("protocol") + "://routing-service";
+        ResponseEntity<LocationGroupVO> exchange =
+                aLoadBalanced.exchange(
+                        endpoint + CommonConstants.API_LOCATIONGROUPS + "?name=" + name,
+                        HttpMethod.GET,
+                        new HttpEntity<LocationGroupVO>(createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))),
+                        LocationGroupVO.class,
+                        maps);
 
-            System.out.println(exchange);
-            return exchange.getBody();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
-    }
-
-    HttpHeaders createHeaders(String username, String password) {
-        return new HttpHeaders() {
-            {
-                String auth = username + ":" + password;
-                byte[] encodedAuth = Base64.encodeBase64(
-                        auth.getBytes(Charset.forName("UTF-8")));
-                String authHeader = "Basic " + new String(encodedAuth);
-                set("Authorization", authHeader);
-            }
-        };
+        System.out.println(exchange);
+        return exchange.getBody();
     }
 }
