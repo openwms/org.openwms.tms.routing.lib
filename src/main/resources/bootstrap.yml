@@ -21,6 +21,7 @@ server:
 
 security:
   user:
+    # need to be overridden in the cloud environment props!
     password: sa
 
 eureka:
@@ -29,7 +30,6 @@ eureka:
       defaultZone: ${owms.eureka.url}/eureka
   instance:
     metadata-map:
-      # need to be overridden in the cloud environment props!
       username: user
       password: ${security.user.password}
       protocol: http
