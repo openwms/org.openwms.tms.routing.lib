@@ -32,10 +32,11 @@
         <relativePath/>
     </parent>
     <artifactId>org.openwms.tms.routing</artifactId>
-    <name>${project.artifactId}</name>
+    <name>OpenWMS.org TMS: Routing Services</name>
     <properties>
         <moduleDir>../..</moduleDir>
         <activiti.version>5.21.0</activiti.version>
+        <sonar.projectKey>OpenWMS.org_TMS:Routing</sonar.projectKey>
     </properties>
 
     <build>
