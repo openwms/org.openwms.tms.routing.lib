@@ -63,7 +63,7 @@ public class RoutingServiceRunner {
             repo.save(new Action(route1, "ACT002", null, "IPOINT", "REQ_", "CP002", "Start process CP001 when REQ_ on any Location in IPOINT LocationGroup"));
             repo.save(new Action(route1, "ACT003", null, "FGINSORT", "REQ_", "CP002", "Start process CP001 when REQ_ on any Location in FGINSORT LocationGroup"));
 
-            repo.save(new Action(routeNO, "ACT004", null, "PICKING", "REQ_", "CP001", "Start process CP001 when REQ_ on top-level LocationGroup and no defined route"));
+            repo.save(new Action(routeNO, "ACT004", null, "ZILE", "REQ_", "CP001", "Start process CP001 when REQ_ on top-level LocationGroup and no defined route"));
             repo.save(new Action(routeDEF, "ACT005", null, "ROOT", "REQ_", "CP001", "Start process CP001 when REQ_ on top-level LocationGroup and any other route"));
         };
     }
