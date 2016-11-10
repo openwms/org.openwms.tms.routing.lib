@@ -59,12 +59,12 @@ public class RoutingServiceRunner {
             Route routeDEF = routeRepository.save(Route.DEF_ROUTE);
             Route routeNO = routeRepository.save(Route.NO_ROUTE);
             Route route1 = routeRepository.save(new Route("R001"));
-            repo.save(new Action(route1, "ACT001", "FGIN/TIPP/ERR_/0001/0000", null, "REQ_", "CP001", "Start process CP001 when REQ_ on ERR_ Location"));
-            repo.save(new Action(route1, "ACT002", null, "IPOINT", "REQ_", "CP002", "Start process CP001 when REQ_ on any Location in IPOINT LocationGroup"));
-            repo.save(new Action(route1, "ACT003", null, "FGINSORT", "REQ_", "CP002", "Start process CP001 when REQ_ on any Location in FGINSORT LocationGroup"));
+            repo.save(new Action(route1, "ACT001", "FGIN/CONV/IN__/0001/0000", null, "REQ_", "CP001", "Start process CP001 when REQ_ on Inbound Location"));
+            repo.save(new Action(route1, "ACT002", null, "IPOINT1", "REQ_", "CP002", "Start process CP001 when REQ_ on any Location in IPOINT1 LocationGroup"));
+            repo.save(new Action(route1, "ACT003", null, "IPOINT2", "REQ_", "CP002", "Start process CP001 when REQ_ on any Location in IPOINT2 LocationGroup"));
 
             repo.save(new Action(routeNO, "ACT004", null, "ZILE", "REQ_", "CP001", "Start process CP001 when REQ_ on top-level LocationGroup and no defined route"));
-            repo.save(new Action(routeDEF, "ACT005", null, "ROOT", "REQ_", "CP001", "Start process CP001 when REQ_ on top-level LocationGroup and any other route"));
+            repo.save(new Action(routeDEF, "ACT005", null, "FGIN/ERR_/0001/0000/0000", "REQ_", "CP001", "Start process CP001 when REQ_ on top-level LocationGroup and any other route"));
         };
     }
 }
