@@ -58,7 +58,7 @@ class ActivitiMatrix implements Matrix {
         if (null != location) {
 
             // First explicitly search for the Location and Route
-            prg = repository.findByRouteAndLocationKey(route, location.getCoordinate());
+            prg = repository.findByRouteAndLocationKey(route.getRouteId(), location.getCoordinate());
             if (!prg.isPresent()) {
 
                 // When Location is set but no Action exists, check by LocationGroup
@@ -93,7 +93,7 @@ class ActivitiMatrix implements Matrix {
     }
 
     private Optional<Action> findByLocationGroup(Route route, LocationGroupVO locationGroup) {
-        Optional<Action> cp = repository.findByRouteAndLocationGroupName(route, locationGroup.getName());
+        Optional<Action> cp = repository.findByRouteAndLocationGroupName(route.getRouteId(), locationGroup.getName());
         if (!cp.isPresent() && locationGroup.hasLink("_parent")) {
             cp = findByLocationGroup(route, findLocationGroup(locationGroup.getLink("_parent")));
         }
@@ -109,6 +109,6 @@ class ActivitiMatrix implements Matrix {
     }
 
     private Optional<Action> findByLocationGroupByName(Route route, String locationGroupName) {
-        return repository.findByRouteAndLocationGroupName(route, locationGroupName);
+        return repository.findByRouteAndLocationGroupName(route.getRouteId(), locationGroupName);
     }
 }

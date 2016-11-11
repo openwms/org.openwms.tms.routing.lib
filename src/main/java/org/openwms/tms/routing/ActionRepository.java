@@ -34,9 +34,9 @@ import org.springframework.data.repository.query.Param;
  */
 interface ActionRepository extends JpaRepository<Action, Long> {
 
-    @Query("select a from Action a where a.route = :route and a.locationKey is not null and a.locationKey = :locationKey and a.enabled = true")
-    Optional<Action> findByRouteAndLocationKey(@Param("route") Route route, @Param("locationKey") String locationKey);
+    @Query("select a from Action a where a.route.routeId = :routeId and a.locationKey is not null and a.locationKey = :locationKey and a.enabled = true")
+    Optional<Action> findByRouteAndLocationKey(@Param("routeId") String routeId, @Param("locationKey") String locationKey);
 
-    @Query("select a from Action a where a.route = :route and a.locationGroupName is not null and a.locationGroupName = :locationGroupName and a.enabled = true")
-    Optional<Action> findByRouteAndLocationGroupName(@Param("route") Route route, @Param("locationGroupName") String locationGroupName);
+    @Query("select a from Action a where a.route.routeId = :routeId and a.locationGroupName is not null and a.locationGroupName = :locationGroupName and a.enabled = true")
+    Optional<Action> findByRouteAndLocationGroupName(@Param("routeId") String routeId, @Param("locationGroupName") String locationGroupName);
 }

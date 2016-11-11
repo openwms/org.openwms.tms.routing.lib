@@ -53,7 +53,7 @@ class ActivitiExecutor implements ProgramExecutor {
         LOGGER.debug("Executing program : {}", program);
         Map<String, Object> variables = new HashMap<>();
         variables.put("barcode", "");
-        String id = repositoryService.createProcessDefinitionQuery().processDefinitionKey(program.getProgramKey()).singleResult().getId();
+        String id = repositoryService.createProcessDefinitionQuery().processDefinitionKey(program.getProgramKey()).list().get(0).getId();
         runtimeService.startProcessInstanceById(id, runtimeVariables);
         return null;
     }

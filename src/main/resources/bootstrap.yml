@@ -10,6 +10,15 @@ spring:
       discovery:
         enabled: true
         service-id: openwms-config
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
 
 owms:
   eureka:
