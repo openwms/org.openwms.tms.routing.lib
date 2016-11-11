@@ -47,7 +47,7 @@ public class Route extends ApplicationEntity implements Serializable {
     /** For all TransportOrders with no explicitly defined Route. */
     public static final Route DEF_ROUTE = new Route("_DEFAULT");
     @NotNull
-    @Column(name = "C_NAME")
+    @Column(name = "C_NAME", unique = true)
     private String routeId;
     @Column(name = "C_DESCRIPTION")
     private String description;
