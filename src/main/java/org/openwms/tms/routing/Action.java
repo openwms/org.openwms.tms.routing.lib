@@ -21,7 +21,9 @@
  */
 package org.openwms.tms.routing;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -53,17 +55,25 @@ public class Action extends BaseEntity implements Serializable {
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "C_ROUTE_ID")
     private Route route;
     @NotNull
+    @Column(name = "C_PROGRAM_NAME")
     private String programKey;
     @NotNull
+    @Column(name = "C_NAME")
     private String name;
+    @Column(name = "C_LOCATION_KEY")
     private String locationKey;
+    @Column(name = "C_LOCATION_GROUP_NAME")
     private String locationGroupName;
     @NotNull
+    @Column(name = "C_ACTION_TYPE")
     private String actionType;
     @NotNull
+    @Column(name = "C_DESCRIPTION")
     private String description;
+    @Column(name = "C_ENABLED")
     private boolean enabled = true;
 
     public Route getRoute() {
