@@ -60,11 +60,12 @@
                 <artifactId>org.openwms.common.shared</artifactId>
                 <version>${common.version}</version>
             </dependency>
-            <!--dependency>
+            <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.comm</artifactId>
+                <artifactId>org.openwms.common.service</artifactId>
                 <version>${common.version}</version>
-            </dependency-->
+                <classifier>client</classifier>
+            </dependency>
             <dependency>
                 <groupId>org.activiti</groupId>
                 <artifactId>activiti-explorer</artifactId>
@@ -90,6 +91,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.common.shared</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.service</artifactId>
+            <classifier>client</classifier>
         </dependency>
 
         <!-- 3rd party dependencies -->
