@@ -28,8 +28,10 @@ import org.openwms.common.FetchLocationByCoord;
 import org.openwms.common.FetchLocationGroupByName;
 import org.openwms.common.LocationGroupVO;
 import org.openwms.common.LocationVO;
+import org.openwms.common.transport.api.TransportUnitApi;
 import org.openwms.tms.FetchStartedTransportOrder;
 import org.openwms.tms.TransportOrder;
+import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.ProgramResult;
@@ -58,6 +60,10 @@ class RequestMessageController {
     private Matrix matrix;
     @Autowired
     private ProgramExecutor executor;
+    @Autowired
+    private InputContext in;
+    @Autowired
+    private TransportUnitApi api;
 
     /**
      * Takes the passed message, and hands over to the service.
@@ -77,6 +83,11 @@ class RequestMessageController {
          - type
 
          */
+        // Populate input context
+        in.addBeanToMsg("barcode", req.getBarcode());
+        in.addBeanToMsg("actualLocation", req.getActualLocation());
+        in.addBeanToMsg("actualLocationGroup", req.getLocationGroupName());
+
         LocationVO location = fetchLocationByCoord.apply(req.getActualLocation());
         LocationGroupVO locationGroup = req.hasLocationGroupName() ? fetchLocationGroupByName.apply(req.getLocationGroupName()) : fetchLocationGroupByName.apply(location.getLocationGroupName());
         Route route;

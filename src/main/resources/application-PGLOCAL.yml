@@ -7,3 +7,8 @@ spring:
     username: OPENWMS
     password: OPENWMS
     url: jdbc:postgresql:OPENWMSDB
+
+owms:
+  common-service:
+    protocol: http
+    name: common-service
