@@ -53,7 +53,6 @@ ID   | Description
 R001 | We should have an additional expression language to support microservices. At best with support for HATEOS for better navigation
 
 ## Further reading
-https://github.com/openwms/org.openwms.tms.routing/tree/master
 
 ID   | Description
 ---- | -----------
