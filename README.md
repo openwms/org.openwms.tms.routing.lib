@@ -32,6 +32,15 @@ The actual Activiti BPMN snippet looks like this:
 Notice that the flow and the expressions are modelled in Activiti
 Model Explorer.
 
+## Benefits
+
+Why did we choose BPMN and Activit? From the project experience we've
+gained, we think that is important that project consultants as well as
+business persons should define the project specific part in BPMN and not
+inside code. An engineer has usually built a library with business
+functions over the years and can just plug them together in some kind
+of flow - we've misused BPMN for that.
+
 ## Features
 
 The current implementation allows to reference standard Spring managed
