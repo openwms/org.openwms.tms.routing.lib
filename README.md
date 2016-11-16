@@ -11,7 +11,7 @@ could look like this:
 
 ![Workflow][1]
  
-(1) When the REQ_ message arrives, the `TransportUnit` with the given
+(1) Whenever a REQ_ message arrives, the `TransportUnit` with the given
 `Barcode` is booked onto the `Location` provided in the message.
 
 (2) For the current `TransportUnit` a `TransportOrder` is created with
@@ -51,6 +51,13 @@ I001 | FeignClients are instantiated in an isolated child context and accessible
 ID   | Description
 ---- | -----------
 R001 | We should have an additional expression language to support microservices. At best with support for HATEOS for better navigation
+
+## Further reading
+https://github.com/openwms/org.openwms.tms.routing/tree/master
+
+ID   | Description
+---- | -----------
+L001 | [Secured Eureka First Microservices](https://github.com/openwms/org.openwms/wiki/Secured-Eureka-First-services-on-Heroku)
 
 [1]: src/docs/res/workflow.png
 
