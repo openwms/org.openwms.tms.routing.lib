@@ -34,8 +34,8 @@ Model Explorer.
 
 ## Benefits
 
-Why did we choose BPMN and Activit? From the project experience we've
-gained, we think that is important that project consultants as well as
+Why did we choose BPMN and Activit? From our project experience so far,
+we think that it is important that project consultants as well as
 business persons should define the project specific part in BPMN and not
 inside code. An engineer has usually built a library with business
 functions over the years and can just plug them together in some kind
