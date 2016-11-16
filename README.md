@@ -19,7 +19,7 @@ the target `LocationGroup` equals to `FGSTOCK`.
 
 (3) In the final step the system triggers a service to send an OSIP RES_
 message to the underlying subsystem (i.e. PLC or Raspberry Pi) with the
-next `Location` coordinate to move to.
+next `Location` coordinate to move the `TransportUnit` to.
 
 The actual Activiti BPMN snippet looks like this:
 
