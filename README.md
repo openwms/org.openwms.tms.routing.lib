@@ -19,9 +19,9 @@ the target `LocationGroup` equals to `FGSTOCK`.
 
 (3) In the final step the system triggers a service to send an OSIP RES_
 message to the underlying subsystem (i.e. PLC or Raspberry Pi) with the
-next `Location` coordinate to move to. | dfsf
+next `Location` coordinate to move to.
 
-The actual BPMN snippet for Activiti looks like this:
+The actual Activiti BPMN snippet looks like this:
 
 ```
     <serviceTask id="sid-...27D" name="Book TransportUnit to current Location" activiti:expression="#{transportUnitApi.updateActualLocation(in.msg.barcode, in.msg.actualLocation)}"></serviceTask>
