@@ -40,11 +40,17 @@ be accessed with support of `Feign`. Therefor the TMS Routing service
 needs to have the Feign client interface definitions on the classpath at
 startup.
 
+## Open Issues
+
+ID   | Description
+---- | -----------
+I001 | FeignClients are instantiated in an isolated child context and accessible by the hosting application only but not from Activiti.
+
 ## Outlook
 
-ID | Description
+ID   | Description
 ---- | -----------
-R001 | We should have an additional expression language to support microservices
+R001 | We should have an additional expression language to support microservices. At best with support for HATEOS for better navigation
 
 [1]: src/docs/res/workflow.png
 
