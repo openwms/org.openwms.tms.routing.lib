@@ -30,16 +30,16 @@ The actual Activiti BPMN snippet looks like this:
 ```
 
 Notice that the flow and the expressions are modelled in Activiti
-Model Explorer.
+Model Explorer rather than in XML.
 
 ## Benefits
 
-Why did we choose BPMN and Activiti? From our project experience so far,
+Why did we choose BPMN and Activiti? From the project experience we have,
 we think that it is important that project consultants as well as
-business persons should define the project specific part in BPMN and not
-inside code. An engineer has usually built a library with business
-functions over the years and can just plug them together in some kind
-of flow - we've misused BPMN for that.
+business people should realize the project specific parts in BPMN and not
+in code. Usually after doing several projects an engineer has a library
+of business functions and can just plug them together in some kind of
+flow - we've misused the concept of BPMN for that.
 
 ## Features
 
