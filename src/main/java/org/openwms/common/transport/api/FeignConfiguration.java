@@ -19,27 +19,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.routing;
+package org.openwms.common.transport.api;
 
-import org.ameba.app.SolutionApp;
-import org.openwms.ModuleConfiguration;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * A RoutingServiceRunner.
+ * A FeignConfiguration.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@SpringBootApplication(scanBasePackageClasses = {SolutionApp.class, ModuleConfiguration.class})
-public class RoutingServiceRunner {
+@Configuration
+@EnableFeignClients(basePackages = "org.openwms.common.transport.api")
+public class FeignConfiguration {
 
-    /**
-     * Boot up!
-     *
-     * @param args Some args
-     */
-    public static void main(String[] args) {
-        SpringApplication.run(RoutingServiceRunner.class, args);
-    }
 }

@@ -19,20 +19,32 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.routing;
+package org.openwms;
 
+import org.openwms.tms.routing.InputContext;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * A ModuleConfig.
+ * A ParentConfiguration.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Configuration
-class ModuleConfig {
+@EnableDiscoveryClient
+@EnableTransactionManagement
+@EntityScan(basePackages = "org.openwms")
+public class ModuleConfiguration {
+
+    @Bean
+    public InputContext in() {
+        return new InputContext();
+    }
 
     public
     @LoadBalanced
@@ -46,4 +58,5 @@ class ModuleConfig {
     RestTemplate simpleRestTemplate() {
         return new RestTemplate();
     }
+
 }

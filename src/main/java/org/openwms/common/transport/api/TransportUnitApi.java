@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@FeignClient(name = "${owms.common-service.protocol}://${owms.common-service.name}")
+@FeignClient(name = "common-service")
 public interface TransportUnitApi {
 
     @RequestMapping(method = RequestMethod.GET, params = {"bk"})
