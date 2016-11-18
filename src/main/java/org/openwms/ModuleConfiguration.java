@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * A ParentConfiguration.
+ * A ModuleConfiguration.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
