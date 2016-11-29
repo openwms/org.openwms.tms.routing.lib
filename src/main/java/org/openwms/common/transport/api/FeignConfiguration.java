@@ -21,6 +21,8 @@
  */
 package org.openwms.common.transport.api;
 
+import org.activiti.spring.boot.DataSourceProcessEngineAutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,6 +32,7 @@ import org.springframework.context.annotation.Configuration;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Configuration
+@AutoConfigureBefore(DataSourceProcessEngineAutoConfiguration.class)
 @EnableFeignClients(basePackages = "org.openwms.common.transport.api")
 public class FeignConfiguration {
 
