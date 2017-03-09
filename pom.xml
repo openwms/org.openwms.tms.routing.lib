@@ -101,10 +101,6 @@
         <!-- Project dependencies -->
         <dependency>
             <groupId>org.openwms</groupId>
-            <artifactId>org.openwms.common.shared</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.openwms</groupId>
             <artifactId>org.openwms.common.service</artifactId>
             <classifier>client</classifier>
         </dependency>
