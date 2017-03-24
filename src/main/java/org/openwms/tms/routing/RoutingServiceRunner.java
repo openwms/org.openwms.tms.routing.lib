@@ -22,6 +22,7 @@
 package org.openwms.tms.routing;
 
 import org.ameba.app.SolutionApp;
+import org.openwms.FeignConfiguration;
 import org.openwms.ModuleConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,7 +32,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@SpringBootApplication(scanBasePackageClasses = {SolutionApp.class, ModuleConfiguration.class})
+@SpringBootApplication(scanBasePackageClasses = {SolutionApp.class, ModuleConfiguration.class}, exclude = FeignConfiguration.class)
 public class RoutingServiceRunner {
 
     /**

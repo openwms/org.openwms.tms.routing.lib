@@ -21,7 +21,6 @@
  */
 package org.openwms;
 
-import org.openwms.tms.routing.InputContext;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -40,11 +39,6 @@ import org.springframework.web.client.RestTemplate;
 @EnableTransactionManagement
 @EntityScan(basePackages = "org.openwms")
 public class ModuleConfiguration {
-
-    @Bean
-    public InputContext in() {
-        return new InputContext();
-    }
 
     public
     @LoadBalanced
