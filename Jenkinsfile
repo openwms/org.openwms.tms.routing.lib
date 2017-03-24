@@ -7,25 +7,27 @@ node {
       git 'git@github.com:openwms/org.openwms.tms.routing.git'
       mvnHome = tool 'M3'
     }
-    parallel (
-      "default-build": {
-        stage('\u27A1 Build') {
-          sh "'${mvnHome}/bin/mvn' clean install -Ddocumentation.dir=${WORKSPACE} -Psordocs,sonatype -U"
-        }
-      },
-      "sonar-build": {
-        stage('\u27A1 Sonar') {
-          sh "'${mvnHome}/bin/mvn' clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Djacoco.propertyName=jacocoArgLine -Denforcer.skip -Dbuild.number=${BUILD_NUMBER} -Dbuild.date=${BUILD_ID} -Ddocumentation.dir=${WORKSPACE} -Pjenkins"
-        }
+    stage('\u27A1 Build & Deploy') {
+      configFileProvider(
+          [configFile(fileId: 'maven-local-settings', variable: 'MAVEN_SETTINGS')]) {
+            sh "'${mvnHome}/bin/mvn' -s $MAVEN_SETTINGS clean deploy -Ddocumentation.dir=${WORKSPACE} -Dverbose=false -Psordocs,sonatype -U"
       }
-    )
+    }
     stage('\u27A1 Results') {
       archive '**/target/*.jar'
     }
     stage('\u27A1 Heroku Staging') {
-      sh "git remote remove heroku"
-      sh "git remote add heroku https://:${HEROKU_API_KEY}@git.heroku.com/openwms-routing-service.git"
-      sh "git push heroku master -f"
+      sh '''
+          if git remote | grep heroku > /dev/null; then
+             git remote remove heroku
+          fi
+          git remote add heroku https://:${HEROKU_API_KEY}@git.heroku.com/openwms-routing-service.git
+          git push heroku master -f
+      '''
+    }
+    stage('\u27A1 Sonar') {
+      sh "'${mvnHome}/bin/mvn' clean org.jacoco:jacoco-maven-plugin:prepare-agent verify -Dbuild.number=${BUILD_NUMBER} -Dbuild.date=${BUILD_ID} -Ddocumentation.dir=${WORKSPACE} -Pjenkins"
+      sh "'${mvnHome}/bin/mvn' sonar:sonar -Pjenkins"
     }
   } finally {
     junit allowEmptyResults: true, testResults: '**/target/surefire-reports/TEST-*.xml'
