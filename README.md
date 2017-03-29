@@ -1,5 +1,9 @@
 # org.openwms.tms.routing
 
+![Build status][ci-image]
+
+[ci-image]: https://img.shields.io/jenkins/s/http/openwms.mooo.com:8080/view/All/job/org.openwms.tms.routing.svg
+
 The TMS Routing service is responsible to route incoming messages to the
 appropriate workflow and finally handle the request message. The workflow
 is defined as a BMPN conform workflow, with Activiti extensions, and
