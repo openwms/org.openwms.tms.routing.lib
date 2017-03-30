@@ -15,11 +15,11 @@ node {
     }
     stage('\u27A1 Heroku Staging') {
       sh '''
-          if git remote | grep heroku > /dev/null; then
-             git remote remove heroku
-          fi
-          git remote add heroku https://:${HEROKU_API_KEY}@git.heroku.com/openwms-routing-service.git
-          git push heroku master -f
+        if git remote | grep heroku > /dev/null; then
+           git remote remove heroku
+        fi
+        git remote add heroku https://:${HEROKU_API_KEY}@git.heroku.com/openwms-routing-service.git
+        git push heroku master -f
       '''
     }
     stage('\u27A1 Results') {
