@@ -33,26 +33,114 @@
     </parent>
     <artifactId>org.openwms.tms.routing</artifactId>
     <name>OpenWMS.org TMS: Routing Services</name>
+    <url>https://www.interface21.io/docs/tms/routing/index.html</url>
+
     <properties>
-        <moduleDir>../..</moduleDir>
         <activiti.version>5.21.0</activiti.version>
         <sonar.projectKey>OpenWMS.org_TMS:Routing</sonar.projectKey>
         <common.version>1.1.0-SNAPSHOT</common.version>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>OpenWMS.org Release Repository</name>
+            <url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+        <snapshotRepository>
+            <id>sonatype-nexus-staging</id>
+            <name>OpenWMS.org Snapshot Repository</name>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <site>
+            <id>ftp-io</id>
+            <name>OpenWMS.org WebSite</name>
+            <url>ftps://ftp.interface21.io/tms/routing</url>
+        </site>
+    </distributionManagement>
+
+    <developers>
+        <developer>
+            <id>scherrer</id>
+            <name>Heiko Scherrer</name>
+            <email>scherrer@openwms.org</email>
+            <url>https://openwms.github.io/</url>
+            <organization>Interface21.io</organization>
+            <organizationUrl>https://www.interface21.io</organizationUrl>
+            <timezone>+2</timezone>
+            <roles>
+                <role>Project Lead</role>
+                <role>Architect</role>
+                <role>Developer</role>
+                <role>Deployer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/openwms/org.openwms.tms.routing</url>
+        <connection>scm:git:git://github.com/openwms/org.openwms.tms.routing.git</connection>
+        <developerConnection>scm:git:git@github.com:openwms/org.openwms.tms.routing.git</developerConnection>
+    </scm>
+
+    <ciManagement>
+        <system>Jenkins</system>
+        <url>http://openwms.mooo.com/jenkins/job/org.openwms.tms.routing</url>
+        <notifiers>
+            <notifier>
+                <type>mail</type>
+                <configuration>
+                    <address>product@openwms.org</address>
+                </configuration>
+            </notifier>
+        </notifiers>
+    </ciManagement>
+
+    <issueManagement>
+        <system>Github</system>
+        <url>https://github.com/openwms/org.openwms.tms.routing/issues</url>
+    </issueManagement>
+
     <build>
         <finalName>tms-routing-service</finalName>
         <plugins>
-            <!--plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>aspectj-maven-plugin</artifactId>
-            </plugin-->
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>index</report>
+                            <report>summary</report>
+                            <report>project-team</report>
+                            <report>issue-tracking</report>
+                            <report>cim</report>
+                            <report>scm</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <dependencyManagement>
         <dependencies>
@@ -94,11 +182,21 @@
                 <artifactId>activation</artifactId>
                 <version>1.1.1</version>
             </dependency>
+            <dependency>
+                <groupId>net.sf.dozer</groupId>
+                <artifactId>dozer</artifactId>
+                <exclusions>
+                    <exclusion>
+                        <!-- we take the latest one from activiti instead -->
+                        <groupId>org.apache.commons</groupId>
+                        <artifactId>commons-lang3</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
-
         <!-- Project dependencies -->
         <dependency>
             <groupId>org.openwms</groupId>
@@ -114,14 +212,7 @@
         <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <!-- we take the latest one from activiti instead -->
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>commons-lang3</artifactId>
-                </exclusion>
-            </exclusions>
+            <scope>compile</scope> <!-- Fix the scope -->
         </dependency>
         <dependency>
             <groupId>org.activiti</groupId>
