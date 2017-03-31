@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scan="true" scanPeriod="30 seconds">
 
+    <conversionRule conversionWord="tid" converterClass="org.ameba.logging.ThreadIdProvider" />
+
     <variable scope="context" name="mdcPattern" value="%replace(;%X{MSGKEY};%X{MSGDATA}){';+( |$)', ''}" />
 
     <property name="LOG_TEMP" value="/tmp/owms" />
