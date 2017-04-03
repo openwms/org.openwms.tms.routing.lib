@@ -6,7 +6,7 @@ is defined as a BMPN conform workflow, with [Activiti](https://www.activiti.org)
 extensions, and comprises the execution of services in sequence order or in parallel
 execution steps.
 
-A typical and simple workflow to handle incoming [OSIP](https://www.interface21.io/osip)
+A typical and simple workflow to handle incoming [OSIP][2]
 REQ_ messages could look like this:
 
 ![Workflow][1]
@@ -17,7 +17,7 @@ REQ_ messages could look like this:
 (2) For the current `TransportUnit` a `TransportOrder` is created with
 the target `LocationGroup` equals to `FGSTOCK`.
 
-(3) In the final step the system triggers a service to send an [OSIP](https://www.interface21.io/osip) RES_
+(3) In the final step the system triggers a service to send an [OSIP][2] RES_
 message to the underlying subsystem (i.e. PLC or Raspberry Pi) with the
 next `Location` coordinate to move the `TransportUnit` to.
 
@@ -50,4 +50,4 @@ needs to have the Feign client interface definitions on the classpath at
 startup.
 
 [1]: images/workflow.png
-
+[2]: https://github.com/openwms/org.openwms.osip
