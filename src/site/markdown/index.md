@@ -49,5 +49,5 @@ be accessed with support of `Feign`. Therefor the TMS Routing service
 needs to have the Feign client interface definitions on the classpath at
 startup.
 
-[1]: src/docs/res/workflow.png
+[1]: images/workflow.png
 
