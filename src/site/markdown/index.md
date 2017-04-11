@@ -1,4 +1,4 @@
-#TMS: Routing Service
+#TMS Routing Service
 
 The TMS Routing Service is responsible to route incoming messages to the
 appropriate workflow and finally handle the request message. The workflow
@@ -50,4 +50,4 @@ needs to have the Feign client interface definitions on the classpath at
 startup.
 
 [1]: images/workflow.png
-[2]: https://github.com/openwms/org.openwms.osip
+[2]: https://www.interface21.io/osip
