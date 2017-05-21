@@ -1,8 +1,6 @@
 spring:
   application:
     name: routing-service
-  main:
-    banner-mode: "OFF"
   cloud:
     config:
       label: ${owms.tenant:master}
@@ -46,6 +44,8 @@ eureka:
 ---
 spring:
   profiles: CLOUD
+  main:
+    banner-mode: "OFF"
 
 eureka:
   instance:
