@@ -6,7 +6,7 @@ spring:
   cloud:
     config:
       label: ${owms.tenant:master}
-      fail-fast: true
+      fail-fast: true # true means retry
       discovery:
         enabled: true
         service-id: openwms-config

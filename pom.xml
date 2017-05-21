@@ -106,7 +106,7 @@
     </issueManagement>
 
     <build>
-        <finalName>tms-routing-service</finalName>
+        <finalName>openwms-tms-routing</finalName>
         <plugins>
             <plugin>
                 <groupId>org.asciidoctor</groupId>
@@ -295,6 +295,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-hateoas</artifactId>
         </dependency>
+
+        <!-- both for retry -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
