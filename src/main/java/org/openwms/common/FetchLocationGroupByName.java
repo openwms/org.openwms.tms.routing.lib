@@ -21,16 +21,10 @@
  */
 package org.openwms.common;
 
-import static org.openwms.SecurityUtils.createHeaders;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpEntity;
@@ -38,6 +32,14 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+
+import static java.lang.String.format;
+import static org.openwms.SecurityUtils.createHeaders;
 
 /**
  * A FetchLocationGroupByName.
@@ -48,6 +50,8 @@ import org.springframework.web.client.RestTemplate;
 public class FetchLocationGroupByName implements Function<String, LocationGroupVO> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FetchLocationGroupByName.class);
+    @Value("${owms.routing.common-service-name:common-service}")
+    private String commonServiceName;
     @Autowired
     private RestTemplate aLoadBalanced;
     @Autowired
@@ -55,14 +59,14 @@ public class FetchLocationGroupByName implements Function<String, LocationGroupV
 
     @Override
     public LocationGroupVO apply(String name) {
-        List<ServiceInstance> list = dc.getInstances("common-service");
+        List<ServiceInstance> list = dc.getInstances(commonServiceName.toUpperCase());
         if (list == null || list.size() == 0) {
-            throw new RuntimeException("No deployed service with name common-service found");
+            throw new RuntimeException(format("No deployed service with name [%s] found", commonServiceName.toUpperCase()));
         }
         Map<String, Object> maps = new HashMap<>();
         maps.put("name", name);
         ServiceInstance si = list.get(0);
-        String endpoint = si.getMetadata().get("protocol") + "://common-service" + CommonConstants.API_LOCATIONGROUPS + "?name=" + name;
+        String endpoint = si.getMetadata().get("protocol") + "://" + si.getServiceId() + CommonConstants.API_LOCATIONGROUPS + "?name=" + name;
         LOGGER.debug("Calling common-service URL [{}]", endpoint);
         ResponseEntity<LocationGroupVO> exchange =
                 aLoadBalanced.exchange(
