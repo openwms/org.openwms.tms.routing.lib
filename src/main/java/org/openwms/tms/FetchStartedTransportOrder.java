@@ -21,11 +21,6 @@
  */
 package org.openwms.tms;
 
-import static org.openwms.SecurityUtils.createHeaders;
-
-import java.util.List;
-import java.util.function.Function;
-
 import org.ameba.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +33,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+import java.util.function.Function;
+
+import static org.openwms.SecurityUtils.createHeaders;
 
 /**
  * A FetchStartedTransportOrder.
@@ -60,7 +60,7 @@ public class FetchStartedTransportOrder implements Function<String, TransportOrd
             throw new RuntimeException("No deployed service with name tms-service found");
         }
         ServiceInstance si = list.get(0);
-        String endpoint = si.getMetadata().get("protocol") + "://tms-service/v1/transportorders?barcode=" + barcode + "&state=STARTED";
+        String endpoint = si.getMetadata().get("protocol") + "://tms-service/transportorders?barcode=" + barcode + "&state=STARTED";
         LOGGER.debug("Calling tms-service URL [{}]", endpoint);
         ResponseEntity<List<TransportOrder>> exchange =
                 aLoadBalanced.exchange(

@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,7 @@ import static org.openwms.SecurityUtils.createHeaders;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
+@RefreshScope
 @Component
 public class FetchLocationByCoord implements Function<String, LocationVO> {
 
