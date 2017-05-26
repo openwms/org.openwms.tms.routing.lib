@@ -221,8 +221,7 @@
         <!-- Project dependencies -->
         <dependency>
             <groupId>org.openwms</groupId>
-            <artifactId>org.openwms.common.service</artifactId>
-            <classifier>client</classifier>
+            <artifactId>org.openwms.common.shared</artifactId>
         </dependency>
 
         <!-- 3rd party dependencies -->

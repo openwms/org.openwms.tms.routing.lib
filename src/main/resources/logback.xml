@@ -25,6 +25,7 @@
     <logger name="com.netflix.discovery" level="OFF" />
     <logger name="org.springframework.security" level="WARN" />
 
+    <logger name="ch.qos" level="ERROR" />
     <logger name="org.openwms" level="DEBUG" />
     <logger name="CORE_INTEGRATION_MESSAGING" level="DEBUG" />
 
