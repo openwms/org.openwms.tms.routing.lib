@@ -9,12 +9,12 @@
     <property name="MODULE_NAME" value="TMS" />
     <property name="SERVICE_NAME" value="TMS-Routing" />
 
-    <appender name="SYSLOG" class="ch.qos.logback.classic.net.SyslogAppender">
+    <!--appender name="SYSLOG" class="ch.qos.logback.classic.net.SyslogAppender">
         <syslogHost>openwms.mooo.com</syslogHost>
         <facility>SYSLOG</facility>
         <port>10514</port>
         <suffixPattern>${SERVICE_NAME} ${Tenant} ${MODULE_NAME} %d{YYYY-MM-dd HH:mm:ss.SSS} %X{X-RequestID} %-5level [${PID:- }/%tid] - [%-40.40logger{39}]${mdcPattern} : %msg%n</suffixPattern>
-    </appender>
+    </appender-->
 
     <include resource="logback-appenders.xml" />
     <include resource="logback-loggers.xml" />
@@ -31,7 +31,6 @@
 
     <root level="INFO">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="SYSLOG" />
     </root>
 
 </configuration>
