@@ -43,19 +43,19 @@ import static java.lang.String.format;
 import static org.openwms.SecurityUtils.createHeaders;
 
 /**
- * A ConfigResourcePatternResolver.
+ * A ConfigServerResourcePatternResolver.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class ConfigResourcePatternResolver extends PathMatchingResourcePatternResolver {
+public class ConfigServerResourcePatternResolver extends PathMatchingResourcePatternResolver {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigResourcePatternResolver.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigServerResourcePatternResolver.class);
     public static final String CONFIG_URL_PREFIX = "config:";
     private final DiscoveryClient dc;
     private final RestTemplate restTemplate;
     private final String configServerId;
 
-    public ConfigResourcePatternResolver(DiscoveryClient dc, RestTemplate restTemplate, @Value("${spring.cloud.config.discovery.service-id}") String configServerId) {
+    public ConfigServerResourcePatternResolver(DiscoveryClient dc, RestTemplate restTemplate, @Value("${spring.cloud.config.discovery.service-id}") String configServerId) {
         this.configServerId = configServerId;
         this.restTemplate = restTemplate;
         this.dc = dc;
