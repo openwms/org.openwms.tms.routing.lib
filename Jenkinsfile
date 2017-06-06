@@ -32,8 +32,7 @@ node {
       }
     }
     stage('\u27A1 Sonar') {
-      sh "'${mvnHome}/bin/mvn' clean org.jacoco:jacoco-maven-plugin:prepare-agent verify -Dci.buildNumber=${BUILD_NUMBER} -Ddocumentation.dir=${WORKSPACE}/target -Pjenkins"
-      sh "'${mvnHome}/bin/mvn' sonar:sonar -Pjenkins"
+      sh "'${mvnHome}/bin/mvn' clean org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar -Djacoco.propertyName=jacocoArgLine -Pjenkins"
     }
   } finally {
     junit allowEmptyResults: true, testResults: '**/target/surefire-reports/TEST-*.xml'
