@@ -69,7 +69,7 @@ class RequestMessageController {
     /**
      * Takes the passed message, and hands over to the service.
      */
-    @PostMapping("/v1/req")
+    @PostMapping("/req")
     @Transactional
     public void handleREQ(@RequestBody RequestVO req) {
 

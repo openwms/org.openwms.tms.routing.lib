@@ -21,9 +21,6 @@
  */
 package org.openwms.common.comm.sysu;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.openwms.common.FetchLocationGroupByName;
 import org.openwms.common.LocationGroupVO;
 import org.openwms.tms.FetchStartedTransportOrder;
@@ -34,6 +31,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A SystemUpdateMessageController.
@@ -52,7 +52,7 @@ class SystemUpdateMessageController {
     @Autowired
     private ProgramExecutor executor;
 
-    @PostMapping("/v1/sysu")
+    @PostMapping("/sysu")
     public void handleSYSU(@RequestBody SystemUpdateVO sysu) {
 
         LocationGroupVO locationGroup = fetchLocationGroupByName.apply(sysu.locationGroupName);
