@@ -8,6 +8,8 @@ spring:
       discovery:
         enabled: true
         service-id: openwms-config
+      username: user # need to be overridden in the cloud environment props!
+      password: sa # need to be overridden in the cloud environment props!
   h2:
     console:
       enabled: true
@@ -19,16 +21,14 @@ spring:
       ddl-auto: create-drop
 owms:
   eureka:
-    # need to be overridden in the cloud environment props!
-    url: http://user:sa@localhost:8761
+    url: http://user:sa@localhost:8761 # need to be overridden in the cloud environment props!
 
 server:
   port: ${PORT:8130}
 
 security:
   user:
-    # need to be overridden in the cloud environment props!
-    password: sa
+    password: sa # need to be overridden in the cloud environment props!
 
 eureka:
   client:
