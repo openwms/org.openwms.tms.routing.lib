@@ -27,11 +27,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
- * A ActivitiExecutor.
+ * A ActivitiExecutor delegates to Activiti for program execution.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -42,18 +42,28 @@ class ActivitiExecutor implements ProgramExecutor {
     private final RuntimeService runtimeService;
     private final RepositoryService repositoryService;
 
+    /**
+     * Autowired constructor.
+     *
+     * @param runtimeService Required Activiti RuntimeService
+     * @param repositoryService Required Activiti RepositoryService
+     */
     ActivitiExecutor(RuntimeService runtimeService, RepositoryService repositoryService) {
         this.runtimeService = runtimeService;
         this.repositoryService = repositoryService;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public ProgramResult execute(Action program, Map<String, Object> runtimeVariables) {
-        LOGGER.debug("Executing program : {}", program);
-        Map<String, Object> variables = new HashMap<>();
-        variables.put("barcode", "");
+    public Optional<ProgramResult> execute(Action program, Map<String, Object> runtimeVariables) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Executing program : {}", program);
+        }
         String id = repositoryService.createProcessDefinitionQuery().processDefinitionKey(program.getProgramKey()).list().get(0).getId();
         runtimeService.startProcessInstanceById(id, runtimeVariables);
+        // TODO [openwms]: 07.06.17 return an result here!
         return null;
     }
 }

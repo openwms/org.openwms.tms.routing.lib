@@ -21,8 +21,6 @@
  */
 package org.openwms.common.comm.req;
 
-import java.util.HashMap;
-
 import org.ameba.exception.NotFoundException;
 import org.openwms.common.FetchLocationByCoord;
 import org.openwms.common.FetchLocationGroupByName;
@@ -41,6 +39,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * A RequestMessageController is the API of the routing service component.
@@ -97,7 +98,7 @@ class RequestMessageController {
         } catch (NotFoundException nfe) {
             route = Route.NO_ROUTE;
         }
-        ProgramResult result = executor.execute(matrix.findBy("REQ_", route, location, locationGroup), new HashMap<>(0));
+        Optional<ProgramResult> result = executor.execute(matrix.findBy("REQ_", route, location, locationGroup), new HashMap<>(0));
         //return new ResponseMessage.Builder()
         // .withBarcode(result.getBarcode())
         // .withActualLocation(result.getActualLocation())

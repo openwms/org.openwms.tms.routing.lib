@@ -22,13 +22,21 @@
 package org.openwms.tms.routing;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
- * A ProgramExecutor.
+ * A ProgramExecutor is responsible for the execution of material flow programs.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 public interface ProgramExecutor {
 
-    ProgramResult execute(Action program, Map<String, Object> runtimeVariables);
+    /**
+     * Execute the Action also called {@code program} with the given input parameters {@code runtimeVariables}.
+     *
+     * @param program The program to execute
+     * @param runtimeVariables A map of input values, passed to the program
+     * @return The program result
+     */
+    Optional<ProgramResult> execute(Action program, Map<String, Object> runtimeVariables);
 }
