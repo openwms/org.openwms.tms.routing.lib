@@ -39,13 +39,17 @@ eureka:
       username: user
       password: ${security.user.password}
       protocol: http
+      config-protocol: http # The protocol used to access the config server
 
 ---
 spring:
   profiles: CLOUD
   main:
     banner-mode: "OFF"
-
+  cloud:
+    config:
+      headers:
+        protocol: https
 eureka:
   instance:
     hostname: openwms-routing-service.herokuapp.com
@@ -56,3 +60,4 @@ eureka:
     homePageUrl: https://${eureka.instance.hostName}/
     metadata-map:
       protocol: https
+      config-protocol: https
