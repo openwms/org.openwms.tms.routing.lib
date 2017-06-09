@@ -19,6 +19,8 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: create-drop
+  activiti:
+    process-definition-location-prefix: config:/processes/
 owms:
   eureka:
     url: http://user:sa@localhost:8761 # need to be overridden in the cloud environment props!
@@ -40,7 +42,6 @@ eureka:
       password: ${security.user.password}
       protocol: http
       config-protocol: http # The protocol used to access the config server
-
 ---
 spring:
   profiles: CLOUD

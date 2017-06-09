@@ -21,12 +21,15 @@
  */
 package org.openwms;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 
@@ -40,20 +43,25 @@ import static org.openwms.SecurityUtils.createHeaders;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
+@Primary
+@Component
 public class ConfigServerResourcePatternResolver extends PathMatchingResourcePatternResolver {
 
     public static final String CONFIG_URL_PREFIX = "config:";
-    private final RestTemplate restTemplate;
-    private final String configServerId;
-    private final String configServerProtocol;
-    private final String configServerUsername;
-    private final String configServerPassword;
+    private  RestTemplate restTemplate;
+    private  String configServerId;
+    private  String configServerProtocol;
+    private  String configServerUsername;
+    private  String configServerPassword;
 
-    public ConfigServerResourcePatternResolver(RestTemplate restTemplate,
+    ConfigServerResourcePatternResolver(){}
+
+    public ConfigServerResourcePatternResolver(@Qualifier("aLoadBalanced") RestTemplate restTemplate,
                                                @Value("${spring.cloud.config.discovery.service-id}") String configServerId,
                                                @Value("${spring.cloud.config.headers.protocol:http}") String configServerProtocol,
                                                @Value("${spring.cloud.config.username}") String configServerUsername,
-                                               @Value("${spring.cloud.config.password}") String configServerPassword) {
+                                               @Value("${spring.cloud.config.password}") String configServerPassword
+                                               ) {
         this.restTemplate = restTemplate;
         this.configServerId = configServerId;
         this.configServerProtocol = configServerProtocol;
@@ -71,9 +79,10 @@ public class ConfigServerResourcePatternResolver extends PathMatchingResourcePat
     }
 
     private Optional<Resource> resolveConfiguredValue(String locationPattern) {
+        String path = locationPattern.substring(locationPattern.indexOf(":")+1, locationPattern.length());
         ResponseEntity<Resource> exchange =
                 restTemplate.exchange(
-                        format("%s://%s/%s/%s/%s", configServerProtocol, configServerId, locationPattern, "default", "master"),
+                        format("%s://%s/%s/%s/%s", configServerProtocol, configServerId, path, "default", "master"),
                         HttpMethod.GET,
                         new HttpEntity<Resource>(createHeaders(configServerUsername, configServerPassword)),
                         Resource.class
