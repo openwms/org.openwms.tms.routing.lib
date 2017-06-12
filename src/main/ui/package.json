@@ -1,0 +1,20 @@
+{
+  "name": "tms-routing",
+  "version": "1.0.0",
+  "description": "An UI to manage TMS Routing decisions",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config config/webpack.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GPL2",
+  "dependencies": {
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  },
+  "devDependencies": {
+    "babel-loader": "^7.0.0",
+    "webpack": "^2.6.1"
+  }
+}
