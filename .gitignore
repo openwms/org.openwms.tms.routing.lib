@@ -1,6 +1,7 @@
 # Directories #
 /build/
 /bin/
+dist
 target/
 **/${project.build.directory}/
 /null/
@@ -23,7 +24,7 @@ libs/
 *.ear
 *.db
 rebel.xml
-
+package-lock.json
 *.versionsBackup
 
 ######################

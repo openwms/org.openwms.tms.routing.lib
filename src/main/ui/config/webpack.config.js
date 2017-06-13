@@ -5,12 +5,9 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.jsx?$/,
-                use: [
-                    {
-                        loader: 'babel-loader'
-                    }
-                ]
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: ['babel-loader'],
             }
         ]
     },
@@ -20,6 +17,6 @@ module.exports = {
     ],
 
     output: {
-        filename: 'app.js',
+        filename: './dist/app.js',
     }
 };
