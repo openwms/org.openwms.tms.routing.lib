@@ -24,6 +24,7 @@ class RouteList extends React.Component {
                         <th>Target Location</th>
                         <th>Target Location Group</th>
                         <th>Enabled</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 {routes.map(route => <RouteListItem value={route} />)}
