@@ -7,7 +7,7 @@ class RouteListItem extends React.Component {
 
     render() {
         return (
-            <tr>
+            <tr style={{color: this.props.value.enabled ? '' : '#ccc'}}>
                 <td>{this.props.value.name}</td>
                 <td>{this.props.value.description}</td>
                 <td>{this.props.value.sourceLocation}</td>

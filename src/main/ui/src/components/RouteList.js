@@ -26,7 +26,6 @@ class RouteList extends React.Component {
                         <th>Source Location Group</th>
                         <th>Target Location</th>
                         <th>Target Location Group</th>
-                        <th>Enabled</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
