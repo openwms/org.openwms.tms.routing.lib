@@ -16,8 +16,8 @@ class RouteListItem extends React.Component {
                 <td>{this.props.value.targetLocationGroupName}</td>
                 <td>
                     <button type="button" className="btn btn-default"><span className="glyphicon glyphicon-pencil"></span></button>
-                    <button type="button" className="btn btn-default"><span className="glyphicon glyphicon-remove"></span></button>
-                    <button type="button" className="btn btn-default" alt={this.props.value.enabled ? 'Disable' : 'Enable'}><span className={this.props.value.enabled ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}></span></button>
+                    <button type="button" className="btn btn-default" onClick={this.props.onDelete}><span className="glyphicon glyphicon-remove"></span></button>
+                    <button type="button" className="btn btn-default"><span className={this.props.value.enabled ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}></span></button>
                 </td>
             </tr>
         );
@@ -26,6 +26,7 @@ class RouteListItem extends React.Component {
 
 RouteListItem.propTypes = {
     value: PropTypes.object,
+    onDelete: PropTypes.func.isRequired,
 };
 
 export default RouteListItem;

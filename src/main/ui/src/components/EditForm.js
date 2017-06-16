@@ -8,11 +8,42 @@ class EditForm extends React.Component {
         super()
 
         this.state = {
-            obj: {},
+            obj: {
+                name: '',
+                description: '',
+                sourceLocationGroup: '',
+                targetLocationGroup: '',
+                enabled: true,
+                sourceLocation: '',
+                targetLocation: '',
+            },
         }
     }
 
+    handleSave(event) {
+        this.props.onSave(this.state.obj);
+    }
+
+    handleCancel(event) {
+        this.props.onBack();
+    }
+
+    handleChangeName(event) {
+//        const route = this.state.obj
+//        route.name = event.target.value
+        this.setState({ obj: Object.assign(this.state.obj, {name:event.target.value}) })
+    }
+
+    handleChangeDescription(event) {
+        this.setState({ obj: Object.assign(this.state.obj, {description:event.target.value}) })
+    }
+
+    handleChangeState(event) {
+        this.setState({ obj: Object.assign(this.state.obj, {enabled:event.target.value}) })
+    }
+
     render() {
+        const { name, description, enabled } = this.state.obj;
         return (
             <div className='row'>
                 <div className='row'>
@@ -21,8 +52,8 @@ class EditForm extends React.Component {
                             <h1>
                             <div className="col-md-10">Create Route</div>
                             <div className="col-md-2">
-                                <button className="btn btn-default" onClick={this.props.onBack}><span className="glyphicon glyphicon-trash"></span></button>
-                                <button className="btn btn-default" onClick={this.props.onSave}><span className="glyphicon glyphicon-ok"></span></button>
+                                <button className="btn btn-default" onClick={this.handleCancel.bind(this)}><span className="glyphicon glyphicon-trash"></span></button>
+                                <button className="btn btn-default" onClick={this.handleSave.bind(this)}><span className="glyphicon glyphicon-ok"></span></button>
                             </div>
                             </h1>
                         </div>
@@ -32,16 +63,16 @@ class EditForm extends React.Component {
                 <form className="form-horizontal">
                     <div className="container">
                         <div className="form-group">
-                            <label htmlFor="routeId-txt" className="col-xs-2 col-form-label">Route ID</label>
+                            <label htmlFor="name-txt" className="col-xs-2 col-form-label">Route ID</label>
                             <div className="col-xs-10">
-                                <input className="form-control" type="text" id="routeId-txt" />
+                                <input className="form-control" type="text" id="name-txt" value={name} onChange={this.handleChangeName.bind(this)} />
                             </div>
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="description-txt" className="col-xs-2 col-form-label">Description</label>
                             <div className="col-xs-10">
-                                <textarea className="form-control" id="description-txt" rows="3"/>
+                                <textarea className="form-control" id="description-txt" rows="3" value={description} onChange={this.handleChangeDescription.bind(this)} />
                             </div>
                         </div>
 
@@ -113,7 +144,7 @@ class EditForm extends React.Component {
                             <label className="col-xs-2 col-form-label"></label>
                             <div className="col-xs-10">
                                 <div className="form-check">
-                                    <button className={this.props.value.enable ? 'btn btn-success' : 'btn btn-danger'} type="button">{this.props.value.enable ? 'Enabled' : 'Disabled'}</button>
+                                    <button className={enabled ? 'btn btn-success' : 'btn btn-danger'} type="button" onClick={this.handleChangeState.bind(this)}>{enabled ? 'Enabled' : 'Disabled'}</button>
                                 </div>
                             </div>
                         </div>

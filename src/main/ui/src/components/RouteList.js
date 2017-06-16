@@ -1,23 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Header from './Header';
 import RouteListItem from './RouteListItem';
 
 class RouteList extends React.Component {
 
-    handleEnableItem(event) {
+    handleEnableRoute(event) {
         console.log(event.target.value)
     }
 
+    handleDeleteRoute(route) {
+        console.dir(route)
+    }
+
     render() {
-
-        const routes = [
-            { name: "Route 1", description: "Route 1 Desc", sourceLocation: "sourceLocation", targetLocation: "targetLocation", sourceLocationGroupName: "sourceLocationGroupName", targetLocationGroupName: "targetLocationGroupName", enabled: true },
-            { name: "Route 2", description: "Route 2 Desc", sourceLocation: "sourceLocation", targetLocation: "targetLocation", sourceLocationGroupName: "sourceLocationGroupName", targetLocationGroupName: "targetLocationGroupName", enabled: true },
-            { name: "Route 3", description: "Route 3 Desc", sourceLocation: "sourceLocation", targetLocation: "targetLocation", sourceLocationGroupName: "sourceLocationGroupName", targetLocationGroupName: "targetLocationGroupName", enabled: false },
-        ];
-
         return (               
             <div>
                 <div className='row'>
@@ -45,7 +41,7 @@ class RouteList extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {routes.map(route => <RouteListItem key={route.name} value={route} onEnable={this.handleEnableItem.bind(this)}/>)}
+                            {this.props.routes.map(route => <RouteListItem key={route.name} value={route} onEnable={this.handleEnableRoute.bind(this)} onDelete={this.handleDeleteRoute.bind(this)} />)}
                         </tbody>
                     </table>
                 </div>
@@ -55,7 +51,8 @@ class RouteList extends React.Component {
 }
 
 RouteList.propTypes = {
-  onCreate: PropTypes.func.isRequired,
+    routes: PropTypes.array.isRequired,
+    onCreate: PropTypes.func.isRequired,
 }
 
 export default RouteList;
