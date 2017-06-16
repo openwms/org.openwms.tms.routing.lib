@@ -7,8 +7,8 @@ class ToolBar extends React.Component {
 
     render() {
         return (
-        <div>
-            <Button value='Create' onClick={this.props.onCreate.bind(this)}/>
+        <div className="container">
+            <button className="btn btn-default" onClick={this.props.onCreate.bind(this)}>{this.props.createMode ? 'Back' : 'Create'}</button>
         </div>);
     }
 }

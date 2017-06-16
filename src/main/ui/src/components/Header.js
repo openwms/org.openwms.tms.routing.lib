@@ -3,7 +3,7 @@ import React from 'react';
 class Header extends React.Component {
 
     render() {
-        return <div><h1>Route Management</h1></div>;
+        return <h1>Routes</h1>;
     }
 }
 

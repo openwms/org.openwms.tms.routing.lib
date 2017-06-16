@@ -1,8 +1,6 @@
 import React from 'react';
 
 import EditForm from './EditForm';
-import Header from './Header';
-import ToolBar from './ToolBar';
 import RouteList from './RouteList';
 
 class App extends React.Component {
@@ -12,6 +10,7 @@ class App extends React.Component {
 
         this.state = {
             editMode: false,
+            current: {},
         }
     }
 
@@ -22,9 +21,7 @@ class App extends React.Component {
     render() {
         return (
             <div className='container'>
-                <div className='row'><Header /></div>
-                <div className='row'><ToolBar onCreate={this.handleCreate.bind(this)} /></div>
-                {this.state.editMode ? <div className='row'><EditForm /></div> : <div className='row'><RouteList /></div>}
+                {this.state.editMode ? <div className='row'><EditForm value={this.state.current} onBack={this.handleCreate.bind(this)} onSave={this.handleCreate.bind(this)} /></div> : <div className='row'><RouteList onCreate={this.handleCreate.bind(this)}/></div>}
             </div>
         );
     }
