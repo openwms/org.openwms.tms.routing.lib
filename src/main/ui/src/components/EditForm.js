@@ -41,35 +41,11 @@ class EditForm extends React.Component {
     }
 
     handleChangeState(event) {
-        this.setState({ obj: Object.assign(this.state.obj, {enabled:!this.state.objenabled}) })
+        this.setState({ obj: Object.assign(this.state.obj, {enabled:!event.target.value}) })
     }
 
-    handleChangeCoord(coord, val, evt) {
-        console.log('coord'+coord)
-        console.log('event'+val)
-        if (val) {
-
-        switch (coord) {
-            case 'sArea':
-                this.setState({ obj: Object.assign(this.state.obj, {sourceLocation:event.target.value}) })
-                break;
-            case 'sAisle':
-                this.setState({ obj: Object.assign(this.state.obj, {sourceLocation:event.target.value}) })
-                break;
-            case 'sX':
-                this.setState({ obj: Object.assign(this.state.obj, {sourceLocation:event.target.value}) })
-                break;
-            case 'sY':
-                this.setState({ obj: Object.assign(this.state.obj, {sourceLocation:event.target.value}) })
-                break;
-            case 'sZ':
-                this.setState({ obj: Object.assign(this.state.obj, {sourceLocation:event.target.value}) })
-                break;
-            default:
-                console.log('Error')
-        }
-        }
-        console.log(this.state.obj.sourceLocation)
+    handleChangeCoord(coord, event) {
+ddd        this.setState({ obj: Object.assign(this.state.obj, {sourceLocation:coord}) })
     }
 
     render() {
@@ -108,21 +84,7 @@ class EditForm extends React.Component {
 
                         <div className="form-group">
                             <label htmlFor="sourceLocation-txt" className="col-xs-2 col-form-label">Source Location</label>
-                            <div className="col-xs-2">
-                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='sArea' value={} />
-                            </div>
-                            <div className="col-xs-2">
-                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='sAisle' />
-                            </div>
-                            <div className="col-xs-2">
-                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='sX' />
-                            </div>
-                            <div className="col-xs-2">
-                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='sY' />
-                            </div>
-                            <div className="col-xs-2">
-                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='sZ' />
-                            </div>
+                            <Coordinate value={sourceLocation} onChange={this.handleChangeCoord.bind(this)}/>
                         </div>
 
                         <div className="form-group">
@@ -140,21 +102,6 @@ class EditForm extends React.Component {
 
                         <div className="form-group">
                             <label htmlFor="targetLocation-txt" className="col-xs-2 col-form-label">Target Location</label>
-                            <div className="col-xs-2">
-                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='tArea' />
-                            </div>
-                            <div className="col-xs-2">
-                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='tAisle' />
-                            </div>
-                            <div className="col-xs-2">
-                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='tX' />
-                            </div>
-                            <div className="col-xs-2">
-                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='tY' />
-                            </div>
-                            <div className="col-xs-2">
-                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='tZ' />
-                            </div>
                         </div>
 
                         <div className="form-group">
