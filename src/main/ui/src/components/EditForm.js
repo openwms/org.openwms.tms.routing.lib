@@ -2,6 +2,8 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
+import Coordinate from './Coordinate';
+
 class EditForm extends React.Component {
 
     constructor() {
@@ -39,11 +41,39 @@ class EditForm extends React.Component {
     }
 
     handleChangeState(event) {
-        this.setState({ obj: Object.assign(this.state.obj, {enabled:event.target.value}) })
+        this.setState({ obj: Object.assign(this.state.obj, {enabled:!this.state.objenabled}) })
+    }
+
+    handleChangeCoord(coord, val, evt) {
+        console.log('coord'+coord)
+        console.log('event'+val)
+        if (val) {
+
+        switch (coord) {
+            case 'sArea':
+                this.setState({ obj: Object.assign(this.state.obj, {sourceLocation:event.target.value}) })
+                break;
+            case 'sAisle':
+                this.setState({ obj: Object.assign(this.state.obj, {sourceLocation:event.target.value}) })
+                break;
+            case 'sX':
+                this.setState({ obj: Object.assign(this.state.obj, {sourceLocation:event.target.value}) })
+                break;
+            case 'sY':
+                this.setState({ obj: Object.assign(this.state.obj, {sourceLocation:event.target.value}) })
+                break;
+            case 'sZ':
+                this.setState({ obj: Object.assign(this.state.obj, {sourceLocation:event.target.value}) })
+                break;
+            default:
+                console.log('Error')
+        }
+        }
+        console.log(this.state.obj.sourceLocation)
     }
 
     render() {
-        const { name, description, enabled } = this.state.obj;
+        const { name, description, sourceLocationGroup, sourceLocation, targetLocationGroup, targetLocation, enabled } = this.state.obj;
         return (
             <div className='row'>
                 <div className='row'>
@@ -79,19 +109,19 @@ class EditForm extends React.Component {
                         <div className="form-group">
                             <label htmlFor="sourceLocation-txt" className="col-xs-2 col-form-label">Source Location</label>
                             <div className="col-xs-2">
-                                <input className="form-control" type="text" id="sourceLocationArea-txt"/>
+                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='sArea' value={} />
                             </div>
                             <div className="col-xs-2">
-                                <input className="form-control" type="text" id="sourceLocationAisle-txt"/>
+                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='sAisle' />
                             </div>
                             <div className="col-xs-2">
-                                <input className="form-control" type="text" id="sourceLocationX-txt"/>
+                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='sX' />
                             </div>
                             <div className="col-xs-2">
-                                <input className="form-control" type="text" id="sourceLocationX-txt"/>
+                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='sY' />
                             </div>
                             <div className="col-xs-2">
-                                <input className="form-control" type="text" id="sourceLocationZ-txt"/>
+                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='sZ' />
                             </div>
                         </div>
 
@@ -111,19 +141,19 @@ class EditForm extends React.Component {
                         <div className="form-group">
                             <label htmlFor="targetLocation-txt" className="col-xs-2 col-form-label">Target Location</label>
                             <div className="col-xs-2">
-                                <input className="form-control" type="text" id="targetLocationArea-txt"/>
+                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='tArea' />
                             </div>
                             <div className="col-xs-2">
-                                <input className="form-control" type="text" id="targetLocationAisle-txt"/>
+                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='tAisle' />
                             </div>
                             <div className="col-xs-2">
-                                <input className="form-control" type="text" id="targetLocationX-txt"/>
+                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='tX' />
                             </div>
                             <div className="col-xs-2">
-                                <input className="form-control" type="text" id="targetLocationX-txt"/>
+                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='tY' />
                             </div>
                             <div className="col-xs-2">
-                                <input className="form-control" type="text" id="targetLocationZ-txt"/>
+                                <Coordinate onChange={this.handleChangeCoord.bind(this)} key='tZ' />
                             </div>
                         </div>
 

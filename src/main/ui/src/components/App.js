@@ -38,7 +38,7 @@ class App extends React.Component {
     }
 
     handleSaveNew(route) {
-        console.log('Add route: ' + route.name)
+        console.dir('Add route: ' + route)
         const routeArr = this.state.routes.concat(route);
         this.setState(
             {
