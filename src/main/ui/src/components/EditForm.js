@@ -66,9 +66,9 @@ class EditForm extends React.Component {
                     <div className="container">
                         <div className="row">
                             <h1>
-                            <div className="col-md-10">Create Route</div>
+                            <div className="col-md-10">{this.props.mode == 'create' ? 'Create Route' : 'Edit Route'}</div>
                             <div className="text-right col-md-2">
-                                <button className="btn btn-default" onClick={this.handleCancel.bind(this)}><span className="glyphicon glyphicon-trash"></span></button>
+                                <button className="btn btn-default" onClick={this.handleCancel.bind(this)}><span className='glyphicon glyphicon-repeat'></span></button>
                                 <button className="btn btn-default" onClick={this.handleSave.bind(this)}><span className="glyphicon glyphicon-ok"></span></button>
                             </div>
                             </h1>
@@ -123,6 +123,7 @@ class EditForm extends React.Component {
 
 EditForm.propTypes = {
   value: PropTypes.object.isRequired,
+  mode: PropTypes.string.isRequired,
   onBack: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
 }

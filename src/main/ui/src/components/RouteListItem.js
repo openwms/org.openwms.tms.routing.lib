@@ -24,7 +24,7 @@ class RouteListItem extends React.Component {
                 <td>{this.props.value.targetLocationGroupName}</td>
                 <td className="text-right">
                     <button type="button" className="btn btn-default" onClick={this.handleModify.bind(this)}><span className="glyphicon glyphicon-pencil"></span></button>
-                    <button type="button" className="btn btn-default" onClick={this.handleDelete.bind(this)}><span className="glyphicon glyphicon-remove"></span></button>
+                    <button type="button" className="btn btn-default" onClick={this.handleDelete.bind(this)}><span className="glyphicon glyphicon-trash"></span></button>
                     <button type="button" className="btn btn-default" onClick={this.props.onEnable}><span className={this.props.value.enabled ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}></span></button>
                 </td>
             </tr>

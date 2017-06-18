@@ -9,7 +9,7 @@ class App extends React.Component {
         super()
 
         this.state = {
-            editMode: false,
+            mode: 'list',
             current: {},
             routes: [
                 { name: "Route 1", description: "Route 1 Desc", sourceLocation: "EXT_/0000/0000/0000/0000", targetLocation: "FG__/0001/0000/0000/0000", sourceLocationGroupName: "", targetLocationGroupName: "FGAISLE1", enabled: true },
@@ -20,7 +20,7 @@ class App extends React.Component {
     }
 
     handleCreateRoute(route) {
-        this.setState({editMode: true})
+        this.setState({mode: 'create'})
     }
 
     handleDeleteRoute(routeName) {
@@ -34,13 +34,13 @@ class App extends React.Component {
         const route = this.state.routes.filter(function(r) {return r.name == routeName});
         this.setState({
             current: route[0],
-            editMode: true
+            mode: 'edit'
         })
     }
 
     handleCancel() {
         this.setState({
-                editMode: false,
+                mode: 'list',
                 current: {},
             }
         )
@@ -51,33 +51,50 @@ class App extends React.Component {
         const routeArr = this.state.routes.concat(route);
         this.setState(
             {
-                editMode: false,
+                mode: 'list',
                 routes: routeArr,
             }
         )
     }
 
     render() {
-        return (
-            <div className='container'>
-                {this.state.editMode ?
-                                    <div className='row'>
-                                        <EditForm value={this.state.current}
-                                            onBack={this.handleCancel.bind(this)}
-                                            onSave={this.handleSaveNew.bind(this)}
-                                        />
-                                    </div>
-                :
-                                    <div className='row'>
-                                        <RouteList routes={this.state.routes}
-                                            onCreate={this.handleCreateRoute.bind(this)}
-                                            onDelete={this.handleDeleteRoute.bind(this)}
-                                            onModify={this.handleModifyRoute.bind(this)}
-                                            />
-                                    </div>
-                }
-            </div>
-        );
+        if (this.state.mode == 'create') {
+            return (
+                <div className='container'>
+                    <div className='row'>
+                        <EditForm mode={this.state.mode} value={this.state.current}
+                            onBack={this.handleCancel.bind(this)}
+                            onSave={this.handleSaveNew.bind(this)}
+                        />
+                    </div>
+                </div>
+            );
+        }
+        if (this.state.mode == 'edit') {
+            return (
+                <div className='container'>
+                    <div className='row'>
+                        <EditForm mode={this.state.mode} value={this.state.current}
+                            onBack={this.handleCancel.bind(this)}
+                            onSave={this.handleSaveNew.bind(this)}
+                        />
+                    </div>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className='container'>
+                    <div className='row'>
+                        <RouteList routes={this.state.routes}
+                            onCreate={this.handleCreateRoute.bind(this)}
+                            onDelete={this.handleDeleteRoute.bind(this)}
+                            onModify={this.handleModifyRoute.bind(this)}
+                            />
+                    </div>
+                </div>
+            );
+        }
     }
 }
 
