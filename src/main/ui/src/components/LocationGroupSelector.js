@@ -9,8 +9,7 @@ class LocationGroupSelector extends React.Component {
     }
 
     handleChange(event) {
-        console.log('value is '+event.target.value)
-        this.val = event.target.value
+        this.val = event.target.value == '--' ? '' : event.target.value
         this.props.onChange(this.val)
     }
 
@@ -21,7 +20,7 @@ class LocationGroupSelector extends React.Component {
         return (
             <div className={this.props.elementsClassName}>
                 <select value={this.val} onChange={this.handleChange.bind(this)} className="form-control" id={this.props.id} >
-                    <option value=""></option>
+                    <option value="--">--</option>
                     <option value="ZILE">ZILE</option>
                     <option value="FGTIPP">FGTIPP</option>
                     <option value="FGPALETT">FGPALETT</option>

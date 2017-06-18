@@ -5,12 +5,16 @@ import RouteListItem from './RouteListItem';
 
 class RouteList extends React.Component {
 
+    handleModifyRoute(routeName, event) {
+        this.props.onModify(routeName, event)
+    }
+
     handleEnableRoute(event) {
         console.log(event.target.value)
     }
 
-    handleDeleteRoute(route) {
-        console.dir(route)
+    handleDeleteRoute(routeName, event) {
+        this.props.onDelete(routeName)
     }
 
     render() {
@@ -21,7 +25,7 @@ class RouteList extends React.Component {
                         <div className="row">
                             <h1>
                             <div className="col-md-10">Routes</div>
-                            <div className="col-md-2"><button className="btn btn-default" onClick={this.props.onCreate}><span className="glyphicon glyphicon-plus"></span></button></div>
+                            <div className="text-right col-md-2"><button className="btn btn-default" onClick={this.props.onCreate}><span className="glyphicon glyphicon-plus"></span></button></div>
                             </h1>
                         </div>
                     </div>                
@@ -41,7 +45,13 @@ class RouteList extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.props.routes.map(route => <RouteListItem key={route.name} value={route} onEnable={this.handleEnableRoute.bind(this)} onDelete={this.handleDeleteRoute.bind(this)} />)}
+                            {this.props.routes.map(route =>
+                                <RouteListItem key={route.name} value={route}
+                                    onModify={this.handleModifyRoute.bind(this)}
+                                    onEnable={this.handleEnableRoute.bind(this)}
+                                    onDelete={this.handleDeleteRoute.bind(this)} />
+                                )
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -53,6 +63,8 @@ class RouteList extends React.Component {
 RouteList.propTypes = {
     routes: PropTypes.array.isRequired,
     onCreate: PropTypes.func.isRequired,
+    onModify: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
 }
 
 export default RouteList;

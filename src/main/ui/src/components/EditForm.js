@@ -59,7 +59,7 @@ class EditForm extends React.Component {
     }
 
     render() {
-        const { name, description, sourceLocationGroupName, sourceLocation, targetLocationGroupName, targetLocation, enabled } = this.state.obj;
+        const { name, description, sourceLocationGroupName, sourceLocation, targetLocationGroupName, targetLocation, enabled } = this.props.value;
         return (
             <div className='row'>
                 <div className='row'>
@@ -67,7 +67,7 @@ class EditForm extends React.Component {
                         <div className="row">
                             <h1>
                             <div className="col-md-10">Create Route</div>
-                            <div className="col-md-2">
+                            <div className="text-right col-md-2">
                                 <button className="btn btn-default" onClick={this.handleCancel.bind(this)}><span className="glyphicon glyphicon-trash"></span></button>
                                 <button className="btn btn-default" onClick={this.handleSave.bind(this)}><span className="glyphicon glyphicon-ok"></span></button>
                             </div>
@@ -84,34 +84,28 @@ class EditForm extends React.Component {
                                 <input className="form-control" type="text" id="name-txt" value={name} onChange={this.handleChangeName.bind(this)} />
                             </div>
                         </div>
-
                         <div className="form-group">
                             <label htmlFor="description-txt" className="col-xs-2 col-form-label">Description</label>
                             <div className="col-xs-10">
                                 <textarea className="form-control" id="description-txt" rows="3" value={description} onChange={this.handleChangeDescription.bind(this)} />
                             </div>
                         </div>
-
                         <div className="form-group">
                             <label htmlFor="sourceLocation-txt" className="col-xs-2 col-form-label">Source Location</label>
                             <Coordinate value={sourceLocation} onChange={this.handleChangeSourceLocation.bind(this)} elementsClassName="col-xs-2" />
                         </div>
-
                         <div className="form-group">
                             <label htmlFor="sourceLocationGroup-txt" className="col-xs-2 col-form-label">Source Location Group</label>
                             <LocationGroupSelector value={sourceLocationGroupName} onChange={this.handleChangeSourceLocationGroupName.bind(this)} elementsClassName="col-xs-10" />
                         </div>
-
                         <div className="form-group">
                             <label htmlFor="targetLocation-txt" className="col-xs-2 col-form-label">Target Location</label>
                             <Coordinate value={targetLocation} onChange={this.handleChangeTargetLocation.bind(this)} elementsClassName="col-xs-2" />
                         </div>
-
                         <div className="form-group">
                             <label htmlFor="targetLocationGroup-txt" className="col-xs-2 col-form-label">Target Location Group</label>
                             <LocationGroupSelector value={targetLocationGroupName} onChange={this.handleChangeTargetLocationGroupName.bind(this)} elementsClassName="col-xs-10" />
                         </div>
-
                         <div className="form-group">
                             <label className="col-xs-2 col-form-label"></label>
                             <div className="col-xs-10">
