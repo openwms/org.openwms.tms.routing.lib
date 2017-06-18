@@ -31,8 +31,6 @@ class EditForm extends React.Component {
     }
 
     handleChangeName(event) {
-//        const route = this.state.obj
-//        route.name = event.target.value
         this.setState({ obj: Object.assign(this.state.obj, {name:event.target.value}) })
     }
 
@@ -40,12 +38,16 @@ class EditForm extends React.Component {
         this.setState({ obj: Object.assign(this.state.obj, {description:event.target.value}) })
     }
 
-    handleChangeState(event) {
-        this.setState({ obj: Object.assign(this.state.obj, {enabled:!event.target.value}) })
+    handleChangeSourceLocation(coord, event) {
+        this.setState({ obj: Object.assign(this.state.obj, {sourceLocation:coord}) })
     }
 
-    handleChangeCoord(coord, event) {
-ddd        this.setState({ obj: Object.assign(this.state.obj, {sourceLocation:coord}) })
+    handleChangeTargetLocation(coord, event) {
+        this.setState({ obj: Object.assign(this.state.obj, {targetLocation:coord}) })
+    }
+
+    handleChangeState(event) {
+        this.setState({ obj: Object.assign(this.state.obj, {enabled:!this.state.obj.enabled}) })
     }
 
     render() {
@@ -84,7 +86,7 @@ ddd        this.setState({ obj: Object.assign(this.state.obj, {sourceLocation:co
 
                         <div className="form-group">
                             <label htmlFor="sourceLocation-txt" className="col-xs-2 col-form-label">Source Location</label>
-                            <Coordinate value={sourceLocation} onChange={this.handleChangeCoord.bind(this)}/>
+                            <Coordinate value={sourceLocation} onChange={this.handleChangeSourceLocation.bind(this)}/>
                         </div>
 
                         <div className="form-group">
@@ -102,6 +104,7 @@ ddd        this.setState({ obj: Object.assign(this.state.obj, {sourceLocation:co
 
                         <div className="form-group">
                             <label htmlFor="targetLocation-txt" className="col-xs-2 col-form-label">Target Location</label>
+                            <Coordinate value={targetLocation} onChange={this.handleChangeTargetLocation.bind(this)}/>
                         </div>
 
                         <div className="form-group">
