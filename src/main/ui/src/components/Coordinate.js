@@ -54,19 +54,19 @@ class Coordinate extends React.Component {
         }
         return (
             <div>
-                <div className="col-xs-2">
+                <div className={this.props.elementsClassName}>
                     <input className="form-control" type="text" value={this.coord.area} onChange={this.handleChange.bind(this)} alt="area" maxLength="4" />
                 </div>
-                <div className="col-xs-2">
+                <div className={this.props.elementsClassName}>
                     <input className="form-control" type="text" value={this.coord.aisle} onChange={this.handleChange.bind(this)} alt="aisle" maxLength="4" />
                 </div>
-                <div className="col-xs-2">
+                <div className={this.props.elementsClassName}>
                     <input className="form-control" type="text" value={this.coord.x} onChange={this.handleChange.bind(this)} alt="x" maxLength="4" />
                 </div>
-                <div className="col-xs-2">
+                <div className={this.props.elementsClassName}>
                     <input className="form-control" type="text" value={this.coord.y} onChange={this.handleChange.bind(this)} alt="y" maxLength="4" />
                 </div>
-                <div className="col-xs-2">
+                <div className={this.props.elementsClassName}>
                     <input className="form-control" type="text" value={this.coord.z} onChange={this.handleChange.bind(this)} alt="z" maxLength="4" />
                 </div>
             </div>
@@ -76,6 +76,7 @@ class Coordinate extends React.Component {
 
 Coordinate.propTypes = {
     value: PropTypes.string,
+    elementsClassName: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
 }
 

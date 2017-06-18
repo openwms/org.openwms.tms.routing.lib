@@ -3,18 +3,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Coordinate from './Coordinate';
+import LocationGroupSelector from './LocationGroupSelector';
 
 class EditForm extends React.Component {
 
     constructor() {
         super()
-
         this.state = {
             obj: {
                 name: '',
                 description: '',
-                sourceLocationGroup: '',
-                targetLocationGroup: '',
+                sourceLocationGroupName: '',
+                targetLocationGroupName: '',
                 enabled: true,
                 sourceLocation: '',
                 targetLocation: '',
@@ -42,8 +42,16 @@ class EditForm extends React.Component {
         this.setState({ obj: Object.assign(this.state.obj, {sourceLocation:coord}) })
     }
 
+    handleChangeSourceLocationGroupName(locationGroupName, event) {
+        this.setState({ obj: Object.assign(this.state.obj, {sourceLocationGroupName:locationGroupName}) })
+    }
+
     handleChangeTargetLocation(coord, event) {
         this.setState({ obj: Object.assign(this.state.obj, {targetLocation:coord}) })
+    }
+
+    handleChangeTargetLocationGroupName(locationGroupName, event) {
+        this.setState({ obj: Object.assign(this.state.obj, {targetLocationGroupName:locationGroupName}) })
     }
 
     handleChangeState(event) {
@@ -51,7 +59,7 @@ class EditForm extends React.Component {
     }
 
     render() {
-        const { name, description, sourceLocationGroup, sourceLocation, targetLocationGroup, targetLocation, enabled } = this.state.obj;
+        const { name, description, sourceLocationGroupName, sourceLocation, targetLocationGroupName, targetLocation, enabled } = this.state.obj;
         return (
             <div className='row'>
                 <div className='row'>
@@ -86,38 +94,22 @@ class EditForm extends React.Component {
 
                         <div className="form-group">
                             <label htmlFor="sourceLocation-txt" className="col-xs-2 col-form-label">Source Location</label>
-                            <Coordinate value={sourceLocation} onChange={this.handleChangeSourceLocation.bind(this)}/>
+                            <Coordinate value={sourceLocation} onChange={this.handleChangeSourceLocation.bind(this)} elementsClassName="col-xs-2" />
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="sourceLocationGroup-txt" className="col-xs-2 col-form-label">Source Location Group</label>
-                            <div className="col-xs-10">
-                                <select className="form-control" id="sourceLocationGroup-txt">
-                                    <option>ZILE</option>
-                                    <option>FGTIPP</option>
-                                    <option>FGPALETT</option>
-                                    <option>FGCARTON</option>
-                                    <option>FGAISLE1</option>
-                                </select>                        
-                            </div>
+                            <LocationGroupSelector value={sourceLocationGroupName} onChange={this.handleChangeSourceLocationGroupName.bind(this)} elementsClassName="col-xs-10" />
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="targetLocation-txt" className="col-xs-2 col-form-label">Target Location</label>
-                            <Coordinate value={targetLocation} onChange={this.handleChangeTargetLocation.bind(this)}/>
+                            <Coordinate value={targetLocation} onChange={this.handleChangeTargetLocation.bind(this)} elementsClassName="col-xs-2" />
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="targetLocationGroup-txt" className="col-xs-2 col-form-label">Target Location Group</label>
-                            <div className="col-xs-10">
-                                <select className="form-control" id="targetLocationGroup-txt">
-                                    <option>ZILE</option>
-                                    <option>FGTIPP</option>
-                                    <option>FGPALETT</option>
-                                    <option>FGCARTON</option>
-                                    <option>FGAISLE1</option>
-                                </select>                        
-                            </div>
+                            <LocationGroupSelector value={targetLocationGroupName} onChange={this.handleChangeTargetLocationGroupName.bind(this)} elementsClassName="col-xs-10" />
                         </div>
 
                         <div className="form-group">
