@@ -1,5 +1,6 @@
 import React from 'react';
 
+import CreateForm from './CreateForm';
 import EditForm from './EditForm';
 import RouteList from './RouteList';
 
@@ -10,7 +11,7 @@ class App extends React.Component {
 
         this.state = {
             mode: 'list',
-            current: {},
+            current: {enabled:true},
             routes: [
                 { name: "Route 1", description: "Route 1 Desc", sourceLocation: "EXT_/0000/0000/0000/0000", targetLocation: "FG__/0001/0000/0000/0000", sourceLocationGroupName: "", targetLocationGroupName: "FGAISLE1", enabled: true },
                 { name: "Route 2", description: "Route 2 Desc", sourceLocation: "FGIN/0001/0000/0000/0000", targetLocation: "", sourceLocationGroupName: "FGAISLE1", targetLocationGroupName: "ZILE", enabled: true },
@@ -47,10 +48,8 @@ class App extends React.Component {
     }
 
     handleSaveNew(route) {
-        console.dir('Add route: ' + route)
-        const routeArr = this.state.routes.concat(route);
-        this.setState(
-            {
+        const routeArr = (route && route.name) ? this.state.routes.concat(route) : this.state.routes;
+        this.setState({
                 mode: 'list',
                 routes: routeArr,
             }
@@ -62,7 +61,7 @@ class App extends React.Component {
             return (
                 <div className='container'>
                     <div className='row'>
-                        <EditForm mode={this.state.mode} value={this.state.current}
+                        <CreateForm
                             onBack={this.handleCancel.bind(this)}
                             onSave={this.handleSaveNew.bind(this)}
                         />
@@ -74,7 +73,7 @@ class App extends React.Component {
             return (
                 <div className='container'>
                     <div className='row'>
-                        <EditForm mode={this.state.mode} value={this.state.current}
+                        <EditForm value={this.state.current}
                             onBack={this.handleCancel.bind(this)}
                             onSave={this.handleSaveNew.bind(this)}
                         />

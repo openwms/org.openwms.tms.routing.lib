@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 import Coordinate from './Coordinate';
 import LocationGroupSelector from './LocationGroupSelector';
 
-class EditForm extends React.Component {
+class CreateForm extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
                 route : {
-                name: props.value.name,
+                name: '',
                 description: '',
                 sourceLocationGroupName: '',
                 targetLocationGroupName: '',
@@ -36,7 +36,6 @@ class EditForm extends React.Component {
 
     handleChangeDescription(event) {
         this.setState(Object.assign(this.state.route,{description: event.target.value}))
-//        this.setState({route : {description: event.target.value}})
     }
 
     handleChangeSourceLocation(coord, event) {
@@ -61,8 +60,7 @@ class EditForm extends React.Component {
     }
 
     render() {
-        //this.route = this.props.value;
-        const { name, description, sourceLocationGroupName, sourceLocation, targetLocationGroupName, targetLocation, enabled } = this.props.value ? this.props.value : this.state.route;
+        const { name, description, sourceLocationGroupName, sourceLocation, targetLocationGroupName, targetLocation, enabled } = this.state.route;
         return (
             <div className='row'>
                 <div className="container">
@@ -71,7 +69,7 @@ class EditForm extends React.Component {
                         <div className="text-left col-xs-1">
                             <button className="btn btn-default" onClick={this.handleCancel.bind(this)}><span className='glyphicon glyphicon-arrow-left'></span></button>
                         </div>
-                        <div className="text-center col-xs-10">{this.props.mode == 'create' ? 'Create Route' : 'Edit Route'}</div>
+                        <div className="text-center col-xs-10">Create Route</div>
                         <div className="text-right col-xs-1">
                             <button className="btn btn-default" onClick={this.handleSave.bind(this)}><span className="glyphicon glyphicon-ok"></span></button>
                         </div>
@@ -124,10 +122,9 @@ class EditForm extends React.Component {
     }
 }
 
-EditForm.propTypes = {
-  value: PropTypes.object.isRequired,
+CreateForm.propTypes = {
   onBack: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
 }
 
-export default EditForm;
+export default CreateForm;
