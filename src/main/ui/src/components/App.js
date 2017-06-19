@@ -1,5 +1,6 @@
 import React from 'react';
 
+import CreateForm from './CreateForm';
 import EditForm from './EditForm';
 import RouteList from './RouteList';
 
@@ -9,51 +10,98 @@ class App extends React.Component {
         super()
 
         this.state = {
-            editMode: false,
-            current: {},
+            mode: 'list',
+            current: {enabled:true},
             routes: [
-                { name: "Route 1", description: "Route 1 Desc", sourceLocation: "sourceLocation", targetLocation: "targetLocation", sourceLocationGroupName: "sourceLocationGroupName", targetLocationGroupName: "targetLocationGroupName", enabled: true },
-                { name: "Route 2", description: "Route 2 Desc", sourceLocation: "sourceLocation", targetLocation: "targetLocation", sourceLocationGroupName: "sourceLocationGroupName", targetLocationGroupName: "targetLocationGroupName", enabled: true },
-                { name: "Route 3", description: "Route 3 Desc", sourceLocation: "sourceLocation", targetLocation: "targetLocation", sourceLocationGroupName: "sourceLocationGroupName", targetLocationGroupName: "targetLocationGroupName", enabled: false },
+                { name: "Route 1", description: "Route 1 Desc", sourceLocation: "EXT_/0000/0000/0000/0000", targetLocation: "FG__/0001/0000/0000/0000", sourceLocationGroupName: "", targetLocationGroupName: "FGAISLE1", enabled: true },
+                { name: "Route 2", description: "Route 2 Desc", sourceLocation: "FGIN/0001/0000/0000/0000", targetLocation: "", sourceLocationGroupName: "FGAISLE1", targetLocationGroupName: "ZILE", enabled: true },
+                { name: "Route 3", description: "Route 3 Desc", sourceLocation: "FG__/TIPP/0001/0001/0000", targetLocation: "FG__/TIPP/0002/0001/0000", sourceLocationGroupName: "FGTIPP", targetLocationGroupName: "FGCARTON", enabled: false },
             ],
         }
     }
 
-    handleCreate(route) {
-        console.dir('Switch to edit form: ' + route)
-        this.setState(
-            {
-                editMode: true,
-            }
-        )
+    handleCreateRoute(route) {
+        this.setState({mode: 'create'})
+    }
+
+    handleDeleteRoute(routeName) {
+        console.log('Deleting Route with name ' + routeName)
+        const routes = this.state.routes.filter(function(r) {return r.name != routeName});
+        this.setState({routes: routes})
+    }
+
+    handleModifyRoute(routeName) {
+        console.log('Modify Route with name ' + routeName)
+        const route = this.state.routes.filter(function(r) {return r.name == routeName});
+        this.setState({
+            current: route[0],
+            mode: 'edit'
+        })
+    }
+
+    handleRouteStatusChange(routeName, status) {
+        this.setState({
+            routes: this.state.routes.map(function(r) { if (r.name == routeName) { r.enabled = status; return r } else { return r } }),
+            mode: 'list'
+        })
     }
 
     handleCancel() {
-        this.setState(
-            {
-                editMode: false,
+        this.setState({
+                mode: 'list',
                 current: {},
             }
         )
     }
 
     handleSaveNew(route) {
-        console.dir('Add route: ' + route)
-        const routeArr = this.state.routes.concat(route);
-        this.setState(
-            {
-                editMode: false,
+        const routeArr = (route && route.name) ? this.state.routes.concat(route) : this.state.routes;
+        this.setState({
+                mode: 'list',
                 routes: routeArr,
             }
         )
     }
 
     render() {
-        return (
-            <div className='container'>
-                {this.state.editMode ? <div className='row'><EditForm value={this.state.current} onBack={this.handleCancel.bind(this)} onSave={this.handleSaveNew.bind(this)} /></div> : <div className='row'><RouteList routes={this.state.routes} onCreate={this.handleCreate.bind(this)}/></div>}
-            </div>
-        );
+        if (this.state.mode == 'create') {
+            return (
+                <div className='container'>
+                    <div className='row'>
+                        <CreateForm
+                            onBack={this.handleCancel.bind(this)}
+                            onSave={this.handleSaveNew.bind(this)}
+                        />
+                    </div>
+                </div>
+            );
+        }
+        if (this.state.mode == 'edit') {
+            return (
+                <div className='container'>
+                    <div className='row'>
+                        <EditForm value={this.state.current}
+                            onBack={this.handleCancel.bind(this)}
+                            onSave={this.handleSaveNew.bind(this)}
+                        />
+                    </div>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className='container'>
+                    <div className='row'>
+                        <RouteList routes={this.state.routes}
+                            onCreate={this.handleCreateRoute.bind(this)}
+                            onDelete={this.handleDeleteRoute.bind(this)}
+                            onModify={this.handleModifyRoute.bind(this)}
+                            onChangeStatus={this.handleRouteStatusChange.bind(this)}
+                            />
+                    </div>
+                </div>
+            );
+        }
     }
 }
 
