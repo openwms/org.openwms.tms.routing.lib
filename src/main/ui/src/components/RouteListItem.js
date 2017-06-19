@@ -13,6 +13,10 @@ class RouteListItem extends React.Component {
         this.props.onModify(this.props.value.name, event)
     }
 
+    handleEnable() {
+        this.props.onEnable(this.props.value.name, !this.props.value.enabled)
+    }
+
     render() {
         return (
             <tr style={{color: this.props.value.enabled ? '' : '#ccc'}}>
@@ -25,7 +29,7 @@ class RouteListItem extends React.Component {
                 <td className="text-right">
                     <button type="button" className="btn btn-default" onClick={this.handleModify.bind(this)}><span className="glyphicon glyphicon-pencil"></span></button>
                     <button type="button" className="btn btn-default" onClick={this.handleDelete.bind(this)}><span className="glyphicon glyphicon-trash"></span></button>
-                    <button type="button" className="btn btn-default" onClick={this.props.onEnable}><span className={this.props.value.enabled ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}></span></button>
+                    <button type="button" className="btn btn-default" onClick={this.handleEnable.bind(this)}><span className={this.props.value.enabled ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}></span></button>
                 </td>
             </tr>
         );

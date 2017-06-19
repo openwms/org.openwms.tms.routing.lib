@@ -39,6 +39,13 @@ class App extends React.Component {
         })
     }
 
+    handleRouteStatusChange(routeName, status) {
+        this.setState({
+            routes: this.state.routes.map(function(r) { if (r.name == routeName) { r.enabled = status; return r } else { return r } }),
+            mode: 'list'
+        })
+    }
+
     handleCancel() {
         this.setState({
                 mode: 'list',
@@ -89,6 +96,7 @@ class App extends React.Component {
                             onCreate={this.handleCreateRoute.bind(this)}
                             onDelete={this.handleDeleteRoute.bind(this)}
                             onModify={this.handleModifyRoute.bind(this)}
+                            onChangeStatus={this.handleRouteStatusChange.bind(this)}
                             />
                     </div>
                 </div>

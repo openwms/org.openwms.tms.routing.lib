@@ -9,8 +9,8 @@ class RouteList extends React.Component {
         this.props.onModify(routeName, event)
     }
 
-    handleEnableRoute(event) {
-        console.log(event.target.value)
+    handleEnableRoute(routeName, status) {
+        this.props.onChangeStatus(routeName, status)
     }
 
     handleDeleteRoute(routeName, event) {
@@ -65,6 +65,7 @@ RouteList.propTypes = {
     onCreate: PropTypes.func.isRequired,
     onModify: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    onChangeStatus: PropTypes.func.isRequired,
 }
 
 export default RouteList;
