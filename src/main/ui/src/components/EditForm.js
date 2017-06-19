@@ -9,17 +9,7 @@ class EditForm extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-                route : {
-                name: props.value.name,
-                description: '',
-                sourceLocationGroupName: '',
-                targetLocationGroupName: '',
-                enabled: true,
-                sourceLocation: '',
-                targetLocation: '',
-            }
-        }
+        this.state = { route : this.props.value }
     }
 
     handleSave(event) {
@@ -36,7 +26,6 @@ class EditForm extends React.Component {
 
     handleChangeDescription(event) {
         this.setState(Object.assign(this.state.route,{description: event.target.value}))
-//        this.setState({route : {description: event.target.value}})
     }
 
     handleChangeSourceLocation(coord, event) {
@@ -56,13 +45,11 @@ class EditForm extends React.Component {
     }
 
     handleChangeState(event) {
-        console.log(event.target.value)
         this.setState(Object.assign(this.state.route,{enabled: (event.target.value == 'Enabled') ? false : true}))
     }
 
     render() {
-        //this.route = this.props.value;
-        const { name, description, sourceLocationGroupName, sourceLocation, targetLocationGroupName, targetLocation, enabled } = this.props.value ? this.props.value : this.state.route;
+        const { name, description, sourceLocationGroupName, sourceLocation, targetLocationGroupName, targetLocation, enabled } = this.state.route;
         return (
             <div className='row'>
                 <div className="container">
