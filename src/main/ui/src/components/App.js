@@ -26,8 +26,7 @@ class App extends React.Component {
 
     handleDeleteRoute(routeName) {
         console.log('Deleting Route with name ' + routeName)
-        const routes = this.state.routes.filter(function(r) {return r.name != routeName});
-        this.setState({routes: routes})
+        this.setState({routes: this.state.routes.filter(function(r) {return r.name != routeName})})
     }
 
     handleModifyRoute(routeName) {
