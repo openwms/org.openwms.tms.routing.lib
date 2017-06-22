@@ -21,11 +21,14 @@
  */
 package org.openwms;
 
+import org.ameba.mapping.BeanMapper;
+import org.ameba.mapping.DozerMapperImpl;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
 
@@ -37,6 +40,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 @EnableDiscoveryClient
 @EnableTransactionManagement
+@EnableJpaRepositories(basePackages = "org.openwms")
 @EntityScan(basePackages = "org.openwms")
 public class ModuleConfiguration {
 
@@ -51,6 +55,12 @@ public class ModuleConfiguration {
     @Bean
     RestTemplate simpleRestTemplate() {
         return new RestTemplate();
+    }
+
+    public
+    @Bean
+    BeanMapper beanMapper() {
+        return new DozerMapperImpl("META-INF/dozer/tms-bean-mappings.xml");
     }
 
 }

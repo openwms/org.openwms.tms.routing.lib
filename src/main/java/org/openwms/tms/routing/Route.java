@@ -80,12 +80,28 @@ public class Route extends ApplicationEntity implements Serializable {
         return description;
     }
 
+    public boolean hasSourceLocation() {
+        return sourceLocation != null;
+    }
+
     public LocationEO getSourceLocation() {
         return sourceLocation;
     }
 
+    public void setSourceLocation(LocationEO sourceLocation) {
+        this.sourceLocation = sourceLocation;
+    }
+
+    public boolean hasTargetLocation() {
+        return targetLocation != null;
+    }
+
     public LocationEO getTargetLocation() {
         return targetLocation;
+    }
+
+    public void setTargetLocation(LocationEO targetLocation) {
+        this.targetLocation = targetLocation;
     }
 
     public String getSourceLocationGroupName() {
@@ -101,7 +117,8 @@ public class Route extends ApplicationEntity implements Serializable {
     }
 
     public static Route of(String routeId) {
-        if (routeId == null || routeId.isEmpty()) return DEF_ROUTE;
+        if (routeId == null || routeId.isEmpty())
+            return DEF_ROUTE;
         return new Route(routeId);
     }
 
@@ -112,8 +129,10 @@ public class Route extends ApplicationEntity implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Route route = (Route) o;
         return Objects.equals(routeId, route.routeId);
     }

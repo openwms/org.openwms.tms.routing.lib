@@ -9,12 +9,12 @@ class RouteList extends React.Component {
         this.props.onModify(routeName, event)
     }
 
-    handleEnableRoute(routeName, status) {
-        this.props.onChangeStatus(routeName, status)
+    handleEnableRoute(key, status) {
+        this.props.onChangeStatus(key, status)
     }
 
-    handleDeleteRoute(routeName, event) {
-        this.props.onDelete(routeName)
+    handleDeleteRoute(key, event) {
+        this.props.onDelete(key)
     }
 
     render() {
@@ -45,7 +45,7 @@ class RouteList extends React.Component {
                             </thead>
                             <tbody>
                                 {this.props.routes.map(route =>
-                                    <RouteListItem key={route.persistentKey} value={route}
+                                    <RouteListItem key={route.key} value={route}
                                         onModify={this.handleModifyRoute.bind(this)}
                                         onEnable={this.handleEnableRoute.bind(this)}
                                         onDelete={this.handleDeleteRoute.bind(this)} />

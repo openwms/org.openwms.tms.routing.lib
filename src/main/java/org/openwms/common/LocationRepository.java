@@ -23,6 +23,8 @@ package org.openwms.common;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 /**
  * A LocationRepository.
  *
@@ -30,4 +32,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface LocationRepository extends JpaRepository<LocationEO, Long> {
 
+    Optional<LocationEO> findByLocationId(String locationId);
 }

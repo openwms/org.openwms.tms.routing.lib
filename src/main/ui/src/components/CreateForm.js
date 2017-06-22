@@ -16,8 +16,6 @@ class CreateForm extends React.Component {
                 sourceLocationGroupName: '',
                 targetLocationGroupName: '',
                 enabled: true,
-                sourceLocation: '',
-                targetLocation: '',
             }
         }
     }

@@ -6,21 +6,21 @@ import Button from './Button';
 class RouteListItem extends React.Component {
 
     handleDelete(event) {
-        this.props.onDelete(this.props.value.routeId, event)
+        this.props.onDelete(this.props.value.key, event)
     }
 
     handleModify(event) {
-        this.props.onModify(this.props.value.routeId, event)
+        this.props.onModify(this.props.value.name, event)
     }
 
     handleEnable() {
-        this.props.onEnable(this.props.value.routeId, !this.props.value.enabled)
+        this.props.onEnable(this.props.value.key, !this.props.value.enabled)
     }
 
     render() {
         return (
             <tr style={{color: this.props.value.enabled ? '' : '#ccc'}}>
-                <td>{this.props.value.routeId}</td>
+                <td>{this.props.value.name}</td>
                 <td>{this.props.value.description}</td>
                 <td>{this.props.value.sourceLocation}</td>
                 <td>{this.props.value.sourceLocationGroupName}</td>
