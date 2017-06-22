@@ -21,6 +21,9 @@
  */
 package org.openwms.tms.routing;
 
+import org.ameba.integration.jpa.ApplicationEntity;
+import org.openwms.common.LocationEO;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -29,9 +32,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
-
-import org.ameba.integration.jpa.ApplicationEntity;
-import org.openwms.common.LocationEO;
 
 /**
  * A Route.
@@ -74,6 +74,30 @@ public class Route extends ApplicationEntity implements Serializable {
 
     public String getRouteId() {
         return routeId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LocationEO getSourceLocation() {
+        return sourceLocation;
+    }
+
+    public LocationEO getTargetLocation() {
+        return targetLocation;
+    }
+
+    public String getSourceLocationGroupName() {
+        return sourceLocationGroupName;
+    }
+
+    public String getTargetLocationGroupName() {
+        return targetLocationGroupName;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
     }
 
     public static Route of(String routeId) {

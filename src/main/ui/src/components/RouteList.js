@@ -45,7 +45,7 @@ class RouteList extends React.Component {
                             </thead>
                             <tbody>
                                 {this.props.routes.map(route =>
-                                    <RouteListItem key={route.name} value={route}
+                                    <RouteListItem key={route.persistentKey} value={route}
                                         onModify={this.handleModifyRoute.bind(this)}
                                         onEnable={this.handleEnableRoute.bind(this)}
                                         onDelete={this.handleDeleteRoute.bind(this)} />
