@@ -21,6 +21,9 @@
  */
 package org.openwms.tms.routing;
 
+import org.ameba.integration.jpa.ApplicationEntity;
+import org.openwms.common.LocationEO;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -29,9 +32,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
-
-import org.ameba.integration.jpa.ApplicationEntity;
-import org.openwms.common.LocationEO;
 
 /**
  * A Route.
@@ -76,8 +76,49 @@ public class Route extends ApplicationEntity implements Serializable {
         return routeId;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean hasSourceLocation() {
+        return sourceLocation != null;
+    }
+
+    public LocationEO getSourceLocation() {
+        return sourceLocation;
+    }
+
+    public void setSourceLocation(LocationEO sourceLocation) {
+        this.sourceLocation = sourceLocation;
+    }
+
+    public boolean hasTargetLocation() {
+        return targetLocation != null;
+    }
+
+    public LocationEO getTargetLocation() {
+        return targetLocation;
+    }
+
+    public void setTargetLocation(LocationEO targetLocation) {
+        this.targetLocation = targetLocation;
+    }
+
+    public String getSourceLocationGroupName() {
+        return sourceLocationGroupName;
+    }
+
+    public String getTargetLocationGroupName() {
+        return targetLocationGroupName;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
     public static Route of(String routeId) {
-        if (routeId == null || routeId.isEmpty()) return DEF_ROUTE;
+        if (routeId == null || routeId.isEmpty())
+            return DEF_ROUTE;
         return new Route(routeId);
     }
 
@@ -88,8 +129,10 @@ public class Route extends ApplicationEntity implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Route route = (Route) o;
         return Objects.equals(routeId, route.routeId);
     }

@@ -23,6 +23,8 @@ package org.openwms.tms.routing;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 /**
  * A RouteRepository.
  *
@@ -30,4 +32,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 interface RouteRepository extends JpaRepository<Route, Long> {
 
+    Optional<Route> findByPKey(String pKey);
 }

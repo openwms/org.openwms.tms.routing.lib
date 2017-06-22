@@ -6,7 +6,7 @@ import Button from './Button';
 class RouteListItem extends React.Component {
 
     handleDelete(event) {
-        this.props.onDelete(this.props.value.name, event)
+        this.props.onDelete(this.props.value.key, event)
     }
 
     handleModify(event) {
@@ -14,7 +14,7 @@ class RouteListItem extends React.Component {
     }
 
     handleEnable() {
-        this.props.onEnable(this.props.value.name, !this.props.value.enabled)
+        this.props.onEnable(this.props.value.key, !this.props.value.enabled)
     }
 
     render() {
