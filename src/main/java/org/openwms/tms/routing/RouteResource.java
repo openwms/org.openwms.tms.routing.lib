@@ -71,10 +71,10 @@ class RouteResource {
         routeRepository.findByPKey(persistentKey).ifPresent(routeRepository::delete);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/routes")
-    public void save(@RequestBody RouteVO routeVO) {
-
+    public RouteVO save(@RequestBody RouteVO routeVO) {
+        Route route = routeRepository.findByPKey(routeVO.getKey()).orElseThrow(NotFoundException::new);
+        return mapper.map(routeRepository.save(mapper.mapFromTo(routeVO, route)), RouteVO.class);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

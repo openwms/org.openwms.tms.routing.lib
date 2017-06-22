@@ -34,7 +34,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class RouteVO extends AbstractBase implements Serializable {
 
-    private String name, description, sourceLocation, sourceLocationGroupName, targetLocation, targetLocationGroupName, enabled, key;
+    private String name, description, sourceLocation, sourceLocationGroupName, targetLocation, targetLocationGroupName, key;
+    private boolean enabled;
 
     public String getName() {
         return name;
@@ -84,11 +85,11 @@ public class RouteVO extends AbstractBase implements Serializable {
         this.targetLocationGroupName = targetLocationGroupName;
     }
 
-    public String getEnabled() {
+    public boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(String enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
