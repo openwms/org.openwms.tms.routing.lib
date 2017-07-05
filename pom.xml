@@ -42,6 +42,8 @@
         <sonar.projectKey>OpenWMS.org_TMS:Routing</sonar.projectKey>
         <core.version>1.1.0-SNAPSHOT</core.version>
         <common.version>1.1.0-SNAPSHOT</common.version>
+        <lombok.version>1.16.12</lombok.version>
+        <activation.version>1.1.1</activation.version>
     </properties>
 
     <distributionManagement>
@@ -130,6 +132,7 @@
                 <version>1.2</version>
                 <configuration>
                     <installDirectory>target</installDirectory>
+                    <workingDirectory>src/main/ui</workingDirectory>
                 </configuration>
                 <executions>
                     <execution>
@@ -154,8 +157,11 @@
                     <execution>
                         <id>webpack build</id>
                         <goals>
-                            <goal>webpack</goal>
+                            <goal>npm</goal>
                         </goals>
+                        <configuration>
+                            <arguments>run build</arguments>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -234,9 +240,14 @@
                 </exclusions>
             </dependency>
             <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>javax.activation</groupId>
                 <artifactId>activation</artifactId>
-                <version>1.1.1</version>
+                <version>${activation.version}</version>
             </dependency>
             <dependency>
                 <groupId>net.sf.dozer</groupId>
@@ -264,7 +275,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.12</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>

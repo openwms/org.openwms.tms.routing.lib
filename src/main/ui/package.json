@@ -4,7 +4,8 @@
   "description": "An UI to manage TMS Routing decisions",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --watch --config config/webpack.config.js"
+    "start": "webpack --watch --config config/webpack.config.js",
+    "build": "webpack --config config/webpack.config.js"
   },
   "keywords": [],
   "author": "",
