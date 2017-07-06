@@ -62,6 +62,7 @@ public class ConfigServerResourcePatternResolverIT {
         testee = new ConfigServerResourcePatternResolver(restTemplate, "openwms-config", "http", "user", "sa");
     }
 
+    @Ignore("work in progress")
     public final
     @Test
     void shall_resolve_from_GitHub() {
