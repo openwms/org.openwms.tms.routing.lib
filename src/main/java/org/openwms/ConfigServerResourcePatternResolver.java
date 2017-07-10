@@ -21,6 +21,7 @@
  */
 package org.openwms;
 
+import org.openwms.core.SecurityUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
@@ -36,7 +37,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Optional;
 
 import static java.lang.String.format;
-import static org.openwms.SecurityUtils.createHeaders;
 
 /**
  * A ConfigServerResourcePatternResolver.
@@ -84,7 +84,7 @@ public class ConfigServerResourcePatternResolver extends PathMatchingResourcePat
                 restTemplate.exchange(
                         format("%s://%s/%s/%s/%s", configServerProtocol, configServerId, path, "default", "master"),
                         HttpMethod.GET,
-                        new HttpEntity<Resource>(createHeaders(configServerUsername, configServerPassword)),
+                        new HttpEntity<Resource>(SecurityUtils.createHeaders(configServerUsername, configServerPassword)),
                         Resource.class
                 );
 

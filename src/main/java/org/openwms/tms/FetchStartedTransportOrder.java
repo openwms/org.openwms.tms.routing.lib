@@ -22,6 +22,7 @@
 package org.openwms.tms;
 
 import org.ameba.exception.NotFoundException;
+import org.openwms.core.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.function.Function;
-
-import static org.openwms.SecurityUtils.createHeaders;
 
 /**
  * A FetchStartedTransportOrder.
@@ -66,7 +65,7 @@ public class FetchStartedTransportOrder implements Function<String, TransportOrd
                 aLoadBalanced.exchange(
                         endpoint,
                         HttpMethod.GET,
-                        new HttpEntity<>(createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))),
+                        new HttpEntity<>(SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))),
                         new ParameterizedTypeReference<List<TransportOrder>>() {
                         });
         if (exchange.getBody().size() == 0) {

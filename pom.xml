@@ -29,19 +29,18 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
+        <version>2</version>
         <relativePath/>
     </parent>
     <artifactId>org.openwms.tms.routing</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>OpenWMS.org TMS: Routing Services</name>
     <url>https://www.interface21.io/docs/tms/routing/index.html</url>
 
     <properties>
         <activiti.version>5.21.0</activiti.version>
         <sonar.projectKey>OpenWMS.org_TMS:Routing</sonar.projectKey>
-        <core.version>1.1.0-SNAPSHOT</core.version>
-        <common.version>1.1.0-SNAPSHOT</common.version>
+        <core.version>1.1.0</core.version>
         <lombok.version>1.16.12</lombok.version>
         <activation.version>1.1.1</activation.version>
     </properties>
@@ -84,10 +83,8 @@
 
     <scm>
         <url>https://github.com/openwms/org.openwms.tms.routing</url>
-        <connection>scm:git:git://github.com/openwms/org.openwms.tms.routing.git
-        </connection>
-        <developerConnection>scm:git:git@github.com:openwms/org.openwms.tms.routing.git
-        </developerConnection>
+        <connection>scm:git:git://github.com/openwms/org.openwms.tms.routing.git</connection>
+        <developerConnection>scm:git:git@github.com:openwms/org.openwms.tms.routing.git</developerConnection>
     </scm>
 
     <ciManagement>
@@ -199,14 +196,8 @@
             </dependency>
             <dependency>
                 <groupId>org.openwms</groupId>
-                <artifactId>org.openwms.common.shared</artifactId>
-                <version>${common.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.openwms</groupId>
-                <artifactId>org.openwms.common.service</artifactId>
-                <version>${common.version}</version>
-                <classifier>client</classifier>
+                <artifactId>org.openwms.core.util</artifactId>
+                <version>${core.version}</version>
             </dependency>
 
             <dependency>
@@ -265,10 +256,9 @@
     </dependencyManagement>
 
     <dependencies>
-        <!-- Project dependencies -->
         <dependency>
             <groupId>org.openwms</groupId>
-            <artifactId>org.openwms.common.shared</artifactId>
+            <artifactId>org.openwms.core.util</artifactId>
         </dependency>
 
         <!-- 3rd party dependencies -->

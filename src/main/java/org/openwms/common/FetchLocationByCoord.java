@@ -21,6 +21,7 @@
  */
 package org.openwms.common;
 
+import org.openwms.core.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 import static java.lang.String.format;
-import static org.openwms.SecurityUtils.createHeaders;
 
 /**
  * A FetchLocationGroupByName.
@@ -68,13 +68,13 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
         Map<String, Object> maps = new HashMap<>();
         maps.put("locationPK", coordinate);
         ServiceInstance si = list.get(0);
-        String endpoint = si.getMetadata().get("protocol") + "://" + si.getServiceId() + CommonConstants.API_LOCATIONS + "?locationPK=" + coordinate;
+        String endpoint = si.getMetadata().get("protocol") + "://" + si.getServiceId() + "/v1/locations" + "?locationPK=" + coordinate;
         LOGGER.debug("Calling common-service URL [{}]", endpoint);
         ResponseEntity<LocationVO> exchange =
                 aLoadBalanced.exchange(
                         endpoint,
                         HttpMethod.GET,
-                        new HttpEntity<LocationVO>(createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))),
+                        new HttpEntity<LocationVO>(SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))),
                         LocationVO.class);
         return exchange.getBody();
     }
