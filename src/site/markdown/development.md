@@ -8,3 +8,8 @@ you call Maven to build the project and create the deliverables:
 $ mvn package
 ```
 
+# Release
+
+```
+$ mvn clean deploy -Prelease,gpg
+```
