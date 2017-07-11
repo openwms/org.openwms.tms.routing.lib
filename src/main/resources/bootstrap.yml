@@ -23,21 +23,21 @@ spring:
 #    process-definition-location-prefix: config:processes/
 owms:
   eureka:
-    url: http://user:sa@localhost:8761 # need to be overridden in the cloud environment props!
+    url: ${OWMS_EUREKA_URL:http://user:sa@localhost:8761} # need to be overridden in the cloud environment props!
 
 server:
   port: ${PORT:8130}
 
 security:
   user:
-    password: sa # need to be overridden in the cloud environment props!
+    password: ${OWMS_SECURITY_BASIC_PASSWORD:sa} # need to be overridden in the cloud environment props!
   basic:
     enabled: false
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${owms.eureka.url}/eureka
+      defaultZone: ${OWMS_EUREKA_URL:http://user:sa@localhost:8761}/eureka
   instance:
     metadata-map:
       username: user
@@ -53,15 +53,15 @@ spring:
   cloud:
     config:
       headers:
-        protocol: https
+        protocol: ${OWMS_CONFIGSRV_PROTOCOL:https}
 eureka:
   instance:
-    hostname: openwms-routing-service.herokuapp.com
+    hostname: ${OWMS_TMSRT_URL:openwms-routing-service.herokuapp.com}
     secure-port-enabled: true
     non-secure-port-enabled: false
-    statusPageUrl: https://${eureka.instance.hostName}/info
-    healthCheckUrl: https://${eureka.instance.hostName}/health
-    homePageUrl: https://${eureka.instance.hostName}/
+    statusPageUrl: ${OWMS_TMSRT_PROTOCOL:https}://${eureka.instance.hostName}/info
+    healthCheckUrl: ${OWMS_TMSRT_PROTOCOL:https}://${eureka.instance.hostName}/health
+    homePageUrl: ${OWMS_TMSRT_PROTOCOL:https}://${eureka.instance.hostName}/
     metadata-map:
-      protocol: https
-      config-protocol: https
+      protocol: ${OWMS_TMSRT_PROTOCOL:https}
+      config-protocol: ${OWMS_CONFIGSRV_PROTOCOL:https}
