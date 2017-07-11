@@ -122,6 +122,27 @@
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-ui</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}/META-INF/resources</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/ui</directory>
+                                    <includes>
+                                        <include>index.html</include>
+                                        <include>dist/**</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>com.github.eirslett</groupId>
