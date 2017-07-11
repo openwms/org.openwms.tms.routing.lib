@@ -86,7 +86,7 @@ class App extends React.Component {
     }
 
     _findAll() {
-        const apiUrl = 'http://localhost:8130/routes'
+        const apiUrl = 'http://tms-routing-infrastructure.app.gcaas.ch/routes'
         fetch(apiUrl, {
             method: 'GET',
             headers: {
@@ -102,7 +102,7 @@ class App extends React.Component {
     }
 
     _add(route, callback) {
-        const apiUrl = 'http://localhost:8130/routes'
+        const apiUrl = 'http://tms-routing-infrastructure.app.gcaas.ch/routes'
         fetch(apiUrl, {
             method: 'POST',
             headers: {
@@ -116,7 +116,7 @@ class App extends React.Component {
     }
 
     _save(route) {
-        const apiUrl = 'http://localhost:8130/routes'
+        const apiUrl = 'http://tms-routing-infrastructure.app.gcaas.ch/routes'
         fetch(apiUrl, {
             method: 'PUT',
             headers: {
@@ -130,7 +130,7 @@ class App extends React.Component {
 
     _delete(key) {
         console.log('Delete ' + key)
-        const apiUrl = 'http://localhost:8130/routes/' + key
+        const apiUrl = 'http://tms-routing-infrastructure.app.gcaas.ch/routes/' + key
         fetch(apiUrl, {
             method: 'DELETE',
             headers: {
