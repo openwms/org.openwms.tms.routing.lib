@@ -1,4 +1,4 @@
-#TMS Routing Service
+##Purpose
 
 The TMS Routing Service is responsible to route incoming messages to the
 appropriate workflow and finally handle the request message. The workflow
@@ -31,6 +31,15 @@ The actual [Activiti](https://www.activiti.org) BPMN snippet looks like this:
 
 Notice that the flow and the expressions are modelled in [Activiti](https://www.activiti.org)
 Model Explorer rather than in XML.
+
+##Deployment
+This component is a crucial part of the TMS (Transport Management System) and is required
+in all automated warehouse projects. The microservice is deployed as RTU
+(ready-to-use) box in following environments:
+
+| endpoints | billed | SLA |
+| --------- | ------ | --- |
+| http://tms-routing-infrastructure.app.gcaas.ch | no | No SLA available, EU-CH region |
 
 ## Benefits
 
