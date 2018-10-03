@@ -28,8 +28,8 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.openwms</groupId>
-        <artifactId>org.openwms</artifactId>
-        <version>2</version>
+        <artifactId>org.openwms.parent</artifactId>
+        <version>3</version>
         <relativePath/>
     </parent>
     <artifactId>org.openwms.tms.routing</artifactId>
@@ -38,23 +38,24 @@
     <url>https://www.interface21.io/docs/tms/routing/index.html</url>
 
     <properties>
-        <activiti.version>5.21.0</activiti.version>
-        <sonar.projectKey>OpenWMS.org_TMS:Routing</sonar.projectKey>
-        <core.version>1.1.0</core.version>
-        <lombok.version>1.16.12</lombok.version>
         <activation.version>1.1.1</activation.version>
+        <activiti.version>5.21.0</activiti.version>
+        <ameba-cloud.version>2.0-SNAPSHOT</ameba-cloud.version>
+        <core.version>1.3.0-SNAPSHOT</core.version>
+        <lombok.version>1.16.12</lombok.version>
+        <sonar.projectKey>OpenWMS.org_TMS:Routing</sonar.projectKey>
     </properties>
 
     <distributionManagement>
         <repository>
             <id>sonatype-nexus-staging</id>
             <name>OpenWMS.org Release Repository</name>
-            <url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
         </repository>
         <snapshotRepository>
             <id>sonatype-nexus-staging</id>
             <name>OpenWMS.org Snapshot Repository</name>
-            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
         <site>
             <id>ftp-io</id>
@@ -230,6 +231,11 @@
             </dependency>
 
             <dependency>
+                <groupId>io.interface21</groupId>
+                <artifactId>ameba-cloud</artifactId>
+                <version>${ameba-cloud.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.activiti</groupId>
                 <artifactId>activiti-explorer</artifactId>
                 <version>${activiti.version}</version>
@@ -252,11 +258,6 @@
                 </exclusions>
             </dependency>
             <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>javax.activation</groupId>
                 <artifactId>activation</artifactId>
                 <version>${activation.version}</version>
@@ -270,6 +271,11 @@
                         <!-- we take the latest one from activiti instead -->
                         <groupId>org.apache.commons</groupId>
                         <artifactId>commons-lang3</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <!-- bites with netflix-ribbon -->
+                        <groupId>commons-collections</groupId>
+                        <artifactId>commons-collections</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -290,6 +296,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>net.sf.dozer</groupId>
@@ -323,42 +330,32 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+        </dependency-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
             <exclusions>
                 <exclusion>
-                    <!-- bites with spring-core -->
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
+                    <!-- Bites with the version from actuator -->
+                    <groupId>org.hdrhistogram</groupId>
+                    <artifactId>HdrHistogram</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-feign</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-hystrix</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>commons-lang3</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-ribbon</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -375,6 +372,10 @@
             <artifactId>spring-retry</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.interface21</groupId>
+            <artifactId>ameba-cloud</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
@@ -408,12 +409,6 @@
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.ow2.asm</groupId>
-                    <artifactId>asm</artifactId>
-                </exclusion>
-            </exclusions>
             <scope>test</scope>
         </dependency>
     </dependencies>

@@ -21,10 +21,11 @@
  */
 package org.openwms;
 
+import io.interface21.cloud.ui.UIPackage;
 import org.openwms.common.transport.api.TransportUnitApi;
 import org.openwms.tms.routing.InputContext;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -39,7 +40,7 @@ import org.springframework.context.annotation.Configuration;
 //@AutoConfigureBefore(DataSourceAutoConfiguration.class)
 //@AutoConfigureAfter(ModuleConfiguration.class)
 //@AutoConfigureBefore(JpaProcessEngineAutoConfiguration.JpaConfiguration.class)
-@EnableFeignClients(basePackages = "org.openwms.common.transport.api")
+@EnableFeignClients(basePackageClasses = {TransportUnitApi.class, UIPackage.class})
 public class FeignConfiguration {
 
     @Bean
