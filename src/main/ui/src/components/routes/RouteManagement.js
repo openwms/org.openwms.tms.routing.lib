@@ -4,6 +4,7 @@ import {Route} from "react-router"
 import {ConnectedSwitch} from "@ameba/ameba-js"
 import RouteList from "./RouteList"
 import * as pages from '../../constants/LinkPages'
+import {loadRoutes} from "../../actions";
 
 const styles = theme => ({
     root: theme.mixins.gutters({
@@ -53,7 +54,7 @@ const mapStateToProps = (state, props) => (
 const mapDispatchToProps = (dispatch) => (
     {
         onLoadRoutes: () => {
-            //dispatch(loadVersions())
+            dispatch(loadRoutes())
         },
         onCreateRoute: () => {
         },
