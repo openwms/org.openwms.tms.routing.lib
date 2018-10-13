@@ -75,8 +75,8 @@
     "build": "sh -ac '. .env; node scripts/build.js'",
     "build:dev": "sh -ac '. .env.development; node scripts/build.js'",
     "build:local": "sh -ac '. .env.local; node scripts/build.js'",
-    "build:staging": "sh -ac '. .env.staging; webpack -p --progress'",
-    "build:production": "sh -ac '. .env.production; webpack -p --progress'",
+    "build:staging": "sh -ac '. .env.staging; node scripts/build.js'",
+    "build:production": "sh -ac '. .env.production; node scripts/build.js'",
     "test": "node scripts/test.js --env=jsdom"
   },
   "eslintConfig": {
