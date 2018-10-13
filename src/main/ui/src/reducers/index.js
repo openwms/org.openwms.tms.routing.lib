@@ -2,8 +2,9 @@ import {combineReducers} from 'redux'
 //import {ACTIONS} from '@ameba/ameba-js'
 import * as pages from '../constants/LinkPages'
 import {routerReducer} from "react-router-redux";
+import * as types from '../constants/ActionTypes'
 
-function routes(state = [], action) {
+function clientroutes(state = [], action) {
     switch (action.type) {
         default:
             return [
@@ -13,7 +14,17 @@ function routes(state = [], action) {
     }
 }
 
+function routes(state = [], action) {
+    switch (action.type) {
+        case types.UPDATE_ROUTES:
+            return action.routes;
+        default:
+            return []
+    }
+}
+
 const reducers = combineReducers({
+    clientroutes,
     routes,
     router: routerReducer,
 });

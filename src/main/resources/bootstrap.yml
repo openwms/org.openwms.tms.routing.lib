@@ -10,15 +10,6 @@ spring:
         service-id: openwms-config
       username: user # need to be overridden in the cloud environment props!
       password: sa # need to be overridden in the cloud environment props!
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: true
-  jpa:
-    generate-ddl: true
-    hibernate:
-      ddl-auto: create-drop
 #  activiti:
 #    process-definition-location-prefix: config:processes/
 owms:
@@ -44,6 +35,26 @@ eureka:
       password: ${security.user.password}
       protocol: http
       config-protocol: http # The protocol used to access the config server
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+---
+spring:
+  profiles: DEMO
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
 
 ---
 spring:

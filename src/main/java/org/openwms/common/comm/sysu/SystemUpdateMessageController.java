@@ -61,14 +61,4 @@ class SystemUpdateMessageController {
         runtimeVariables.put("errorCode", sysu.errorCode);
         executor.execute(matrix.findBy("SYSU", Route.DEF_ROUTE, null, locationGroup), runtimeVariables);
     }
-
-    private static class SystemUpdateVO {
-
-        String locationGroupName, errorCode;
-
-        public SystemUpdateVO(String locationGroupName, String errorCode) {
-            this.locationGroupName = locationGroupName;
-            this.errorCode = errorCode;
-        }
-    }
 }

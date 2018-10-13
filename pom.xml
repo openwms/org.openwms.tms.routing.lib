@@ -46,6 +46,36 @@
         <sonar.projectKey>OpenWMS.org_TMS:Routing</sonar.projectKey>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <environment>:local</environment>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <environment>:dev</environment>
+            </properties>
+        </profile>
+        <profile>
+            <id>staging</id>
+            <properties>
+                <environment>:staging</environment>
+            </properties>
+        </profile>
+        <profile>
+            <id>production</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <environment>:production</environment>
+            </properties>
+        </profile>
+    </profiles>
+
     <distributionManagement>
         <repository>
             <id>sonatype-nexus-staging</id>
@@ -174,12 +204,12 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>webpack build</id>
+                        <id>npm build</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run build</arguments>
+                            <arguments>run build${environment}</arguments>
                         </configuration>
                     </execution>
                 </executions>
@@ -296,6 +326,11 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>

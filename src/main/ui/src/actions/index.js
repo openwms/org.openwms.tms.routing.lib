@@ -1,6 +1,7 @@
 import {ACTIONS} from '@ameba/ameba-js'
 import {push} from 'connected-react-router'
-
+import * as SRV from "../services"
+import * as types from '../constants/ActionTypes'
 
 export function goto(refs) {
     return (dispatch, getState) => {
@@ -10,7 +11,6 @@ export function goto(refs) {
 
 export function loadRoutes() {
     return (dispatch, getState) => {
-        /**
         SRV.loadRoutes(
             (routes) => {
                 dispatch({
@@ -23,7 +23,6 @@ export function loadRoutes() {
                 error: error,
             })
         );
-         */
     }
 }
 

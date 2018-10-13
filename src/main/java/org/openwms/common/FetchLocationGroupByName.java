@@ -66,6 +66,7 @@ public class FetchLocationGroupByName implements Function<String, LocationGroupV
             throw new RuntimeException(format("No deployed service with name [%s] found", commonServiceName.toUpperCase()));
         }
         Map<String, Object> maps = new HashMap<>();
+        String rbg = name + "___";
         maps.put("name", name);
         ServiceInstance si = list.get(0);
         String endpoint = si.getMetadata().get("protocol") + "://" + si.getServiceId() + "/v1/locationgroups" + "?name=" + name;
@@ -77,8 +78,6 @@ public class FetchLocationGroupByName implements Function<String, LocationGroupV
                         new HttpEntity<LocationGroupVO>(SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))),
                         LocationGroupVO.class,
                         maps);
-
-        System.out.println(exchange);
         return exchange.getBody();
     }
 }
