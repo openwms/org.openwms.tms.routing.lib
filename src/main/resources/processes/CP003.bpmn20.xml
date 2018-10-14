@@ -20,8 +20,8 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="sid-EE0CD301-8286-4243-B088-02DA3704E66C" id="BPMNEdge_sid-EE0CD301-8286-4243-B088-02DA3704E66C">
         <omgdi:waypoint x="165.0" y="195.0"></omgdi:waypoint>
-        <omgdi:waypoint x="402.5" y="195.0"></omgdi:waypoint>
-        <omgdi:waypoint x="402.5" y="240.0"></omgdi:waypoint>
+        <omgdi:waypoint x="402.0" y="195.0"></omgdi:waypoint>
+        <omgdi:waypoint x="402.26011560693644" y="240.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-ECE9AEB1-73EA-4F95-807D-5ADEFB2214D4" id="BPMNEdge_sid-ECE9AEB1-73EA-4F95-807D-5ADEFB2214D4">
         <omgdi:waypoint x="505.0" y="281.5"></omgdi:waypoint>
