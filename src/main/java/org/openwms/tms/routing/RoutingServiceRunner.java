@@ -23,6 +23,7 @@ package org.openwms.tms.routing;
 
 import io.interface21.cloud.AmebaCloudModule;
 import org.ameba.app.SolutionApp;
+import org.openwms.FeignConfiguration;
 import org.openwms.ModuleConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,7 +33,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@SpringBootApplication(scanBasePackageClasses = {SolutionApp.class, ModuleConfiguration.class, AmebaCloudModule.class})
+@SpringBootApplication(scanBasePackageClasses = {SolutionApp.class, ModuleConfiguration.class, AmebaCloudModule.class, FeignConfiguration.class})
 public class RoutingServiceRunner {
 
     /**

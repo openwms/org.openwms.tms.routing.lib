@@ -19,28 +19,27 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.sysu;
+package org.openwms.common.location.api;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
-import java.util.Date;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * A SystemUpdateVO.
+ * A LocationGroupApi.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-class SystemUpdateVO implements Serializable {
+@FeignClient(name = "common-service", qualifier = "locationGroupApi")
+public interface LocationGroupApi {
 
-    @JsonProperty
-    Date created;
-    @JsonProperty
-    String locationGroupName, errorCode;
+    /**
+     * This method is used to update the state of a LocationGroup with an errorCode String, usually coming from a SYSU telegram.
+     *
+     * @param locationGroupName The name of the LocationGroup
+     * @param errorCode The error code as String
+     */
+    @PatchMapping(value = "/v1/locationgroups", params = {"name"})
+    void updateState(@RequestParam(name = "name") String locationGroupName, @RequestBody ErrorCodeVO errorCode);
 }

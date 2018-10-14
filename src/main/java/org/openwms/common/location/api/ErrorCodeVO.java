@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.sysu;
+package org.openwms.common.location.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -27,20 +27,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
- * A SystemUpdateVO.
+ * A ErrorCodeVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-class SystemUpdateVO implements Serializable {
+@AllArgsConstructor
+public class ErrorCodeVO implements Serializable {
 
     @JsonProperty
-    Date created;
-    @JsonProperty
-    String locationGroupName, errorCode;
+    String errorCode;
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
 }

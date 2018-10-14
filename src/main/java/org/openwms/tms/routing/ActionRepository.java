@@ -21,11 +21,11 @@
  */
 package org.openwms.tms.routing;
 
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import java.util.Optional;
 
 /**
  * A ActionRepository.
@@ -37,6 +37,6 @@ interface ActionRepository extends JpaRepository<Action, Long> {
     @Query("select a from Action a where a.route.routeId = :routeId and a.locationKey is not null and a.locationKey = :locationKey and a.enabled = true")
     Optional<Action> findByRouteAndLocationKey(@Param("routeId") String routeId, @Param("locationKey") String locationKey);
 
-    @Query("select a from Action a where a.route.routeId = :routeId and a.locationGroupName is not null and a.locationGroupName = :locationGroupName and a.enabled = true")
-    Optional<Action> findByRouteAndLocationGroupName(@Param("routeId") String routeId, @Param("locationGroupName") String locationGroupName);
+    @Query("select a from Action a where a.actionType = :actionType and a.route.routeId = :routeId and a.locationGroupName is not null and a.locationGroupName = :locationGroupName and a.enabled = true")
+    Optional<Action> findByActionTypeAndRouteAndLocationGroupName(@Param("actionType") String actionType, @Param("routeId") String routeId, @Param("locationGroupName") String locationGroupName);
 }
