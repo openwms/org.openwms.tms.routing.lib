@@ -23,6 +23,7 @@ package org.openwms.tms.routing;
 
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -61,8 +62,8 @@ class ActivitiExecutor implements ProgramExecutor {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Executing program : {}", program);
         }
-        String id = repositoryService.createProcessDefinitionQuery().processDefinitionKey(program.getProgramKey()).list().get(0).getId();
-        runtimeService.startProcessInstanceById(id, runtimeVariables);
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionKey(program.getProgramKey()).active().latestVersion().singleResult();
+        runtimeService.startProcessInstanceById(processDefinition.getId(), runtimeVariables);
         // TODO [openwms]: 07.06.17 return an result here!
         return null;
     }

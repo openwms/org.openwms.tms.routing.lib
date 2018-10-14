@@ -22,6 +22,8 @@
 package org.openwms.common.transport.api;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,22 +35,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@FeignClient(name = "common-service")
+@FeignClient(name = "common-service", qualifier = "transportUnitApi")
 public interface TransportUnitApi {
 
     @RequestMapping(method = RequestMethod.GET, params = {"bk"})
     @ResponseBody
     TransportUnitVO getTransportUnit(@RequestParam("bk") String transportUnitBK);
 
-    @RequestMapping(method = RequestMethod.POST, params = {"bk"})
+    @PostMapping(params = {"bk"})
     @ResponseBody
-    void createTU(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnitVO tu);
+    void createTU(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnitVO tu, @RequestParam(value = "strict", required = false) Boolean strict);
+
+    @PostMapping(params = {"bk"})
+    @ResponseBody
+    void createTUFlat(@RequestParam("bk") String transportUnitBK, @RequestParam("actualLocation") String actualLocation, @RequestParam("tut") String tut, @RequestParam(value = "strict", required = false) Boolean strict);
 
     @RequestMapping(method = RequestMethod.PUT, params = {"bk"})
     @ResponseBody
     TransportUnitVO updateTU(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnitVO tu);
 
-    @RequestMapping(method = RequestMethod.PATCH, params = {"bk"})
+    @PatchMapping(value = "/v1/transportunits", params = {"bk"})
     @ResponseBody
     TransportUnitVO updateActualLocation(@RequestParam("bk") String transportUnitBK, @RequestBody String actualLocation);
 }
