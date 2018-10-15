@@ -21,10 +21,14 @@
  */
 package org.openwms.common.location.api;
 
+import org.openwms.common.LocationGroupVO;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Collection;
 
 /**
  * A LocationGroupApi.
@@ -42,4 +46,12 @@ public interface LocationGroupApi {
      */
     @PatchMapping(value = "/v1/locationgroups", params = {"name"})
     void updateState(@RequestParam(name = "name") String locationGroupName, @RequestBody ErrorCodeVO errorCode);
+
+    /**
+     * Find and return all existing {@code LocationGroup} representations.
+     *
+     * @return Never {@literal null}
+     */
+    @GetMapping("/v1/locationgroups")
+    Collection<LocationGroupVO> findAll();
 }

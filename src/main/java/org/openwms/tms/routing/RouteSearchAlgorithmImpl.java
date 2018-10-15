@@ -21,7 +21,22 @@
  */
 package org.openwms.tms.routing;
 
+import org.ameba.exception.NotFoundException;
+import org.openwms.common.LocationGroupVO;
+import org.openwms.common.LocationRepository;
+import org.openwms.common.location.api.LocationGroupApi;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static java.lang.String.format;
 
 /**
  * A RouteSearchAlgorithmImpl.
@@ -31,11 +46,114 @@ import org.springframework.stereotype.Component;
 @Component
 class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(RouteSearchAlgorithmImpl.class);
+    private final RouteRepository repository;
+    private final LocationGroupApi locationGroupApi;
+    private final LocationRepository locationRepository;
+
+    private Map<String, String> mappingLocationToParent = new ConcurrentHashMap<>();
+
+    RouteSearchAlgorithmImpl(RouteRepository repository, LocationGroupApi locationGroupApi, LocationRepository locationRepository) {
+        this.repository = repository;
+        this.locationGroupApi = locationGroupApi;
+        this.locationRepository = locationRepository;
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public Route findBy(String sourceLocation, String targetLocation, String targetLocationGroup) {
-        return Route.DEF_ROUTE;
+        Assert.hasText(sourceLocation, "The sourceLocation must be given when searching for a Route");
+        boolean targetLocExists = StringUtils.hasText(targetLocation);
+        boolean targetLgExists = StringUtils.hasText(targetLocationGroup);
+        Collection<LocationGroupVO> allLocationGroups = locationGroupApi.findAll();
+
+        Optional<Route> result;
+        // First try explicit declaration
+        if (targetLocExists) {
+
+            // Have both. Search for a match:
+            result = repository.findBySourceLocation_LocationIdAndTargetLocation_LocationIdAndEnabled(sourceLocation, targetLocation, true);
+            if (result.isPresent()) {
+                // Match with locations
+                LOGGER.debug("Route in direct location match found: {}", result.get());
+                return result.get();
+            }
+
+            // No direct match
+            if (targetLgExists) {
+                result = repository.findBySourceLocation_LocationIdAndTargetLocationGroupNameAndEnabled(sourceLocation, targetLocationGroup, true);
+                if (result.isPresent()) {
+                    LOGGER.debug("Route with sourceLocation and targetLocation direct match found: {}", result.get());
+                    return result.get();
+                }
+
+                // We don't find a Route for either Location nor LocationGroup -> climb up
+                result = findInHierarchy(sourceLocation, targetLocation, allLocationGroups);
+                if (result.isPresent()) {
+                    LOGGER.debug("Route found 1: {}", result.get());
+                    return result.get();
+                }
+
+                // strange but we haven't found something above the Location, try LocationGroup at last...
+                result = findInGroupHierarchy(sourceLocation, targetLocationGroup, allLocationGroups);
+                if (result.isPresent()) {
+                    LOGGER.debug("Route found 2: {}", result.get());
+                    return result.get();
+                }
+
+                throw new NotFoundException(format("No route found for TransportOrder with sourceLocation [%s], targetLocation [%s] and targetLocationGroup [%s]", sourceLocation, targetLocation, targetLocationGroup));
+            } else {
+
+                // No match for targetLocationGroup, search for the targetLocation upwards:
+                result = findInHierarchy(sourceLocation, targetLocation, allLocationGroups);
+                if (result.isPresent()) {
+                    LOGGER.debug("Route found 3: {}", result.get());
+                    return result.get();
+                }
+                throw new NotFoundException(format("No route found for TransportOrder with sourceLocation [%s], targetLocation [%s] and targetLocationGroup [%s]", sourceLocation, targetLocation, targetLocationGroup));
+            }
+        }
+        Assert.hasText(targetLocationGroup, "The targetLocation did not find a match, hence a TargetLocationGroup is required");
+
+        result = findInGroupHierarchy(sourceLocation, targetLocationGroup, allLocationGroups);
+        if (result.isPresent()) {
+            return result.get();
+        }
+
+        result = findInGroupHierarchy(sourceLocation, targetLocationGroup, allLocationGroups);
+        if (result.isPresent()) {
+            return result.get();
+        }
+
+        throw new NotFoundException(format("No route found for TransportOrder with sourceLocation [%s], targetLocation [%s] and targetLocationGroup [%s]", sourceLocation, targetLocation, targetLocationGroup));
+    }
+
+    private Optional<Route> findInGroupHierarchy(String sourceLocation, String targetLocationGroup, Collection<LocationGroupVO> allLocationGroups) {
+        // climb up group
+        Optional<Route> route = repository.findBySourceLocation_LocationIdAndTargetLocationGroupNameAndEnabled(sourceLocation, targetLocationGroup, true);
+        if (!route.isPresent()) {
+            LocationGroupVO current = allLocationGroups.stream().filter(lg -> lg.getName().equals(targetLocationGroup)).findFirst().orElseThrow(() -> new NotFoundException(format("The LocationGrouo with name [%s] does not exist", targetLocationGroup)));
+            route = findInGroupHierarchy(sourceLocation, current.getParent(), allLocationGroups);
+        } return route;
+    }
+
+    private Optional<Route> findInHierarchy(String sourceLocation, String targetLocation, Collection<LocationGroupVO> allLocationGroups) {
+        Optional<Route> route = repository.findBySourceLocation_LocationIdAndTargetLocation_LocationIdAndEnabled(sourceLocation, targetLocation, true);
+        if (route.isPresent()) {
+            return route;
+        }
+        // first step is target then source...
+        String parent = mappingLocationToParent.computeIfAbsent(targetLocation, (k) -> locationRepository.findByLocationId(k).orElseThrow(()->new NotFoundException(format("TargetLocation with locationId %s does not exist", targetLocation))).getLocationGroupName());
+        route = findInGroupHierarchy(sourceLocation, parent, allLocationGroups);
+        if (route.isPresent()) {
+            return route;
+        }
+        /*
+        parent = mappingLocationToParent.computeIfAbsent(sourceLocation, (k) -> locationRepository.findByLocationId(k).orElseThrow(()->new NotFoundException(format("SourceLocation with locationId %s does not exist", sourceLocation))).getLocationGroupName());
+        route = findInGroups(parent, )
+*/
+        return Optional.empty();
     }
 }

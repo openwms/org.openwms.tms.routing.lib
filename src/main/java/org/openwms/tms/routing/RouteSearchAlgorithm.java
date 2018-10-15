@@ -28,5 +28,14 @@ package org.openwms.tms.routing;
  */
 public interface RouteSearchAlgorithm {
 
+    /**
+     * Find and return a Route from the given {@code sourceLocation} to either the
+     * {@code targetLocation} or to the {@code targetLocationGroup}.
+     *
+     * @param sourceLocation The start point of the TransportOrder
+     * @param targetLocation The target of the TransportOrder as Location
+     * @param targetLocationGroup The target of the TransportOrder as LocationGroup
+     * @return A Route, never {@literal null}
+     */
     Route findBy(String sourceLocation, String targetLocation, String targetLocationGroup);
 }

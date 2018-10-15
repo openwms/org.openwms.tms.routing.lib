@@ -43,7 +43,7 @@ import org.springframework.context.annotation.Configuration;
 //@AutoConfigureBefore(DataSourceAutoConfiguration.class)
 //@AutoConfigureAfter(ModuleConfiguration.class)
 //@AutoConfigureBefore(JpaProcessEngineAutoConfiguration.JpaConfiguration.class)
-@EnableFeignClients(basePackageClasses = {TransportUnitApi.class, UIPackage.class, LocationGroupApi.class, TransportOrderApi.class})
+@EnableFeignClients(basePackageClasses = {TransportUnitApi.class, UIPackage.class, LocationGroupApi.class, LocationGroupApi.class, TransportOrderApi.class})
 public class FeignConfiguration {
 
     @Bean
