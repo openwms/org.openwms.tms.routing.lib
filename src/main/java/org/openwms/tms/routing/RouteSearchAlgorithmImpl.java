@@ -27,10 +27,10 @@ import org.openwms.common.LocationRepository;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
@@ -43,7 +43,6 @@ import static java.lang.String.format;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Component
 class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteSearchAlgorithmImpl.class);
@@ -52,11 +51,17 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
     private final LocationRepository locationRepository;
 
     private Map<String, String> mappingLocationToParent = new ConcurrentHashMap<>();
+    private Collection<LocationGroupVO> allLocationGroups;
 
     RouteSearchAlgorithmImpl(RouteRepository repository, LocationGroupApi locationGroupApi, LocationRepository locationRepository) {
         this.repository = repository;
         this.locationGroupApi = locationGroupApi;
         this.locationRepository = locationRepository;
+    }
+
+    @PostConstruct
+    void onPOstConstruct() {
+        allLocationGroups = locationGroupApi.findAll();
     }
 
     /**
@@ -67,13 +72,12 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
         Assert.hasText(sourceLocation, "The sourceLocation must be given when searching for a Route");
         boolean targetLocExists = StringUtils.hasText(targetLocation);
         boolean targetLgExists = StringUtils.hasText(targetLocationGroup);
-        Collection<LocationGroupVO> allLocationGroups = locationGroupApi.findAll();
 
         Optional<Route> result;
         // First try explicit declaration
         if (targetLocExists) {
 
-            // Have both. Search for a match:
+            // (1) Have both. Search for a match:
             result = repository.findBySourceLocation_LocationIdAndTargetLocation_LocationIdAndEnabled(sourceLocation, targetLocation, true);
             if (result.isPresent()) {
                 // Match with locations
@@ -89,14 +93,14 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
                     return result.get();
                 }
 
-                // We don't find a Route for either Location nor LocationGroup -> climb up
+                // (2) We don't find a Route for either 2 Locations nor source Location and target LocationGroup -> climb up the target
                 result = findInHierarchy(sourceLocation, targetLocation, allLocationGroups);
                 if (result.isPresent()) {
                     LOGGER.debug("Route found 1: {}", result.get());
                     return result.get();
                 }
 
-                // strange but we haven't found something above the Location, try LocationGroup at last...
+                // strange but we haven't found something above the target Location, try LocationGroup at last...
                 result = findInGroupHierarchy(sourceLocation, targetLocationGroup, allLocationGroups);
                 if (result.isPresent()) {
                     LOGGER.debug("Route found 2: {}", result.get());
@@ -106,7 +110,7 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
                 throw new NotFoundException(format("No route found for TransportOrder with sourceLocation [%s], targetLocation [%s] and targetLocationGroup [%s]", sourceLocation, targetLocation, targetLocationGroup));
             } else {
 
-                // No match for targetLocationGroup, search for the targetLocation upwards:
+                // No targetLocationGroup, search for the targetLocation upwards:
                 result = findInHierarchy(sourceLocation, targetLocation, allLocationGroups);
                 if (result.isPresent()) {
                     LOGGER.debug("Route found 3: {}", result.get());
@@ -134,7 +138,10 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
         // climb up group
         Optional<Route> route = repository.findBySourceLocation_LocationIdAndTargetLocationGroupNameAndEnabled(sourceLocation, targetLocationGroup, true);
         if (!route.isPresent()) {
-            LocationGroupVO current = allLocationGroups.stream().filter(lg -> lg.getName().equals(targetLocationGroup)).findFirst().orElseThrow(() -> new NotFoundException(format("The LocationGrouo with name [%s] does not exist", targetLocationGroup)));
+            LocationGroupVO current = allLocationGroups.stream().filter(lg -> lg.getName().equals(targetLocationGroup)).findFirst().orElseThrow(() -> new NotFoundException(format("The LocationGroup with name [%s] does not exist", targetLocationGroup)));
+            if (current.getParent() == null || current.getParent().isEmpty()) {
+                return Optional.empty();
+            }
             route = findInGroupHierarchy(sourceLocation, current.getParent(), allLocationGroups);
         } return route;
     }
