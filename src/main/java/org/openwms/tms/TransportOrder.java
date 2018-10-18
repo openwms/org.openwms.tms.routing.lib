@@ -49,10 +49,6 @@ public class TransportOrder {
     @JsonProperty
     private String targetLocationGroup;
 
-    public TransportOrder() {
-
-    }
-
     public TransportOrder(String id, String transportUnitId, String routeId) {
         this.id = id;
         this.transportUnitId = transportUnitId;
