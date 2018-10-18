@@ -34,6 +34,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 /**
  * A ExplicitRouteSearchIT.
  *
@@ -50,44 +53,59 @@ public class ExplicitRouteSearchIT {
     private ExplicitRouteSearch testee;
 
 
-    public @Test(expected = IllegalArgumentException.class)
+    public @Test
     void shall_fail_when_no_source_is_given() {
-        testee.findBy(null, "IPUNKT", "LAGER");
+        try {
+            testee.findBy(null, "IPUNKT", "LAGER");
+            fail("Should fail because no source is given");
+        } catch (IllegalArgumentException iae) {
+            assertTrue(iae.getMessage().contains("sourceLocation"));
+            // ok
+        }
     }
 
-    public @Test(expected = IllegalArgumentException.class)
-    void shall_fail_when_no_targetLoc_is_given() {
-        testee.findBy(" ", "", " ");
-    }
-
-    public @Test(expected = IllegalArgumentException.class)
-    void shall_fail_when_no_targetLG_is_given() {
-        testee.findBy(" ", " ", "");
-    }
-
-    public @Test(expected = IllegalArgumentException.class)
+    public @Test
     void shall_fail_when_no_target_is_given() {
-        testee.findBy(" ", null, null);
+        try {
+            testee.findBy("STCK/0001/0001/0000/0000", null, null);
+            fail("Should fail because no target is given at all");
+        } catch (IllegalArgumentException iae) {
+            assertTrue(iae.getMessage().contains("target"));
+            // ok
+        }
     }
 
-    public @Test(expected = IllegalArgumentException.class)
-    void shall_fail_when_no_target_is_given2() {
-        testee.findBy(" ", null, null);
-    }
-
-    public @Test(expected = IllegalArgumentException.class)
+    public @Test
     void shall_fail_when_no_target_is_given3() {
-        testee.findBy("STCK/0001/0001/0000/0000", null, null);
+        try {
+            testee.findBy("STCK/0001/0001/0000/0000", " ", null);
+            fail("Should fail because no target is given");
+        } catch (IllegalArgumentException iae) {
+            assertTrue(iae.getMessage().contains("target"));
+            // ok
+        }
     }
 
-    public @Test(expected = IllegalArgumentException.class)
+    public @Test
     void shall_fail_when_no_target_is_given4() {
-        testee.findBy("STCK/0001/0001/0000/0000", null, " ");
+        try {
+            testee.findBy("STCK/0001/0001/0000/0000", null, " ");
+            fail("Should fail because no target is given");
+        } catch (IllegalArgumentException iae) {
+            assertTrue(iae.getMessage().contains("targetLocation"));
+            // ok
+        }
     }
 
-    public @Test(expected = IllegalArgumentException.class)
-    void shall_fail_when_no_target_is_given5() {
-        testee.findBy("STCK/0001/0001/0000/0000", " ", null);
+    public @Test
+    void shall_fail_with_invalid_target() {
+        try {
+            testee.findBy("STCK/0001/0001/0000/0000", "", "STOCK");
+            fail("Should fail because no route exists");
+        } catch (NotFoundException iae) {
+            assertTrue(iae.getMessage().contains("No route"));
+            // ok
+        }
     }
 
     public @Test
@@ -96,10 +114,16 @@ public class ExplicitRouteSearchIT {
         Assert.assertNotEquals("", result.getRouteId());
     }
 
-    public @Test(expected = NotFoundException.class)
-    void shall_fail_with_invalid_target() {
-        Route result = testee.findBy("STCK/0001/0001/0000/0000", "", "STOCK");
-        Assert.assertNotEquals("", result.getRouteId());
+    public @Test
+    void shall_pass_when_at_least_one_target_is_given2() {
+        Route result = testee.findBy("STCK/0001/0001/0000/0000", null, "FGRECEIVING");
+        Assert.assertEquals("REC_CONV", result.getRouteId());
+    }
+
+    public @Test
+    void shall_pass_when_all_targets_are_given() {
+        Route result = testee.findBy("STCK/0001/0001/0000/0000", "STCK/0001/0002/0000/0000", "FGRECEIVING");
+        Assert.assertEquals("SRC_TRG", result.getRouteId());
     }
 
     @TestConfiguration
