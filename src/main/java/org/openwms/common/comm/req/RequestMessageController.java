@@ -34,6 +34,7 @@ import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.ProgramResult;
 import org.openwms.tms.routing.Route;
+import org.openwms.tms.routing.RouteSearchAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,7 +65,7 @@ class RequestMessageController {
     @Autowired
     private InputContext in;
     @Autowired
-    private TransportUnitApi api;
+    private RouteSearchAlgorithm routeSearch;
 
     /**
      * Takes the passed message, and hands over to the service.
@@ -94,7 +95,7 @@ class RequestMessageController {
         Route route;
         try {
             TransportOrder transportOrder = fetchTransportOrder.apply(req.getBarcode());
-            route = Route.of(transportOrder.getRouteId());
+            route = routeSearch.findBy(transportOrder.getSourceLocation(), transportOrder.getTargetLocation(), transportOrder.getTargetLocationGroup());
         } catch (NotFoundException nfe) {
             route = Route.NO_ROUTE;
         }

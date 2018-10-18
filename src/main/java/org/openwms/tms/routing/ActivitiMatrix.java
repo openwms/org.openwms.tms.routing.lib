@@ -21,19 +21,26 @@
  */
 package org.openwms.tms.routing;
 
-import javax.validation.constraints.NotNull;
-import java.util.Optional;
-
 import org.ameba.exception.NotFoundException;
 import org.openwms.common.LocationGroupVO;
 import org.openwms.common.LocationVO;
+import org.openwms.core.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.hateoas.Link;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * A ActivitiMatrix.
@@ -50,6 +57,8 @@ class ActivitiMatrix implements Matrix {
     @Autowired
     @Qualifier("simpleRestTemplate")
     private RestTemplate restTemplate;
+    @Autowired
+    private DiscoveryClient dc;
 
     @Override
     public Action findBy(@NotNull String actionType, @NotNull Route route, LocationVO location, LocationGroupVO locationGroup) {
@@ -62,11 +71,11 @@ class ActivitiMatrix implements Matrix {
             if (!prg.isPresent()) {
 
                 // When Location is set but no Action exists, check by LocationGroup
-                prg = findByLocationGroupByName(route, location.getLocationGroupName());
+                prg = findByLocationGroupByName(actionType, route, location.getLocationGroupName());
                 if (!prg.isPresent()) {
 
                     // search the LocationGroup hierarchy the way up...
-                    prg = findByLocationGroup(route, locationGroup);
+                    prg = findByLocationGroup(actionType, route, locationGroup);
                     if (!prg.isPresent()) {
                         String message = String.format("No Action found for Route [%s] on Location [%s] and LocationGroup [%s]", route.getRouteId(), location.getCoordinate(), location.getLocationGroupName());
                         LOGGER.info(message);
@@ -83,7 +92,7 @@ class ActivitiMatrix implements Matrix {
                 LOGGER.info(message);
                 throw new NoRouteException(message);
             }
-            prg = findByLocationGroup(route, locationGroup);
+            prg = findByLocationGroup(actionType, route, locationGroup);
         }
         return prg.orElseThrow(() -> {
             String message = String.format("No Action found for Route [%s], Location [%s], LocationGroup [%s]", route.getRouteId(), location, locationGroup);
@@ -92,23 +101,34 @@ class ActivitiMatrix implements Matrix {
         });
     }
 
-    private Optional<Action> findByLocationGroup(Route route, LocationGroupVO locationGroup) {
-        Optional<Action> cp = repository.findByRouteAndLocationGroupName(route.getRouteId(), locationGroup.getName());
+    private Optional<Action> findByLocationGroup(String actionType, Route route, LocationGroupVO locationGroup) {
+        Optional<Action> cp = repository.findByActionTypeAndRouteAndLocationGroupName(actionType, route.getRouteId(), locationGroup.getName());
         if (!cp.isPresent() && locationGroup.hasLink("_parent")) {
-            cp = findByLocationGroup(route, findLocationGroup(locationGroup.getLink("_parent")));
+            cp = findByLocationGroup(actionType, route, findLocationGroup(locationGroup.getLink("_parent")));
         }
         return cp;
     }
 
     private LocationGroupVO findLocationGroup(Link parent) {
-        LocationGroupVO lg = restTemplate.getForObject(parent.getHref(), LocationGroupVO.class);
+        List<ServiceInstance> list = dc.getInstances("common-service");
+        if (list == null || list.size() == 0) {
+            throw new RuntimeException("No deployed service with name common-service found");
+        }
+        ServiceInstance si = list.get(0);
+        LOGGER.debug("Calling common-service URL [{}]", parent.getHref());
+        ResponseEntity<LocationGroupVO> lg = restTemplate.exchange(
+                parent.getHref(),
+                HttpMethod.GET,
+                new HttpEntity<>(SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))),
+                LocationGroupVO.class
+                );
         if (lg == null) {
             throw new NotFoundException(String.format("No LocationGroup found at [%s]", parent.getHref()));
         }
-        return lg;
+        return lg.getBody();
     }
 
-    private Optional<Action> findByLocationGroupByName(Route route, String locationGroupName) {
-        return repository.findByRouteAndLocationGroupName(route.getRouteId(), locationGroupName);
+    private Optional<Action> findByLocationGroupByName(String actionType, Route route, String locationGroupName) {
+        return repository.findByActionTypeAndRouteAndLocationGroupName(actionType, route.getRouteId(), locationGroupName);
     }
 }

@@ -21,10 +21,14 @@
  */
 package org.openwms;
 
+import feign.auth.BasicAuthRequestInterceptor;
+import io.interface21.cloud.ui.UIPackage;
+import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.transport.api.TransportUnitApi;
+import org.openwms.tms.api.TransportOrderApi;
 import org.openwms.tms.routing.InputContext;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -39,7 +43,7 @@ import org.springframework.context.annotation.Configuration;
 //@AutoConfigureBefore(DataSourceAutoConfiguration.class)
 //@AutoConfigureAfter(ModuleConfiguration.class)
 //@AutoConfigureBefore(JpaProcessEngineAutoConfiguration.JpaConfiguration.class)
-@EnableFeignClients(basePackages = "org.openwms.common.transport.api")
+@EnableFeignClients(basePackageClasses = {TransportUnitApi.class, UIPackage.class, LocationGroupApi.class, LocationGroupApi.class, TransportOrderApi.class})
 public class FeignConfiguration {
 
     @Bean
@@ -48,5 +52,8 @@ public class FeignConfiguration {
         return new InputContext();
     }
 
-
+    @Bean
+    public BasicAuthRequestInterceptor basicAuthRequestInterceptor() {
+        return new BasicAuthRequestInterceptor("user", "sa");
+    }
 }

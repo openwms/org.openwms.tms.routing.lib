@@ -77,8 +77,6 @@ public class FetchLocationGroupByName implements Function<String, LocationGroupV
                         new HttpEntity<LocationGroupVO>(SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))),
                         LocationGroupVO.class,
                         maps);
-
-        System.out.println(exchange);
         return exchange.getBody();
     }
 }

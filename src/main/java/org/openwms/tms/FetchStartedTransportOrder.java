@@ -66,8 +66,8 @@ public class FetchStartedTransportOrder implements Function<String, TransportOrd
                         endpoint,
                         HttpMethod.GET,
                         new HttpEntity<>(SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))),
-                        new ParameterizedTypeReference<List<TransportOrder>>() {
-                        });
+                        new ParameterizedTypeReference<List<TransportOrder>>() {}
+                        );
         if (exchange.getBody().size() == 0) {
             throw new NotFoundException(String.format("No started TransportOrders for TransportUnit [%s] found, no routing possible", barcode));
         }
