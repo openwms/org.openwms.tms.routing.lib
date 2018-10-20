@@ -1,11 +1,11 @@
 /*
  * openwms.org, the Open Warehouse Management System.
- * Copyright (C) 2014 Heiko Scherrer
+ * Copyright (C) 2018 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as 
+ * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -19,42 +19,46 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.common.comm.req;
 
-import org.springframework.hateoas.ResourceSupport;
-
-import java.io.Serializable;
+import org.openwms.tms.routing.InputContext;
 
 /**
- * A LocationGroup.
+ * A RequestHeaderVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class LocationGroupVO extends ResourceSupport implements Serializable {
+class RequestHeaderVO {
 
-    private String name;
-    private String parent;
+    private String sequenceNo, sender, receiver;
 
-    public LocationGroupVO() {
+    public String getSequenceNo() {
+        return sequenceNo;
     }
 
-    public LocationGroupVO(String name) {
-        this.name = name;
+    public void setSequenceNo(String sequenceNo) {
+        this.sequenceNo = sequenceNo;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getSender() {
+        return sender;
     }
 
-    public String getName() {
-        return name;
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
-    public String getParent() {
-        return parent;
+    public String getReceiver() {
+        return receiver;
     }
 
-    public void setParent(String parent) {
-        this.parent = parent;
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
+
+    void addFields(InputContext in) {
+        in.addBeanToMsg("sequenceNo", sequenceNo);
+        in.addBeanToMsg("sender", sender);
+        in.addBeanToMsg("receiver", receiver);
     }
 }

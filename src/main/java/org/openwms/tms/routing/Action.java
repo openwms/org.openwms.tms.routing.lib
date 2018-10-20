@@ -21,6 +21,8 @@
  */
 package org.openwms.tms.routing;
 
+import org.ameba.integration.jpa.BaseEntity;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -28,8 +30,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-
-import org.ameba.integration.jpa.BaseEntity;
 
 /**
  * A Action.

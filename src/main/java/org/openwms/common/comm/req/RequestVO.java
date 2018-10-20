@@ -26,32 +26,26 @@ package org.openwms.common.comm.req;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
+// ajc has a problem here with lombok
 class RequestVO {
 
     String actualLocation, locationGroupName, barcode;
+    RequestHeaderVO header;
 
     public String getActualLocation() {
         return actualLocation;
-    }
-
-    public void setActualLocation(String actualLocation) {
-        this.actualLocation = actualLocation;
     }
 
     public String getLocationGroupName() {
         return locationGroupName;
     }
 
-    public void setLocationGroupName(String locationGroupName) {
-        this.locationGroupName = locationGroupName;
-    }
-
     public String getBarcode() {
         return barcode;
     }
 
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
+    public RequestHeaderVO getHeader() {
+        return header;
     }
 
     public boolean hasLocationGroupName() {

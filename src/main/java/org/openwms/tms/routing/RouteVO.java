@@ -21,7 +21,6 @@
  */
 package org.openwms.tms.routing;
 
-import lombok.NoArgsConstructor;
 import org.ameba.http.AbstractBase;
 
 import java.io.Serializable;
@@ -31,7 +30,7 @@ import java.io.Serializable;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@NoArgsConstructor
+// ajc has a problem here with lombok
 public class RouteVO extends AbstractBase implements Serializable {
 
     private String name, description, sourceLocation, sourceLocationGroupName, targetLocation, targetLocationGroupName, key;

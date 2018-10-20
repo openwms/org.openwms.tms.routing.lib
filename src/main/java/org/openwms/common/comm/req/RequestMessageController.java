@@ -26,13 +26,11 @@ import org.openwms.common.FetchLocationByCoord;
 import org.openwms.common.FetchLocationGroupByName;
 import org.openwms.common.LocationGroupVO;
 import org.openwms.common.LocationVO;
-import org.openwms.common.transport.api.TransportUnitApi;
 import org.openwms.tms.FetchStartedTransportOrder;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.ProgramExecutor;
-import org.openwms.tms.routing.ProgramResult;
 import org.openwms.tms.routing.Route;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +40,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.Optional;
 
 /**
  * A RequestMessageController is the API of the routing service component.
@@ -89,6 +86,7 @@ class RequestMessageController {
         in.addBeanToMsg("barcode", req.getBarcode());
         in.addBeanToMsg("actualLocation", req.getActualLocation());
         in.addBeanToMsg("actualLocationGroup", req.getLocationGroupName());
+        req.getHeader().addFields(in);
 
         LocationVO location = fetchLocationByCoord.apply(req.getActualLocation());
         LocationGroupVO locationGroup = req.hasLocationGroupName() ? fetchLocationGroupByName.apply(req.getLocationGroupName()) : fetchLocationGroupByName.apply(location.getLocationGroupName());
@@ -99,11 +97,6 @@ class RequestMessageController {
         } catch (NotFoundException nfe) {
             route = Route.NO_ROUTE;
         }
-        Optional<ProgramResult> result = executor.execute(matrix.findBy("REQ_", route, location, locationGroup), new HashMap<>(0));
-        //return new ResponseMessage.Builder()
-        // .withBarcode(result.getBarcode())
-        // .withActualLocation(result.getActualLocation())
-        // .withTargetLocation(result.getTargetLocation())
-        // .withTargetLocationGroup(result.getLocationGroupName()).build();
+        executor.execute(matrix.findBy("REQ_", route, location, locationGroup), new HashMap<>(0));
     }
 }
