@@ -2,3 +2,18 @@ eureka:
   client:
     healthcheck:
       enabled: true
+
+---
+spring:
+  profiles: ASYNCHRONOUS
+
+owms:
+  driver:
+    sysu:
+      queue-name: sysu
+      exchange-mapping: sysu.*
+    req:
+      queue-name: req
+      exchange-mapping: req.*
+    res:
+      queue-name: res
