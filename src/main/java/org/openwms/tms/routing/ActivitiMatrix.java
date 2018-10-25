@@ -21,13 +21,11 @@
  */
 package org.openwms.tms.routing;
 
-import org.ameba.exception.NotFoundException;
 import org.openwms.common.LocationGroupVO;
 import org.openwms.common.LocationVO;
 import org.openwms.core.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -52,13 +50,15 @@ class ActivitiMatrix implements Matrix {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ActivitiMatrix.class);
 
-    @Autowired
-    private ActionRepository repository;
-    @Autowired
-    @Qualifier("simpleRestTemplate")
-    private RestTemplate restTemplate;
-    @Autowired
-    private DiscoveryClient dc;
+    private final ActionRepository repository;
+    private final RestTemplate restTemplate;
+    private final DiscoveryClient dc;
+
+    ActivitiMatrix(ActionRepository repository, @Qualifier("simpleRestTemplate") RestTemplate restTemplate, DiscoveryClient dc) {
+        this.repository = repository;
+        this.restTemplate = restTemplate;
+        this.dc = dc;
+    }
 
     @Override
     public Action findBy(@NotNull String actionType, @NotNull Route route, LocationVO location, LocationGroupVO locationGroup) {
@@ -115,16 +115,15 @@ class ActivitiMatrix implements Matrix {
             throw new RuntimeException("No deployed service with name common-service found");
         }
         ServiceInstance si = list.get(0);
-        LOGGER.debug("Calling common-service URL [{}]", parent.getHref());
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Calling common-service URL [{}]", parent.getHref());
+        }
         ResponseEntity<LocationGroupVO> lg = restTemplate.exchange(
                 parent.getHref(),
                 HttpMethod.GET,
                 new HttpEntity<>(SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))),
                 LocationGroupVO.class
                 );
-        if (lg == null) {
-            throw new NotFoundException(String.format("No LocationGroup found at [%s]", parent.getHref()));
-        }
         return lg.getBody();
     }
 

@@ -21,10 +21,10 @@
  */
 package org.openwms.common;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.ResourceSupport;
+
+import java.io.Serializable;
 
 /**
  * A LocationVO.

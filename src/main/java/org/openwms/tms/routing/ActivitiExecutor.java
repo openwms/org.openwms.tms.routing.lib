@@ -43,12 +43,6 @@ class ActivitiExecutor implements ProgramExecutor {
     private final RuntimeService runtimeService;
     private final RepositoryService repositoryService;
 
-    /**
-     * Autowired constructor.
-     *
-     * @param runtimeService Required Activiti RuntimeService
-     * @param repositoryService Required Activiti RepositoryService
-     */
     ActivitiExecutor(RuntimeService runtimeService, RepositoryService repositoryService) {
         this.runtimeService = runtimeService;
         this.repositoryService = repositoryService;
@@ -64,7 +58,6 @@ class ActivitiExecutor implements ProgramExecutor {
         }
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionKey(program.getProgramKey()).active().latestVersion().singleResult();
         runtimeService.startProcessInstanceById(processDefinition.getId(), runtimeVariables);
-        // TODO [openwms]: 07.06.17 return an result here!
-        return null;
+        return Optional.empty();
     }
 }

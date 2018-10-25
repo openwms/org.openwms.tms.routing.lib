@@ -19,34 +19,19 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.location.api;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.io.Serializable;
+package org.openwms.common.comm.res;
 
 /**
- * A ErrorCodeVO.
+ * A ResResponder is sending messages to trigger a OSIP RES_ telegram to a given target.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class ErrorCodeVO implements Serializable {
+public interface ResResponder {
 
-    @JsonProperty
-    private String errorCode;
-
-    public ErrorCodeVO() {
-    }
-
-    public ErrorCodeVO(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
-    }
+    /**
+     * Send a message to fire a OSIP RES_ telegram to the given {@code target} location.
+     *
+     * @param target The target location
+     */
+    void sendToLocation(String target);
 }

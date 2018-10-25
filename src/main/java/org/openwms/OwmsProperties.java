@@ -19,34 +19,36 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.location.api;
+package org.openwms;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
-import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 /**
- * A ErrorCodeVO.
+ * A OwmsProperties.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class ErrorCodeVO implements Serializable {
+@Configuration
+@ConfigurationProperties("owms")
+public class OwmsProperties {
 
-    @JsonProperty
-    private String errorCode;
+    private Map<String, String> partners = new HashMap<>();
 
-    public ErrorCodeVO() {
+    public Map<String, String> getPartners() {
+        return this.partners;
     }
 
-    public ErrorCodeVO(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
+    public Optional<String> getPartner(String key) {
+        return partners
+                .entrySet()
+                .stream()
+                .filter(e -> e.getKey().equalsIgnoreCase(key))
+                .findFirst()
+                .map(Map.Entry::getValue);
     }
 }

@@ -44,4 +44,8 @@ public class InputContext {
     public void setMsg(Map<String, Object> msg) {
         this.msg = msg;
     }
+
+    public void putAll(Map<String, Object> msg) {
+        this.msg.putAll(msg);
+    }
 }

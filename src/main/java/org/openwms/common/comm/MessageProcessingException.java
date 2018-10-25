@@ -1,6 +1,6 @@
 /*
  * openwms.org, the Open Warehouse Management System.
- * Copyright (C) 2018 Heiko Scherrer
+ * Copyright (C) 2014 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
@@ -19,34 +19,31 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.location.api;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.io.Serializable;
+package org.openwms.common.comm;
 
 /**
- * A ErrorCodeVO.
+ * A MessageProcessingException is a general exception that indicates a fault situation during message processing.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class ErrorCodeVO implements Serializable {
+public class MessageProcessingException extends RuntimeException {
 
-    @JsonProperty
-    private String errorCode;
-
-    public ErrorCodeVO() {
+    /**
+     * Create a new MessageProcessingException.
+     *
+     * @param message Detail message
+     * @param cause Cause to be propagated
+     */
+    public MessageProcessingException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public ErrorCodeVO(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
+    /**
+     * Create a new MessageProcessingException.
+     *
+     * @param message Detail message
+     */
+    public MessageProcessingException(String message) {
+        super(message);
     }
 }

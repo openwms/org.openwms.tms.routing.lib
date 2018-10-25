@@ -21,89 +21,29 @@
  */
 package org.openwms.common.comm.req;
 
-import org.ameba.exception.NotFoundException;
-import org.openwms.common.FetchLocationByCoord;
-import org.openwms.common.FetchLocationGroupByName;
-import org.openwms.common.LocationGroupVO;
-import org.openwms.common.LocationVO;
-import org.openwms.common.transport.api.TransportUnitApi;
-import org.openwms.tms.FetchStartedTransportOrder;
-import org.openwms.tms.TransportOrder;
-import org.openwms.tms.routing.InputContext;
-import org.openwms.tms.routing.Matrix;
-import org.openwms.tms.routing.ProgramExecutor;
-import org.openwms.tms.routing.ProgramResult;
-import org.openwms.tms.routing.Route;
-import org.openwms.tms.routing.RouteSearchAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import org.openwms.core.SpringProfiles;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Optional;
 
 /**
  * A RequestMessageController is the API of the routing service component.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
+@Profile("!"+ SpringProfiles.ASYNCHRONOUS_PROFILE)
 @RestController
 class RequestMessageController {
 
-    @Autowired
-    private FetchLocationGroupByName fetchLocationGroupByName;
-    @Autowired
-    private FetchLocationByCoord fetchLocationByCoord;
-    @Autowired
-    private FetchStartedTransportOrder fetchTransportOrder;
-    @Autowired
-    private Matrix matrix;
-    @Autowired
-    private ProgramExecutor executor;
-    @Autowired
-    private InputContext in;
-    @Autowired
-    private RouteSearchAlgorithm routeSearch;
+    private final RequestMessageHandler handler;
 
-    /**
-     * Takes the passed message, and hands over to the service.
-     */
+    RequestMessageController(RequestMessageHandler handler) {
+        this.handler = handler;
+    }
+
     @PostMapping("/req")
-    @Transactional
-    public void handleREQ(@RequestBody RequestVO req) {
-
-        /*
-
-         Select program from
-         - actual location
-         - transportunit
-         - locgroup x
-         - to x
-         - routeid x
-         - type
-
-         */
-        // Populate input context
-        in.addBeanToMsg("barcode", req.getBarcode());
-        in.addBeanToMsg("actualLocation", req.getActualLocation());
-        in.addBeanToMsg("actualLocationGroup", req.getLocationGroupName());
-
-        LocationVO location = fetchLocationByCoord.apply(req.getActualLocation());
-        LocationGroupVO locationGroup = req.hasLocationGroupName() ? fetchLocationGroupByName.apply(req.getLocationGroupName()) : fetchLocationGroupByName.apply(location.getLocationGroupName());
-        Route route;
-        try {
-            TransportOrder transportOrder = fetchTransportOrder.apply(req.getBarcode());
-            route = routeSearch.findBy(transportOrder.getSourceLocation(), transportOrder.getTargetLocation(), transportOrder.getTargetLocationGroup());
-        } catch (NotFoundException nfe) {
-            route = Route.NO_ROUTE;
-        }
-        Optional<ProgramResult> result = executor.execute(matrix.findBy("REQ_", route, location, locationGroup), new HashMap<>(0));
-        //return new ResponseMessage.Builder()
-        // .withBarcode(result.getBarcode())
-        // .withActualLocation(result.getActualLocation())
-        // .withTargetLocation(result.getTargetLocation())
-        // .withTargetLocationGroup(result.getLocationGroupName()).build();
+    void handleREQ(@RequestBody RequestVO req) {
+        handler.handleREQ(req);
     }
 }

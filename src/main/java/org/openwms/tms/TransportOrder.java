@@ -21,10 +21,9 @@
  */
 package org.openwms.tms;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * A TransportOrder.
@@ -32,8 +31,6 @@ import lombok.NoArgsConstructor;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class TransportOrder {
 
     @JsonProperty
@@ -48,6 +45,10 @@ public class TransportOrder {
     private String targetLocation;
     @JsonProperty
     private String targetLocationGroup;
+
+    @JsonCreator
+    public TransportOrder() {
+    }
 
     public TransportOrder(String id, String transportUnitId, String routeId) {
         this.id = id;

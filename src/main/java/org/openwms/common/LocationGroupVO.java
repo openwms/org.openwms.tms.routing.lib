@@ -21,15 +21,17 @@
  */
 package org.openwms.common;
 
-import java.io.Serializable;
-
+import lombok.Builder;
 import org.springframework.hateoas.ResourceSupport;
+
+import java.io.Serializable;
 
 /**
  * A LocationGroup.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
+@Builder
 public class LocationGroupVO extends ResourceSupport implements Serializable {
 
     private String name;
@@ -40,6 +42,11 @@ public class LocationGroupVO extends ResourceSupport implements Serializable {
 
     public LocationGroupVO(String name) {
         this.name = name;
+    }
+
+    public LocationGroupVO(String name, String parent) {
+        this.name = name;
+        this.parent = parent;
     }
 
     public void setName(String name) {

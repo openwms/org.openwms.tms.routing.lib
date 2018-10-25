@@ -21,6 +21,7 @@
  */
 package org.openwms.common;
 
+import org.ameba.annotation.Measured;
 import org.openwms.core.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +60,7 @@ public class FetchLocationByCoord implements Function<String, LocationVO> {
     @Autowired
     private DiscoveryClient dc;
 
+    @Measured
     @Override
     public LocationVO apply(String coordinate) {
         List<ServiceInstance> list = dc.getInstances(commonServiceName.toUpperCase());

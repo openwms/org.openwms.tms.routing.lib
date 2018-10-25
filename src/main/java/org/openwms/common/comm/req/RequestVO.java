@@ -21,37 +21,71 @@
  */
 package org.openwms.common.comm.req;
 
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * A RequestVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-class RequestVO {
+// ajc has a problem here with lombok
+public class RequestVO implements Serializable {
 
-    String actualLocation, locationGroupName, barcode;
-
-    public String getActualLocation() {
-        return actualLocation;
-    }
+    private String actualLocation, locationGroupName, barcode, errorCode;
 
     public void setActualLocation(String actualLocation) {
         this.actualLocation = actualLocation;
-    }
-
-    public String getLocationGroupName() {
-        return locationGroupName;
     }
 
     public void setLocationGroupName(String locationGroupName) {
         this.locationGroupName = locationGroupName;
     }
 
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
+    }
+
+    public void setHeader(RequestHeaderVO header) {
+        this.header = header;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    private RequestHeaderVO header;
+
+    public Map<String, Object> getAll() {
+        Map<String, Object> result = new HashMap<>(4);
+        result.put("actualLocation", actualLocation);
+        result.put("locationGroupName", locationGroupName);
+        result.put("barcode", barcode);
+        result.put("errorCode", errorCode);
+        result.put("reqHeader", header);
+        return Collections.unmodifiableMap(result);
+    }
+
+    public String getActualLocation() {
+        return actualLocation;
+    }
+
+    public String getLocationGroupName() {
+        return locationGroupName;
+    }
+
     public String getBarcode() {
         return barcode;
     }
 
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
+    public RequestHeaderVO getHeader() {
+        return header;
     }
 
     public boolean hasLocationGroupName() {

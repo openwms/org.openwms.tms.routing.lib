@@ -21,13 +21,13 @@
  */
 package org.openwms.common;
 
+import org.ameba.integration.jpa.ApplicationEntity;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-
-import org.ameba.integration.jpa.ApplicationEntity;
 
 /**
  * A LocationEO.
