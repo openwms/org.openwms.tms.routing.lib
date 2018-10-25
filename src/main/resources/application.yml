@@ -2,3 +2,23 @@ eureka:
   client:
     healthcheck:
       enabled: true
+
+owms:
+  partners:
+    sps01: tcpip-palett1
+    sps02: tcpip-palett2
+
+---
+spring:
+  profiles: ASYNCHRONOUS
+
+owms:
+  driver:
+    sysu:
+      queue-name: sysu
+      exchange-mapping: sysu.*
+    req:
+      queue-name: req
+      exchange-mapping: req.*
+    res:
+      queue-name: res

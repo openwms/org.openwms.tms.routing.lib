@@ -22,9 +22,6 @@
 package org.openwms.common.location.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -33,13 +30,21 @@ import java.io.Serializable;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ErrorCodeVO implements Serializable {
 
     @JsonProperty
-    String errorCode;
+    private String errorCode;
+
+    public ErrorCodeVO() {
+    }
+
+    public ErrorCodeVO(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
 
     public void setErrorCode(String errorCode) {
         this.errorCode = errorCode;

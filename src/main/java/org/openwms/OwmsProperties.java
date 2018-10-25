@@ -1,11 +1,11 @@
 /*
  * openwms.org, the Open Warehouse Management System.
- * Copyright (C) 2014 Heiko Scherrer
+ * Copyright (C) 2018 Heiko Scherrer
  *
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as 
+ * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -19,44 +19,36 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms;
 
-import lombok.Builder;
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
-import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 /**
- * A LocationGroup.
+ * A OwmsProperties.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Builder
-public class LocationGroupVO extends ResourceSupport implements Serializable {
+@Configuration
+@ConfigurationProperties("owms")
+public class OwmsProperties {
 
-    private String name;
-    private String parent;
+    private Map<String, String> partners = new HashMap<>();
 
-    public LocationGroupVO() {
+    public Map<String, String> getPartners() {
+        return this.partners;
     }
 
-    public LocationGroupVO(String name) {
-        this.name = name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getParent() {
-        return parent;
-    }
-
-    public void setParent(String parent) {
-        this.parent = parent;
+    public Optional<String> getPartner(String key) {
+        return partners
+                .entrySet()
+                .stream()
+                .filter(e -> e.getKey().equalsIgnoreCase(key))
+                .findFirst()
+                .map(Map.Entry::getValue);
     }
 }

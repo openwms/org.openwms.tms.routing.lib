@@ -5,7 +5,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as 
+ * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -21,10 +21,10 @@
  */
 package org.openwms.common;
 
+import org.ameba.annotation.Measured;
 import org.openwms.core.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -52,13 +52,17 @@ import static java.lang.String.format;
 public class FetchLocationGroupByName implements Function<String, LocationGroupVO> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FetchLocationGroupByName.class);
-    @Value("${owms.routing.common-service-name:common-service}")
-    private String commonServiceName;
-    @Autowired
-    private RestTemplate aLoadBalanced;
-    @Autowired
-    private DiscoveryClient dc;
+    private final String commonServiceName;
+    private final RestTemplate aLoadBalanced;
+    private final DiscoveryClient dc;
 
+    FetchLocationGroupByName(@Value("${owms.routing.common-service-name:common-service}") String commonServiceName, RestTemplate aLoadBalanced, DiscoveryClient dc) {
+        this.commonServiceName = commonServiceName;
+        this.aLoadBalanced = aLoadBalanced;
+        this.dc = dc;
+    }
+
+    @Measured
     @Override
     public LocationGroupVO apply(String name) {
         List<ServiceInstance> list = dc.getInstances(commonServiceName.toUpperCase());
@@ -70,13 +74,7 @@ public class FetchLocationGroupByName implements Function<String, LocationGroupV
         ServiceInstance si = list.get(0);
         String endpoint = si.getMetadata().get("protocol") + "://" + si.getServiceId() + "/v1/locationgroups" + "?name=" + name;
         LOGGER.debug("Calling common-service URL [{}]", endpoint);
-        ResponseEntity<LocationGroupVO> exchange =
-                aLoadBalanced.exchange(
-                        endpoint,
-                        HttpMethod.GET,
-                        new HttpEntity<LocationGroupVO>(SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))),
-                        LocationGroupVO.class,
-                        maps);
+        ResponseEntity<LocationGroupVO> exchange = aLoadBalanced.exchange(endpoint, HttpMethod.GET, new HttpEntity<LocationGroupVO>(SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))), LocationGroupVO.class, maps);
         return exchange.getBody();
     }
 }

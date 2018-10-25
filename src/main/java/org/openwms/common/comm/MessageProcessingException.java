@@ -5,7 +5,7 @@
  * This file is part of openwms.org.
  *
  * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as 
+ * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -19,44 +19,31 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
-
-import lombok.Builder;
-import org.springframework.hateoas.ResourceSupport;
-
-import java.io.Serializable;
+package org.openwms.common.comm;
 
 /**
- * A LocationGroup.
+ * A MessageProcessingException is a general exception that indicates a fault situation during message processing.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Builder
-public class LocationGroupVO extends ResourceSupport implements Serializable {
+public class MessageProcessingException extends RuntimeException {
 
-    private String name;
-    private String parent;
-
-    public LocationGroupVO() {
+    /**
+     * Create a new MessageProcessingException.
+     *
+     * @param message Detail message
+     * @param cause Cause to be propagated
+     */
+    public MessageProcessingException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public LocationGroupVO(String name) {
-        this.name = name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getParent() {
-        return parent;
-    }
-
-    public void setParent(String parent) {
-        this.parent = parent;
+    /**
+     * Create a new MessageProcessingException.
+     *
+     * @param message Detail message
+     */
+    public MessageProcessingException(String message) {
+        super(message);
     }
 }
