@@ -44,6 +44,11 @@ public class LocationGroupVO extends ResourceSupport implements Serializable {
         this.name = name;
     }
 
+    public LocationGroupVO(String name, String parent) {
+        this.name = name;
+        this.parent = parent;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

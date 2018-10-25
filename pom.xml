@@ -42,7 +42,6 @@
         <activiti.version>5.21.0</activiti.version>
         <ameba-cloud.version>2.0-SNAPSHOT</ameba-cloud.version>
         <core.version>1.3.0-SNAPSHOT</core.version>
-        <lombok.version>1.16.12</lombok.version>
         <sonar.projectKey>OpenWMS.org_TMS:Routing</sonar.projectKey>
     </properties>
 
@@ -215,6 +214,24 @@
                 </executions>
             </plugin-->
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <debug>${debug.info}</debug>
+                        <optimize>true</optimize>
+                        <fork>true</fork>
+                        <source>${maven.compile.sourceLevel}</source>
+                        <target>${maven.compile.targetLevel}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <proc>none</proc>
+                        <!-- see: https://github.com/spring-projects/spring-boot/issues/4847 -->
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <reporting>
