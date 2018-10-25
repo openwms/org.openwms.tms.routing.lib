@@ -28,7 +28,7 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * A AmqpResponder.
@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Profile(SpringProfiles.ASYNCHRONOUS_PROFILE)
-@Component("responder")
+@Service("responder")
 public class AmqpResponder implements ResResponder {
 
     private final InputContext in;
@@ -52,7 +52,7 @@ public class AmqpResponder implements ResResponder {
 
     @Measured
     @Override
-    public void sendTo(String target) {
+    public void sendToLocation(String target) {
         ResponseHeader header = ResponseHeader.newBuilder()
                 .sender("" + in.getMsg().get("receiver"))
                 .receiver(""+in.getMsg().get("sender"))

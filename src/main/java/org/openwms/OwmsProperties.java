@@ -19,19 +19,36 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.res;
+package org.openwms;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 /**
- * A ResResponder is sending messages to trigger a OSIP RES_ telegram to a given target.
+ * A OwmsProperties.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public interface ResResponder {
+@Configuration
+@ConfigurationProperties("owms")
+public class OwmsProperties {
 
-    /**
-     * Send a message to fire a OSIP RES_ telegram to the given {@code target} location.
-     *
-     * @param target The target location
-     */
-    void sendToLocation(String target);
+    private Map<String, String> partners = new HashMap<>();
+
+    public Map<String, String> getPartners() {
+        return this.partners;
+    }
+
+    public Optional<String> getPartner(String key) {
+        return partners
+                .entrySet()
+                .stream()
+                .filter(e -> e.getKey().equalsIgnoreCase(key))
+                .findFirst()
+                .map(Map.Entry::getValue);
+    }
 }
