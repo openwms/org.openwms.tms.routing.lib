@@ -21,6 +21,7 @@
  */
 package org.openwms;
 
+import org.ameba.annotation.EnableAspects;
 import org.ameba.mapping.BeanMapper;
 import org.ameba.mapping.DozerMapperImpl;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -40,6 +41,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 @EnableDiscoveryClient
 @EnableTransactionManagement
+@EnableAspects
 @EnableJpaRepositories(basePackages = "org.openwms")
 @EntityScan(basePackages = "org.openwms")
 public class ModuleConfiguration {
@@ -62,5 +64,4 @@ public class ModuleConfiguration {
     BeanMapper beanMapper() {
         return new DozerMapperImpl("META-INF/dozer/tms-bean-mappings.xml");
     }
-
 }
