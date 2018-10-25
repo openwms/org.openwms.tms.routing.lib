@@ -23,6 +23,7 @@ package org.openwms.common.comm.res;
 
 import org.ameba.annotation.Measured;
 import org.openwms.OwmsProperties;
+import org.openwms.common.comm.MessageProcessingException;
 import org.openwms.core.SecurityUtils;
 import org.openwms.core.SpringProfiles;
 import org.openwms.core.exception.IllegalConfigurationValueException;
@@ -82,11 +83,9 @@ class ResSenderApi implements ResResponder {
                 .newBuilder()
                 .header(header)
                 .barcode(""+in.getMsg().get("barcode"))
-                ;
-
-        builder.actualLocation(""+in.getMsg().get("actualLocation"));
-        builder.errorCode(""+in.getMsg().get("errorCode"));
-        builder.targetLocation(target);
+                .actualLocation(""+in.getMsg().get("actualLocation"))
+                .errorCode(""+in.getMsg().get("errorCode"))
+                .targetLocation(target);
 
         ServiceInstance si = list.get(0);
         String endpoint = si.getMetadata().get("protocol") + "://" + si.getServiceId() + "/res";
@@ -95,15 +94,15 @@ class ResSenderApi implements ResResponder {
         }
         HttpHeaders headers = SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"));
         try {
-
-        aLoadBalanced.exchange(
-            endpoint,
-            HttpMethod.POST,
-            new HttpEntity<>(builder.build(), headers),
-            Void.class
-        );
+            aLoadBalanced.exchange(
+                endpoint,
+                HttpMethod.POST,
+                new HttpEntity<>(builder.build(), headers),
+                Void.class
+            );
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
+            throw new MessageProcessingException(e.getMessage(), e);
         }
     }
 }
