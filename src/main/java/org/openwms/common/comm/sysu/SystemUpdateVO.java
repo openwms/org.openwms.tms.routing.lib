@@ -22,9 +22,13 @@
 package org.openwms.common.comm.sysu;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.openwms.common.location.api.ErrorCodeVO;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A SystemUpdateVO.
@@ -34,9 +38,9 @@ import java.util.Date;
 class SystemUpdateVO implements Serializable {
 
     @JsonProperty
-    Date created;
+    private Date created;
     @JsonProperty
-    String locationGroupName, errorCode;
+    private String locationGroupName, errorCode;
 
     @java.beans.ConstructorProperties({"created", "locationGroupName", "errorCode"})
     public SystemUpdateVO(Date created, String locationGroupName, String errorCode) {
@@ -46,6 +50,14 @@ class SystemUpdateVO implements Serializable {
     }
 
     public SystemUpdateVO() {
+    }
+
+    public Map<String, Object> getAll() {
+        Map<String, Object> result = new HashMap<>(3);
+        result.put("created", created);
+        result.put("locationGroupName", locationGroupName);
+        result.put("errorCode", new ErrorCodeVO(errorCode));
+        return Collections.unmodifiableMap(result);
     }
 
     public Date getCreated() {

@@ -21,55 +21,31 @@
  */
 package org.openwms.common.comm.sysu;
 
-import org.openwms.common.FetchLocationGroupByName;
-import org.openwms.common.LocationGroupVO;
-import org.openwms.common.location.api.ErrorCodeVO;
-import org.openwms.tms.FetchStartedTransportOrder;
-import org.openwms.tms.routing.InputContext;
-import org.openwms.tms.routing.Matrix;
-import org.openwms.tms.routing.ProgramExecutor;
-import org.openwms.tms.routing.Route;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.ameba.annotation.Measured;
+import org.openwms.core.SpringProfiles;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A SystemUpdateMessageController.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
+@Profile("!"+SpringProfiles.ASYNCHRONOUS_PROFILE)
 @RestController
 class SystemUpdateMessageController {
 
-    @Autowired
-    private FetchLocationGroupByName fetchLocationGroupByName;
-    @Autowired
-    private FetchStartedTransportOrder fetchTransportOrder;
-    @Autowired
-    private Matrix matrix;
-    @Autowired
-    private ProgramExecutor executor;
-    @Autowired
-    private InputContext in;
+    private final SystemUpdateMessageHandler handler;
 
+    SystemUpdateMessageController(SystemUpdateMessageHandler handler) {
+        this.handler = handler;
+    }
+
+    @Measured
     @PostMapping("/sysu")
-    public void handleSYSU(@RequestBody SystemUpdateVO sysu) {
-
-        LocationGroupVO locationGroup = fetchLocationGroupByName.apply(sysu.locationGroupName);
-        Map<String, Object> runtimeVariables = new HashMap<>(3);
-        in.getMsg().put("locationGroupName", sysu.locationGroupName);
-        ErrorCodeVO vo = new ErrorCodeVO();
-        vo.setErrorCode(sysu.errorCode);
-        in.getMsg().put("errorCode", vo);
-        in.getMsg().put("created", sysu.created);
-
-        runtimeVariables.put("locationGroupName", sysu.locationGroupName);
-        runtimeVariables.put("errorCode", sysu.errorCode);
-        runtimeVariables.put("created", sysu.created);
-        executor.execute(matrix.findBy("SYSU", Route.NO_ROUTE, null, locationGroup), runtimeVariables);
+    void handleSYSU(@RequestBody SystemUpdateVO sysu) {
+        handler.handleSYSU(sysu);
     }
 }

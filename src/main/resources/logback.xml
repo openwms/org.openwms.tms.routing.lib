@@ -9,24 +9,20 @@
     <property name="MODULE_NAME" value="TMS" />
     <property name="SERVICE_NAME" value="TMS-Routing" />
 
-    <!--appender name="SYSLOG" class="ch.qos.logback.classic.net.SyslogAppender">
-        <syslogHost>openwms.mooo.com</syslogHost>
-        <facility>SYSLOG</facility>
-        <port>10514</port>
-        <suffixPattern>${SERVICE_NAME} ${Tenant} ${MODULE_NAME} %d{YYYY-MM-dd HH:mm:ss.SSS} %X{X-RequestID} %-5level [${PID:- }/%tid] - [%-40.40logger{39}]${mdcPattern} : %msg%n</suffixPattern>
-    </appender-->
-
     <include resource="logback-appenders.xml" />
     <include resource="logback-loggers.xml" />
 
+    <logger name="ch.qos" level="ERROR" />
     <logger name="org.dozer" level="ERROR" />
     <logger name="org.hibernate.SQL" level="OFF" />
     <logger name="org.hibernate.type" level="OFF" />
     <logger name="com.netflix.discovery" level="OFF" />
     <logger name="org.springframework.security" level="WARN" />
 
-    <logger name="ch.qos" level="ERROR" />
     <logger name="org.openwms" level="DEBUG" />
+    <logger name="MEASURED" level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </logger>
     <logger name="CORE_INTEGRATION_MESSAGING" level="DEBUG" />
 
     <root level="INFO">

@@ -38,17 +38,13 @@ import org.springframework.context.annotation.Configuration;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Configuration
-//@ExcludeFromScan
 @AutoConfigureOrder(0)
-//@AutoConfigureBefore(DataSourceAutoConfiguration.class)
-//@AutoConfigureAfter(ModuleConfiguration.class)
-//@AutoConfigureBefore(JpaProcessEngineAutoConfiguration.JpaConfiguration.class)
 @EnableFeignClients(basePackageClasses = {TransportUnitApi.class, UIPackage.class, LocationGroupApi.class, LocationGroupApi.class, TransportOrderApi.class})
 public class FeignConfiguration {
 
     @Bean
-    public InputContext in(TransportUnitApi transportUnitApi) {
-        System.out.println(transportUnitApi);
+//    @Scope("prototype")
+    public InputContext in() {
         return new InputContext();
     }
 

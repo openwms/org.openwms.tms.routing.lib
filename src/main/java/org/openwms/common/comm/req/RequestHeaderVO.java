@@ -23,12 +23,17 @@ package org.openwms.common.comm.req;
 
 import org.openwms.tms.routing.InputContext;
 
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * A RequestHeaderVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-class RequestHeaderVO {
+public class RequestHeaderVO implements Serializable {
 
     private String sequenceNo, sender, receiver;
 
@@ -54,6 +59,14 @@ class RequestHeaderVO {
 
     public void setReceiver(String receiver) {
         this.receiver = receiver;
+    }
+
+    public Map<String, Object> getAll() {
+        Map<String, Object> result = new HashMap<>(3);
+        result.put("sequenceNo", sequenceNo);
+        result.put("sender", sender);
+        result.put("receiver", receiver);
+        return Collections.unmodifiableMap(result);
     }
 
     void addFields(InputContext in) {
