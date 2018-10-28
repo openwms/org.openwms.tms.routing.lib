@@ -42,7 +42,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 @EnableDiscoveryClient
 @EnableTransactionManagement
-@EnableAspects
+@EnableAspects(propagateRootCause = true)
 @EnableConfigurationProperties
 @EnableJpaRepositories(basePackages = "org.openwms")
 @EntityScan(basePackages = "org.openwms")

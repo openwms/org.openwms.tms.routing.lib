@@ -23,19 +23,22 @@ package org.openwms.tms;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A TransportOrder.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Data
-public class TransportOrder {
+// ajc has a problem here with lombok
+public class TransportOrder implements Serializable {
 
-    @JsonProperty
+    @JsonProperty("persistentKey")
     private String id;
-    @JsonProperty
+    @JsonProperty("transportUnitBK")
     private String transportUnitId;
     @JsonProperty
     private String routeId;
@@ -48,12 +51,6 @@ public class TransportOrder {
 
     @JsonCreator
     public TransportOrder() {
-    }
-
-    public TransportOrder(String id, String transportUnitId, String routeId) {
-        this.id = id;
-        this.transportUnitId = transportUnitId;
-        this.routeId = routeId;
     }
 
     public String getId() {
@@ -78,5 +75,15 @@ public class TransportOrder {
 
     public String getTargetLocationGroup() {
         return targetLocationGroup;
+    }
+
+    public Map<String, Object> getAll() {
+        Map<String, Object> result = new HashMap<>(6);
+        result.put("to.pKey", id);
+        result.put("to.barcode", transportUnitId);
+        result.put("to.sourceLocation", sourceLocation);
+        result.put("to.targetLocation", targetLocation);
+        result.put("to.targetLocationGroup", targetLocationGroup);
+        return result;
     }
 }

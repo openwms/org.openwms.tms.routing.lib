@@ -29,15 +29,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * A LocationGroupApi.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@FeignClient(name = "common-service", qualifier = "locationGroupApi")
+@FeignClient(name = "common-service", qualifier = "locationGroupApi", decode404 = true)
 public interface LocationGroupApi {
 
+    @GetMapping(value = "/v1/locationgroups", params = {"name"})
+    Optional<LocationGroupVO> findByName(@RequestParam("name") String name);
     /**
      * This method is used to update the state of a LocationGroup with an errorCode String, usually coming from a SYSU telegram.
      *

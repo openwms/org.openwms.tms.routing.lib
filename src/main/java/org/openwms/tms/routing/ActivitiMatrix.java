@@ -75,9 +75,14 @@ class ActivitiMatrix implements Matrix {
                 if (!prg.isPresent()) {
 
                     // search the LocationGroup hierarchy the way up...
+                    if (locationGroup == null) {
+                        String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route.getRouteId(), location.getCoordinate(), location.getLocationGroupName());
+                        LOGGER.info(message);
+                        throw new NoRouteException(message);
+                    }
                     prg = findByLocationGroup(actionType, route, locationGroup);
                     if (!prg.isPresent()) {
-                        String message = String.format("No Action found for Route [%s] on Location [%s] and LocationGroup [%s]", route.getRouteId(), location.getCoordinate(), location.getLocationGroupName());
+                        String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route.getRouteId(), location.getCoordinate(), location.getLocationGroupName());
                         LOGGER.info(message);
                         throw new NoRouteException(message);
                     }

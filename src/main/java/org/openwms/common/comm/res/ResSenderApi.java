@@ -105,4 +105,16 @@ class ResSenderApi implements ResResponder {
             throw new MessageProcessingException(e.getMessage(), e);
         }
     }
+
+    /**
+     * Send a message to fire a OSIP RES_ telegram to the given {@code target} location.
+     *
+     * @param barcode
+     * @param sourceLocation
+     * @param targetLocation The target location
+     */
+    @Override
+    public void sendToLocation(String barcode, String sourceLocation, String targetLocation) {
+
+    }
 }

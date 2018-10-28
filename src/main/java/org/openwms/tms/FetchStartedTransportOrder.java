@@ -32,10 +32,11 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -43,14 +44,18 @@ import java.util.function.Function;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Component
+@Service
 public class FetchStartedTransportOrder implements Function<String, TransportOrder> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FetchStartedTransportOrder.class);
+    private final RestTemplate aLoadBalanced;
+    private final DiscoveryClient dc;
+
     @Autowired
-    private RestTemplate aLoadBalanced;
-    @Autowired
-    private DiscoveryClient dc;
+    public FetchStartedTransportOrder(RestTemplate aLoadBalanced, DiscoveryClient dc) {
+        this.aLoadBalanced = aLoadBalanced;
+        this.dc = dc;
+    }
 
     @Override
     public TransportOrder apply(String barcode) {
@@ -60,7 +65,9 @@ public class FetchStartedTransportOrder implements Function<String, TransportOrd
         }
         ServiceInstance si = list.get(0);
         String endpoint = si.getMetadata().get("protocol") + "://tms-service/transportorders?barcode=" + barcode + "&state=STARTED";
-        LOGGER.debug("Calling tms-service URL [{}]", endpoint);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Calling tms-service URL [{}]", endpoint);
+        }
         ResponseEntity<List<TransportOrder>> exchange =
                 aLoadBalanced.exchange(
                         endpoint,
@@ -68,7 +75,7 @@ public class FetchStartedTransportOrder implements Function<String, TransportOrd
                         new HttpEntity<>(SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))),
                         new ParameterizedTypeReference<List<TransportOrder>>() {}
                         );
-        if (exchange.getBody().size() == 0) {
+        if (Objects.requireNonNull(exchange.getBody()).isEmpty()) {
             throw new NotFoundException(String.format("No started TransportOrders for TransportUnit [%s] found, no routing possible", barcode));
         }
         return exchange.getBody().get(0);

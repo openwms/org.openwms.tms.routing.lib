@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
-  <process id="CP001" name="CP001 - LOC/LG Status Update" isExecutable="true">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:activiti="http://activiti.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             typeLanguage="http://www.w3.org/2001/XMLSchema"
+             expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.activiti.org/processdef">
+  <process id="CP001" name="CP001 - Book on Actual Location" isExecutable="true">
     <startEvent id="sid-B26E0B4C-1756-4701-A5D0-753667D34FF0"></startEvent>
-    <serviceTask id="sid-CB275BC5-9B82-4813-9BB3-B0882247327D" name="Find Key" activiti:expression="#{transportUnitService.getByKey()}"></serviceTask>
+    <serviceTask id="sid-CB275BC5-9B82-4813-9BB3-B0882247327D" name="moveTU" activiti:expression="#{transportUnitApi.moveTU(in.msg.barcode, in.msg.actualLocation)}"></serviceTask>
     <sequenceFlow id="sid-EE0CD301-8286-4243-B088-02DA3704E66C" sourceRef="sid-B26E0B4C-1756-4701-A5D0-753667D34FF0" targetRef="sid-CB275BC5-9B82-4813-9BB3-B0882247327D"></sequenceFlow>
     <intermediateThrowEvent id="sid-CA5B85A6-7D04-4C7E-A7A5-D09824FE6602"></intermediateThrowEvent>
     <sequenceFlow id="sid-ECE9AEB1-73EA-4F95-807D-5ADEFB2214D4" sourceRef="sid-CB275BC5-9B82-4813-9BB3-B0882247327D" targetRef="sid-CA5B85A6-7D04-4C7E-A7A5-D09824FE6602"></sequenceFlow>

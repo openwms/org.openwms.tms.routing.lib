@@ -21,4 +21,7 @@ owms:
       queue-name: req
       exchange-mapping: req.*
     res:
-      queue-name: res
+      exchange-mapping: res.*
+    upd:
+      queue-name: upd
+      exchange-mapping: upd.*

@@ -23,6 +23,7 @@ package org.openwms;
 
 import feign.auth.BasicAuthRequestInterceptor;
 import io.interface21.cloud.ui.UIPackage;
+import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.transport.api.TransportUnitApi;
 import org.openwms.tms.api.TransportOrderApi;
@@ -39,7 +40,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @AutoConfigureOrder(0)
-@EnableFeignClients(basePackageClasses = {TransportUnitApi.class, UIPackage.class, LocationGroupApi.class, LocationGroupApi.class, TransportOrderApi.class})
+@EnableFeignClients(basePackageClasses = {TransportUnitApi.class, UIPackage.class, LocationGroupApi.class, LocationApi.class, TransportOrderApi.class})
 public class FeignConfiguration {
 
     @Bean

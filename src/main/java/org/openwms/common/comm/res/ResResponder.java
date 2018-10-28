@@ -31,7 +31,14 @@ public interface ResResponder {
     /**
      * Send a message to fire a OSIP RES_ telegram to the given {@code target} location.
      *
-     * @param target The target location
+     * @param targetLocation The target location
      */
-    void sendToLocation(String target);
+    void sendToLocation(String targetLocation);
+
+    /**
+     * Send a message to fire a OSIP RES_ telegram to the given {@code target} location.
+     *
+     * @param targetLocation The target location
+     */
+    void sendToLocation(String barcode, String sourceLocation, String targetLocation);
 }

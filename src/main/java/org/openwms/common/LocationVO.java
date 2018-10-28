@@ -33,6 +33,7 @@ import java.io.Serializable;
  */
 public class LocationVO extends ResourceSupport implements Serializable {
 
+    public static final LocationVO REQUEST_LOCATION = new LocationVO("????/????/????/????/????");
     @JsonProperty("locationId")
     private String coordinate;
     private String locationGroupName;

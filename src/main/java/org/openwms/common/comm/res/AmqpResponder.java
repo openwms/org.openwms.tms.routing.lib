@@ -22,13 +22,17 @@
 package org.openwms.common.comm.res;
 
 import org.ameba.annotation.Measured;
+import org.openwms.OwmsProperties;
 import org.openwms.core.SpringProfiles;
+import org.openwms.core.exception.IllegalConfigurationValueException;
 import org.openwms.tms.routing.InputContext;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+
+import static java.lang.String.format;
 
 /**
  * A AmqpResponder.
@@ -41,13 +45,15 @@ public class AmqpResponder implements ResResponder {
 
     private final InputContext in;
     private final AmqpTemplate amqpTemplate;
-    private final String queueName;
+    private final String exchangeMapping;
+    private final OwmsProperties owmsProperties;
 
     @Autowired
-    public AmqpResponder(InputContext in, AmqpTemplate amqpTemplate, @Value("${owms.driver.res.queue-name}") String queueName) {
+    public AmqpResponder(InputContext in, AmqpTemplate amqpTemplate, @Value("${owms.driver.res.exchange-mapping}") String exchangeMapping, OwmsProperties owmsProperties) {
         this.in = in;
         this.amqpTemplate = amqpTemplate;
-        this.queueName = queueName;
+        this.exchangeMapping = exchangeMapping;
+        this.owmsProperties = owmsProperties;
     }
 
     @Measured
@@ -67,7 +73,28 @@ public class AmqpResponder implements ResResponder {
                 .targetLocation(target)
                 .errorCode(""+in.getMsg().get("errorCode"))
                 ;
-        amqpTemplate.convertAndSend(queueName, builder.build());
+        String routingKey = owmsProperties.getPartner(""+in.getMsg().get("sender")).orElseThrow(() -> new IllegalConfigurationValueException(format("No partner service with name [%s] configured in property owms.driver.partners", ""+in.getMsg().get("sender"))));
+        amqpTemplate.convertAndSend(exchangeMapping, routingKey, builder.build());
+    }
+
+    @Override
+    public void sendToLocation(String barcode, String sourceLocation, String targetLocation) {
+        ResponseHeader header = ResponseHeader.newBuilder()
+                .sender("" + in.getMsg().get("receiver"))
+                .receiver(""+in.getMsg().get("sender"))
+                .sequenceNo(""+in.getMsg().get("sequenceNo"))
+                .build();
+
+        ResponseMessage.Builder builder = ResponseMessage
+                .newBuilder()
+                .header(header)
+                .barcode(barcode)
+                .actualLocation(sourceLocation)
+                .targetLocation(targetLocation)
+                .errorCode(""+in.getMsg().get("errorCode"))
+                ;
+        String routingKey = owmsProperties.getPartner(""+in.getMsg().get("sender")).orElseThrow(() -> new IllegalConfigurationValueException(format("No partner service with name [%s] configured in property owms.driver.partners", ""+in.getMsg().get("sender"))));
+        amqpTemplate.convertAndSend(exchangeMapping, routingKey, builder.build());
     }
 
 }

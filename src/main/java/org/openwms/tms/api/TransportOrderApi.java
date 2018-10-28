@@ -21,8 +21,10 @@
  */
 package org.openwms.tms.api;
 
+import org.openwms.tms.TransportOrder;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -32,7 +34,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@FeignClient(name = "tms-service", qualifier = "transportOrderApi")
+@FeignClient(name = "tms-service", qualifier = "transportOrderApi", decode404 = true)
 public interface TransportOrderApi {
 
     @PostMapping(value = "/transportorders")
@@ -42,4 +44,13 @@ public interface TransportOrderApi {
     @PostMapping(value = "/transportorders")
     @ResponseStatus(HttpStatus.CREATED)
     void createTO(@RequestParam(value = "barcode") String barcode, @RequestParam(value = "target") String target, @RequestParam(value = "priority", required = false) String priority);
+
+    @GetMapping(value = "/transportorders", params ={"sourceLocation", "state"})
+    TransportOrder getNextInfeed(@RequestParam("sourceLocation") String sourceLocation, @RequestParam("state") String state);
+
+    @GetMapping(value = "/transportorders", params ={"sourceLocationGroupName", "targetLocationGroupName", "state"})
+    TransportOrder getNextInAisle(@RequestParam("sourceLocationGroupName") String sourceLocationGroupName, @RequestParam("targetLocationGroupName") String targetLocationGroupName, @RequestParam("state") String state);
+
+    @GetMapping(value = "/transportorders", params ={"sourceLocationGroupName", "state"})
+    TransportOrder getNextOutfeed(@RequestParam("sourceLocationGroupName") String sourceLocationGroupName,@RequestParam("state") String state);
 }

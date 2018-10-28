@@ -54,7 +54,7 @@ public interface TransportUnitApi {
     @ResponseBody
     TransportUnitVO updateTU(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnitVO tu);
 
-    @PatchMapping(value = "/v1/transportunits", params = {"bk"})
+    @PatchMapping(value = "/v1/transportunits", params = {"bk", "newLocation"})
     @ResponseBody
-    TransportUnitVO updateActualLocation(@RequestParam("bk") String transportUnitBK, @RequestBody String actualLocation);
+    TransportUnitVO moveTU(@RequestParam("bk") String transportUnitBK, @RequestParam("newLocation") String actualLocation);
 }

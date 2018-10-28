@@ -31,6 +31,8 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 import java.util.Optional;
 
+import static java.lang.String.format;
+
 /**
  * A ActivitiExecutor delegates to Activiti for program execution.
  *
@@ -57,6 +59,9 @@ class ActivitiExecutor implements ProgramExecutor {
             LOGGER.debug("Executing program : {}", program);
         }
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionKey(program.getProgramKey()).active().latestVersion().singleResult();
+        if (null == processDefinition) {
+            throw new IllegalStateException(format("No active process with programkey %s found", program.getProgramKey()));
+        }
         runtimeService.startProcessInstanceById(processDefinition.getId(), runtimeVariables);
         return Optional.empty();
     }
