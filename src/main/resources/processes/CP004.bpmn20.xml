@@ -9,7 +9,7 @@
              expressionLanguage="http://www.w3.org/1999/XPath"
              targetNamespace="http://www.activiti.org/processdef">
     <process id="CP004" isExecutable="true">
-        <serviceTask id="sid-CC737CCC-6A96-4610-8CEC-182C4DC33497" name="Check for Infeed" activiti:expression="#{transportOrderApi.getNextInfeed(&quot;SL__/CONV/STCK/IN__/0001&quot;,&quot;STARTED&quot;)}" activiti:resultVariableName="to"></serviceTask>
+        <serviceTask id="sid-CC737CCC-6A96-4610-8CEC-182C4DC33497" name="Check for Infeed" activiti:expression="#{transportOrderApi.getNextInfeed(&quot;SL__/CONV/STCK/IN__/0001&quot;,&quot;STARTED&quot;,&quot;ZEILEL&quot;)}" activiti:resultVariableName="to"></serviceTask>
         <startEvent id="sid-45CB9035-7173-4B6A-82CF-8146DD5CB644"></startEvent>
         <endEvent id="sid-5BF81A02-EB87-4F38-8C09-6A5C475093BA"></endEvent>
         <sequenceFlow id="sid-F03A490E-0122-432A-9AD3-CF7576B573DB" sourceRef="sid-45CB9035-7173-4B6A-82CF-8146DD5CB644" targetRef="sid-CC737CCC-6A96-4610-8CEC-182C4DC33497"></sequenceFlow>

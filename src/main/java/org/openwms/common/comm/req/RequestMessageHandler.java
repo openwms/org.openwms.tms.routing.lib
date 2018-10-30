@@ -33,6 +33,7 @@ import org.openwms.tms.FetchStartedTransportOrder;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
+import org.openwms.tms.routing.NoRouteException;
 import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.Route;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
@@ -82,9 +83,10 @@ class RequestMessageHandler {
         }
         Route route;
         try {
-            TransportOrder transportOrder = fetchTransportOrder.apply(req.getBarcode());
+                TransportOrder transportOrder = fetchTransportOrder.apply(req.getBarcode());
+                in.putAll(transportOrder.getAll());
             route = routeSearch.findBy(transportOrder.getSourceLocation(), transportOrder.getTargetLocation(), transportOrder.getTargetLocationGroup());
-        } catch (NotFoundException nfe) {
+        } catch (NoRouteException | NotFoundException nfe) {
             route = Route.NO_ROUTE;
         }
         executor.execute(matrix.findBy("REQ_", route, location, locationGroup.get()), in.getMsg());

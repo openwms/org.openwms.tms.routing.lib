@@ -79,11 +79,11 @@ public class TransportOrder implements Serializable {
 
     public Map<String, Object> getAll() {
         Map<String, Object> result = new HashMap<>(6);
-        result.put("to.pKey", id);
-        result.put("to.barcode", transportUnitId);
-        result.put("to.sourceLocation", sourceLocation);
-        result.put("to.targetLocation", targetLocation);
-        result.put("to.targetLocationGroup", targetLocationGroup);
+        result.put("toId", id);
+        result.put("to-barcode", transportUnitId);
+        result.put("to-sourceLocation", sourceLocation);
+        result.put("to-targetLocation", targetLocation);
+        result.put("to-targetLocationGroup", targetLocationGroup);
         return result;
     }
 }

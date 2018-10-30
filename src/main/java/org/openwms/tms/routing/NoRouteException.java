@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @ResponseStatus(HttpStatus.NOT_FOUND)
-class NoRouteException extends RuntimeException {
+public class NoRouteException extends RuntimeException {
 
     /**
      * Constructs a new runtime exception with the specified detail message. The cause is not initialized, and may subsequently be initialized

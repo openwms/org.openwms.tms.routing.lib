@@ -21,8 +21,10 @@
  */
 package org.openwms.tms.routing;
 
+import org.ameba.exception.NotFoundException;
 import org.openwms.common.LocationGroupVO;
 import org.openwms.common.LocationVO;
+import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.core.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,11 +54,13 @@ class ActivitiMatrix implements Matrix {
 
     private final ActionRepository repository;
     private final RestTemplate restTemplate;
+    private final LocationGroupApi locationGroupApi;
     private final DiscoveryClient dc;
 
-    ActivitiMatrix(ActionRepository repository, @Qualifier("simpleRestTemplate") RestTemplate restTemplate, DiscoveryClient dc) {
+    ActivitiMatrix(ActionRepository repository, @Qualifier("simpleRestTemplate") RestTemplate restTemplate, LocationGroupApi locationGroupApi, DiscoveryClient dc) {
         this.repository = repository;
         this.restTemplate = restTemplate;
+        this.locationGroupApi = locationGroupApi;
         this.dc = dc;
     }
 
@@ -81,6 +85,16 @@ class ActivitiMatrix implements Matrix {
                         throw new NoRouteException(message);
                     }
                     prg = findByLocationGroup(actionType, route, locationGroup);
+                    if (!prg.isPresent() && route.equals(Route.NO_ROUTE)) {
+                        String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route.getRouteId(), location.getCoordinate(), location.getLocationGroupName());
+                        LOGGER.info(message);
+                        throw new NoRouteException(message);
+                    }
+
+                    if (!route.equals(Route.DEF_ROUTE)) {
+                        prg = findByLocationGroup(actionType, Route.DEF_ROUTE, locationGroup);
+                    }
+
                     if (!prg.isPresent()) {
                         String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route.getRouteId(), location.getCoordinate(), location.getLocationGroupName());
                         LOGGER.info(message);
@@ -108,8 +122,15 @@ class ActivitiMatrix implements Matrix {
 
     private Optional<Action> findByLocationGroup(String actionType, Route route, LocationGroupVO locationGroup) {
         Optional<Action> cp = repository.findByActionTypeAndRouteAndLocationGroupName(actionType, route.getRouteId(), locationGroup.getName());
-        if (!cp.isPresent() && locationGroup.hasLink("_parent")) {
-            cp = findByLocationGroup(actionType, route, findLocationGroup(locationGroup.getLink("_parent")));
+        if (!cp.isPresent()) {
+
+            if (locationGroup.hasParent()) {
+                cp = findByLocationGroup(actionType, route, locationGroupApi.findByName(locationGroup.getParent()).orElseThrow(NotFoundException::new));
+
+            } else if (locationGroup.hasLink("_parent")) {
+                cp = findByLocationGroup(actionType, route, findLocationGroup(locationGroup.getLink("_parent")));
+
+            }
         }
         return cp;
     }

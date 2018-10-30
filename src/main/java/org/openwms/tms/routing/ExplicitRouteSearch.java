@@ -21,10 +21,8 @@
  */
 package org.openwms.tms.routing;
 
-import org.ameba.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
@@ -37,7 +35,7 @@ import static java.lang.String.format;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Component
+//@Component
 class ExplicitRouteSearch implements RouteSearchAlgorithm {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExplicitRouteSearch.class);
@@ -66,11 +64,11 @@ class ExplicitRouteSearch implements RouteSearchAlgorithm {
                 LOGGER.debug("Route in direct location match found: {}", result.get());
                 return result.get();
             }
-            throw new NotFoundException(format("No route found for TransportOrder with sourceLocation [%s] and targetLocation [%s]", sourceLocation, targetLocation));
+            throw new NoRouteException(format("No route found for TransportOrder with sourceLocation [%s] and targetLocation [%s]", sourceLocation, targetLocation));
         }
         Assert.hasText(targetLocationGroup, "The targetLocation did not find a match, hence a TargetLocationGroup is required");
         Assert.hasText(targetLocationGroup, "The targetLocationGroup must be given because no targetLocation has been specified");
-        return findInGroup(sourceLocation, targetLocationGroup).orElseThrow(() -> new NotFoundException(format("No route found for TransportOrder with sourceLocation [%s] and targetLocationGroup [%s]", sourceLocation, targetLocationGroup)));
+        return findInGroup(sourceLocation, targetLocationGroup).orElseThrow(() -> new NoRouteException(format("No route found for TransportOrder with sourceLocation [%s] and targetLocationGroup [%s]", sourceLocation, targetLocationGroup)));
     }
 
     private Optional<Route> findInGroup(String sourceLocation, String targetLocationGroup) {

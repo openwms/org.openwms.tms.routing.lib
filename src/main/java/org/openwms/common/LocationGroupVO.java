@@ -64,4 +64,8 @@ public class LocationGroupVO extends ResourceSupport implements Serializable {
     public void setParent(String parent) {
         this.parent = parent;
     }
+
+    public boolean hasParent() {
+        return parent != null && !parent.isEmpty();
+    }
 }
