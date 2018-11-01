@@ -2,3 +2,15 @@ language: java
 
 jdk:
   - openjdk8
+
+services:
+- docker
+
+after_success:
+- docker build -t openwms/org.openwms.tms.routing:$TRAVIS_BUILD_NUMBER .
+
+deploy:
+  provider: script
+  script: bash docker_push
+  on:
+    branch: master
