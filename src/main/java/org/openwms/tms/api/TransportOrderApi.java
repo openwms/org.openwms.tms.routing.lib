@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.List;
+
 /**
  * A TransportOrderApi.
  *
@@ -48,6 +50,9 @@ public interface TransportOrderApi {
 
     @PostMapping(value = "/transportorders/{id}", params = {"state"})
     void changeState(@PathVariable(value = "id") String id, @RequestParam(value = "state") String state);
+
+    @GetMapping(value = "/transportorders", params = {"barcode", "state"})
+    List<TransportOrder> findBy(@RequestParam(value = "barcode") String barcode, @RequestParam(value = "state") String state);
 
     @GetMapping(value = "/transportorders", params ={"sourceLocation", "state", "searchTargetLocationGroupNames"})
     TransportOrder getNextInfeed(@RequestParam("sourceLocation") String sourceLocation, @RequestParam("state") String state, @RequestParam("searchTargetLocationGroupNames") String searchTargetLocationGroups);

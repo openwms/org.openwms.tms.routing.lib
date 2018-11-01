@@ -23,13 +23,12 @@ package org.openwms.common.comm.upd;
 
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
-import org.openwms.common.FetchLocationByCoord;
 import org.openwms.common.LocationGroupVO;
 import org.openwms.common.LocationVO;
 import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupApi;
-import org.openwms.tms.FetchStartedTransportOrder;
 import org.openwms.tms.TransportOrder;
+import org.openwms.tms.api.TransportOrderApi;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.NoRouteException;
@@ -37,6 +36,8 @@ import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.Route;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
 import org.springframework.util.Assert;
+
+import java.util.List;
 
 /**
  * A UpdateMessageHandler.
@@ -46,8 +47,7 @@ import org.springframework.util.Assert;
 @TxService
 class UpdateMessageHandler {
 
-    private final FetchLocationByCoord fetchLocationByCoord;
-    private final FetchStartedTransportOrder fetchTransportOrder;
+    private final TransportOrderApi transportOrderApi;
     private final Matrix matrix;
     private final ProgramExecutor executor;
     private final InputContext in;
@@ -55,9 +55,8 @@ class UpdateMessageHandler {
     private final LocationApi locationApi;
     private final LocationGroupApi locationGroupApi;
 
-    UpdateMessageHandler(FetchLocationByCoord fetchLocationByCoord, FetchStartedTransportOrder fetchTransportOrder, Matrix matrix, ProgramExecutor executor, InputContext in, RouteSearchAlgorithm routeSearch, LocationApi locationApi, LocationGroupApi locationGroupApi) {
-        this.fetchLocationByCoord = fetchLocationByCoord;
-        this.fetchTransportOrder = fetchTransportOrder;
+    UpdateMessageHandler(TransportOrderApi transportOrderApi, Matrix matrix, ProgramExecutor executor, InputContext in, RouteSearchAlgorithm routeSearch, LocationApi locationApi, LocationGroupApi locationGroupApi) {
+        this.transportOrderApi = transportOrderApi;
         this.matrix = matrix;
         this.executor = executor;
         this.in = in;
@@ -74,13 +73,16 @@ class UpdateMessageHandler {
 
         LocationVO location = locationApi.findLocationByCoordinate(msg.getActualLocation()).orElseThrow(NotFoundException::new);
         LocationGroupVO locationGroup = locationGroupApi.findByName(location.getLocationGroupName()).orElseThrow(NotFoundException::new);
-        Route route;
-        try {
-            TransportOrder transportOrder = fetchTransportOrder.apply(msg.getBarcode());
+        Route route = Route.NO_ROUTE;
+        List<TransportOrder> transportOrders = transportOrderApi.findBy(msg.getBarcode(), "STARTED");
+        if (transportOrders != null && !transportOrders.isEmpty()) {
+            TransportOrder transportOrder = transportOrders.get(0);
             in.putAll(transportOrder.getAll());
-            route = routeSearch.findBy(transportOrder.getSourceLocation(), transportOrder.getTargetLocation(), transportOrder.getTargetLocationGroup());
-        } catch (NoRouteException nfe) {
-            route = Route.NO_ROUTE;
+            try {
+                route = routeSearch.findBy(transportOrder.getSourceLocation(), transportOrder.getTargetLocation(), transportOrder.getTargetLocationGroup());
+            } catch (NoRouteException nfe) {
+                // perfectly fine here
+            }
         }
         executor.execute(matrix.findBy("UPD_", route, location, locationGroup), in.getMsg());
     }

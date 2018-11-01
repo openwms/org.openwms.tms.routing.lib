@@ -23,14 +23,12 @@ package org.openwms.common.comm.req;
 
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
-import org.openwms.common.FetchLocationByCoord;
-import org.openwms.common.FetchLocationGroupByName;
 import org.openwms.common.LocationGroupVO;
 import org.openwms.common.LocationVO;
 import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupApi;
-import org.openwms.tms.FetchStartedTransportOrder;
 import org.openwms.tms.TransportOrder;
+import org.openwms.tms.api.TransportOrderApi;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.NoRouteException;
@@ -39,6 +37,7 @@ import org.openwms.tms.routing.Route;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
 import org.springframework.util.Assert;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -49,22 +48,22 @@ import java.util.Optional;
 @TxService
 class RequestMessageHandler {
 
-    private final FetchStartedTransportOrder fetchTransportOrder;
     private final Matrix matrix;
     private final ProgramExecutor executor;
     private final InputContext in;
     private final RouteSearchAlgorithm routeSearch;
     private final LocationApi locationApi;
     private final LocationGroupApi locationGroupApi;
+    private final TransportOrderApi transportOrderApi;
 
-    RequestMessageHandler(FetchLocationGroupByName fetchLocationGroupByName, FetchLocationByCoord fetchLocationByCoord, FetchStartedTransportOrder fetchTransportOrder, Matrix matrix, ProgramExecutor executor, InputContext in, RouteSearchAlgorithm routeSearch, LocationApi locationApi, LocationGroupApi locationGroupApi) {
-        this.fetchTransportOrder = fetchTransportOrder;
+    RequestMessageHandler(Matrix matrix, ProgramExecutor executor, InputContext in, RouteSearchAlgorithm routeSearch, LocationApi locationApi, LocationGroupApi locationGroupApi, TransportOrderApi transportOrderApi) {
         this.matrix = matrix;
         this.executor = executor;
         this.in = in;
         this.routeSearch = routeSearch;
         this.locationApi = locationApi;
         this.locationGroupApi = locationGroupApi;
+        this.transportOrderApi = transportOrderApi;
     }
 
     /**
@@ -82,14 +81,10 @@ class RequestMessageHandler {
             throw new NotFoundException("No LocationGroup exists for handling REQ message in routing");
         }
         Route route = Route.NO_ROUTE;
-        TransportOrder transportOrder = null;
-        try {
-            transportOrder = fetchTransportOrder.apply(req.getBarcode());
+        List<TransportOrder> transportOrders = transportOrderApi.findBy(req.getBarcode(), "STARTED");
+        if (transportOrders != null && !transportOrders.isEmpty()) {
+            TransportOrder transportOrder = transportOrders.get(0);
             in.putAll(transportOrder.getAll());
-        } catch (NotFoundException nfe) {
-            // go ahead without TO
-        }
-        if (transportOrder != null) {
             try {
                 route = routeSearch.findBy(transportOrder.getSourceLocation(), transportOrder.getTargetLocation(), transportOrder.getTargetLocationGroup());
             } catch (NoRouteException nre) {
@@ -98,5 +93,4 @@ class RequestMessageHandler {
         }
         executor.execute(matrix.findBy("REQ_", route, location, locationGroup.get()), in.getMsg());
     }
-
 }

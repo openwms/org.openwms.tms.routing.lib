@@ -21,12 +21,16 @@
  */
 package org.openwms.common.comm.sysu;
 
-import org.openwms.common.FetchLocationGroupByName;
+import org.ameba.exception.NotFoundException;
+import org.openwms.common.LocationGroupVO;
+import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.Route;
 import org.springframework.stereotype.Component;
+
+import static java.lang.String.format;
 
 /**
  * A SystemUpdateHandler.
@@ -36,20 +40,21 @@ import org.springframework.stereotype.Component;
 @Component
 class SystemUpdateMessageHandler {
 
-    private final FetchLocationGroupByName fetchLocationGroupByName;
+    private final LocationGroupApi locationGroupApi;
     private final Matrix matrix;
     private final ProgramExecutor executor;
     private final InputContext in;
 
-    SystemUpdateMessageHandler(FetchLocationGroupByName fetchLocationGroupByName, Matrix matrix, ProgramExecutor executor, InputContext in) {
-        this.fetchLocationGroupByName = fetchLocationGroupByName;
+    SystemUpdateMessageHandler(LocationGroupApi locationGroupApi, Matrix matrix, ProgramExecutor executor, InputContext in) {
+        this.locationGroupApi = locationGroupApi;
         this.matrix = matrix;
         this.executor = executor;
         this.in = in;
     }
 
     void handleSYSU(SystemUpdateVO sysu) {
+        LocationGroupVO locationGroupName = locationGroupApi.findByName(sysu.getLocationGroupName()).orElseThrow(()-> new NotFoundException(format("No LocationGroup with name [%s] exists, can't process SYSU", sysu.getLocationGroupName())));
         in.getMsg().putAll(sysu.getAll());
-        executor.execute(matrix.findBy("SYSU", Route.NO_ROUTE, null, fetchLocationGroupByName.apply(sysu.getLocationGroupName())), in.getMsg());
+        executor.execute(matrix.findBy("SYSU", Route.NO_ROUTE, null, locationGroupName), in.getMsg());
     }
 }
