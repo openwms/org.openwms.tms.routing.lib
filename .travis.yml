@@ -7,7 +7,7 @@ services:
 - docker
 
 after_success:
-- docker build -t openwms/org.openwms.tms.routing:$TRAVIS_BUILD_NUMBER .
+- docker build -t openwms/org.openwms.tms.routing:latest .
 
 deploy:
   provider: script
