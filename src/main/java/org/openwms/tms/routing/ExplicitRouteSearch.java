@@ -23,6 +23,8 @@ package org.openwms.tms.routing;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
@@ -35,7 +37,8 @@ import static java.lang.String.format;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-//@Component
+@Profile("SIMPLE")
+@Component
 class ExplicitRouteSearch implements RouteSearchAlgorithm {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExplicitRouteSearch.class);
@@ -51,7 +54,7 @@ class ExplicitRouteSearch implements RouteSearchAlgorithm {
     @Override
     public Route findBy(String sourceLocation, String targetLocation, String targetLocationGroup) {
         Assert.hasText(sourceLocation, "The sourceLocation must be given when searching for a Route");
-        boolean targetLocExists = StringUtils.hasText(targetLocation);
+        final boolean targetLocExists = StringUtils.hasText(targetLocation);
 
         Optional<Route> result;
         // First try explicit declaration
@@ -67,7 +70,6 @@ class ExplicitRouteSearch implements RouteSearchAlgorithm {
             throw new NoRouteException(format("No route found for TransportOrder with sourceLocation [%s] and targetLocation [%s]", sourceLocation, targetLocation));
         }
         Assert.hasText(targetLocationGroup, "The targetLocation did not find a match, hence a TargetLocationGroup is required");
-        Assert.hasText(targetLocationGroup, "The targetLocationGroup must be given because no targetLocation has been specified");
         return findInGroup(sourceLocation, targetLocationGroup).orElseThrow(() -> new NoRouteException(format("No route found for TransportOrder with sourceLocation [%s] and targetLocationGroup [%s]", sourceLocation, targetLocationGroup)));
     }
 

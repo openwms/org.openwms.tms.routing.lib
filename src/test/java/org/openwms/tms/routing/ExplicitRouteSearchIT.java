@@ -21,7 +21,6 @@
  */
 package org.openwms.tms.routing;
 
-import org.ameba.exception.NotFoundException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +30,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -47,6 +47,7 @@ import static org.junit.Assert.fail;
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "org.openwms")
 @EntityScan(basePackages = "org.openwms")
+@ActiveProfiles("SIMPLE")
 public class ExplicitRouteSearchIT {
 
     @Autowired
@@ -102,7 +103,7 @@ public class ExplicitRouteSearchIT {
         try {
             testee.findBy("STCK/0001/0001/0000/0000", "", "STOCK");
             fail("Should fail because no route exists");
-        } catch (NotFoundException iae) {
+        } catch (NoRouteException iae) {
             assertTrue(iae.getMessage().contains("No route"));
             // ok
         }

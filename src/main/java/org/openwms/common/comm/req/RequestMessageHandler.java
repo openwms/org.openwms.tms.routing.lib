@@ -81,13 +81,20 @@ class RequestMessageHandler {
         if (!locationGroup.isPresent()) {
             throw new NotFoundException("No LocationGroup exists for handling REQ message in routing");
         }
-        Route route;
+        Route route = Route.NO_ROUTE;
+        TransportOrder transportOrder = null;
         try {
-                TransportOrder transportOrder = fetchTransportOrder.apply(req.getBarcode());
-                in.putAll(transportOrder.getAll());
-            route = routeSearch.findBy(transportOrder.getSourceLocation(), transportOrder.getTargetLocation(), transportOrder.getTargetLocationGroup());
-        } catch (NoRouteException | NotFoundException nfe) {
-            route = Route.NO_ROUTE;
+            transportOrder = fetchTransportOrder.apply(req.getBarcode());
+            in.putAll(transportOrder.getAll());
+        } catch (NotFoundException nfe) {
+            // go ahead without TO
+        }
+        if (transportOrder != null) {
+            try {
+                route = routeSearch.findBy(transportOrder.getSourceLocation(), transportOrder.getTargetLocation(), transportOrder.getTargetLocationGroup());
+            } catch (NoRouteException nre) {
+                // perfectly fine here
+            }
         }
         executor.execute(matrix.findBy("REQ_", route, location, locationGroup.get()), in.getMsg());
     }

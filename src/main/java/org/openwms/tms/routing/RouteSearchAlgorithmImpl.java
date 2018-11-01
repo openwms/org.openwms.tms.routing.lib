@@ -27,6 +27,7 @@ import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -44,6 +45,7 @@ import static java.lang.String.format;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
+@Profile("!SIMPLE")
 @Component
 class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
 
@@ -62,7 +64,7 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
     }
 
     @PostConstruct
-    void onPOstConstruct() {
+    void onPostConstruct() {
         allLocationGroups = locationGroupApi.findAll();
     }
 
