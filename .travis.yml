@@ -4,10 +4,18 @@ jdk:
   - openjdk8
 
 services:
-- docker
+  - docker
+
+addons:
+  sonarcloud:
+    organization: "openwms-github"
+
+script:
+  - sonar-scanner
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 
 after_success:
-- docker build -t openwms/org.openwms.tms.routing:latest .
+  - docker build -t openwms/org.openwms.tms.routing:latest .
 
 deploy:
   provider: script
