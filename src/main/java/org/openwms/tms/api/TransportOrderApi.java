@@ -60,6 +60,6 @@ public interface TransportOrderApi {
     @GetMapping(value = "/transportorders", params ={"sourceLocationGroupName", "targetLocationGroupName", "state"})
     TransportOrder getNextInAisle(@RequestParam("sourceLocationGroupName") String sourceLocationGroupName, @RequestParam("targetLocationGroupName") String targetLocationGroupName, @RequestParam("state") String state);
 
-    @GetMapping(value = "/transportorders", params ={"sourceLocationGroupName", "state"})
-    TransportOrder getNextOutfeed(@RequestParam("sourceLocationGroupName") String sourceLocationGroupName,@RequestParam("state") String state);
+    @GetMapping(value = "/transportorders", params ={"state", "sourceLocationGroupName"})
+    TransportOrder getNextOutfeed(@RequestParam("state") String state, @RequestParam("sourceLocationGroupName") String sourceLocationGroupName);
 }
