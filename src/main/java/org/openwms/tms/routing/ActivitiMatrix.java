@@ -91,7 +91,7 @@ class ActivitiMatrix implements Matrix {
                         throw new NoRouteException(message);
                     }
 
-                    if (!route.equals(Route.DEF_ROUTE)) {
+                    if (!prg.isPresent() && !route.equals(Route.DEF_ROUTE)) {
                         prg = findByLocationGroup(actionType, Route.DEF_ROUTE, locationGroup);
                     }
 
