@@ -1,14 +1,18 @@
-# org.openwms.tms.routing
+# Intention
+The TMS Routing service is responsible to route incoming messages to the appropriate
+workflow and finally handle the message. The workflow is defined as a BMPN conform
+workflow, with [Activiti](https://www.activiti.org) extensions, and comprises the
+execution of services in sequential order or in parallel execution steps.
 
-![Build status][ci-image]
+# Resources
+Documentation at [GitHub](https://github.com/openwms/org.openwms.tms.routing/wiki)
 
-[ci-image]: https://img.shields.io/jenkins/s/https/openwms.mooo.com/jenkins/view/All/job/org.openwms.tms.routing.svg
+[![Build status](https://img.shields.io/travis/openwms/org.openwms.tms.routing.svg?style=flat-square)](https://travis-ci.com/openwms/org.openwms.tms.routing)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Quality](https://sonarcloud.io/api/project_badges/measure?project=org.openwms:org.openwms.tms.routing&metric=alert_status)](https://sonarcloud.io/dashboard?id=org.openwms:org.openwms.tms.routing)
+[![Join the chat at https://gitter.im/openwms/org.openwms](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/openwms/org.openwms?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-The TMS Routing service is responsible to route incoming messages to the
-appropriate workflow and finally handle the request message. The workflow
-is defined as a BMPN conform workflow, with Activiti extensions, and
-comprises the execution of services in sequential order or in parallel
-execution steps.
+# Details
 
 A typical and simple workflow to handle incoming OSIP REQ_ messages
 could look like this:
