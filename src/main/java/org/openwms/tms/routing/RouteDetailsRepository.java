@@ -17,20 +17,14 @@ package org.openwms.tms.routing;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import java.util.List;
 
 /**
- * A RouteRepository.
+ * A RouteDetailsRepository.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-interface RouteRepository extends JpaRepository<Route, Long> {
+interface RouteDetailsRepository extends JpaRepository<RouteDetails, Long> {
 
-    Optional<Route> findByPKey(String pKey);
-
-    Optional<Route> findBySourceLocation_LocationIdAndTargetLocation_LocationIdAndEnabled(String sourceLocation, String targetLocation, boolean enabled);
-
-    Optional<Route> findBySourceLocation_LocationIdAndTargetLocationGroupNameAndEnabled(String sourceLocation, String targetLocationGroupName, boolean enabled);
-
-    Optional<Route> findBySourceLocationGroupNameAndTargetLocationGroupNameAndEnabled(String sourceLocationGroupName, String targetLocationGroupName, boolean enabled);
+    List<RouteDetails> findByRoute_RouteId(String routeId);
 }

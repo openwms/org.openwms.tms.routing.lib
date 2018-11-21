@@ -21,13 +21,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -60,9 +56,6 @@ public class Route extends ApplicationEntity implements Serializable {
     private String targetLocationGroupName;
     @Column(name = "C_ENABLED")
     private boolean enabled = true;
-    @OneToMany(mappedBy = "route")
-    @OrderBy("pos")
-    private List<RouteDetails> details = new ArrayList<>();
 
     /*~ ----------------------------- constructors ------------------- */
 
@@ -117,10 +110,6 @@ public class Route extends ApplicationEntity implements Serializable {
 
     public boolean isEnabled() {
         return enabled;
-    }
-
-    public List<RouteDetails> getDetails() {
-        return details;
     }
 
     /*~ ----------------------------- methods ------------------- */

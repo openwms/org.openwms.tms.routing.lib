@@ -15,22 +15,15 @@
  */
 package org.openwms.tms.routing;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
-
 /**
- * A RouteRepository.
+ * A RouteService.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-interface RouteRepository extends JpaRepository<Route, Long> {
+public interface RouteService {
 
-    Optional<Route> findByPKey(String pKey);
-
-    Optional<Route> findBySourceLocation_LocationIdAndTargetLocation_LocationIdAndEnabled(String sourceLocation, String targetLocation, boolean enabled);
-
-    Optional<Route> findBySourceLocation_LocationIdAndTargetLocationGroupNameAndEnabled(String sourceLocation, String targetLocationGroupName, boolean enabled);
-
-    Optional<Route> findBySourceLocationGroupNameAndTargetLocationGroupNameAndEnabled(String sourceLocationGroupName, String targetLocationGroupName, boolean enabled);
+    /**
+     * Send a RES_ telegram to the next location that is defined in the static Route Details.
+     */
+    void sendToNextLocation();
 }

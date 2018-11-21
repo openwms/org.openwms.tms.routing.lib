@@ -19,6 +19,8 @@ import org.ameba.integration.jpa.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.io.Serializable;
@@ -33,7 +35,8 @@ import java.io.Serializable;
 class RouteDetails extends BaseEntity implements Serializable {
 
     public static final String COLUMN_ROUTE_ID = "C_ROUTE_ID";
-    @Column(name = COLUMN_ROUTE_ID)
+    @ManyToOne
+    @JoinColumn(name = COLUMN_ROUTE_ID)
     private Route route;
 
     public static final String COLUMN_POS = "C_POS";
