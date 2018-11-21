@@ -59,6 +59,9 @@ class ResSenderApi implements ResResponder {
         this.owmsProperties = owmsProperties;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Measured
     public void sendToLocation(String target) {
@@ -101,14 +104,10 @@ class ResSenderApi implements ResResponder {
     }
 
     /**
-     * Send a message to fire a OSIP RES_ telegram to the given {@code target} location.
-     *
-     * @param barcode
-     * @param sourceLocation
-     * @param targetLocation The target location
+     * {@inheritDoc}
      */
     @Override
     public void sendToLocation(String barcode, String sourceLocation, String targetLocation) {
-
+        throw new UnsupportedOperationException("Currently not implemented");
     }
 }

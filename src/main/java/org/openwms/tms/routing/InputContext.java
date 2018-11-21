@@ -15,8 +15,9 @@
  */
 package org.openwms.tms.routing;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A InputContext.
@@ -25,7 +26,7 @@ import java.util.Map;
  */
 public class InputContext {
 
-    private Map<String, Object> msg = new HashMap<>();
+    private Map<String, Object> msg = new ConcurrentHashMap<>();
 
     public void addBeanToMsg(String name, Object bean) {
         msg.put(name, bean);
@@ -35,8 +36,16 @@ public class InputContext {
         return msg;
     }
 
+    public <T extends Object> Optional<T> get(String key, Class<T> clazz) {
+        return (Optional<T>) Optional.ofNullable(this.msg.get(key));
+    }
+
     public void setMsg(Map<String, Object> msg) {
         this.msg = msg;
+    }
+
+    public void put(String key, Object val) {
+        this.msg.put(key, val);
     }
 
     public void putAll(Map<String, Object> msg) {

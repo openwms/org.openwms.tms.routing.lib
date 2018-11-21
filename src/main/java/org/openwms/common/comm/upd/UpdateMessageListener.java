@@ -16,6 +16,8 @@
 package org.openwms.common.comm.upd;
 
 import org.ameba.annotation.Measured;
+import org.openwms.common.comm.ItemMessage;
+import org.openwms.common.comm.ItemMessageHandler;
 import org.openwms.core.SpringProfiles;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.Exchange;
@@ -35,9 +37,9 @@ import org.springframework.stereotype.Component;
 @Component
 class UpdateMessageListener {
 
-    private final UpdateMessageHandler handler;
+    private final ItemMessageHandler handler;
 
-    UpdateMessageListener(UpdateMessageHandler handler) {
+    UpdateMessageListener(ItemMessageHandler handler) {
         this.handler = handler;
     }
 
@@ -46,7 +48,7 @@ class UpdateMessageListener {
             value = @Queue(value = "${owms.driver.upd.queue-name}", durable = "true"),
             exchange = @Exchange(value = "${owms.driver.upd.exchange-mapping}", ignoreDeclarationExceptions = "true"))
     )
-    void handle(@Payload UpdateVO msg) {
+    void handle(@Payload ItemMessage msg) {
         try {
             handler.handle(msg);
         } catch (Exception e) {

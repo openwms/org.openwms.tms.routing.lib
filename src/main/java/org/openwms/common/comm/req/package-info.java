@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * This package contains contains the COMMON REQ_ types.
+ * This package cares about processing the OSIP REQ_ type.
  */
 package org.openwms.common.comm.req;

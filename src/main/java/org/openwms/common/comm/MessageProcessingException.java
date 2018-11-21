@@ -16,7 +16,8 @@
 package org.openwms.common.comm;
 
 /**
- * A MessageProcessingException is a general exception that indicates a fault situation during message processing.
+ * A MessageProcessingException is a general exception that indicates a fault situation
+ * during message processing.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
