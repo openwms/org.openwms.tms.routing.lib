@@ -26,7 +26,11 @@ import java.util.Map;
  */
 public class ItemMessage {
 
-    private String type, actualLocation, locationGroupName, barcode, errorCode;
+    private String type;
+    private String actualLocation;
+    private String locationGroupName;
+    private String barcode;
+    private String errorCode;
     private ItemMessageHeader header;
 
     /*~ ----------------------------- accessors ------------------- */

@@ -29,7 +29,9 @@ import java.util.Map;
  */
 public class ItemMessageHeader implements Serializable {
 
-    private String sequenceNo, sender, receiver;
+    private String sequenceNo;
+    private String sender;
+    private String receiver;
 
     public String getSequenceNo() {
         return sequenceNo;
