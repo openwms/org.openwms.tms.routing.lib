@@ -48,7 +48,7 @@ class RouteServiceImpl implements RouteService {
     public void sendToNextLocation() {
         Route route = in.get("route", Route.class).orElseThrow(() -> new NoRouteException("No Route information in current context, can't load the next Location from the RouteDetails"));
         String actualLocation = in.get("actualLocation", String.class).orElseThrow(() -> new NoRouteException("No information about the actual Location in the current context, can't load the next Location from the RouteDetails"));
-        String asNext = repository.findByRoute_RouteId(route.getRouteId())
+        String asNext = repository.findByRoute_RouteId_OrderByPos(route.getRouteId())
                 .stream()
                 .filter(r -> r.getSource().equals(actualLocation))
                 .findFirst()
