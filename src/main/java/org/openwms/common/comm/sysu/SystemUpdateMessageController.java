@@ -40,6 +40,6 @@ class SystemUpdateMessageController {
     @Measured
     @PostMapping("/sysu")
     void handleSYSU(@RequestBody SystemUpdateVO sysu) {
-        handler.handleSYSU(sysu);
+        handler.handle(sysu);
     }
 }

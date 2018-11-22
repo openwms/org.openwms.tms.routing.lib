@@ -18,6 +18,7 @@ package org.openwms.common.comm.sysu;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.openwms.common.location.api.ErrorCodeVO;
 
+import java.beans.ConstructorProperties;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
@@ -34,9 +35,13 @@ class SystemUpdateVO implements Serializable {
     @JsonProperty
     private Date created;
     @JsonProperty
-    private String locationGroupName, errorCode;
+    private String locationGroupName;
+    @JsonProperty
+    private String errorCode;
+    @JsonProperty
+    private String type;
 
-    @java.beans.ConstructorProperties({"created", "locationGroupName", "errorCode"})
+    @ConstructorProperties({"created", "locationGroupName", "errorCode"})
     public SystemUpdateVO(Date created, String locationGroupName, String errorCode) {
         this.created = created;
         this.locationGroupName = locationGroupName;
@@ -78,6 +83,14 @@ class SystemUpdateVO implements Serializable {
         this.errorCode = errorCode;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public boolean equals(Object o) {
         if (o == this)
             return true;
@@ -115,9 +128,5 @@ class SystemUpdateVO implements Serializable {
 
     protected boolean canEqual(Object other) {
         return other instanceof SystemUpdateVO;
-    }
-
-    public String toString() {
-        return "SystemUpdateVO(created=" + this.getCreated() + ", locationGroupName=" + this.getLocationGroupName() + ", errorCode=" + this.getErrorCode() + ")";
     }
 }

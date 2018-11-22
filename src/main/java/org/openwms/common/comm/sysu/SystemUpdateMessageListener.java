@@ -48,7 +48,7 @@ class SystemUpdateMessageListener {
     )
     void handleSYSU(@Payload SystemUpdateVO sysu) {
         try {
-            handler.handleSYSU(sysu);
+            handler.handle(sysu);
         } catch (Exception e) {
             throw new AmqpRejectAndDontRequeueException(e.getMessage(), e);
         }

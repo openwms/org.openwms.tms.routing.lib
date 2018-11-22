@@ -29,10 +29,10 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,8 +58,11 @@ class ActivitiMatrix implements Matrix {
         this.dc = dc;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Action findBy(@NotNull String actionType, @NotNull Route route, LocationVO location, LocationGroupVO locationGroup) {
+    public Action findBy(String actionType, Route route, @Nullable LocationVO location, @Nullable LocationGroupVO locationGroup) {
         // search explicitly...
         Optional<Action> prg = Optional.empty();
         if (null != location) {
@@ -140,12 +143,7 @@ class ActivitiMatrix implements Matrix {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Calling common-service URL [{}]", parent.getHref());
         }
-        ResponseEntity<LocationGroupVO> lg = restTemplate.exchange(
-                parent.getHref(),
-                HttpMethod.GET,
-                new HttpEntity<>(SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))),
-                LocationGroupVO.class
-                );
+        ResponseEntity<LocationGroupVO> lg = restTemplate.exchange(parent.getHref(), HttpMethod.GET, new HttpEntity<>(SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))), LocationGroupVO.class);
         return lg.getBody();
     }
 
