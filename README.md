@@ -57,6 +57,14 @@ be accessed with support of `Feign`. Therefor the TMS Routing service
 needs to have the Feign client interface definitions on the classpath at
 startup.
 
+### Static Routing
+
+Requests from PLC for a next target can be answered statically by using a routing table.
+For this reason a `Route` may have `RouteDetails` entries in a well defined order (ordered
+by the `pos` attribute). The actual location from the telegram is used to determine the
+next target. In the selected workflow just call `#{routing.sendToNextLocation()}` to choose
+the next routing location.
+
 ## Open Issues
 
 ID   | Description
