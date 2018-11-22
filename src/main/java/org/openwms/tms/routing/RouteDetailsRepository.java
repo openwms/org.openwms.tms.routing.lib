@@ -26,5 +26,5 @@ import java.util.List;
  */
 interface RouteDetailsRepository extends JpaRepository<RouteDetails, Long> {
 
-    List<RouteDetails> findByRoute_RouteId(String routeId);
+    List<RouteDetails> findByRoute_RouteId_OrderByPos(String routeId);
 }
