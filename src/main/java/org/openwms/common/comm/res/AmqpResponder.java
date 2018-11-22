@@ -50,6 +50,9 @@ public class AmqpResponder implements ResResponder {
         this.owmsProperties = owmsProperties;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Measured
     @Override
     public void sendToLocation(String target) {
@@ -71,6 +74,10 @@ public class AmqpResponder implements ResResponder {
         amqpTemplate.convertAndSend(exchangeMapping, routingKey, builder.build());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Measured
     @Override
     public void sendToLocation(String barcode, String sourceLocation, String targetLocation) {
         ResponseHeader header = ResponseHeader.newBuilder()

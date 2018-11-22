@@ -17,7 +17,6 @@ package org.openwms.tms.routing;
 
 import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
-import org.openwms.common.LocationRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;

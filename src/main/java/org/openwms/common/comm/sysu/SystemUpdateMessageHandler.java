@@ -46,9 +46,9 @@ class SystemUpdateMessageHandler {
         this.in = in;
     }
 
-    void handleSYSU(SystemUpdateVO sysu) {
-        LocationGroupVO locationGroupName = locationGroupApi.findByName(sysu.getLocationGroupName()).orElseThrow(()-> new NotFoundException(format("No LocationGroup with name [%s] exists, can't process SYSU", sysu.getLocationGroupName())));
-        in.getMsg().putAll(sysu.getAll());
-        executor.execute(matrix.findBy("SYSU", Route.NO_ROUTE, null, locationGroupName), in.getMsg());
+    void handle(SystemUpdateVO msg) {
+        LocationGroupVO locationGroupName = locationGroupApi.findByName(msg.getLocationGroupName()).orElseThrow(()-> new NotFoundException(format("No LocationGroup with name [%s] exists, can't process SYSU", msg.getLocationGroupName())));
+        in.getMsg().putAll(msg.getAll());
+        executor.execute(matrix.findBy(msg.getType(), Route.NO_ROUTE, null, locationGroupName), in.getMsg());
     }
 }

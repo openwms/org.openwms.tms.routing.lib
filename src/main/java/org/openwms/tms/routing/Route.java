@@ -16,7 +16,6 @@
 package org.openwms.tms.routing;
 
 import org.ameba.integration.jpa.ApplicationEntity;
-import org.openwms.common.LocationEO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -58,6 +57,8 @@ public class Route extends ApplicationEntity implements Serializable {
     @Column(name = "C_ENABLED")
     private boolean enabled = true;
 
+    /*~ ----------------------------- constructors ------------------- */
+
     /** Dear JPA ... */
     protected Route() {
     }
@@ -66,6 +67,7 @@ public class Route extends ApplicationEntity implements Serializable {
         this.routeId = routeId;
     }
 
+    /*~ ----------------------------- accessors ------------------- */
     public String getRouteId() {
         return routeId;
     }
@@ -110,6 +112,7 @@ public class Route extends ApplicationEntity implements Serializable {
         return enabled;
     }
 
+    /*~ ----------------------------- methods ------------------- */
     public static Route of(String routeId) {
         if (routeId == null || routeId.isEmpty())
             return DEF_ROUTE;

@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.common;
+package org.openwms.tms.routing;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import java.util.List;
 
 /**
- * A LocationRepository.
+ * A RouteDetailsRepository.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public interface LocationRepository extends JpaRepository<LocationEO, Long> {
+interface RouteDetailsRepository extends JpaRepository<RouteDetails, Long> {
 
-    Optional<LocationEO> findByLocationId(String locationId);
+    List<RouteDetails> findByRoute_RouteId(String routeId);
 }

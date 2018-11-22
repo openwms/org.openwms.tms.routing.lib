@@ -15,6 +15,8 @@
  */
 package org.openwms.common.comm.req;
 
+import org.openwms.common.comm.ItemMessage;
+import org.openwms.common.comm.ItemMessageHandler;
 import org.openwms.core.SpringProfiles;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * A RequestMessageController is the API of the routing service component.
+ * A RequestMessageController is the http endpoint of the routing service component to
+ * process REQ_ messages.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -30,14 +33,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class RequestMessageController {
 
-    private final RequestMessageHandler handler;
+    private final ItemMessageHandler handler;
 
-    RequestMessageController(RequestMessageHandler handler) {
+    RequestMessageController(ItemMessageHandler handler) {
         this.handler = handler;
     }
 
     @PostMapping("/req")
-    void handleREQ(@RequestBody RequestVO req) {
-        handler.handleREQ(req);
+    void handle(@RequestBody ItemMessage msg) {
+        handler.handle(msg);
     }
 }

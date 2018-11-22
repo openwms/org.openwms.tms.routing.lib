@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * This package contains contains the COMMON SYSU types.
+ * This package cares about processing the OSIP SYSU type.
  */
 package org.openwms.common.comm.sysu;

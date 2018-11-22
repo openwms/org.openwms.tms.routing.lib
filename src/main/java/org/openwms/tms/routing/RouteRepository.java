@@ -28,8 +28,6 @@ interface RouteRepository extends JpaRepository<Route, Long> {
 
     Optional<Route> findByPKey(String pKey);
 
-    Optional<Route> findBySourceLocation_LocationIdAndEnabled(String sourceLocation, boolean enabled);
-
     Optional<Route> findBySourceLocation_LocationIdAndTargetLocation_LocationIdAndEnabled(String sourceLocation, String targetLocation, boolean enabled);
 
     Optional<Route> findBySourceLocation_LocationIdAndTargetLocationGroupNameAndEnabled(String sourceLocation, String targetLocationGroupName, boolean enabled);

@@ -13,22 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.common.comm.upd;
+package org.openwms.common.comm;
 
 import org.openwms.tms.routing.InputContext;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A UpdateHeaderVO.
+ * A ItemMessageHeader.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class UpdateHeaderVO implements Serializable {
+public class ItemMessageHeader implements Serializable {
 
-    private String sequenceNo, sender, receiver;
+    private String sequenceNo;
+    private String sender;
+    private String receiver;
 
     public String getSequenceNo() {
         return sequenceNo;
@@ -59,7 +62,7 @@ public class UpdateHeaderVO implements Serializable {
         result.put("sequenceNo", sequenceNo);
         result.put("sender", sender);
         result.put("receiver", receiver);
-        return result;
+        return Collections.unmodifiableMap(result);
     }
 
     void addFields(InputContext in) {

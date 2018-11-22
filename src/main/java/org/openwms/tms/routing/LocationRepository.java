@@ -13,7 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.openwms.tms.routing;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
 /**
- * This package cares about processing the OSIP REQ_ type.
+ * A LocationRepository.
+ *
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-package org.openwms.common.comm.req;
+public interface LocationRepository extends JpaRepository<LocationEO, Long> {
+
+    Optional<LocationEO> findByLocationId(String locationId);
+}

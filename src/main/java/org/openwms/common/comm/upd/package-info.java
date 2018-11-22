@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * This package contains contains the COMMON UPD types.
+ * This package cares about processing the OSIP UPD* types.
  */
 package org.openwms.common.comm.upd;

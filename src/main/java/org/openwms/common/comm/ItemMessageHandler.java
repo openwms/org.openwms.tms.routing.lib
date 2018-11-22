@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.common.comm.upd;
+package org.openwms.common.comm;
 
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
@@ -33,40 +33,51 @@ import org.springframework.util.Assert;
 
 import java.util.List;
 
+import static java.lang.String.format;
+
 /**
- * A UpdateMessageHandler.
+ * A RequestMessageHandler.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @TxService
-class UpdateMessageHandler {
+public class ItemMessageHandler {
 
-    private final TransportOrderApi transportOrderApi;
     private final Matrix matrix;
     private final ProgramExecutor executor;
     private final InputContext in;
     private final RouteSearchAlgorithm routeSearch;
     private final LocationApi locationApi;
     private final LocationGroupApi locationGroupApi;
+    private final TransportOrderApi transportOrderApi;
 
-    UpdateMessageHandler(TransportOrderApi transportOrderApi, Matrix matrix, ProgramExecutor executor, InputContext in, RouteSearchAlgorithm routeSearch, LocationApi locationApi, LocationGroupApi locationGroupApi) {
-        this.transportOrderApi = transportOrderApi;
+    ItemMessageHandler(Matrix matrix, ProgramExecutor executor, InputContext in, RouteSearchAlgorithm routeSearch, LocationApi locationApi, LocationGroupApi locationGroupApi, TransportOrderApi transportOrderApi) {
         this.matrix = matrix;
         this.executor = executor;
         this.in = in;
         this.routeSearch = routeSearch;
         this.locationApi = locationApi;
         this.locationGroupApi = locationGroupApi;
+        this.transportOrderApi = transportOrderApi;
     }
 
-    public void handle(UpdateVO msg) {
+    public void handle(ItemMessage msg) {
         Assert.notNull(msg, "handle called with null message");
         Assert.notNull(msg.getHeader(), "handle called without message header");
         in.putAll(msg.getAll());
         in.putAll(msg.getHeader().getAll());
 
-        LocationVO location = locationApi.findLocationByCoordinate(msg.getActualLocation()).orElseThrow(NotFoundException::new);
-        LocationGroupVO locationGroup = locationGroupApi.findByName(location.getLocationGroupName()).orElseThrow(NotFoundException::new);
+        LocationVO actualLocation = locationApi
+                .findLocationByCoordinate(msg.getActualLocation())
+                .orElseThrow(()-> new NotFoundException(format("Location with coordinate [%s] does not exist", msg.getActualLocation())));
+
+        LocationGroupVO locationGroup =
+                msg.hasLocationGroupName() ?
+                        locationGroupApi.findByName(msg.getLocationGroupName())
+                                .orElseThrow(()->new NotFoundException("No LocationGroup exists for handling message in routing")) :
+                        locationGroupApi.findByName(actualLocation.getLocationGroupName())
+                                .orElseThrow(()->new NotFoundException("No LocationGroup exists for handling message in routing"));
+
         Route route = Route.NO_ROUTE;
         List<TransportOrder> transportOrders = transportOrderApi.findBy(msg.getBarcode(), "STARTED");
         if (transportOrders != null && !transportOrders.isEmpty()) {
@@ -74,11 +85,11 @@ class UpdateMessageHandler {
             in.putAll(transportOrder.getAll());
             try {
                 route = routeSearch.findBy(transportOrder.getSourceLocation(), transportOrder.getTargetLocation(), transportOrder.getTargetLocationGroup());
-            } catch (NoRouteException nfe) {
+            } catch (NoRouteException nre) {
                 // perfectly fine here
             }
         }
-        executor.execute(matrix.findBy("UPD_", route, location, locationGroup), in.getMsg());
+        in.put("route", route);
+        executor.execute(matrix.findBy(msg.getType(), route, actualLocation, locationGroup), in.getMsg());
     }
-
 }

@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.common.comm.sysu;
+package org.openwms.common.comm.upd;
 
-import org.ameba.annotation.Measured;
+import org.openwms.common.comm.ItemMessage;
+import org.openwms.common.comm.ItemMessageHandler;
 import org.openwms.core.SpringProfiles;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,23 +24,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * A SystemUpdateMessageController.
+ * A UpdateMessageController is the http endpoint of the routing service component to
+ * process UPD_ messages.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Profile("!"+SpringProfiles.ASYNCHRONOUS_PROFILE)
+@Profile("!" + SpringProfiles.ASYNCHRONOUS_PROFILE)
 @RestController
-class SystemUpdateMessageController {
+class UpdateMessageController {
 
-    private final SystemUpdateMessageHandler handler;
+    private final ItemMessageHandler handler;
 
-    SystemUpdateMessageController(SystemUpdateMessageHandler handler) {
+    UpdateMessageController(ItemMessageHandler handler) {
         this.handler = handler;
     }
 
-    @Measured
-    @PostMapping("/sysu")
-    void handleSYSU(@RequestBody SystemUpdateVO sysu) {
-        handler.handle(sysu);
+    @PostMapping("/upd")
+    void handle(@RequestBody ItemMessage msg) {
+        handler.handle(msg);
     }
 }

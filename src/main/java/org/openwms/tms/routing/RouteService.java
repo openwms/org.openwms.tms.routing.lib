@@ -13,7 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.openwms.tms.routing;
+
 /**
- * This package cares about processing the OSIP REQ_ type.
+ * A RouteService.
+ *
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-package org.openwms.common.comm.req;
+public interface RouteService {
+
+    /**
+     * Send a RES_ telegram to the next location that is defined in the static Route Details.
+     */
+    void sendToNextLocation();
+}

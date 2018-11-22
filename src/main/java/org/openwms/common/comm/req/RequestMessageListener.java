@@ -16,6 +16,8 @@
 package org.openwms.common.comm.req;
 
 import org.ameba.annotation.Measured;
+import org.openwms.common.comm.ItemMessage;
+import org.openwms.common.comm.ItemMessageHandler;
 import org.openwms.core.SpringProfiles;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.Exchange;
@@ -35,9 +37,9 @@ import org.springframework.stereotype.Component;
 @Component
 class RequestMessageListener {
 
-    private final RequestMessageHandler handler;
+    private final ItemMessageHandler handler;
 
-    RequestMessageListener(RequestMessageHandler handler) {
+    RequestMessageListener(ItemMessageHandler handler) {
         this.handler = handler;
     }
 
@@ -46,9 +48,9 @@ class RequestMessageListener {
             value = @Queue(value = "${owms.driver.req.queue-name}", durable = "true"),
             exchange = @Exchange(value = "${owms.driver.req.exchange-mapping}", ignoreDeclarationExceptions = "true"))
     )
-    void handleREQ(@Payload RequestVO req) {
+    void handle(@Payload ItemMessage msg) {
         try {
-            handler.handleREQ(req);
+            handler.handle(msg);
         } catch (Exception e) {
             throw new AmqpRejectAndDontRequeueException(e.getMessage(), e);
         }
