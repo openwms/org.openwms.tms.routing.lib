@@ -33,6 +33,10 @@ public class InputContext {
         msg.put(name, bean);
     }
 
+    public void clear() {
+        this.msg.clear();
+    }
+
     public Map<String, Object> getMsg() {
         return msg;
     }

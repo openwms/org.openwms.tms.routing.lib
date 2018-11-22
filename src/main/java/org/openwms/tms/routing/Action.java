@@ -37,7 +37,7 @@ public class Action extends BaseEntity implements Serializable {
     public Action() {
     }
 
-    public Action(Route route, String name, String locationKey, String locationGroupName, String actionType, String programKey, String description) {
+    public Action(RouteImpl route, String name, String locationKey, String locationGroupName, String actionType, String programKey, String description) {
         this.route = route;
         this.name = name;
         this.locationKey = locationKey;
@@ -50,7 +50,7 @@ public class Action extends BaseEntity implements Serializable {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "C_ROUTE_ID")
-    private Route route;
+    private RouteImpl route;
     @NotNull
     @Column(name = "C_PROGRAM_NAME")
     private String programKey;
@@ -70,7 +70,7 @@ public class Action extends BaseEntity implements Serializable {
     @Column(name = "C_ENABLED")
     private boolean enabled = true;
 
-    public Route getRoute() {
+    public RouteImpl getRoute() {
         return route;
     }
 

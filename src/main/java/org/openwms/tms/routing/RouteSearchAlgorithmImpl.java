@@ -71,7 +71,7 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
         boolean targetLocExists = StringUtils.hasText(targetLocation);
         boolean targetLgExists = StringUtils.hasText(targetLocationGroup);
 
-        Optional<Route> result;
+        Optional<RouteImpl> result;
         // First try explicit declaration
         if (targetLocExists) {
 
@@ -132,9 +132,9 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
         throw new NoRouteException(format("No route found for TransportOrder with sourceLocation [%s], targetLocation [%s] and targetLocationGroup [%s]", sourceLocation, targetLocation, targetLocationGroup));
     }
 
-    private Optional<Route> findInTargetGroupHierarchy(String sourceLocation, String targetLocationGroup, Collection<LocationGroupVO> allLocationGroups) {
+    private Optional<RouteImpl> findInTargetGroupHierarchy(String sourceLocation, String targetLocationGroup, Collection<LocationGroupVO> allLocationGroups) {
         // climb up group
-        Optional<Route> route = repository.findBySourceLocation_LocationIdAndTargetLocationGroupNameAndEnabled(sourceLocation, targetLocationGroup, true);
+        Optional<RouteImpl> route = repository.findBySourceLocation_LocationIdAndTargetLocationGroupNameAndEnabled(sourceLocation, targetLocationGroup, true);
         if (!route.isPresent()) {
             LocationGroupVO current = allLocationGroups.stream().filter(lg -> lg.getName().equals(targetLocationGroup)).findFirst().orElseThrow(() -> new NotFoundException(format("The LocationGroup with name [%s] does not exist", targetLocationGroup)));
             if (current.getParent() == null || current.getParent().isEmpty()) {
@@ -144,9 +144,9 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
         } return route;
     }
 
-    private Optional<Route> findInSourceGroupHierarchy(String sourceLocationGroup, String targetLocationGroup, Collection<LocationGroupVO> allLocationGroups) {
+    private Optional<RouteImpl> findInSourceGroupHierarchy(String sourceLocationGroup, String targetLocationGroup, Collection<LocationGroupVO> allLocationGroups) {
         // climb up group
-        Optional<Route> route = repository.findBySourceLocationGroupNameAndTargetLocationGroupNameAndEnabled(sourceLocationGroup, targetLocationGroup, true);
+        Optional<RouteImpl> route = repository.findBySourceLocationGroupNameAndTargetLocationGroupNameAndEnabled(sourceLocationGroup, targetLocationGroup, true);
         if (!route.isPresent()) {
             LocationGroupVO currentSource = allLocationGroups.stream().filter(lg -> lg.getName().equals(sourceLocationGroup)).findFirst().orElseThrow(() -> new NotFoundException(format("The LocationGroup with name [%s] does not exist", sourceLocationGroup)));
             if (currentSource.getParent() == null || currentSource.getParent().isEmpty()) {
@@ -165,8 +165,8 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
         } return route;
     }
 
-    private Optional<Route> findInHierarchy(String sourceLocation, String targetLocation, Collection<LocationGroupVO> allLocationGroups) {
-        Optional<Route> route = repository.findBySourceLocation_LocationIdAndTargetLocation_LocationIdAndEnabled(sourceLocation, targetLocation, true);
+    private Optional<RouteImpl> findInHierarchy(String sourceLocation, String targetLocation, Collection<LocationGroupVO> allLocationGroups) {
+        Optional<RouteImpl> route = repository.findBySourceLocation_LocationIdAndTargetLocation_LocationIdAndEnabled(sourceLocation, targetLocation, true);
         if (route.isPresent()) {
             return route;
         }
@@ -183,9 +183,9 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
 
     }
 
-    private Optional<Route> findInHierarchy2(String sourceLocation, String targetLocationGroupName, Collection<LocationGroupVO> allLocationGroups) {
+    private Optional<RouteImpl> findInHierarchy2(String sourceLocation, String targetLocationGroupName, Collection<LocationGroupVO> allLocationGroups) {
         // first step is target then source...
-        Optional<Route> route = findInTargetGroupHierarchy(sourceLocation, targetLocationGroupName, allLocationGroups);
+        Optional<RouteImpl> route = findInTargetGroupHierarchy(sourceLocation, targetLocationGroupName, allLocationGroups);
         if (route.isPresent()) {
             return route;
         }

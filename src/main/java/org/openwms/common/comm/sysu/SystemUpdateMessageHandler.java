@@ -21,7 +21,7 @@ import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.ProgramExecutor;
-import org.openwms.tms.routing.Route;
+import org.openwms.tms.routing.RouteImpl;
 import org.springframework.stereotype.Component;
 
 import static java.lang.String.format;
@@ -47,8 +47,9 @@ class SystemUpdateMessageHandler {
     }
 
     void handle(SystemUpdateVO msg) {
+        in.clear();
         LocationGroupVO locationGroupName = locationGroupApi.findByName(msg.getLocationGroupName()).orElseThrow(()-> new NotFoundException(format("No LocationGroup with name [%s] exists, can't process SYSU", msg.getLocationGroupName())));
         in.getMsg().putAll(msg.getAll());
-        executor.execute(matrix.findBy(msg.getType(), Route.NO_ROUTE, null, locationGroupName), in.getMsg());
+        executor.execute(matrix.findBy(msg.getType(), RouteImpl.NO_ROUTE, null, locationGroupName), in.getMsg());
     }
 }

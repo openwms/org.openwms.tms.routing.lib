@@ -66,14 +66,14 @@ class RouteResource {
 
     @PutMapping("/routes")
     public RouteVO save(@RequestBody RouteVO routeVO) {
-        Route route = routeRepository.findByPKey(routeVO.getKey()).orElseThrow(NotFoundException::new);
+        RouteImpl route = routeRepository.findByPKey(routeVO.getKey()).orElseThrow(NotFoundException::new);
         return mapper.map(routeRepository.save(mapper.mapFromTo(routeVO, route)), RouteVO.class);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/routes")
     public void create(@RequestBody RouteVO routeVO, HttpServletRequest req, HttpServletResponse resp) {
-        Route route = mapper.map(routeVO, Route.class);
+        RouteImpl route = mapper.map(routeVO, RouteImpl.class);
         if (route.hasSourceLocation()) {
             route.setSourceLocation(locationRepository.findByLocationId(route.getSourceLocation().getLocationId()).orElseThrow(NotFoundException::new));
         }

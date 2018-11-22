@@ -16,7 +16,7 @@
 	</configuration>
 
     <mapping>
-		<class-a map-null="false">org.openwms.tms.routing.Route</class-a>
+		<class-a map-null="false">org.openwms.tms.routing.RouteImpl</class-a>
 		<class-b>org.openwms.tms.routing.RouteVO</class-b>
         <field>
             <a is-accessible="true">pKey</a>

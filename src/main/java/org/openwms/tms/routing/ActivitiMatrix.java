@@ -71,33 +71,38 @@ class ActivitiMatrix implements Matrix {
             prg = repository.findByActionTypeAndRouteAndLocationKey(actionType, route.getRouteId(), location.getCoordinate());
             if (!prg.isPresent()) {
 
-                // Not found with Location => check by Location's.LocationGroup
-                prg = findInLocationGroupHierarchy(actionType, route, locationGroupApi.findByName(location.getLocationGroupName()).orElseThrow(NotFoundException::new));
+                if (!RouteImpl.DEF_ROUTE.getRouteId().equals(route.getRouteId())) {
+                    prg = repository.findByActionTypeAndRouteAndLocationKey(actionType, RouteImpl.DEF_ROUTE.getRouteId(), location.getCoordinate());
+                }
                 if (!prg.isPresent()) {
-
-                    // Search the LocationGroup hierarchy the way up...
-                    if (locationGroup == null) {
-                        String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route, location.getCoordinate(), location.getLocationGroupName());
-                        LOGGER.info(message);
-                        throw new NoRouteException(message);
-                    }
-                    prg = findInLocationGroupHierarchy(actionType, route, locationGroup);
-
-                    if (!prg.isPresent() && route.equals(Route.NO_ROUTE)) {
-                        String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route, location.getCoordinate(), location.getLocationGroupName());
-                        LOGGER.info(message);
-                        throw new NoRouteException(message);
-                    }
-
-                    if (!prg.isPresent() && !route.equals(Route.DEF_ROUTE)) {
-                        // Last chance: Search for the default route
-                        prg = findInLocationGroupHierarchy(actionType, Route.DEF_ROUTE, locationGroup);
-                    }
-
+                    // Not found with Location => check by Location's.LocationGroup
+                    prg = findInLocationGroupHierarchy(actionType, route, locationGroupApi.findByName(location.getLocationGroupName()).orElseThrow(NotFoundException::new));
                     if (!prg.isPresent()) {
-                        String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route, location.getCoordinate(), location.getLocationGroupName());
-                        LOGGER.info(message);
-                        throw new NoRouteException(message);
+
+                        // Search the LocationGroup hierarchy the way up...
+                        if (locationGroup == null) {
+                            String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route, location.getCoordinate(), location.getLocationGroupName());
+                            LOGGER.info(message);
+                            throw new NoRouteException(message);
+                        }
+                        prg = findInLocationGroupHierarchy(actionType, route, locationGroup);
+
+                        if (!prg.isPresent() && route.equals(RouteImpl.NO_ROUTE)) {
+                            String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route, location.getCoordinate(), location.getLocationGroupName());
+                            LOGGER.info(message);
+                            throw new NoRouteException(message);
+                        }
+
+                        if (!prg.isPresent() && !route.equals(RouteImpl.DEF_ROUTE)) {
+                            // Last chance: Search for the default route
+                            prg = findInLocationGroupHierarchy(actionType, RouteImpl.DEF_ROUTE, locationGroup);
+                        }
+
+                        if (!prg.isPresent()) {
+                            String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route, location.getCoordinate(), location.getLocationGroupName());
+                            LOGGER.info(message);
+                            throw new NoRouteException(message);
+                        }
                     }
                 }
             }

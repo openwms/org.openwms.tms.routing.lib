@@ -28,6 +28,7 @@ import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.NoRouteException;
 import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.Route;
+import org.openwms.tms.routing.RouteImpl;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
 import org.springframework.util.Assert;
 
@@ -64,6 +65,7 @@ public class ItemMessageHandler {
     public void handle(ItemMessage msg) {
         Assert.notNull(msg, "handle called with null message");
         Assert.notNull(msg.getHeader(), "handle called without message header");
+        in.clear();
         in.putAll(msg.getAll());
         in.putAll(msg.getHeader().getAll());
 
@@ -78,7 +80,7 @@ public class ItemMessageHandler {
                         locationGroupApi.findByName(actualLocation.getLocationGroupName())
                                 .orElseThrow(()->new NotFoundException("No LocationGroup exists for handling message in routing"));
 
-        Route route = Route.NO_ROUTE;
+        Route route = RouteImpl.NO_ROUTE;
         List<TransportOrder> transportOrders = transportOrderApi.findBy(msg.getBarcode(), "STARTED");
         if (transportOrders != null && !transportOrders.isEmpty()) {
             TransportOrder transportOrder = transportOrders.get(0);

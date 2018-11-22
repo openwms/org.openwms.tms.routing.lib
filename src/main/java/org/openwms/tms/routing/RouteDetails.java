@@ -37,7 +37,7 @@ class RouteDetails extends BaseEntity implements Serializable {
     public static final String COLUMN_ROUTE_ID = "C_ROUTE_ID";
     @ManyToOne
     @JoinColumn(name = COLUMN_ROUTE_ID)
-    private Route route;
+    private RouteImpl route;
 
     public static final String COLUMN_POS = "C_POS";
     @Column(name = COLUMN_POS)
@@ -55,7 +55,7 @@ class RouteDetails extends BaseEntity implements Serializable {
     protected RouteDetails() {
     }
 
-    public RouteDetails(Route route, int pos) {
+    public RouteDetails(RouteImpl route, int pos) {
         this.route = route;
         this.pos = pos;
     }

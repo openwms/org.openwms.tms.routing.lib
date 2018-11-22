@@ -46,11 +46,11 @@ class ExplicitRouteSearch implements RouteSearchAlgorithm {
      * {@inheritDoc}
      */
     @Override
-    public Route findBy(String sourceLocation, String targetLocation, String targetLocationGroup) {
+    public RouteImpl findBy(String sourceLocation, String targetLocation, String targetLocationGroup) {
         Assert.hasText(sourceLocation, "The sourceLocation must be given when searching for a Route");
         final boolean targetLocExists = StringUtils.hasText(targetLocation);
 
-        Optional<Route> result;
+        Optional<RouteImpl> result;
         // First try explicit declaration
         if (targetLocExists) {
 
@@ -67,7 +67,7 @@ class ExplicitRouteSearch implements RouteSearchAlgorithm {
         return findInGroup(sourceLocation, targetLocationGroup).orElseThrow(() -> new NoRouteException(format("No route found for TransportOrder with sourceLocation [%s] and targetLocationGroup [%s]", sourceLocation, targetLocationGroup)));
     }
 
-    private Optional<Route> findInGroup(String sourceLocation, String targetLocationGroup) {
+    private Optional<RouteImpl> findInGroup(String sourceLocation, String targetLocationGroup) {
         return repository.findBySourceLocation_LocationIdAndTargetLocationGroupNameAndEnabled(sourceLocation, targetLocationGroup, true);
     }
 }
