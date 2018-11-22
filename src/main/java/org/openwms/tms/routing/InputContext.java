@@ -18,6 +18,7 @@ package org.openwms.tms.routing;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * A InputContext.
@@ -36,7 +37,7 @@ public class InputContext {
         return msg;
     }
 
-    public <T extends Object> Optional<T> get(String key) {
+    public <T extends Object> Optional<T> get(String key, Class<T> routeClass) {
         return (Optional<T>) Optional.ofNullable(this.msg.get(key));
     }
 
@@ -44,11 +45,16 @@ public class InputContext {
         this.msg = msg;
     }
 
-    public void put(String key, Object val) {
-        this.msg.put(key, val);
+    public Object put(String key, Object val) {
+        if (val != null) {
+            this.msg.put(key, val);
+        }
+        return val;
     }
 
     public void putAll(Map<String, Object> msg) {
-        this.msg.putAll(msg);
+        if (msg != null) {
+            this.msg.putAll(msg.entrySet().stream().filter(e -> e.getKey() != null && e.getValue() != null).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+        }
     }
 }

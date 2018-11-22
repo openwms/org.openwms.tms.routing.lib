@@ -74,9 +74,9 @@ public class ItemMessageHandler {
         LocationGroupVO locationGroup =
                 msg.hasLocationGroupName() ?
                         locationGroupApi.findByName(msg.getLocationGroupName())
-                                .orElseThrow(()->new NotFoundException("No LocationGroup exists for handling REQ message in routing")) :
+                                .orElseThrow(()->new NotFoundException("No LocationGroup exists for handling message in routing")) :
                         locationGroupApi.findByName(actualLocation.getLocationGroupName())
-                                .orElseThrow(()->new NotFoundException("No LocationGroup exists for handling REQ message in routing"));
+                                .orElseThrow(()->new NotFoundException("No LocationGroup exists for handling message in routing"));
 
         Route route = Route.NO_ROUTE;
         List<TransportOrder> transportOrders = transportOrderApi.findBy(msg.getBarcode(), "STARTED");
