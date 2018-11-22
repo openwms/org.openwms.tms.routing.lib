@@ -36,7 +36,7 @@ public class InputContext {
         return msg;
     }
 
-    public <T extends Object> Optional<T> get(String key, Class<T> clazz) {
+    public <T extends Object> Optional<T> get(String key) {
         return (Optional<T>) Optional.ofNullable(this.msg.get(key));
     }
 
