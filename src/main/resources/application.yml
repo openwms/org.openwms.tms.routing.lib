@@ -14,6 +14,11 @@ spring:
 
 owms:
   driver:
+    osip:
+      enabled: true
+    locu:
+      queue-name: locu
+      exchange-mapping: locu.*
     sysu:
       queue-name: sysu
       exchange-mapping: sysu.*
