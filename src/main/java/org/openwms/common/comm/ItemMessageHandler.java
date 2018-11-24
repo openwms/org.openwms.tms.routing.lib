@@ -17,11 +17,11 @@ package org.openwms.common.comm;
 
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
-import org.openwms.common.LocationGroupVO;
-import org.openwms.common.LocationVO;
 import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupApi;
-import org.openwms.tms.TransportOrder;
+import org.openwms.common.location.api.LocationGroupVO;
+import org.openwms.common.location.api.LocationVO;
+import org.openwms.tms.api.TransportOrder;
 import org.openwms.tms.api.TransportOrderApi;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;

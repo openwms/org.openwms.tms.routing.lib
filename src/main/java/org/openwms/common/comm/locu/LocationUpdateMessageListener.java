@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.common.comm.sysu;
+package org.openwms.common.comm.locu;
 
 import org.ameba.annotation.Measured;
 import org.openwms.core.SpringProfiles;
@@ -27,26 +27,26 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 /**
- * A SystemUpdateMessageListener.
+ * A LocationUpdateMessageListener.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Profile(SpringProfiles.ASYNCHRONOUS_PROFILE)
 @Component
-class SystemUpdateMessageListener {
+class LocationUpdateMessageListener {
 
-    private final SystemUpdateMessageHandler handler;
+    private final LocationUpdateMessageHandler handler;
 
-    SystemUpdateMessageListener(SystemUpdateMessageHandler handler) {
+    LocationUpdateMessageListener(LocationUpdateMessageHandler handler) {
         this.handler = handler;
     }
 
     @Measured
     @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(value = "${owms.driver.sysu.queue-name}", durable = "true"),
-            exchange = @Exchange(value = "${owms.driver.sysu.exchange-mapping}", ignoreDeclarationExceptions = "true"))
+            value = @Queue(value = "${owms.driver.locu.queue-name}", durable = "true"),
+            exchange = @Exchange(value = "${owms.driver.locu.exchange-mapping}", ignoreDeclarationExceptions = "true"))
     )
-    void handle(@Payload SystemUpdateVO msg) {
+    void handle(@Payload LocationUpdateVO msg) {
         try {
             handler.handle(msg);
         } catch (Exception e) {

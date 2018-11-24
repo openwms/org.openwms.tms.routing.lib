@@ -13,33 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.common;
-
-import org.ameba.annotation.TxService;
+package org.openwms.common.comm;
 
 /**
- * A TransportUnitServiceImpl.
+ * A CommPackage.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@TxService("transportUnitService")
-class TransportUnitServiceImpl implements TransportUnitService {
+public final class CommPackage {
 
-    @Override
-    public TransportUnit getByKey(String barcode) {
-        System.out.println("Barcode:"+barcode);
-        return null;
-    }
-
-    @Override
-    public TransportUnit getByKey() {
-        /**/System.out.println("Hi");
-        return null;
-    }
-
-    @Override
-    public TransportUnit getByKey2() {
-        System.out.println("Hi 2");
-        return null;
+    private CommPackage() {
     }
 }

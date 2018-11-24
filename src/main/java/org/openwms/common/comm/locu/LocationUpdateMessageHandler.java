@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.common.comm.sysu;
+package org.openwms.common.comm.locu;
 
 import org.ameba.exception.NotFoundException;
+import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
+import org.openwms.common.location.api.LocationVO;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.ProgramExecutor;
@@ -27,29 +29,28 @@ import org.springframework.stereotype.Component;
 import static java.lang.String.format;
 
 /**
- * A SystemUpdateHandler.
+ * A LocationUpdateMessageHandler.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Component
-class SystemUpdateMessageHandler {
+class LocationUpdateMessageHandler {
 
     private final LocationGroupApi locationGroupApi;
+    private final LocationApi locationApi;
     private final Matrix matrix;
     private final ProgramExecutor executor;
-    private final InputContext in;
 
-    SystemUpdateMessageHandler(LocationGroupApi locationGroupApi, Matrix matrix, ProgramExecutor executor, InputContext in) {
+    LocationUpdateMessageHandler(LocationGroupApi locationGroupApi, LocationApi locationApi, Matrix matrix, ProgramExecutor executor) {
         this.locationGroupApi = locationGroupApi;
+        this.locationApi = locationApi;
         this.matrix = matrix;
         this.executor = executor;
-        this.in = in;
     }
 
-    void handle(SystemUpdateVO msg) {
-        in.clear();
-        LocationGroupVO locationGroupName = locationGroupApi.findByName(msg.getLocationGroupName()).orElseThrow(()-> new NotFoundException(format("No LocationGroup with name [%s] exists, can't process SYSU", msg.getLocationGroupName())));
-        in.getMsg().putAll(msg.getAll());
-        executor.execute(matrix.findBy(msg.getType(), RouteImpl.NO_ROUTE, null, locationGroupName), in.getMsg());
+    void handle(LocationUpdateVO msg) {
+        LocationGroupVO locationGroupName = locationGroupApi.findByName(msg.getLocationGroupName()).orElseThrow(()-> new NotFoundException(format("No LocationGroup with name [%s] exists, can't process LOCU", msg.getLocationGroupName())));
+        LocationVO location = locationApi.findLocationByCoordinate(msg.getLocation()).orElseThrow(() -> new NotFoundException(format("No Location with coordinat [%s] exists, can't process LOCU", msg.getLocation())));
+        executor.execute(matrix.findBy(msg.getType(), RouteImpl.NO_ROUTE, location, locationGroupName), new InputContext(msg.getAll()).getMsg());
     }
 }

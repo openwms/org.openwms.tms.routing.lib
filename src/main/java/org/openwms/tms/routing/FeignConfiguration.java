@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms;
+package org.openwms.tms.routing;
 
 import feign.auth.BasicAuthRequestInterceptor;
 import io.interface21.cloud.ui.UIPackage;
@@ -21,7 +21,6 @@ import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.transport.api.TransportUnitApi;
 import org.openwms.tms.api.TransportOrderApi;
-import org.openwms.tms.routing.InputContext;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;

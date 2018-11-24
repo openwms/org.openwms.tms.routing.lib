@@ -27,6 +27,13 @@ import java.util.stream.Collectors;
  */
 public class InputContext {
 
+    public InputContext() {
+    }
+
+    public InputContext(Map<String, Object> msg) {
+        this.msg = msg;
+    }
+
     private Map<String, Object> msg = new ConcurrentHashMap<>();
 
     public void addBeanToMsg(String name, Object bean) {

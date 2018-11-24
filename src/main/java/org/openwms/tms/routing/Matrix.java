@@ -15,8 +15,8 @@
  */
 package org.openwms.tms.routing;
 
-import org.openwms.common.LocationGroupVO;
-import org.openwms.common.LocationVO;
+import org.openwms.common.location.api.LocationGroupVO;
+import org.openwms.common.location.api.LocationVO;
 import org.springframework.lang.Nullable;
 
 /**

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms;
+package org.openwms.tms.routing;
 
 import org.ameba.annotation.EnableAspects;
 import org.ameba.mapping.BeanMapper;
@@ -38,8 +38,8 @@ import org.springframework.web.client.RestTemplate;
 @EnableTransactionManagement
 @EnableAspects(propagateRootCause = true)
 @EnableConfigurationProperties
-@EnableJpaRepositories(basePackages = "org.openwms")
-@EntityScan(basePackages = "org.openwms")
+@EnableJpaRepositories(basePackages = "org.openwms.tms.routing")
+@EntityScan(basePackages = "org.openwms.tms.routing")
 public class ModuleConfiguration {
 
     public

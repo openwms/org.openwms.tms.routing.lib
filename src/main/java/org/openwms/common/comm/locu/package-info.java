@@ -13,34 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.common.location.api;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.io.Serializable;
-
 /**
- * A ErrorCodeVO.
- *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * This package cares about processing the OSIP LOCU type.
  */
-public class ErrorCodeVO implements Serializable {
-
-    @JsonProperty
-    private String errorCode;
-
-    public ErrorCodeVO() {
-    }
-
-    public ErrorCodeVO(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
-    }
-}
+package org.openwms.common.comm.locu;

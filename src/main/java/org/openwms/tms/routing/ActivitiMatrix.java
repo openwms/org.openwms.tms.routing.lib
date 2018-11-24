@@ -16,9 +16,9 @@
 package org.openwms.tms.routing;
 
 import org.ameba.exception.NotFoundException;
-import org.openwms.common.LocationGroupVO;
-import org.openwms.common.LocationVO;
 import org.openwms.common.location.api.LocationGroupApi;
+import org.openwms.common.location.api.LocationGroupVO;
+import org.openwms.common.location.api.LocationVO;
 import org.openwms.core.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,11 +68,11 @@ class ActivitiMatrix implements Matrix {
         if (null != location) {
 
             // First explicitly search for the Location and Route
-            prg = repository.findByActionTypeAndRouteAndLocationKey(actionType, route.getRouteId(), location.getCoordinate());
+            prg = repository.findByActionTypeAndRouteAndLocationKey(actionType, route.getRouteId(), location.getLocationId());
             if (!prg.isPresent()) {
 
                 if (!RouteImpl.DEF_ROUTE.getRouteId().equals(route.getRouteId())) {
-                    prg = repository.findByActionTypeAndRouteAndLocationKey(actionType, RouteImpl.DEF_ROUTE.getRouteId(), location.getCoordinate());
+                    prg = repository.findByActionTypeAndRouteAndLocationKey(actionType, RouteImpl.DEF_ROUTE.getRouteId(), location.getLocationId());
                 }
                 if (!prg.isPresent()) {
                     // Not found with Location => check by Location's.LocationGroup
@@ -81,14 +81,14 @@ class ActivitiMatrix implements Matrix {
 
                         // Search the LocationGroup hierarchy the way up...
                         if (locationGroup == null) {
-                            String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route, location.getCoordinate(), location.getLocationGroupName());
+                            String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route, location.getLocationId(), location.getLocationGroupName());
                             LOGGER.info(message);
                             throw new NoRouteException(message);
                         }
                         prg = findInLocationGroupHierarchy(actionType, route, locationGroup);
 
                         if (!prg.isPresent() && route.equals(RouteImpl.NO_ROUTE)) {
-                            String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route, location.getCoordinate(), location.getLocationGroupName());
+                            String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route, location.getLocationId(), location.getLocationGroupName());
                             LOGGER.info(message);
                             throw new NoRouteException(message);
                         }
@@ -99,7 +99,7 @@ class ActivitiMatrix implements Matrix {
                         }
 
                         if (!prg.isPresent()) {
-                            String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route, location.getCoordinate(), location.getLocationGroupName());
+                            String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route, location.getLocationId(), location.getLocationGroupName());
                             LOGGER.info(message);
                             throw new NoRouteException(message);
                         }

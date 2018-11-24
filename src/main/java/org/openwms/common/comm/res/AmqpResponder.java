@@ -16,10 +16,10 @@
 package org.openwms.common.comm.res;
 
 import org.ameba.annotation.Measured;
-import org.openwms.OwmsProperties;
 import org.openwms.core.SpringProfiles;
 import org.openwms.core.exception.IllegalConfigurationValueException;
 import org.openwms.tms.routing.InputContext;
+import org.openwms.tms.routing.OwmsProperties;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
