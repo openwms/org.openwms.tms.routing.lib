@@ -27,45 +27,48 @@ import java.util.stream.Collectors;
  */
 public class InputContext {
 
+    private InheritableThreadLocal<Map<String, Object>> msg;
+
     public InputContext() {
+        this.msg = new InheritableThreadLocal<>();
+        this.msg.set(new ConcurrentHashMap<>());
     }
 
     public InputContext(Map<String, Object> msg) {
-        this.msg = msg;
+        this.msg = new InheritableThreadLocal<>();
+        this.msg.set(msg);
     }
 
-    private Map<String, Object> msg = new ConcurrentHashMap<>();
-
     public void addBeanToMsg(String name, Object bean) {
-        msg.put(name, bean);
+        msg.get().put(name, bean);
     }
 
     public void clear() {
-        this.msg.clear();
+        this.msg.get().clear();
     }
 
     public Map<String, Object> getMsg() {
-        return msg;
+        return msg.get();
     }
 
     public <T extends Object> Optional<T> get(String key, Class<T> routeClass) {
-        return (Optional<T>) Optional.ofNullable(this.msg.get(key));
+        return (Optional<T>) Optional.ofNullable(this.msg.get().get(key));
     }
 
     public void setMsg(Map<String, Object> msg) {
-        this.msg = msg;
+        this.msg.set(msg);
     }
 
     public Object put(String key, Object val) {
         if (val != null) {
-            this.msg.put(key, val);
+            this.msg.get().put(key, val);
         }
         return val;
     }
 
     public void putAll(Map<String, Object> msg) {
         if (msg != null) {
-            this.msg.putAll(msg.entrySet().stream().filter(e -> e.getKey() != null && e.getValue() != null).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+            this.msg.get().putAll(msg.entrySet().stream().filter(e -> e.getKey() != null && e.getValue() != null).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
         }
     }
 }

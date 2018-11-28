@@ -42,14 +42,14 @@ public class AmqpResponder implements ResResponder {
 
     private final InputContext in;
     private final AmqpTemplate amqpTemplate;
-    private final String exchangeMapping;
+    private final String exchangeName;
     private final OwmsProperties owmsProperties;
 
     @Autowired
-    public AmqpResponder(InputContext in, AmqpTemplate amqpTemplate, @Value("${owms.driver.res.exchange-mapping}") String exchangeMapping, OwmsProperties owmsProperties) {
+    public AmqpResponder(InputContext in, AmqpTemplate amqpTemplate, @Value("${owms.driver.res.exchange-name}") String exchangeName, OwmsProperties owmsProperties) {
         this.in = in;
         this.amqpTemplate = amqpTemplate;
-        this.exchangeMapping = exchangeMapping;
+        this.exchangeName = exchangeName;
         this.owmsProperties = owmsProperties;
     }
 
@@ -74,7 +74,7 @@ public class AmqpResponder implements ResResponder {
                 .errorCode(""+in.getMsg().get("errorCode"))
                 ;
         String routingKey = owmsProperties.getPartner(""+in.getMsg().get("sender")).orElseThrow(() -> new IllegalConfigurationValueException(format("No partner service with name [%s] configured in property owms.driver.partners", ""+in.getMsg().get("sender"))));
-        amqpTemplate.convertAndSend(exchangeMapping, routingKey, builder.build());
+        amqpTemplate.convertAndSend(exchangeName, routingKey, builder.build());
     }
 
     /**
@@ -98,7 +98,7 @@ public class AmqpResponder implements ResResponder {
                 .errorCode(""+in.getMsg().get("errorCode"))
                 ;
         String routingKey = owmsProperties.getPartner(""+in.getMsg().get("sender")).orElseThrow(() -> new IllegalConfigurationValueException(format("No partner service with name [%s] configured in property owms.driver.partners", ""+in.getMsg().get("sender"))));
-        amqpTemplate.convertAndSend(exchangeMapping, routingKey, builder.build());
+        amqpTemplate.convertAndSend(exchangeName, routingKey, builder.build());
     }
 
 }

@@ -18,7 +18,6 @@ package org.openwms.common.comm.locu;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.openwms.common.location.api.ErrorCodeVO;
 
-import java.beans.ConstructorProperties;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
@@ -31,7 +30,7 @@ import java.util.Objects;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-class LocationUpdateVO implements Serializable {
+public class LocationUpdateVO implements Serializable {
 
     @JsonProperty
     private String type;
@@ -43,15 +42,6 @@ class LocationUpdateVO implements Serializable {
     private String errorCode;
     @JsonProperty
     private Date created;
-
-    @ConstructorProperties({"type", "location", "locationGroupName", "errorCode", "created"})
-    public LocationUpdateVO(String type, String location, String locationGroupName, String errorCode, Date created) {
-        this.type = type;
-        this.location = location;
-        this.locationGroupName = locationGroupName;
-        this.errorCode = errorCode;
-        this.created = created;
-    }
 
     public LocationUpdateVO() {
     }

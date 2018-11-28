@@ -33,13 +33,13 @@ import java.util.Map;
 class SystemUpdateVO implements Serializable {
 
     @JsonProperty
-    private Date created;
+    private String type;
     @JsonProperty
     private String locationGroupName;
     @JsonProperty
     private String errorCode;
     @JsonProperty
-    private String type;
+    private Date created;
 
     @ConstructorProperties({"created", "locationGroupName", "errorCode"})
     public SystemUpdateVO(Date created, String locationGroupName, String errorCode) {

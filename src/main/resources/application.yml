@@ -18,15 +18,19 @@ owms:
       enabled: true
     locu:
       queue-name: locu
-      exchange-mapping: locu.*
+      exchange-name: osip
+      routing-key: osip.locu.received
     sysu:
       queue-name: sysu
-      exchange-mapping: sysu.*
+      exchange-name: osip
+      routing-key: osip.sysu.received
     req:
       queue-name: req
-      exchange-mapping: req.*
+      exchange-name: osip
+      routing-key: osip.req.received
     res:
-      exchange-mapping: res.*
+      exchange-name: osip
     upd:
       queue-name: upd
-      exchange-mapping: upd.*
+      exchange-name: osip
+      routing-key: osip.upd.received

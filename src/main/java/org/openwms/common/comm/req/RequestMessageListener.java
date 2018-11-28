@@ -21,9 +21,6 @@ import org.openwms.common.comm.ItemMessage;
 import org.openwms.common.comm.ItemMessageHandler;
 import org.openwms.core.SpringProfiles;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
-import org.springframework.amqp.rabbit.annotation.Exchange;
-import org.springframework.amqp.rabbit.annotation.Queue;
-import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Profile;
@@ -47,10 +44,7 @@ class RequestMessageListener {
     }
 
     @Measured
-    @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(value = "${owms.driver.req.queue-name}", durable = "true"),
-            exchange = @Exchange(value = "${owms.driver.req.exchange-mapping}", ignoreDeclarationExceptions = "true"))
-    )
+    @RabbitListener(queues = "${owms.driver.req.queue-name}" )
     void handle(@Payload ItemMessage msg) {
         try {
             handler.handle(msg);

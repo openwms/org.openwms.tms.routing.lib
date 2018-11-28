@@ -15,7 +15,6 @@
  */
 package org.openwms.common.comm.sysu;
 
-import org.ameba.exception.NotFoundException;
 import org.openwms.common.comm.ConsiderOSIPCondition;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
@@ -25,8 +24,6 @@ import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.RouteImpl;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
-
-import static java.lang.String.format;
 
 /**
  * A SystemUpdateHandler.
@@ -51,7 +48,7 @@ class SystemUpdateMessageHandler {
 
     void handle(SystemUpdateVO msg) {
         in.clear();
-        LocationGroupVO locationGroupName = locationGroupApi.findByName(msg.getLocationGroupName()).orElseThrow(()-> new NotFoundException(format("No LocationGroup with name [%s] exists, can't process SYSU", msg.getLocationGroupName())));
+        LocationGroupVO locationGroupName = locationGroupApi.findByName(msg.getLocationGroupName());
         in.getMsg().putAll(msg.getAll());
         executor.execute(matrix.findBy(msg.getType(), RouteImpl.NO_ROUTE, null, locationGroupName), in.getMsg());
     }

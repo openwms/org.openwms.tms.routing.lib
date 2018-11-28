@@ -15,7 +15,6 @@
  */
 package org.openwms.tms.routing;
 
-import org.ameba.exception.NotFoundException;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
 import org.openwms.common.location.api.LocationVO;
@@ -65,7 +64,7 @@ class ActivitiMatrix implements Matrix {
     public Action findBy(String actionType, Route route, @Nullable LocationVO location, @Nullable LocationGroupVO locationGroup) {
         // search explicitly...
         Optional<Action> prg = Optional.empty();
-        if (null != location) {
+        if (null != location && location.getLocationId() != null) {
 
             // First explicitly search for the Location and Route
             prg = repository.findByActionTypeAndRouteAndLocationKey(actionType, route.getRouteId(), location.getLocationId());
@@ -76,7 +75,7 @@ class ActivitiMatrix implements Matrix {
                 }
                 if (!prg.isPresent()) {
                     // Not found with Location => check by Location's.LocationGroup
-                    prg = findInLocationGroupHierarchy(actionType, route, locationGroupApi.findByName(location.getLocationGroupName()).orElseThrow(NotFoundException::new));
+                    prg = findInLocationGroupHierarchy(actionType, route, locationGroupApi.findByName(location.getLocationGroupName()));
                     if (!prg.isPresent()) {
 
                         // Search the LocationGroup hierarchy the way up...
@@ -129,7 +128,7 @@ class ActivitiMatrix implements Matrix {
         if (!cp.isPresent()) {
 
             if (locationGroup.hasParent()) {
-                cp = findInLocationGroupHierarchy(actionType, route, locationGroupApi.findByName(locationGroup.getParent()).orElseThrow(NotFoundException::new));
+                cp = findInLocationGroupHierarchy(actionType, route, locationGroupApi.findByName(locationGroup.getParent()));
 
             } else if (locationGroup.hasLink("_parent")) {
                 cp = findInLocationGroupHierarchy(actionType, route, findLocationGroup(locationGroup.getLink("_parent")));

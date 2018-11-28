@@ -16,7 +16,6 @@
 package org.openwms.common.comm;
 
 import org.ameba.annotation.TxService;
-import org.ameba.exception.NotFoundException;
 import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
@@ -34,8 +33,6 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.util.Assert;
 
 import java.util.List;
-
-import static java.lang.String.format;
 
 /**
  * A RequestMessageHandler.
@@ -72,15 +69,12 @@ public class ItemMessageHandler {
         in.putAll(msg.getHeader().getAll());
 
         LocationVO actualLocation = locationApi
-                .findLocationByCoordinate(msg.getActualLocation())
-                .orElseThrow(()-> new NotFoundException(format("Location with coordinate [%s] does not exist", msg.getActualLocation())));
+                .findLocationByCoordinate(msg.getActualLocation());
 
         LocationGroupVO locationGroup =
                 msg.hasLocationGroupName() ?
-                        locationGroupApi.findByName(msg.getLocationGroupName())
-                                .orElseThrow(()->new NotFoundException("No LocationGroup exists for handling message in routing")) :
-                        locationGroupApi.findByName(actualLocation.getLocationGroupName())
-                                .orElseThrow(()->new NotFoundException("No LocationGroup exists for handling message in routing"));
+                        locationGroupApi.findByName(msg.getLocationGroupName()) :
+                        locationGroupApi.findByName(actualLocation.getLocationGroupName());
 
         Route route = RouteImpl.NO_ROUTE;
         List<TransportOrder> transportOrders = transportOrderApi.findBy(msg.getBarcode(), "STARTED");

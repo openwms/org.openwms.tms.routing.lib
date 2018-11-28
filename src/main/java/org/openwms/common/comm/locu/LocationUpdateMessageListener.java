@@ -19,9 +19,6 @@ import org.ameba.annotation.Measured;
 import org.openwms.common.comm.ConsiderOSIPCondition;
 import org.openwms.core.SpringProfiles;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
-import org.springframework.amqp.rabbit.annotation.Exchange;
-import org.springframework.amqp.rabbit.annotation.Queue;
-import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Profile;
@@ -45,10 +42,7 @@ class LocationUpdateMessageListener {
     }
 
     @Measured
-    @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(value = "${owms.driver.locu.queue-name}", durable = "true"),
-            exchange = @Exchange(value = "${owms.driver.locu.exchange-mapping}", ignoreDeclarationExceptions = "true"))
-    )
+    @RabbitListener(queues = "${owms.driver.locu.queue-name}")
     void handle(@Payload LocationUpdateVO msg) {
         try {
             handler.handle(msg);
