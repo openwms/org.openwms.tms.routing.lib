@@ -16,6 +16,7 @@
 package org.openwms.common.comm.res;
 
 import org.ameba.annotation.Measured;
+import org.openwms.common.comm.ConsiderOSIPCondition;
 import org.openwms.core.SpringProfiles;
 import org.openwms.core.exception.IllegalConfigurationValueException;
 import org.openwms.tms.routing.InputContext;
@@ -23,6 +24,7 @@ import org.openwms.tms.routing.OwmsProperties;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,7 @@ import static java.lang.String.format;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Profile(SpringProfiles.ASYNCHRONOUS_PROFILE)
+@Conditional(ConsiderOSIPCondition.class)
 @Service("responder")
 public class AmqpResponder implements ResResponder {
 

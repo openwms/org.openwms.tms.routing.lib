@@ -16,6 +16,7 @@
 package org.openwms.common.comm.res;
 
 import org.ameba.annotation.Measured;
+import org.openwms.common.comm.ConsiderOSIPCondition;
 import org.openwms.common.comm.MessageProcessingException;
 import org.openwms.core.SecurityUtils;
 import org.openwms.core.SpringProfiles;
@@ -26,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -43,6 +45,7 @@ import static java.lang.String.format;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Profile("!"+ SpringProfiles.ASYNCHRONOUS_PROFILE)
+@Conditional(ConsiderOSIPCondition.class)
 @Service("responder")
 class ResSenderApi implements ResResponder {
 

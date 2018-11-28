@@ -16,12 +16,14 @@
 package org.openwms.common.comm.sysu;
 
 import org.ameba.exception.NotFoundException;
+import org.openwms.common.comm.ConsiderOSIPCondition;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.RouteImpl;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
 import static java.lang.String.format;
@@ -32,6 +34,7 @@ import static java.lang.String.format;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Component
+@Conditional(ConsiderOSIPCondition.class)
 class SystemUpdateMessageHandler {
 
     private final LocationGroupApi locationGroupApi;

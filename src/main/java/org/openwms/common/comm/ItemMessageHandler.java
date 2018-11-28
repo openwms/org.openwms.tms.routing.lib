@@ -30,6 +30,7 @@ import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.Route;
 import org.openwms.tms.routing.RouteImpl;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -42,6 +43,7 @@ import static java.lang.String.format;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @TxService
+@Conditional(ConsiderOSIPCondition.class)
 public class ItemMessageHandler {
 
     private final Matrix matrix;

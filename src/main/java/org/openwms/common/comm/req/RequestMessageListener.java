@@ -16,6 +16,7 @@
 package org.openwms.common.comm.req;
 
 import org.ameba.annotation.Measured;
+import org.openwms.common.comm.ConsiderOSIPCondition;
 import org.openwms.common.comm.ItemMessage;
 import org.openwms.common.comm.ItemMessageHandler;
 import org.openwms.core.SpringProfiles;
@@ -24,6 +25,7 @@ import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Profile;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
@@ -34,6 +36,7 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Profile(SpringProfiles.ASYNCHRONOUS_PROFILE)
+@Conditional(ConsiderOSIPCondition.class)
 @Component
 class RequestMessageListener {
 

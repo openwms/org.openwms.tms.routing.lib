@@ -16,7 +16,9 @@
 package org.openwms.common.comm.sysu;
 
 import org.ameba.annotation.Measured;
+import org.openwms.common.comm.ConsiderOSIPCondition;
 import org.openwms.core.SpringProfiles;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Profile("!"+SpringProfiles.ASYNCHRONOUS_PROFILE)
+@Conditional(ConsiderOSIPCondition.class)
 @RestController
 class SystemUpdateMessageController {
 
