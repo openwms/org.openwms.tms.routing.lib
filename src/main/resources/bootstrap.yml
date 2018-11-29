@@ -3,7 +3,6 @@ spring:
     name: routing-service
   cloud:
     config:
-      label: ${owms.tenant:master}
       fail-fast: true # true means retry
       discovery:
         enabled: true
