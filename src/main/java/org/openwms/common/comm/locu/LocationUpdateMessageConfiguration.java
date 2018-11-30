@@ -15,6 +15,7 @@
  */
 package org.openwms.common.comm.locu;
 
+import org.openwms.common.comm.ConsiderOSIPCondition;
 import org.openwms.core.SpringProfiles;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -22,6 +23,7 @@ import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
@@ -31,6 +33,7 @@ import org.springframework.context.annotation.Profile;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Profile(SpringProfiles.ASYNCHRONOUS_PROFILE)
+@Conditional(ConsiderOSIPCondition.class)
 @Configuration
 class LocationUpdateMessageConfiguration {
 

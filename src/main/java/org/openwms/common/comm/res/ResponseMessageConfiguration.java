@@ -15,17 +15,23 @@
  */
 package org.openwms.common.comm.res;
 
+import org.openwms.common.comm.ConsiderOSIPCondition;
+import org.openwms.core.SpringProfiles;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
  * A ResponseMessageConfiguration.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
+@Profile(SpringProfiles.ASYNCHRONOUS_PROFILE)
 @Configuration
+@Conditional(ConsiderOSIPCondition.class)
 class ResponseMessageConfiguration {
 
     @Bean("resExchange")
