@@ -11,6 +11,12 @@ spring:
         max-attempts: 120
       username: user # need to be overridden in the cloud environment props!
       password: sa # need to be overridden in the cloud environment props!
+  security:
+    user:
+      password: sa # need to be overridden in the cloud environment props!
+      name: user # need to be overridden in the cloud environment props!
+    basic:
+      enabled: false
 #  activiti:
 #    process-definition-location-prefix: config:processes/
 owms:
@@ -20,20 +26,14 @@ owms:
 server:
   port: ${PORT:8130}
 
-security:
-  user:
-    password: sa # need to be overridden in the cloud environment props!
-  basic:
-    enabled: false
-
 eureka:
   client:
     serviceUrl:
       defaultZone: ${owms.eureka.url}/eureka
   instance:
     metadata-map:
-      username: user
-      password: ${security.user.password}
+      username: ${spring.security.user.name}
+      password: ${spring.security.user.password}
       protocol: http
       config-protocol: http # The protocol used to access the config server
 
