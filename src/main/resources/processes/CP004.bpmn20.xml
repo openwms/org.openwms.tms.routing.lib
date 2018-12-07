@@ -13,7 +13,7 @@
         <startEvent id="sid-45CB9035-7173-4B6A-82CF-8146DD5CB644"></startEvent>
         <endEvent id="sid-5BF81A02-EB87-4F38-8C09-6A5C475093BA"></endEvent>
         <sequenceFlow id="sid-F03A490E-0122-432A-9AD3-CF7576B573DB" sourceRef="sid-45CB9035-7173-4B6A-82CF-8146DD5CB644" targetRef="sid-CC737CCC-6A96-4610-8CEC-182C4DC33497"></sequenceFlow>
-        <serviceTask id="sid-368FF948-3EC0-4C51-8DB6-2FD36CAFC744" name="Check for in-aisle movements" activiti:expression="#{transportOrderApi.getNextInAisle(&quot;LAGER&quot;,&quot;LAGER&quot;,&quot;STARTED&quot;)}" activiti:resultVariableName="to"></serviceTask>
+        <serviceTask id="sid-368FF948-3EC0-4C51-8DB6-2FD36CAFC744" name="Check for in-aisle movements" activiti:expression="#{transportOrderApi.getNextInAisle(&quot;ZEILEL&quot;,&quot;ZEILEL&quot;,&quot;STARTED&quot;)}" activiti:resultVariableName="to"></serviceTask>
         <serviceTask id="sid-49071B53-5850-45C8-9CED-3C33B838171F" name="Check for outfeed" activiti:expression="#{transportOrderApi.getNextOutfeed(&quot;STARTED&quot;,&quot;ZEILEL&quot;)}" activiti:resultVariableName="to"></serviceTask>
         <exclusiveGateway id="sid-15118E65-4BD6-4041-A9D5-59AF2B010546"></exclusiveGateway>
         <sequenceFlow id="sid-5541C999-2D65-4467-81CE-6F0B6D14BA20" sourceRef="sid-CC737CCC-6A96-4610-8CEC-182C4DC33497" targetRef="sid-15118E65-4BD6-4041-A9D5-59AF2B010546"></sequenceFlow>

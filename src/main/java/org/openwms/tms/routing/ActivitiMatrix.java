@@ -15,6 +15,7 @@
  */
 package org.openwms.tms.routing;
 
+import org.ameba.exception.NotFoundException;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
 import org.openwms.common.location.api.LocationVO;
@@ -75,7 +76,7 @@ class ActivitiMatrix implements Matrix {
                 }
                 if (!prg.isPresent()) {
                     // Not found with Location => check by Location's.LocationGroup
-                    prg = findInLocationGroupHierarchy(actionType, route, locationGroupApi.findByName(location.getLocationGroupName()));
+                    prg = findInLocationGroupHierarchy(actionType, route, locationGroupApi.findByName(location.getLocationGroupName()).orElseThrow(NotFoundException::new));
                     if (!prg.isPresent()) {
 
                         // Search the LocationGroup hierarchy the way up...
@@ -128,7 +129,7 @@ class ActivitiMatrix implements Matrix {
         if (!cp.isPresent()) {
 
             if (locationGroup.hasParent()) {
-                cp = findInLocationGroupHierarchy(actionType, route, locationGroupApi.findByName(locationGroup.getParent()));
+                cp = findInLocationGroupHierarchy(actionType, route, locationGroupApi.findByName(locationGroup.getParent()).orElseThrow(NotFoundException::new));
 
             } else if (locationGroup.hasLink("_parent")) {
                 cp = findInLocationGroupHierarchy(actionType, route, findLocationGroup(locationGroup.getLink("_parent")));

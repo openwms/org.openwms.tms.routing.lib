@@ -15,6 +15,7 @@
  */
 package org.openwms.common.comm.locu;
 
+import org.ameba.exception.NotFoundException;
 import org.openwms.common.comm.ConsiderOSIPCondition;
 import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupApi;
@@ -26,6 +27,8 @@ import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.RouteImpl;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
+
+import static java.lang.String.format;
 
 /**
  * A LocationUpdateMessageHandler.
@@ -49,8 +52,8 @@ class LocationUpdateMessageHandler {
     }
 
     void handle(LocationUpdateVO msg) {
-        LocationGroupVO locationGroupName = locationGroupApi.findByName(msg.getLocationGroupName());
-        LocationVO location = locationApi.findLocationByCoordinate(msg.getLocation());
+        LocationGroupVO locationGroupName = locationGroupApi.findByName(msg.getLocationGroupName()).orElseThrow(()-> new NotFoundException(format("No LocationGroup with name [%s] exists, can't process LOCU", msg.getLocationGroupName())));
+        LocationVO location = locationApi.findLocationByCoordinate(msg.getLocation()).orElseThrow(() -> new NotFoundException(format("No Location with coordinate [%s] exists, can't process LOCU", msg.getLocation())));
         executor.execute(matrix.findBy(msg.getType(), RouteImpl.NO_ROUTE, location, locationGroupName), new InputContext(msg.getAll()).getMsg());
     }
 }
