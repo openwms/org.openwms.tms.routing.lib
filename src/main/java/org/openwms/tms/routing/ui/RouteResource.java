@@ -13,12 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing;
+package org.openwms.tms.routing.ui;
 
 import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
+import org.openwms.tms.routing.LocationRepository;
+import org.openwms.tms.routing.RouteImpl;
+import org.openwms.tms.routing.RouteRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,30 +60,39 @@ class RouteResource {
 
     @GetMapping("/routes")
     public List<RouteVO> getAll() {
-        return mapper.map(routeRepository.findAll(), RouteVO.class);
+        return mapper.map(routeRepository.findAll(Sort.by("pk")), RouteVO.class);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Transactional
     @DeleteMapping("/routes/{persistentKey}")
     public void delete(@PathVariable("persistentKey") String persistentKey) {
         routeRepository.findByPKey(persistentKey).ifPresent(routeRepository::delete);
     }
 
     @PutMapping("/routes")
+    @Transactional
     public RouteVO save(@RequestBody RouteVO routeVO) {
-        RouteImpl route = routeRepository.findByPKey(routeVO.getKey()).orElseThrow(NotFoundException::new);
-        return mapper.map(routeRepository.save(mapper.mapFromTo(routeVO, route)), RouteVO.class);
+        RouteImpl eo = routeRepository.findByPKey(routeVO.getKey()).orElseThrow(NotFoundException::new);
+        RouteImpl route = mapper.mapFromTo(routeVO, eo);
+
+        route.setSourceLocation(routeVO.hasSourceLocationName() ? locationRepository.findByLocationId(routeVO.getSourceLocationName()).orElseThrow(NotFoundException::new) : null);
+
+        route.setTargetLocation(routeVO.hasTargetLocationName() ? locationRepository.findByLocationId(routeVO.getTargetLocationName()).orElseThrow(NotFoundException::new) : null);
+
+        return mapper.map(routeRepository.save(route), RouteVO.class);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
+    @Transactional
     @PostMapping("/routes")
     public void create(@RequestBody RouteVO routeVO, HttpServletRequest req, HttpServletResponse resp) {
         RouteImpl route = mapper.map(routeVO, RouteImpl.class);
-        if (route.hasSourceLocation()) {
-            route.setSourceLocation(locationRepository.findByLocationId(route.getSourceLocation().getLocationId()).orElseThrow(NotFoundException::new));
+        if (routeVO.hasSourceLocationName()) {
+            route.setSourceLocation(locationRepository.findByLocationId(routeVO.getSourceLocationName()).orElseThrow(NotFoundException::new));
         }
-        if (route.hasTargetLocation()) {
-            route.setTargetLocation(locationRepository.findByLocationId(route.getTargetLocation().getLocationId()).orElseThrow(NotFoundException::new));
+        if (routeVO.hasTargetLocationName()) {
+            route.setTargetLocation(locationRepository.findByLocationId(routeVO.getTargetLocationName()).orElseThrow(NotFoundException::new));
         }
         route = routeRepository.save(route);
         resp.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,HttpHeaders.LOCATION);

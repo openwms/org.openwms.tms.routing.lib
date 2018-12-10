@@ -15,7 +15,7 @@
  */
 package org.openwms.tms.routing;
 
-import org.ameba.integration.jpa.BaseEntity;
+import org.ameba.integration.jpa.ApplicationEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +32,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "RSRV_ACTION")
-public class Action extends BaseEntity implements Serializable {
+public class Action extends ApplicationEntity implements Serializable {
 
     public Action() {
     }
@@ -72,6 +72,10 @@ public class Action extends BaseEntity implements Serializable {
 
     public RouteImpl getRoute() {
         return route;
+    }
+
+    public void setRoute(RouteImpl route) {
+        this.route = route;
     }
 
     public String getProgramKey() {

@@ -17,7 +17,7 @@
 
     <mapping>
 		<class-a map-null="false">org.openwms.tms.routing.RouteImpl</class-a>
-		<class-b>org.openwms.tms.routing.RouteVO</class-b>
+		<class-b>org.openwms.tms.routing.ui.RouteVO</class-b>
         <field>
             <a is-accessible="true">pKey</a>
             <b is-accessible="true">key</b>
@@ -30,17 +30,17 @@
 			<a is-accessible="true">description</a>
 			<b is-accessible="true">description</b>
 		</field>
-		<field>
+		<field type="one-way">
 			<a is-accessible="true">sourceLocation.locationId</a>
-			<b is-accessible="true">sourceLocation</b>
+			<b is-accessible="true">sourceLocationName</b>
 		</field>
 		<field>
 			<a is-accessible="true">sourceLocationGroupName</a>
 			<b is-accessible="true">sourceLocationGroupName</b>
 		</field>
-		<field>
+		<field type="one-way">
 			<a is-accessible="true">targetLocation.locationId</a>
-			<b is-accessible="true">targetLocation</b>
+			<b is-accessible="true">targetLocationName</b>
 		</field>
 		<field>
 			<a is-accessible="true">targetLocationGroupName</a>
@@ -52,4 +52,44 @@
 		</field>
     </mapping>
 
+	<mapping>
+		<class-a map-null="false">org.openwms.tms.routing.Action</class-a>
+		<class-b>org.openwms.tms.routing.ui.ActionVO</class-b>
+		<field>
+			<a is-accessible="true">pKey</a>
+			<b is-accessible="true">key</b>
+		</field>
+		<field>
+			<a is-accessible="true">name</a>
+			<b is-accessible="true">name</b>
+		</field>
+		<field>
+			<a is-accessible="true">actionType</a>
+			<b is-accessible="true">type</b>
+		</field>
+		<field>
+			<a is-accessible="true">description</a>
+			<b is-accessible="true">description</b>
+		</field>
+		<field>
+			<a is-accessible="true">route</a>
+			<b is-accessible="true">route</b>
+		</field>
+		<field>
+			<a is-accessible="true">programKey</a>
+			<b is-accessible="true">program</b>
+		</field>
+		<field>
+			<a is-accessible="true">locationKey</a>
+			<b is-accessible="true">location</b>
+		</field>
+		<field>
+			<a is-accessible="true">locationGroupName</a>
+			<b is-accessible="true">locationGroupName</b>
+		</field>
+		<field>
+			<a is-accessible="true">enabled</a>
+			<b is-accessible="true">enabled</b>
+		</field>
+	</mapping>
 </mappings>

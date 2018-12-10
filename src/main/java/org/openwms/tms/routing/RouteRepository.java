@@ -24,9 +24,11 @@ import java.util.Optional;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-interface RouteRepository extends JpaRepository<RouteImpl, Long> {
+public interface RouteRepository extends JpaRepository<RouteImpl, Long> {
 
     Optional<RouteImpl> findByPKey(String pKey);
+
+    Optional<RouteImpl> findByRouteId(String routeId);
 
     Optional<RouteImpl> findBySourceLocation_LocationIdAndTargetLocation_LocationIdAndEnabled(String sourceLocation, String targetLocation, boolean enabled);
 

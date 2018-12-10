@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing;
+package org.openwms.tms.routing.ui;
 
 import org.ameba.http.AbstractBase;
 
@@ -27,7 +27,7 @@ import java.io.Serializable;
 // ajc has a problem here with lombok
 public class RouteVO extends AbstractBase implements Serializable {
 
-    private String name, description, sourceLocation, sourceLocationGroupName, targetLocation, targetLocationGroupName, key;
+    private String name, description, sourceLocationName, sourceLocationGroupName, targetLocationName, targetLocationGroupName, key;
     private boolean enabled;
 
     public String getName() {
@@ -46,12 +46,16 @@ public class RouteVO extends AbstractBase implements Serializable {
         this.description = description;
     }
 
-    public String getSourceLocation() {
-        return sourceLocation;
+    public String getSourceLocationName() {
+        return sourceLocationName;
     }
 
-    public void setSourceLocation(String sourceLocation) {
-        this.sourceLocation = sourceLocation;
+    public void setSourceLocationName(String sourceLocationName) {
+        this.sourceLocationName = sourceLocationName;
+    }
+
+    public boolean hasSourceLocationName() {
+        return sourceLocationName != null && !sourceLocationName.isEmpty();
     }
 
     public String getSourceLocationGroupName() {
@@ -62,12 +66,16 @@ public class RouteVO extends AbstractBase implements Serializable {
         this.sourceLocationGroupName = sourceLocationGroupName;
     }
 
-    public String getTargetLocation() {
-        return targetLocation;
+    public String getTargetLocationName() {
+        return targetLocationName;
     }
 
-    public void setTargetLocation(String targetLocation) {
-        this.targetLocation = targetLocation;
+    public void setTargetLocationName(String targetLocationName) {
+        this.targetLocationName = targetLocationName;
+    }
+
+    public boolean hasTargetLocationName() {
+        return targetLocationName != null && !targetLocationName.isEmpty();
     }
 
     public String getTargetLocationGroupName() {

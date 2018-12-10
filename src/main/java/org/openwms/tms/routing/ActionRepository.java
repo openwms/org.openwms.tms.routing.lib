@@ -26,11 +26,14 @@ import java.util.Optional;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-interface ActionRepository extends JpaRepository<Action, Long> {
+public interface ActionRepository extends JpaRepository<Action, Long> {
+
+    Optional<Action> findByPKey(String pKey);
 
     @Query("select a from Action a where a.actionType = :actionType and a.route.routeId = :routeId and a.locationKey is not null and a.locationKey = :locationKey and a.enabled = true")
     Optional<Action> findByActionTypeAndRouteAndLocationKey(@Param("actionType") String actionType, @Param("routeId") String routeId, @Param("locationKey") String locationKey);
 
     @Query("select a from Action a where a.actionType = :actionType and a.route.routeId = :routeId and a.locationGroupName is not null and a.locationGroupName = :locationGroupName and a.enabled = true")
     Optional<Action> findByActionTypeAndRouteAndLocationGroupName(@Param("actionType") String actionType, @Param("routeId") String routeId, @Param("locationGroupName") String locationGroupName);
+
 }
