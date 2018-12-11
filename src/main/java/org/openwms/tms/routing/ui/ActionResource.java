@@ -78,7 +78,7 @@ class ActionResource {
 
         Action action = actionRepository.save(eo);
         action.setRoute(routeRepository.findByRouteId(actionVO.getRoute()).orElseThrow(NotFoundException::new));
-        return mapper.map();
+        return mapper.map(action, ActionVO.class);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
