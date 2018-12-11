@@ -28,7 +28,7 @@ export default class Root extends React.Component {
             ret =
                 <Provider store={this.state.store}>
                     <ConnectedRouter history={history}>
-                        <HashRouter basename='/portal/'>
+                        <HashRouter basename='/'>
                             <Start />
                         </HashRouter>
                     </ConnectedRouter>

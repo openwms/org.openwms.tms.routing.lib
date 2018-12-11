@@ -2,12 +2,12 @@ import {applyMiddleware, compose, createStore} from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 import history from './history';
-import { connectRouter, routerMiddleware } from 'connected-react-router'
+import {routerMiddleware} from 'connected-react-router'
 
-
+const composeEnhancer = compose
 const store = createStore(
-    connectRouter(history)(reducers),
-    compose(
+    reducers(history),
+    composeEnhancer(
         applyMiddleware(
             routerMiddleware(history), // for dispatching history actions
             thunk,// ... other middlewares ...

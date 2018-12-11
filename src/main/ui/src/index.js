@@ -2,20 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {ConnectedRouter} from "connected-react-router";
-import {HashRouter} from "react-router-dom";
 import store from './store';
 import history from './history';
 //import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 import Start from "./components/Start";
 import * as serviceWorker from './serviceWorker';
 
 const app = (
     <Provider store={store}>
         <ConnectedRouter history={history}>
-            <HashRouter basename='/'>
-                <Start />
-            </HashRouter>
+            <Start />
         </ConnectedRouter>
     </Provider>
 );

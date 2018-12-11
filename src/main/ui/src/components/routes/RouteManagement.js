@@ -4,40 +4,37 @@ import {Route} from "react-router"
 import {ConnectedSwitch} from "@ameba/ameba-js"
 import RouteList from "./RouteList"
 import * as pages from '../../constants/LinkPages'
-import {loadRoutes} from "../../actions";
-
-const styles = theme => ({
-    root: theme.mixins.gutters({
-        paddingTop: 16,
-        paddingBottom: 16,
-        marginTop: theme.spacing.unit * 3,
-    }),
-    button: {
-        marginLeft: theme.spacing.unit * 3,
-    },
-});
+import * as types from '../../constants/ActionTypes'
+import {
+    deleteRoute,
+    loadLocationGroups,
+    loadRoutes,
+    openEditRoute,
+    saveRoute
+} from "../../actions";
 
 class RouteManagement extends React.Component {
 
     componentDidMount(prevProps, prevState, prevContext) {
-        this.props.onLoadRoutes();
+        this.props.onLoad();
     }
 
     render() {
         return (
-            <ConnectedSwitch>
-                <Route
-                    path={pages.ROUTES_HOME.ref}
-                    exact={true}
-                    children={({ match }) => (
-                        <RouteList
-                            routes={this.props.routes}
-                            onCreate={this.props.onCreateRoute}
-                            onDelete={this.props.onDeleteRoute}
-                            onModify={this.props.onModifyRoute}
-                            onChangeStatus={this.props.onRouteStatusChange}
-                        />
-                    )} />
+                <ConnectedSwitch>
+                    <Route
+                        path={pages.ROUTES_HOME.ref}
+                        exact={false}
+                        children={({ match }) => (
+                            <RouteList
+                                match={match}
+                                routes={this.props.routes}
+                                onCreate={this.props.onCreateRoute}
+                                onDelete={this.props.onDeleteRoute}
+                                onModify={this.props.onModifyRoute}
+                                onChangeStatus={this.props.onRouteStatusChange}
+                            />
+                        )} />
             </ConnectedSwitch>
         )
     }
@@ -45,25 +42,31 @@ class RouteManagement extends React.Component {
 
 const mapStateToProps = (state, props) => (
     {
-        error: state.error,
-        success: state.success,
         routes: state.routes,
+        locationGroups: state.locationGroups,
     }
 );
 
 const mapDispatchToProps = (dispatch) => (
     {
-        onLoadRoutes: () => {
+        onLoad: () => {
+            dispatch(loadLocationGroups());
             dispatch(loadRoutes())
         },
         onCreateRoute: () => {
+            dispatch({
+                type: types.ROUTE_DIALOG_OPEN,
+                route: {}
+            })
         },
-        onDeleteRoute: () => {
+        onDeleteRoute: (route) => {
+            dispatch(deleteRoute(route))
         },
-        onModifyRoute: () => {
-            console.log('on modify')
+        onModifyRoute: (route) => {
+            dispatch(openEditRoute(route));
         },
-        onRouteStatusChange: () => {
+        onRouteStatusChange: (route) => {
+            dispatch(saveRoute(route));
         },
     }
 );

@@ -74,11 +74,9 @@ class ActionResource {
     @Transactional
     public ActionVO save(@RequestBody ActionVO actionVO) {
         Action eo = actionRepository.findByPKey(actionVO.getKey()).orElseThrow(NotFoundException::new);
-        eo.setRoute(routeRepository.findByRouteId(actionVO.getRoute()).orElseThrow(NotFoundException::new));
-
-        Action action = actionRepository.save(eo);
+        Action action = mapper.mapFromTo(actionVO, eo);
         action.setRoute(routeRepository.findByRouteId(actionVO.getRoute()).orElseThrow(NotFoundException::new));
-        return mapper.map(action, ActionVO.class);
+        return mapper.map(actionRepository.save(action), ActionVO.class);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -86,7 +84,7 @@ class ActionResource {
     @PostMapping("/actions")
     public void create(@RequestBody ActionVO actionVO, HttpServletRequest req, HttpServletResponse resp) {
         Action action = mapper.map(actionVO, Action.class);
-        action.setRoute(routeRepository.findByRouteId(action.getRoute().getRouteId()).orElseThrow(NotFoundException::new));
+        action.setRoute(routeRepository.findByRouteId(actionVO.getRoute()).orElseThrow(NotFoundException::new));
         action = actionRepository.save(action);
         resp.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,HttpHeaders.LOCATION);
         resp.addHeader(HttpHeaders.LOCATION, getCreatedResourceURI(req, action.getPersistentKey()));

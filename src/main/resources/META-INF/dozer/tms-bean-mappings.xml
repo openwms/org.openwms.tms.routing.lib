@@ -71,7 +71,7 @@
 			<a is-accessible="true">description</a>
 			<b is-accessible="true">description</b>
 		</field>
-		<field>
+		<field type="one-way">
 			<a is-accessible="true">route</a>
 			<b is-accessible="true">route</b>
 		</field>

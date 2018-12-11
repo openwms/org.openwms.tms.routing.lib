@@ -24,6 +24,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
@@ -39,6 +40,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableAspects(propagateRootCause = true)
 @EnableConfigurationProperties
 @EnableJpaRepositories(basePackages = "org.openwms.tms.routing")
+@EnableJpaAuditing
 @EntityScan(basePackages = "org.openwms.tms.routing")
 public class ModuleConfiguration {
 
