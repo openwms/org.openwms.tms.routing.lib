@@ -13,4 +13,7 @@ After the project has been ejected follow these steps
     "build:production": "sh -ac '. .env.production; webpack -p --progress'",
     "test": "node scripts/test.js --env=jsdom"
 
+ - Install webpack-cli in order to build production bundles
+ npm install -D webpack-cli
+ 
  
