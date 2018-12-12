@@ -2,7 +2,7 @@
   "name": "tms",
   "version": "0.1.0",
   "description": "An UI to manage TMS Routing decisions",
-  "homepage": "http://localhost:8080/",
+  "homepage": "http://localhost:8130",
   "keywords": [],
   "author": "hscherrer@interface21.io",
   "license": "Apache License 2.0",

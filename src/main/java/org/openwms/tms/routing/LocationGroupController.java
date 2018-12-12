@@ -38,7 +38,7 @@ class LocationGroupController {
         this.locationGroupApi = locationGroupApi;
     }
 
-    @GetMapping("/location-groups")
+    @GetMapping("/api/location-groups")
     public List<LocationGroupVO> findAll() {
         return locationGroupApi.findAll();
     }

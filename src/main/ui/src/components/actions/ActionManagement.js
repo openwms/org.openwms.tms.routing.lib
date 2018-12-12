@@ -22,22 +22,23 @@ class ActionManagement extends React.Component {
 
     render() {
         return (
-                <ConnectedSwitch>
-                    <Route
-                        path={pages.ACTIONS_HOME.ref}
-                        exact={false}
-                        children={({ match }) => (
-                            <ActionList
-                                match={match}
-                                actions={this.props.actions}
-                                onCreate={this.props.onCreate}
-                                onDelete={this.props.onDelete}
-                                onModify={this.props.onModify}
-                                onCloseToast={this.props.onCloseToast}
-                                error={this.props.error}
-                                onChangeStatus={this.props.onStatusChange}
-                            />
-                        )} />
+            <ConnectedSwitch>
+                <Route
+                    path={pages.ACTIONS_HOME.ref}
+                    exact={true}
+                    children={({ match }) => (
+                        <ActionList
+                            match={match}
+                            actions={this.props.actions}
+                            onCreate={this.props.onCreate}
+                            onDelete={this.props.onDelete}
+                            onModify={this.props.onModify}
+                            onCloseToast={this.props.onCloseToast}
+                            error={this.props.error}
+                            onChangeStatus={this.props.onStatusChange}
+                        />
+                    )}
+                />
             </ConnectedSwitch>
         )
     }

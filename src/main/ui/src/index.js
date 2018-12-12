@@ -4,15 +4,16 @@ import {Provider} from 'react-redux';
 import {ConnectedRouter} from "connected-react-router";
 import store from './store';
 import history from './history';
-//import './index.css';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 import Start from "./components/Start";
 import * as serviceWorker from './serviceWorker';
+import {HashRouter} from "react-router-dom";
 
 const app = (
     <Provider store={store}>
         <ConnectedRouter history={history}>
-            <Start />
+            <HashRouter basename="/">
+                <Start />
+            </HashRouter>
         </ConnectedRouter>
     </Provider>
 );

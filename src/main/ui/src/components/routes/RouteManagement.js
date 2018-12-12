@@ -21,20 +21,21 @@ class RouteManagement extends React.Component {
 
     render() {
         return (
-                <ConnectedSwitch>
-                    <Route
-                        path={pages.ROUTES_HOME.ref}
-                        exact={false}
-                        children={({ match }) => (
-                            <RouteList
-                                match={match}
-                                routes={this.props.routes}
-                                onCreate={this.props.onCreateRoute}
-                                onDelete={this.props.onDeleteRoute}
-                                onModify={this.props.onModifyRoute}
-                                onChangeStatus={this.props.onRouteStatusChange}
-                            />
-                        )} />
+            <ConnectedSwitch>
+                <Route
+                    path={pages.ROUTES_HOME.ref}
+                    exact={true}
+                    children={({ match }) => (
+                        <RouteList
+                            match={match}
+                            routes={this.props.routes}
+                            onCreate={this.props.onCreateRoute}
+                            onDelete={this.props.onDeleteRoute}
+                            onModify={this.props.onModifyRoute}
+                            onChangeStatus={this.props.onRouteStatusChange}
+                        />
+                    )}
+                />
             </ConnectedSwitch>
         )
     }

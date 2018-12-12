@@ -22,7 +22,6 @@ spring:
 owms:
   eureka:
     url: http://user:sa@localhost:8761 # need to be overridden in the cloud environment props!
-
 server:
   port: ${PORT:8130}
 

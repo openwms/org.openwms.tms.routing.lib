@@ -7,8 +7,8 @@ class Start extends Component {
     render() {
         return (
             <div>
-                <RouteManagement />
                 <ActionManagement />
+                <RouteManagement />
             </div>
         );
     }

@@ -58,19 +58,19 @@ class ActionResource {
         this.mapper = mapper;
     }
 
-    @GetMapping("/actions")
+    @GetMapping("/api/actions")
     public List<ActionVO> getAll() {
         return mapper.map(actionRepository.findAll(Sort.by("name")), ActionVO.class);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
-    @DeleteMapping("/actions/{persistentKey}")
+    @DeleteMapping("/api/actions/{persistentKey}")
     public void delete(@PathVariable("persistentKey") String persistentKey) {
         actionRepository.findByPKey(persistentKey).ifPresent(actionRepository::delete);
     }
 
-    @PutMapping("/actions")
+    @PutMapping("/api/actions")
     @Transactional
     public ActionVO save(@RequestBody ActionVO actionVO) {
         Action eo = actionRepository.findByPKey(actionVO.getKey()).orElseThrow(NotFoundException::new);
@@ -81,7 +81,7 @@ class ActionResource {
 
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
-    @PostMapping("/actions")
+    @PostMapping("/api/actions")
     public void create(@RequestBody ActionVO actionVO, HttpServletRequest req, HttpServletResponse resp) {
         Action action = mapper.map(actionVO, Action.class);
         action.setRoute(routeRepository.findByRouteId(actionVO.getRoute()).orElseThrow(NotFoundException::new));
