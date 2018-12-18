@@ -76,7 +76,7 @@ class RouteServiceImpl implements RouteService {
         in.put("route", route);
 
         String barcode = in.get("barcode", String.class).orElse("barcode was not set");
-        LOGGER.debug(format("New route [%s] was set for barcode [%s]", routeId, barcode));
+        LOGGER.debug("New route [{}] was set for barcode [{}]", routeId, barcode);
     }
 
 }
