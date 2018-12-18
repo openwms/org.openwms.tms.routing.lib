@@ -13,25 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.common.comm.res;
+package org.openwms.common.comm;
 
 /**
- * A ResResponder is sending messages to trigger a OSIP RES_ telegram to a given target.
+ * A Responder is sending messages to a given target.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public interface ResResponder {
+public interface Responder {
 
     /**
-     * Send a message to fire a OSIP RES_ telegram to the given {@code target} location.
+     * Send a message to the given {@code target} location.
      *
      * @param targetLocation The target location
      */
     void sendToLocation(String targetLocation);
 
     /**
-     * Send a message to fire a OSIP RES_ telegram to the given {@code target} location.
+     * Send a message to the given {@code target} location.
      *
+     * @param barcode The TransportUnit's barcode can be set
+     * @param sourceLocation The source location can be set
      * @param targetLocation The target location
      */
     void sendToLocation(String barcode, String sourceLocation, String targetLocation);

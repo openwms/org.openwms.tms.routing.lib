@@ -18,6 +18,7 @@ package org.openwms.common.comm.res;
 import org.ameba.annotation.Measured;
 import org.openwms.common.comm.ConsiderOSIPCondition;
 import org.openwms.common.comm.MessageProcessingException;
+import org.openwms.common.comm.Responder;
 import org.openwms.core.SecurityUtils;
 import org.openwms.core.SpringProfiles;
 import org.openwms.core.exception.IllegalConfigurationValueException;
@@ -47,7 +48,7 @@ import static java.lang.String.format;
 @Profile("!"+ SpringProfiles.ASYNCHRONOUS_PROFILE)
 @Conditional(ConsiderOSIPCondition.class)
 @Service("responder")
-class ResSenderApi implements ResResponder {
+class ResSenderApi implements Responder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ResSenderApi.class);
     private final InputContext in;
@@ -64,6 +65,8 @@ class ResSenderApi implements ResResponder {
 
     /**
      * {@inheritDoc}
+     *
+     * Send a message to fire a OSIP RES_ telegram to the given {@code target} location.
      */
     @Override
     @Measured
