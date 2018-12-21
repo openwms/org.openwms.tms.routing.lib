@@ -16,7 +16,7 @@
 package org.openwms.tms.routing;
 
 /**
- * A RouteService.
+ * A RouteService operates on {@code Route}s.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -26,4 +26,11 @@ public interface RouteService {
      * Send a RES_ telegram to the next location that is defined in the static Route Details.
      */
     void sendToNextLocation();
+
+    /**
+     * Changes the determined route due to error etc.
+     *
+     * @param routeId The route id
+     */
+    void changeRoute(String routeId);
 }

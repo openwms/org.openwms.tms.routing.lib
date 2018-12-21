@@ -17,6 +17,7 @@ package org.openwms.common.comm.res;
 
 import org.ameba.annotation.Measured;
 import org.openwms.common.comm.ConsiderOSIPCondition;
+import org.openwms.common.comm.Responder;
 import org.openwms.core.SpringProfiles;
 import org.openwms.core.exception.IllegalConfigurationValueException;
 import org.openwms.tms.routing.InputContext;
@@ -38,7 +39,7 @@ import static java.lang.String.format;
 @Profile(SpringProfiles.ASYNCHRONOUS_PROFILE)
 @Conditional(ConsiderOSIPCondition.class)
 @Service("responder")
-public class AmqpResponder implements ResResponder {
+public class AmqpResponder implements Responder {
 
     private final InputContext in;
     private final AmqpTemplate amqpTemplate;
@@ -55,6 +56,8 @@ public class AmqpResponder implements ResResponder {
 
     /**
      * {@inheritDoc}
+     *
+     * Send a message to fire a OSIP RES_ telegram to the given {@code target} location.
      */
     @Measured
     @Override
@@ -79,6 +82,8 @@ public class AmqpResponder implements ResResponder {
 
     /**
      * {@inheritDoc}
+     *
+     * Send a message to fire a OSIP RES_ telegram to the given {@code target} location.
      */
     @Measured
     @Override
