@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
   <process id="CP003" name="CP003 - LG Status Update" isExecutable="true">
     <startEvent id="sid-B26E0B4C-1756-4701-A5D0-753667D34FF0"></startEvent>
-    <serviceTask id="sid-CB275BC5-9B82-4813-9BB3-B0882247327D" name="Update GroupState of LocationGroup from errorCode" activiti:expression="#{locationGroupApi.updateState(in.msg.locationGroupName, in.msg.errorCode)}"></serviceTask>
+    <serviceTask id="sid-CB275BC5-9B82-4813-9BB3-B0882247327D" name="Update GroupState of LocationGroup from errorCode" flowable:expression="#{locationGroupApi.updateState(in.msg.locationGroupName, in.msg.errorCode)}"></serviceTask>
     <sequenceFlow id="sid-EE0CD301-8286-4243-B088-02DA3704E66C" sourceRef="sid-B26E0B4C-1756-4701-A5D0-753667D34FF0" targetRef="sid-CB275BC5-9B82-4813-9BB3-B0882247327D"></sequenceFlow>
     <intermediateThrowEvent id="sid-CA5B85A6-7D04-4C7E-A7A5-D09824FE6602"></intermediateThrowEvent>
     <sequenceFlow id="sid-ECE9AEB1-73EA-4F95-807D-5ADEFB2214D4" sourceRef="sid-CB275BC5-9B82-4813-9BB3-B0882247327D" targetRef="sid-CA5B85A6-7D04-4C7E-A7A5-D09824FE6602"></sequenceFlow>
@@ -10,22 +10,21 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_CP003">
     <bpmndi:BPMNPlane bpmnElement="CP003" id="BPMNPlane_CP003">
       <bpmndi:BPMNShape bpmnElement="sid-B26E0B4C-1756-4701-A5D0-753667D34FF0" id="BPMNShape_sid-B26E0B4C-1756-4701-A5D0-753667D34FF0">
-        <omgdc:Bounds height="30.0" width="30.0" x="135.0" y="180.0"></omgdc:Bounds>
+        <omgdc:Bounds height="30.0" width="30.0" x="30.0" y="56.5"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="sid-CB275BC5-9B82-4813-9BB3-B0882247327D" id="BPMNShape_sid-CB275BC5-9B82-4813-9BB3-B0882247327D">
-        <omgdc:Bounds height="83.0" width="205.0" x="300.0" y="240.0"></omgdc:Bounds>
+        <omgdc:Bounds height="83.0" width="205.0" x="195.0" y="30.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="sid-CA5B85A6-7D04-4C7E-A7A5-D09824FE6602" id="BPMNShape_sid-CA5B85A6-7D04-4C7E-A7A5-D09824FE6602">
-        <omgdc:Bounds height="30.0" width="30.0" x="840.0" y="266.5"></omgdc:Bounds>
+        <omgdc:Bounds height="30.0" width="30.0" x="510.0" y="56.5"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="sid-EE0CD301-8286-4243-B088-02DA3704E66C" id="BPMNEdge_sid-EE0CD301-8286-4243-B088-02DA3704E66C">
-        <omgdi:waypoint x="165.0" y="195.0"></omgdi:waypoint>
-        <omgdi:waypoint x="402.0" y="195.0"></omgdi:waypoint>
-        <omgdi:waypoint x="402.26011560693644" y="240.0"></omgdi:waypoint>
+        <omgdi:waypoint x="59.949999713266116" y="71.5"></omgdi:waypoint>
+        <omgdi:waypoint x="195.0" y="71.5"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-ECE9AEB1-73EA-4F95-807D-5ADEFB2214D4" id="BPMNEdge_sid-ECE9AEB1-73EA-4F95-807D-5ADEFB2214D4">
-        <omgdi:waypoint x="505.0" y="281.5"></omgdi:waypoint>
-        <omgdi:waypoint x="840.0" y="281.5"></omgdi:waypoint>
+        <omgdi:waypoint x="399.95000000000005" y="71.5"></omgdi:waypoint>
+        <omgdi:waypoint x="510.0" y="71.5"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

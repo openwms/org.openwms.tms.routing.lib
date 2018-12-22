@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xmlns:activiti="http://activiti.org/bpmn"
-             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
-             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
-             typeLanguage="http://www.w3.org/2001/XMLSchema"
-             expressionLanguage="http://www.w3.org/1999/XPath"
-             targetNamespace="http://www.activiti.org/processdef">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
   <process id="CP002" name="CP002 - Create TransportUnit and TransportOrder" isExecutable="true">
     <startEvent id="sid-B26E0B4C-1756-4701-A5D0-753667D34FF0"></startEvent>
-    <serviceTask id="sid-CB275BC5-9B82-4813-9BB3-B0882247327D" name="Book TransportUnit to current Location" activiti:expression="#{transportUnitApi.moveTU(in.msg.barcode, in.msg.actualLocation)}"></serviceTask>
+    <serviceTask id="sid-CB275BC5-9B82-4813-9BB3-B0882247327D" name="Book TransportUnit to current Location" flowable:expression="#{transportUnitApi.moveTU(in.msg.barcode, in.msg.actualLocation)}"></serviceTask>
     <intermediateThrowEvent id="sid-CA5B85A6-7D04-4C7E-A7A5-D09824FE6602"></intermediateThrowEvent>
-    <serviceTask id="sid-8A492F84-A716-4876-917E-00179ACE8B7F" name="Create TransportOrder to Stock" activiti:expression="#{transportOrderApi.createTO(in.msg.barcode, &quot;LAGER&quot;)}"></serviceTask>
-    <serviceTask id="sid-6A76FC5A-76F1-45FF-BA1D-75E2704F0C72" name="Send RES_ to Conveyor location" activiti:expression="#{responder.sendToLocation(&quot;SL__/CONV/IN__/0000/0001&quot;)}"></serviceTask>
+    <serviceTask id="sid-8A492F84-A716-4876-917E-00179ACE8B7F" name="Create TransportOrder to Stock" flowable:expression="#{transportOrderApi.createTO(in.msg.barcode, &quot;LAGER&quot;)}"></serviceTask>
+    <serviceTask id="sid-6A76FC5A-76F1-45FF-BA1D-75E2704F0C72" name="Send RES_ to Conveyor location" flowable:expression="#{responder.sendToLocation(&quot;SL__/CONV/IN__/0000/0001&quot;)}"></serviceTask>
     <sequenceFlow id="sid-C1D906F8-CF61-44C2-A4AF-D69E19C0D04E" sourceRef="sid-6A76FC5A-76F1-45FF-BA1D-75E2704F0C72" targetRef="sid-CA5B85A6-7D04-4C7E-A7A5-D09824FE6602"></sequenceFlow>
-    <serviceTask id="sid-958ECD22-E006-427B-A4CE-8525062D0A6B" name="Create TransportUnit if not exists" activiti:expression="#{transportUnitApi.createTU(in.msg.barcode, in.msg.actualLocation, &quot;PALLET&quot;, false)}"></serviceTask>
+    <serviceTask id="sid-958ECD22-E006-427B-A4CE-8525062D0A6B" name="Create TransportUnit if not exists" flowable:expression="#{transportUnitApi.createTU(in.msg.barcode, in.msg.actualLocation, &quot;PALLET&quot;, false)}"></serviceTask>
     <sequenceFlow id="sid-EE0CD301-8286-4243-B088-02DA3704E66C" sourceRef="sid-B26E0B4C-1756-4701-A5D0-753667D34FF0" targetRef="sid-958ECD22-E006-427B-A4CE-8525062D0A6B"></sequenceFlow>
     <sequenceFlow id="sid-E4302B08-A834-4F3E-A21A-3E76D7DE42FC" sourceRef="sid-958ECD22-E006-427B-A4CE-8525062D0A6B" targetRef="sid-CB275BC5-9B82-4813-9BB3-B0882247327D"></sequenceFlow>
     <exclusiveGateway id="sid-140A8156-9B2E-41DE-B1EC-48667B1529D9"></exclusiveGateway>
@@ -52,32 +44,32 @@
         <omgdc:Bounds height="40.0" width="40.0" x="493.5" y="225.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="sid-E4302B08-A834-4F3E-A21A-3E76D7DE42FC" id="BPMNEdge_sid-E4302B08-A834-4F3E-A21A-3E76D7DE42FC">
-        <omgdi:waypoint x="323.0" y="131.82601054481546"></omgdi:waypoint>
-        <omgdi:waypoint x="405.0" y="132.54657293497363"></omgdi:waypoint>
+        <omgdi:waypoint x="322.95000000000005" y="131.8255711775044"></omgdi:waypoint>
+        <omgdi:waypoint x="405.0" y="132.54657293497365"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-C1D906F8-CF61-44C2-A4AF-D69E19C0D04E" id="BPMNEdge_sid-C1D906F8-CF61-44C2-A4AF-D69E19C0D04E">
-        <omgdi:waypoint x="912.0" y="354.0"></omgdi:waypoint>
+        <omgdi:waypoint x="911.9499999999999" y="354.0"></omgdi:waypoint>
         <omgdi:waypoint x="960.0" y="354.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-EE0CD301-8286-4243-B088-02DA3704E66C" id="BPMNEdge_sid-EE0CD301-8286-4243-B088-02DA3704E66C">
-        <omgdi:waypoint x="90.0" y="131.0"></omgdi:waypoint>
+        <omgdi:waypoint x="89.94999922936607" y="131.0"></omgdi:waypoint>
         <omgdi:waypoint x="135.0" y="131.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-138C1AFF-AD15-4B0A-A38C-2DFFBC105487" id="BPMNEdge_sid-138C1AFF-AD15-4B0A-A38C-2DFFBC105487">
-        <omgdi:waypoint x="513.671875" y="172.0"></omgdi:waypoint>
-        <omgdi:waypoint x="513.9103139013453" y="225.4103139013453"></omgdi:waypoint>
+        <omgdi:waypoint x="513.5" y="171.95"></omgdi:waypoint>
+        <omgdi:waypoint x="513.5" y="225.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-BAD59AD6-FBAB-4CB9-8A55-0F2B2F212E99" id="BPMNEdge_sid-BAD59AD6-FBAB-4CB9-8A55-0F2B2F212E99">
-        <omgdi:waypoint x="533.0" y="245.5"></omgdi:waypoint>
-        <omgdi:waypoint x="810.0" y="245.5"></omgdi:waypoint>
-        <omgdi:waypoint x="810.0" y="314.5"></omgdi:waypoint>
+        <omgdi:waypoint x="533.4467252133281" y="245.0"></omgdi:waypoint>
+        <omgdi:waypoint x="818.0" y="245.0"></omgdi:waypoint>
+        <omgdi:waypoint x="818.0" y="314.5"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-7C5B87FB-7382-4DE1-B6C5-12DAECB8BCDE" id="BPMNEdge_sid-7C5B87FB-7382-4DE1-B6C5-12DAECB8BCDE">
-        <omgdi:waypoint x="513.9120370370371" y="264.58796296296293"></omgdi:waypoint>
-        <omgdi:waypoint x="513.6797235023041" y="315.0"></omgdi:waypoint>
+        <omgdi:waypoint x="513.5" y="264.9408570119157"></omgdi:waypoint>
+        <omgdi:waypoint x="513.5" y="315.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-AA3845B0-6CE0-42B2-8C39-E755A487C1E3" id="BPMNEdge_sid-AA3845B0-6CE0-42B2-8C39-E755A487C1E3">
-        <omgdi:waypoint x="608.0" y="354.0"></omgdi:waypoint>
+        <omgdi:waypoint x="607.95" y="354.0"></omgdi:waypoint>
         <omgdi:waypoint x="724.0" y="354.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
