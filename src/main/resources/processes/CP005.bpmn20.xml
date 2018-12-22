@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
-             xmlns:activiti="http://activiti.org/bpmn"
-             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
-             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
-             typeLanguage="http://www.w3.org/2001/XMLSchema"
-             expressionLanguage="http://www.w3.org/1999/XPath"
-             targetNamespace="http://www.activiti.org/processdef">
-  <process id="CP005" isExecutable="true">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+  <process id="CP005" name="CP005" isExecutable="true">
     <startEvent id="sid-F7FE0637-A310-47A7-AA7F-688DDFDACB1E"></startEvent>
-    <serviceTask id="sid-CFC6624D-667F-43DE-AAF7-9A5C91060F19" name="moveTU" activiti:expression="#{transportUnitApi.moveTU(in.msg.barcode, in.msg.actualLocation)}"></serviceTask>
+    <serviceTask id="sid-CFC6624D-667F-43DE-AAF7-9A5C91060F19" name="moveTU" flowable:expression="#{transportUnitApi.moveTU(in.msg.barcode, in.msg.actualLocation)}"></serviceTask>
     <sequenceFlow id="sid-D7BEAAF3-00C5-4392-9BE5-B2C8AF87F6C3" sourceRef="sid-F7FE0637-A310-47A7-AA7F-688DDFDACB1E" targetRef="sid-CFC6624D-667F-43DE-AAF7-9A5C91060F19"></sequenceFlow>
-    <serviceTask id="sid-688CEA34-1D53-40B4-B9A2-2C9E525B7428" name="Finish TransportOrder" activiti:expression="#{transportOrderApi.changeState(in.msg.toId,&quot;FINISHED&quot;)}"></serviceTask>
+    <serviceTask id="sid-688CEA34-1D53-40B4-B9A2-2C9E525B7428" name="Finish TransportOrder" flowable:expression="#{transportOrderApi.changeState(in.msg.toId,&quot;FINISHED&quot;)}"></serviceTask>
     <sequenceFlow id="sid-5BAA154E-F741-4FCE-8211-2CE68E9C2060" sourceRef="sid-CFC6624D-667F-43DE-AAF7-9A5C91060F19" targetRef="sid-688CEA34-1D53-40B4-B9A2-2C9E525B7428"></sequenceFlow>
     <endEvent id="sid-0697E4AA-1B4E-42FD-8074-494E2CE0ED30"></endEvent>
     <sequenceFlow id="sid-B0B75C55-2272-4C62-ACB4-401BF820230F" sourceRef="sid-688CEA34-1D53-40B4-B9A2-2C9E525B7428" targetRef="sid-0697E4AA-1B4E-42FD-8074-494E2CE0ED30"></sequenceFlow>
@@ -31,16 +24,16 @@
         <omgdc:Bounds height="28.0" width="28.0" x="510.0" y="56.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="sid-D7BEAAF3-00C5-4392-9BE5-B2C8AF87F6C3" id="BPMNEdge_sid-D7BEAAF3-00C5-4392-9BE5-B2C8AF87F6C3">
-        <omgdi:waypoint x="60.0" y="70.0"></omgdi:waypoint>
-        <omgdi:waypoint x="120.0" y="70.0"></omgdi:waypoint>
+        <omgdi:waypoint x="59.94999883049306" y="70.0"></omgdi:waypoint>
+        <omgdi:waypoint x="119.99999999997918" y="70.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-B0B75C55-2272-4C62-ACB4-401BF820230F" id="BPMNEdge_sid-B0B75C55-2272-4C62-ACB4-401BF820230F">
-        <omgdi:waypoint x="449.0" y="70.0"></omgdi:waypoint>
+        <omgdi:waypoint x="448.95000000000005" y="70.0"></omgdi:waypoint>
         <omgdi:waypoint x="510.0" y="70.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-5BAA154E-F741-4FCE-8211-2CE68E9C2060" id="BPMNEdge_sid-5BAA154E-F741-4FCE-8211-2CE68E9C2060">
-        <omgdi:waypoint x="220.0" y="70.0"></omgdi:waypoint>
-        <omgdi:waypoint x="300.0" y="70.0"></omgdi:waypoint>
+        <omgdi:waypoint x="219.95" y="70.0"></omgdi:waypoint>
+        <omgdi:waypoint x="299.99999999998033" y="70.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
