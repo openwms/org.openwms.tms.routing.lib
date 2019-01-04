@@ -16,54 +16,27 @@
 package org.openwms.tms.routing;
 
 import org.ameba.annotation.EnableAspects;
-import org.ameba.mapping.BeanMapper;
-import org.ameba.mapping.DozerMapperImpl;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.client.RestTemplate;
 
 /**
- * A ModuleConfiguration.
+ * A RoutingModuleConfiguration.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
+@Profile("!INMEM")
 @Configuration
 @EnableDiscoveryClient
 @EnableTransactionManagement
 @EnableAspects(propagateRootCause = true)
-@EnableConfigurationProperties
-@EnableJpaRepositories(basePackages = "org.openwms.tms.routing")
+@EnableJpaRepositories
 @EnableJpaAuditing
-@EntityScan(basePackages = "org.openwms.tms.routing")
-public class ModuleConfiguration {
+@EntityScan
+public class RoutingStandaloneConfiguration {
 
-    public
-    @LoadBalanced
-    @Bean
-    RestTemplate aLoadBalanced() {
-        return new RestTemplate();
-    }
-
-    public
-    @Bean
-    RestTemplate simpleRestTemplate() {
-        return new RestTemplate();
-    }
-
-    public
-    @Bean
-    BeanMapper beanMapper() {
-        return new DozerMapperImpl("META-INF/dozer/tms-bean-mappings.xml");
-    }
-
-    @Bean OwmsProperties owmsProperties() {
-        return new OwmsProperties();
-    }
 }
