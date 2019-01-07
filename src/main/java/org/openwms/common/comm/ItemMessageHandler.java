@@ -21,8 +21,8 @@ import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
 import org.openwms.common.location.api.LocationVO;
-import org.openwms.tms.api.TransportOrder;
 import org.openwms.tms.api.TransportOrderApi;
+import org.openwms.tms.api.TransportOrderVO;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.NoRouteException;
@@ -83,9 +83,9 @@ public class ItemMessageHandler {
                                 .orElseThrow(() -> new NotFoundException(format("LocationGroup with name [%s] does not exist", actualLocation.getLocationGroupName())));
 
         Route route = RouteImpl.NO_ROUTE;
-        List<TransportOrder> transportOrders = transportOrderApi.findBy(msg.getBarcode(), "STARTED");
+        List<TransportOrderVO> transportOrders = transportOrderApi.findBy(msg.getBarcode(), "STARTED");
         if (transportOrders != null && !transportOrders.isEmpty()) {
-            TransportOrder transportOrder = transportOrders.get(0);
+            TransportOrderVO transportOrder = transportOrders.get(0);
             in.putAll(transportOrder.getAll());
             try {
                 route = routeSearch.findBy(transportOrder.getSourceLocation(), transportOrder.getTargetLocation(), transportOrder.getTargetLocationGroup());

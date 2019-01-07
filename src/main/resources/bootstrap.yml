@@ -17,6 +17,8 @@ spring:
       name: user # need to be overridden in the cloud environment props!
     basic:
       enabled: false
+  liquibase:
+    enabled: false
 #  activiti:
 #    process-definition-location-prefix: config:processes/
 owms:
@@ -24,7 +26,6 @@ owms:
     url: http://user:sa@localhost:8761 # need to be overridden in the cloud environment props!
 server:
   port: ${PORT:8130}
-
 eureka:
   client:
     serviceUrl:
