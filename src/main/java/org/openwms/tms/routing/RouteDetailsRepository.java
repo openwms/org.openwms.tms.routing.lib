@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-interface RouteDetailsRepository extends JpaRepository<RouteDetails, Long> {
+public interface RouteDetailsRepository extends JpaRepository<RouteDetails, Long> {
 
     List<RouteDetails> findByRoute_RouteId_OrderByPos(String routeId);
 }

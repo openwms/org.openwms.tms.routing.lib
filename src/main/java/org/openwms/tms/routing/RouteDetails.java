@@ -32,7 +32,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "RSRV_ROUTE_DETAILS", uniqueConstraints = {@UniqueConstraint(name = "UC_ROUTE_POS", columnNames = {RouteDetails.COLUMN_ROUTE_ID, RouteDetails.COLUMN_POS})})
-class RouteDetails extends BaseEntity implements Serializable {
+public class RouteDetails extends BaseEntity implements Serializable {
 
     public static final String COLUMN_ROUTE_ID = "C_ROUTE_ID";
     @ManyToOne
