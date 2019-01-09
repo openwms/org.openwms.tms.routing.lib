@@ -19,7 +19,7 @@ import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
 import org.openwms.tms.routing.Action;
 import org.openwms.tms.routing.ActionRepository;
-import org.openwms.tms.routing.RouteRepository;
+import org.openwms.tms.routing.routes.RouteRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

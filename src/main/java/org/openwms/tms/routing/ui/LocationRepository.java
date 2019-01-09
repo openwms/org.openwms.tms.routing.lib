@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing;
+package org.openwms.tms.routing.ui;
 
+import org.openwms.tms.routing.LocationEO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +27,7 @@ import java.util.Optional;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Repository
-public interface LocationRepository extends JpaRepository<LocationEO, Long> {
+interface LocationRepository extends JpaRepository<LocationEO, Long> {
 
     Optional<LocationEO> findByLocationId(String locationId);
 }

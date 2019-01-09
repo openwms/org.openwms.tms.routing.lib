@@ -28,14 +28,15 @@ import org.springframework.retry.backoff.ExponentialBackOffPolicy;
 import org.springframework.retry.support.RetryTemplate;
 
 /**
- * A AsyncConfiguration.
+ * A RoutingAsyncConfiguration is activated when the service uses asynchronous
+ * communication to access other services.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Profile(SpringProfiles.ASYNCHRONOUS_PROFILE)
 @EnableRabbit
 @Configuration
-public class AsyncConfiguration {
+public class RoutingAsyncConfiguration {
 
     @Bean
     MessageConverter jsonConverter() {

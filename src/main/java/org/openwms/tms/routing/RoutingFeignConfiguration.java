@@ -28,7 +28,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 /**
- * A RoutingFeignConfiguration.
+ * A RoutingFeignConfiguration activates client stubs using Feign to connect to other
+ * services. This is deactivated when the service is packaged and deployed as part of a
+ * whole application.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */

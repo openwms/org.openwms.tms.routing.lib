@@ -22,7 +22,7 @@ import org.openwms.common.location.api.LocationGroupVO;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.ProgramExecutor;
-import org.openwms.tms.routing.RouteImpl;
+import org.openwms.tms.routing.routes.RouteImpl;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 

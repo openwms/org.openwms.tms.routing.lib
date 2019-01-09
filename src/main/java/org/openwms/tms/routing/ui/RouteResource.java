@@ -17,9 +17,8 @@ package org.openwms.tms.routing.ui;
 
 import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
-import org.openwms.tms.routing.LocationRepository;
-import org.openwms.tms.routing.RouteImpl;
-import org.openwms.tms.routing.RouteRepository;
+import org.openwms.tms.routing.routes.RouteImpl;
+import org.openwms.tms.routing.routes.RouteRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

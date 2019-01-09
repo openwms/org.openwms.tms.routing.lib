@@ -16,6 +16,7 @@
 package org.openwms.tms.routing;
 
 import org.ameba.integration.jpa.ApplicationEntity;
+import org.openwms.tms.routing.routes.RouteImpl;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

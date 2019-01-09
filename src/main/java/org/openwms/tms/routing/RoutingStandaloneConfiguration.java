@@ -15,28 +15,20 @@
  */
 package org.openwms.tms.routing;
 
-import org.ameba.annotation.EnableAspects;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
- * A RoutingModuleConfiguration.
+ * A RoutingStandaloneConfiguration is activated when the service is deployed as a
+ * microservice, not packaged within an application. Then Service Discovery is activated.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Profile("!INMEM")
 @Configuration
 @EnableDiscoveryClient
-@EnableTransactionManagement
-@EnableAspects(propagateRootCause = true)
-@EnableJpaRepositories
-@EnableJpaAuditing
-@EntityScan
+@EnableCircuitBreaker
 public class RoutingStandaloneConfiguration {
-
 }

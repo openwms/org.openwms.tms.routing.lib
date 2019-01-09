@@ -28,8 +28,8 @@ import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.NoRouteException;
 import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.Route;
-import org.openwms.tms.routing.RouteImpl;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
+import org.openwms.tms.routing.routes.RouteImpl;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.util.Assert;
 
