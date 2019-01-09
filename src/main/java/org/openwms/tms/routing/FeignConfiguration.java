@@ -37,7 +37,6 @@ import org.springframework.context.annotation.Configuration;
 public class FeignConfiguration {
 
     @Bean
-//    @Scope("prototype")
     public InputContext in() {
         return new InputContext();
     }

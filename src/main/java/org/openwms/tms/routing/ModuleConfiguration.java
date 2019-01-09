@@ -20,6 +20,7 @@ import org.ameba.mapping.BeanMapper;
 import org.ameba.mapping.DozerMapperImpl;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -41,6 +42,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableConfigurationProperties
 @EnableJpaRepositories(basePackages = "org.openwms.tms.routing")
 @EnableJpaAuditing
+@EnableCircuitBreaker
 @EntityScan(basePackages = "org.openwms.tms.routing")
 public class ModuleConfiguration {
 
