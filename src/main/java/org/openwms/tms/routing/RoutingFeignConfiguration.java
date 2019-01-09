@@ -25,21 +25,18 @@ import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
- * A FeignConfiguration.
+ * A RoutingFeignConfiguration.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
+@Profile("!INMEM")
 @Configuration
 @AutoConfigureOrder(0)
 @EnableFeignClients(basePackageClasses = {TransportUnitApi.class, UIPackage.class, LocationGroupApi.class, LocationApi.class, TransportOrderApi.class})
-public class FeignConfiguration {
-
-    @Bean
-    public InputContext in() {
-        return new InputContext();
-    }
+public class RoutingFeignConfiguration {
 
     @Bean
     public BasicAuthRequestInterceptor basicAuthRequestInterceptor() {

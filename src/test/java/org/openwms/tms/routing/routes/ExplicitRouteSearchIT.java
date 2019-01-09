@@ -18,6 +18,8 @@ package org.openwms.tms.routing;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.openwms.tms.routing.routes.ExplicitRouteSearch;
+import org.openwms.tms.routing.routes.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
