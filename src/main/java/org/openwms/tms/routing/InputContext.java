@@ -27,17 +27,12 @@ import java.util.stream.Collectors;
  */
 public class InputContext {
 
-    private InheritableThreadLocal<Map<String, Object>> msg;
-
-    public InputContext() {
-        this.msg = new InheritableThreadLocal<>();
-        this.msg.set(new ConcurrentHashMap<>());
-    }
-
-    public InputContext(Map<String, Object> msg) {
-        this.msg = new InheritableThreadLocal<>();
-        this.msg.set(msg);
-    }
+    private InheritableThreadLocal<Map<String, Object>> msg = new InheritableThreadLocal() {
+        @Override
+        protected Object initialValue() {
+            return new ConcurrentHashMap<>();
+        }
+    };
 
     public void addBeanToMsg(String name, Object bean) {
         msg.get().put(name, bean);
@@ -55,8 +50,9 @@ public class InputContext {
         return (Optional<T>) Optional.ofNullable(this.msg.get().get(key));
     }
 
-    public void setMsg(Map<String, Object> msg) {
+    public InputContext setMsg(Map<String, Object> msg) {
         this.msg.set(msg);
+        return this;
     }
 
     public Object put(String key, Object val) {
