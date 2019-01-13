@@ -27,9 +27,9 @@ import java.util.stream.Collectors;
  */
 public class InputContext {
 
-    private InheritableThreadLocal<Map<String, Object>> msg = new InheritableThreadLocal() {
+    private InheritableThreadLocal<Map<String, Object>> msg = new InheritableThreadLocal<Map<String, Object>>() {
         @Override
-        protected Object initialValue() {
+        protected Map<String, Object> initialValue() {
             return new ConcurrentHashMap<>();
         }
     };
@@ -46,7 +46,7 @@ public class InputContext {
         return msg.get();
     }
 
-    public <T extends Object> Optional<T> get(String key, Class<T> routeClass) {
+    public <T> Optional<T> get(String key, Class<T> routeClass) {
         return (Optional<T>) Optional.ofNullable(this.msg.get().get(key));
     }
 
