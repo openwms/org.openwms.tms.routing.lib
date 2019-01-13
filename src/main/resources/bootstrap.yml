@@ -9,33 +9,37 @@ spring:
         service-id: openwms-config
       retry:
         max-attempts: 120
-      username: user # need to be overridden in the cloud environment props!
-      password: sa # need to be overridden in the cloud environment props!
   security:
     user:
-      password: sa # need to be overridden in the cloud environment props!
-      name: user # need to be overridden in the cloud environment props!
-    basic:
-      enabled: false
+      password: sa
+      name: user
   liquibase:
     enabled: false
-#  activiti:
-#    process-definition-location-prefix: config:processes/
+
 owms:
+  srv:
+    protocol: http
+    hostname: localhost
   eureka:
-    url: http://user:sa@localhost:8761 # need to be overridden in the cloud environment props!
+    url: http://user:sa@localhost:8761
+    zone: ${owms.eureka.url}/eureka/
+
 server:
   port: ${PORT:8130}
+
 eureka:
   client:
-    serviceUrl:
-      defaultZone: ${owms.eureka.url}/eureka
+    instance-info-replication-interval-seconds: 10 # default is 30
+    service-url:
+      defaultZone: ${owms.eureka.zone}  # Must be camelCase
   instance:
     metadata-map:
       username: ${spring.security.user.name}
       password: ${spring.security.user.password}
-      protocol: http
+      protocol: ${owms.srv.protocol}
+      zone: ${owms.eureka.zone}
       config-protocol: http # The protocol used to access the config server
+    hostname: ${owms.srv.hostname}
 
 hystrix:
   command:
@@ -74,12 +78,10 @@ owms:
 
 eureka:
   instance:
-    hostname: ${owms.srv.hostname}
     secure-port-enabled: true
     non-secure-port-enabled: false
-    statusPageUrl: ${owms.srv.protocol}://${owms.srv.hostname}/info
-    healthCheckUrl: ${owms.srv.protocol}://${owms.srv.hostname}/health
-    homePageUrl: ${owms.srv.protocol}://${owms.srv.hostname}/
+    statusPageUrl: ${owms.srv.protocol}://${owms.srv.hostname}:${server.port}/actuator/info
+    healthCheckUrl: ${owms.srv.protocol}://${owms.srv.hostname}:${server.port}/actuator/health
+    homePageUrl: ${owms.srv.protocol}://${owms.srv.hostname}:${server.port}/actuator/
     metadata-map:
-      protocol: ${owms.srv.protocol}
       config-protocol: ${owms.cfgsrv.protocol:https}
