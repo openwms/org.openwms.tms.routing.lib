@@ -73,7 +73,7 @@ public class ConfigServerResourcePatternResolver extends PathMatchingResourcePat
     }
 
     private Optional<Resource> resolveConfiguredValue(String locationPattern) {
-        String path = locationPattern.substring(locationPattern.indexOf(":")+1, locationPattern.length());
+        String path = locationPattern.substring(locationPattern.indexOf(':')+1, locationPattern.length());
         ResponseEntity<Resource> exchange =
                 restTemplate.exchange(
                         format("%s://%s/%s/%s/%s", configServerProtocol, configServerId, path, "default", "master"),

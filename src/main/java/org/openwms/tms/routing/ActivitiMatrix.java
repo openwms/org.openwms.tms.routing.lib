@@ -82,14 +82,14 @@ class ActivitiMatrix implements Matrix {
 
                         // Search the LocationGroup hierarchy the way up...
                         if (locationGroup == null) {
-                            String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route, location.getLocationId(), location.getLocationGroupName());
+                            String message = String.format("No Action found for ActionType [%s] and Route [%s] on source Location [%s] and source LocationGroup [%s]", actionType, route, location.getLocationId(), location.getLocationGroupName());
                             LOGGER.info(message);
                             throw new NoRouteException(message);
                         }
                         prg = findInLocationGroupHierarchy(actionType, route, locationGroup);
 
                         if (!prg.isPresent() && route.equals(RouteImpl.NO_ROUTE)) {
-                            String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route, location.getLocationId(), location.getLocationGroupName());
+                            String message = String.format("No Action found for ActionType [%s] and Route [%s] on source Location [%s] and source LocationGroup [%s]", actionType, route, location.getLocationId(), location.getLocationGroupName());
                             LOGGER.info(message);
                             throw new NoRouteException(message);
                         }
@@ -100,7 +100,7 @@ class ActivitiMatrix implements Matrix {
                         }
 
                         if (!prg.isPresent()) {
-                            String message = String.format("No Action found for Route [%s] on source Location [%s] and source LocationGroup [%s]", route, location.getLocationId(), location.getLocationGroupName());
+                            String message = String.format("No Action found for ActionType [%s] and Route [%s] on source Location [%s] and source LocationGroup [%s]", actionType, route, location.getLocationId(), location.getLocationGroupName());
                             LOGGER.info(message);
                             throw new NoRouteException(message);
                         }
@@ -112,14 +112,14 @@ class ActivitiMatrix implements Matrix {
         // search for locgroup...
         if (!prg.isPresent()) {
             if (null == locationGroup) {
-                String message = String.format("No Action found for Route [%s] and Location [%s] without LocationGroup", route, location);
+                String message = String.format("No Action found for ActionType [%s] and Route [%s] and Location [%s] without LocationGroup", actionType, route, location);
                 LOGGER.info(message);
                 throw new NoRouteException(message);
             }
             prg = findInLocationGroupHierarchy(actionType, route, locationGroup);
         }
         return prg.orElseThrow(() -> {
-            String message = String.format("No Action found for Route [%s], Location [%s], LocationGroup [%s]", route, location, locationGroup);
+            String message = String.format("No Action found for ActionType [%s] and Route [%s], Location [%s], LocationGroup [%s]", actionType, route, location, locationGroup);
             LOGGER.info(message);
             return new NoRouteException(message);
         });
@@ -142,8 +142,8 @@ class ActivitiMatrix implements Matrix {
 
     private LocationGroupVO findLocationGroup(Link parent) {
         List<ServiceInstance> list = dc.getInstances("common-service");
-        if (list == null || list.size() == 0) {
-            throw new RuntimeException("No deployed service with name common-service found");
+        if (list == null || list.isEmpty()) {
+            throw new NotFoundException("No deployed service with name common-service found");
         }
         ServiceInstance si = list.get(0);
         if (LOGGER.isDebugEnabled()) {
@@ -151,9 +151,5 @@ class ActivitiMatrix implements Matrix {
         }
         ResponseEntity<LocationGroupVO> lg = restTemplate.exchange(parent.getHref(), HttpMethod.GET, new HttpEntity<>(SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))), LocationGroupVO.class);
         return lg.getBody();
-    }
-
-    private Optional<Action> findByActionAndRouteAndLocationGroup(String actionType, Route route, String locationGroupName) {
-        return repository.findByActionTypeAndRouteAndLocationGroupName(actionType, route.getRouteId(), locationGroupName);
     }
 }

@@ -26,6 +26,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Optional;
+
 import static java.lang.String.format;
 
 /**
@@ -61,12 +63,21 @@ class RouteServiceImpl implements RouteService {
         }
         Route route = in.get("route", Route.class).orElseThrow(() -> new NoRouteException("No Route information in current context, can't load the next Location from the RouteDetails"));
         String actualLocation = in.get("actualLocation", String.class).orElseThrow(() -> new NoRouteException("No information about the actual Location in the current context, can't load the next Location from the RouteDetails"));
-        String asNext = routeDetailsRepository.findByRoute_RouteId_OrderByPos(route.getRouteId())
+        Optional<RouteDetails> optAsNext = routeDetailsRepository.findByRoute_RouteId_OrderByPos(route.getRouteId())
                 .stream()
                 .filter(r -> r.getSource().equals(actualLocation))
-                .findFirst()
-                .orElseThrow(() -> new NoRouteException(format("No entry in RouteDetails that matches the sourceLocation [%s]", actualLocation)))
-                .getNext();
+                .findFirst();
+        String asNext;
+        if (optAsNext.isPresent()) {
+            asNext = optAsNext.get().getNext();
+        } else {
+            asNext = routeDetailsRepository.findByRoute_RouteId_OrderByPos(RouteImpl.DEF_ROUTE.getRouteId())
+                    .stream()
+                    .filter(r -> r.getSource().equals(actualLocation))
+                    .findFirst()
+                    .orElseThrow(() -> new NoRouteException(format("No entry in RouteDetails that matches the sourceLocation [%s] and route [%s]", actualLocation, route.getRouteId())))
+                    .getNext();
+        }
         LOGGER.debug("Sending to next Location [{}]", asNext);
         responder.sendToLocation(asNext);
     }

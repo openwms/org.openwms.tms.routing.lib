@@ -22,7 +22,11 @@ package org.openwms.tms.routing;
  */
 public class ProgramResult {
 
-    private String barcode, actualLocation, targetLocation, locationGroupName, error;
+    private String barcode;
+    private String actualLocation;
+    private String targetLocation;
+    private String locationGroupName;
+    private String error;
 
     public String getBarcode() {
         return barcode;

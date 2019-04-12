@@ -15,7 +15,6 @@
  */
 package org.openwms.tms.routing;
 
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -37,7 +36,7 @@ public class ResourceResolverRegistrar implements BeanPostProcessor, BeanFactory
      * {@inheritDoc}
      */
     @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessBeforeInitialization(Object bean, String beanName) {
         if (bean instanceof ResourceLoaderAware) {
             ((ResourceLoaderAware) bean).setResourceLoader(resourceLoader);
         }
@@ -48,7 +47,7 @@ public class ResourceResolverRegistrar implements BeanPostProcessor, BeanFactory
      * {@inheritDoc}
      */
     @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessAfterInitialization(Object bean, String beanName) {
         return bean;
     }
 
@@ -56,7 +55,7 @@ public class ResourceResolverRegistrar implements BeanPostProcessor, BeanFactory
      * {@inheritDoc}
      */
     @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
         resourceLoader = beanFactory.getBean(ConfigServerResourcePatternResolver.class);
         beanFactory.registerResolvableDependency(ResourceLoader.class, resourceLoader);
     }

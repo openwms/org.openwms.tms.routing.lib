@@ -16,21 +16,26 @@ owms:
   driver:
     osip:
       enabled: true
-    locu:
-      queue-name: locu
-      exchange-name: osip
-      routing-key: osip.locu.received
-    sysu:
-      queue-name: sysu
-      exchange-name: osip
-      routing-key: osip.sysu.received
-    req:
-      queue-name: req
-      exchange-name: osip
-      routing-key: osip.req.received
-    res:
-      exchange-name: osip
-    upd:
-      queue-name: upd
-      exchange-name: osip
-      routing-key: osip.upd.received
+      err:
+        queue-name: tms-rtng-err
+        exchange-name: osip
+        routing-key-in: osip.err.ss
+        routing-key-out: osip.err.mfc
+      locu:
+        queue-name: tms-rtng-locu
+        exchange-name: osip
+        routing-key-in: osip.locu.ss
+      sysu:
+        queue-name: tms-rtng-sysu
+        exchange-name: osip
+        routing-key-in: osip.sysu.ss
+      req:
+        queue-name: tms-rtng-req
+        exchange-name: osip
+        routing-key-in: osip.req.ss
+      res:
+        exchange-name: osip
+      upd:
+        queue-name: tms-rtng-upd
+        exchange-name: osip
+        routing-key-in: osip.upd.ss

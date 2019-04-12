@@ -17,6 +17,7 @@ package org.openwms.common.comm;
 
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
+import org.openwms.common.comm.osip.OSIP;
 import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
@@ -30,7 +31,6 @@ import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.Route;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
 import org.openwms.tms.routing.routes.RouteImpl;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -42,8 +42,8 @@ import static java.lang.String.format;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
+@OSIP
 @TxService
-@Conditional(ConsiderOSIPCondition.class)
 public class ItemMessageHandler {
 
     private final Matrix matrix;

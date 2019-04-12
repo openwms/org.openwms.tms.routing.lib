@@ -13,30 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing;
+package org.openwms.common.comm.osip.res;
 
+import org.openwms.common.comm.osip.OSIP;
+import org.openwms.core.SpringProfiles;
+import org.springframework.amqp.core.TopicExchange;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.context.annotation.Profile;
 
 /**
- * A RoutingSecurityConfiguration.
+ * A ResponseMessageConfiguration.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
+@Profile(SpringProfiles.ASYNCHRONOUS_PROFILE)
+@OSIP
 @Configuration
-class RoutingSecurityConfiguration extends WebSecurityConfigurerAdapter {
+class ResponseMessageConfiguration {
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * API is for non browser clients!
-     */
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests().anyRequest().permitAll()
-            .and()
-            .csrf().disable();
+    @Bean
+    TopicExchange resExchange(@Value("${owms.driver.osip.res.exchange-name}") String exchangeName) {
+        return new TopicExchange(exchangeName, true, false);
     }
 }

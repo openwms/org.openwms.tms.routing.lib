@@ -25,12 +25,17 @@ import java.io.Serializable;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-// ajc has a problem here with lombok
 public class ActionVO extends AbstractBase implements Serializable {
 
     @NotNull
     private String name;
-    private String type, description, route, program, locationGroupName, location, key;
+    private String type;
+    private String description;
+    private String route;
+    private String program;
+    private String locationGroupName;
+    private String location;
+    private String key;
     private boolean enabled;
 
     public String getName() {

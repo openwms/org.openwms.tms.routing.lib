@@ -32,6 +32,7 @@ import java.util.Optional;
 public class OwmsProperties {
 
     private Map<String, String> partners = new HashMap<>();
+    private Routing routing;
 
     public Map<String, String> getPartners() {
         return this.partners;
@@ -44,5 +45,25 @@ public class OwmsProperties {
                 .filter(e -> e.getKey().equalsIgnoreCase(key))
                 .findFirst()
                 .map(Map.Entry::getValue);
+    }
+
+    public Routing getRouting() {
+        return routing;
+    }
+
+    public void setRouting(Routing routing) {
+        this.routing = routing;
+    }
+
+    public class Routing {
+        private String serialization;
+
+        public String getSerialization() {
+            return serialization;
+        }
+
+        public void setSerialization(String serialization) {
+            this.serialization = serialization;
+        }
     }
 }

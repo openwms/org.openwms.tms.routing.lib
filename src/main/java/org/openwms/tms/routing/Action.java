@@ -25,6 +25,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringJoiner;
 
 /**
  * A Action.
@@ -56,7 +59,7 @@ public class Action extends ApplicationEntity implements Serializable {
     @Column(name = "C_PROGRAM_NAME")
     private String programKey;
     @NotNull
-    @Column(name = "C_NAME")
+    @Column(name = "C_NAME", unique = true)
     private String name;
     @Column(name = "C_LOCATION_KEY")
     private String locationKey;
@@ -70,6 +73,27 @@ public class Action extends ApplicationEntity implements Serializable {
     private String description;
     @Column(name = "C_ENABLED")
     private boolean enabled = true;
+    @Column(name = "C_FLEX_1")
+    private String flexField1;
+    @Column(name = "C_FLEX_2")
+    private String flexField2;
+    @Column(name = "C_FLEX_3")
+    private String flexField3;
+    @Column(name = "C_FLEX_4")
+    private String flexField4;
+    @Column(name = "C_FLEX_5")
+    private String flexField5;
+
+    public Map<String, Object> getFlexVariables() {
+        // TODO [openwms]: 17.03.19 Improve this with Java9 Map.of
+        Map<String, Object> result = new HashMap<>(5);
+        result.put("flexField1", flexField1);
+        result.put("flexField2", flexField2);
+        result.put("flexField3", flexField3);
+        result.put("flexField4", flexField4);
+        result.put("flexField5", flexField5);
+        return result;
+    }
 
     public RouteImpl getRoute() {
         return route;
@@ -111,16 +135,28 @@ public class Action extends ApplicationEntity implements Serializable {
         this.enabled = enabled;
     }
 
+    public String getFlexField1() {
+        return flexField1;
+    }
+
+    public String getFlexField2() {
+        return flexField2;
+    }
+
+    public String getFlexField3() {
+        return flexField3;
+    }
+
+    public String getFlexField4() {
+        return flexField4;
+    }
+
+    public String getFlexField5() {
+        return flexField5;
+    }
+
     @Override
     public String toString() {
-        return "Action{" +
-                "route=" + route +
-                ", programKey='" + programKey + '\'' +
-                ", name='" + name + '\'' +
-                ", locationKey='" + locationKey + '\'' +
-                ", locationGroupName='" + locationGroupName + '\'' +
-                ", actionType='" + actionType + '\'' +
-                ", description='" + description + '\'' +
-                "} " + super.toString();
+        return new StringJoiner(", ", Action.class.getSimpleName() + "[", "]").add("route=" + route).add("programKey='" + programKey + "'").add("name='" + name + "'").add("locationKey='" + locationKey + "'").add("locationGroupName='" + locationGroupName + "'").add("actionType='" + actionType + "'").add("description='" + description + "'").add("enabled=" + enabled).add("flexField1='" + flexField1 + "'").add("flexField2='" + flexField2 + "'").add("flexField3='" + flexField3 + "'").add("flexField4='" + flexField4 + "'").add("flexField5='" + flexField5 + "'").toString();
     }
 }
