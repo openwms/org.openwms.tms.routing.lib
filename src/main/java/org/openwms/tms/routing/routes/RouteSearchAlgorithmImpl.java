@@ -47,6 +47,7 @@ import static java.lang.String.format;
 class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteSearchAlgorithmImpl.class);
+    public static final String MSG = "No route found for TransportOrder with sourceLocation [%s], targetLocation [%s] and targetLocationGroup [%s]";
     private final RouteRepository repository;
     private final LocationGroupApi locationGroupApi;
     private final LocationApi locationApi;
@@ -108,7 +109,7 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
                     return result.get();
                 }
 
-                throw new NoRouteException(format("No route found for TransportOrder with sourceLocation [%s], targetLocation [%s] and targetLocationGroup [%s]", sourceLocation, targetLocation, targetLocationGroup));
+                throw new NoRouteException(format(MSG, sourceLocation, targetLocation, targetLocationGroup));
             } else {
 
                 // No targetLocationGroup, search for the targetLocation upwards:
@@ -117,7 +118,7 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
                     LOGGER.debug("Route found 3: {}", result.get());
                     return result.get();
                 }
-                throw new NoRouteException(format("No route found for TransportOrder with sourceLocation [%s], targetLocation [%s] and targetLocationGroup [%s]", sourceLocation, targetLocation, targetLocationGroup));
+                throw new NoRouteException(format(MSG, sourceLocation, targetLocation, targetLocationGroup));
             }
         }
         Assert.hasText(targetLocationGroup, "The targetLocation did not find a match, hence a TargetLocationGroup is required");
@@ -132,7 +133,7 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
             return result.get();
         }
 
-        throw new NoRouteException(format("No route found for TransportOrder with sourceLocation [%s], targetLocation [%s] and targetLocationGroup [%s]", sourceLocation, targetLocation, targetLocationGroup));
+        throw new NoRouteException(format(MSG, sourceLocation, targetLocation, targetLocationGroup));
     }
 
     private Optional<RouteImpl> findInTargetGroupHierarchy(String sourceLocation, String targetLocationGroup, Collection<LocationGroupVO> allLocationGroups) {

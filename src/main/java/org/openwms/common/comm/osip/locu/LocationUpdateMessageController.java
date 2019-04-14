@@ -41,7 +41,7 @@ class LocationUpdateMessageController {
 
     @Measured
     @PostMapping("/locu")
-    void handle(@RequestBody LocationUpdateVO msg) {
+    public void handle(@RequestBody LocationUpdateVO msg) {
         handler.handle(msg);
     }
 }

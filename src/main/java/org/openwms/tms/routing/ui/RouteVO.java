@@ -18,6 +18,7 @@ package org.openwms.tms.routing.ui;
 import org.ameba.http.AbstractBase;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A RouteVO.
@@ -27,7 +28,13 @@ import java.io.Serializable;
 // ajc has a problem here with lombok
 public class RouteVO extends AbstractBase implements Serializable {
 
-    private String name, description, sourceLocationName, sourceLocationGroupName, targetLocationName, targetLocationGroupName, key;
+    private String name;
+    private String description;
+    private String sourceLocationName;
+    private String sourceLocationGroupName;
+    private String targetLocationName;
+    private String targetLocationGroupName;
+    private String key;
     private boolean enabled;
 
     public String getName() {
@@ -100,5 +107,22 @@ public class RouteVO extends AbstractBase implements Serializable {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        if (!super.equals(o))
+            return false;
+        RouteVO routeVO = (RouteVO) o;
+        return enabled == routeVO.enabled && Objects.equals(name, routeVO.name) && Objects.equals(description, routeVO.description) && Objects.equals(sourceLocationName, routeVO.sourceLocationName) && Objects.equals(sourceLocationGroupName, routeVO.sourceLocationGroupName) && Objects.equals(targetLocationName, routeVO.targetLocationName) && Objects.equals(targetLocationGroupName, routeVO.targetLocationGroupName) && Objects.equals(key, routeVO.key);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), name, description, sourceLocationName, sourceLocationGroupName, targetLocationName, targetLocationGroupName, key, enabled);
     }
 }

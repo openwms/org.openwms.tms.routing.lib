@@ -19,6 +19,7 @@ import org.ameba.http.AbstractBase;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A ActionVO.
@@ -112,5 +113,22 @@ public class ActionVO extends AbstractBase implements Serializable {
 
     public boolean hasRoute() {
         return route != null && !route.isEmpty();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        if (!super.equals(o))
+            return false;
+        ActionVO actionVO = (ActionVO) o;
+        return enabled == actionVO.enabled && Objects.equals(name, actionVO.name) && Objects.equals(type, actionVO.type) && Objects.equals(description, actionVO.description) && Objects.equals(route, actionVO.route) && Objects.equals(program, actionVO.program) && Objects.equals(locationGroupName, actionVO.locationGroupName) && Objects.equals(location, actionVO.location) && Objects.equals(key, actionVO.key);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), name, type, description, route, program, locationGroupName, location, key, enabled);
     }
 }

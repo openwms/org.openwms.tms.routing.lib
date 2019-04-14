@@ -42,7 +42,7 @@ class UpdateMessageController {
     }
 
     @PostMapping("/upd")
-    void handle(@RequestBody ItemMessage msg) {
+    public void handle(@RequestBody ItemMessage msg) {
         handler.handle(msg);
     }
 }

@@ -42,7 +42,7 @@ class RequestMessageController {
     }
 
     @PostMapping("/req")
-    void handle(@RequestBody ItemMessage msg) {
+    public void handle(@RequestBody ItemMessage msg) {
         handler.handle(msg);
     }
 }

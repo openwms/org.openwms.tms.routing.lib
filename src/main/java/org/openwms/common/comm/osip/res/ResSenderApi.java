@@ -77,7 +77,6 @@ class ResSenderApi implements Responder {
         if (list == null || list.isEmpty()) {
             throw new NotFoundException(format("No deployed service with name [%s] found", ""+in.getMsg().get(CommConstants.SENDER)));
         }
-        // FIXME [openwms]: 19.10.18 encode this into bean
         ResponseHeader header = ResponseHeader.newBuilder()
                 .sender("" + in.getMsg().get(CommConstants.RECEIVER))
                 .receiver(""+in.getMsg().get(CommConstants.SENDER))

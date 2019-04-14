@@ -46,6 +46,7 @@ import java.util.Optional;
 class ActivitiMatrix implements Matrix {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ActivitiMatrix.class);
+    public static final String MSG = "No Action found for ActionType [%s], Route [%s], Location [%s] and LocationGroup [%s]";
 
     private final ActionRepository repository;
     private final RestTemplate restTemplate;
@@ -82,12 +83,12 @@ class ActivitiMatrix implements Matrix {
 
                         // Search the LocationGroup hierarchy the way up...
                         if (locationGroup == null) {
-                            throw new NoRouteException(String.format("No Action found for ActionType [%s] and Route [%s] on source Location [%s] and source LocationGroup [%s]", actionType, route, location.getLocationId(), location.getLocationGroupName()));
+                            throw new NoRouteException(String.format(MSG, actionType, route, location.getLocationId(), location.getLocationGroupName()));
                         }
                         prg = findInLocationGroupHierarchy(actionType, route, locationGroup);
 
                         if (!prg.isPresent() && route.equals(RouteImpl.NO_ROUTE)) {
-                            throw new NoRouteException(String.format("No Action found for ActionType [%s] and Route [%s] on source Location [%s] and source LocationGroup [%s]", actionType, route, location.getLocationId(), location.getLocationGroupName()));
+                            throw new NoRouteException(String.format(MSG, actionType, route, location.getLocationId(), location.getLocationGroupName()));
                         }
 
                         if (!prg.isPresent() && !route.equals(RouteImpl.DEF_ROUTE)) {
@@ -96,7 +97,7 @@ class ActivitiMatrix implements Matrix {
                         }
 
                         if (!prg.isPresent()) {
-                            throw new NoRouteException(String.format("No Action found for ActionType [%s] and Route [%s] on source Location [%s] and source LocationGroup [%s]", actionType, route, location.getLocationId(), location.getLocationGroupName()));
+                            throw new NoRouteException(String.format(MSG, actionType, route, location.getLocationId(), location.getLocationGroupName()));
                         }
                     }
                 }
@@ -110,7 +111,7 @@ class ActivitiMatrix implements Matrix {
             }
             prg = findInLocationGroupHierarchy(actionType, route, locationGroup);
         }
-        return prg.orElseThrow(() -> new NoRouteException(String.format("No Action found for ActionType [%s] and Route [%s], Location [%s], LocationGroup [%s]", actionType, route, location, locationGroup)));
+        return prg.orElseThrow(() -> new NoRouteException(String.format(MSG, actionType, route, location, locationGroup)));
     }
 
     private Optional<Action> findInLocationGroupHierarchy(String actionType, Route route, LocationGroupVO locationGroup) {
