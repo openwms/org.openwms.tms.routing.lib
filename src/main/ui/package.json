@@ -13,6 +13,7 @@
     "@material-ui/icons": "^3.0.1",
     "connected-react-router": "^5.0.1",
     "history": "^4.7.2",
+    "os": "^0.1.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-redux": "^5.0.7",
@@ -26,8 +27,6 @@
     "start": "react-scripts start",
     "build": "node build.js production",
     "build:dev": "node build.js development",
-    "build:local": "node build.js local",
-    "build:staging": "node build.js staging",
     "build:production": "node build.js production",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

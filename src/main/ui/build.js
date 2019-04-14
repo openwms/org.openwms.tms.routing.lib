@@ -9,41 +9,27 @@ if (process.argv.length === 0) {
 }
 
 if (os.type() === 'Linux' ||
-    os.type() === 'Darwin')
+    os.type() === 'Darwin') {
 
-    if (process.argv[0] === 'development') {
+    console.log(process.argv[2]);
+
+    if (process.argv[2] === 'development') {
         exec("sh -ac '. .env.development; react-scripts build'", puts);
     }
-
-    if (process.argv[0] === 'local') {
-        exec("sh -ac '. .env.local; react-scripts build'", puts);
-    }
-
-    if (process.argv[0] === 'staging') {
-        exec("sh -ac '. .env.staging; react-scripts build'", puts);
-    }
-
-    if (process.argv[0] === 'production') {
+    if (process.argv[2] === 'production') {
         exec("sh -ac '. .env.production; react-scripts build'", puts);
     }
+}
+else if (os.type() === 'Windows_NT') {
 
-else if (os.type() === 'Windows_NT')
-
-    if (process.argv[0] === 'development') {
+    if (process.argv[2] === 'development') {
         exec(".env.development && react-scripts build", puts);
     }
 
-    if (process.argv[0] === 'local') {
-        exec(".env.local && react-scripts build", puts);
-    }
-
-    if (process.argv[0] === 'staging') {
-        exec(".env.staging && react-scripts build", puts);
-    }
-
-    if (process.argv[0] === 'production') {
+    if (process.argv[2] === 'production') {
         exec(".env.production && react-scripts build", puts);
     }
-
-else
-    throw new Error("Unsupported OS found: " + process.env.OS.type());
+}
+else {
+    throw new Error("Unsupported OS found: [" + os.type() + "]");
+}

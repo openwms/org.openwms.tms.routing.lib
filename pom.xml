@@ -27,21 +27,9 @@
 
     <profiles>
         <profile>
-            <id>local</id>
-            <properties>
-                <environment>:local</environment>
-            </properties>
-        </profile>
-        <profile>
             <id>dev</id>
             <properties>
                 <environment>:dev</environment>
-            </properties>
-        </profile>
-        <profile>
-            <id>staging</id>
-            <properties>
-                <environment>:staging</environment>
             </properties>
         </profile>
         <profile>
