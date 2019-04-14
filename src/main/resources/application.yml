@@ -39,3 +39,7 @@ owms:
         queue-name: tms-rtng-upd
         exchange-name: osip
         routing-key-in: osip.upd.ss
+      updx:
+        queue-name: tms-rtng-updx
+        exchange-name: osip
+        routing-key-in: osip.updx.ss

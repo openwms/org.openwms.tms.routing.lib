@@ -42,7 +42,17 @@ class UpdateMessageListener {
 
     @Measured
     @RabbitListener(queues = "${owms.driver.osip.upd.queue-name}")
-    void handle(@Payload ItemMessage msg) {
+    void handleUPD(@Payload ItemMessage msg) {
+        try {
+            handler.handle(msg);
+        } catch (Exception e) {
+            throw new AmqpRejectAndDontRequeueException(e.getMessage(), e);
+        }
+    }
+
+    @Measured
+    @RabbitListener(queues = "${owms.driver.osip.updx.queue-name}")
+    void handleUPDX(@Payload ItemMessage msg) {
         try {
             handler.handle(msg);
         } catch (Exception e) {

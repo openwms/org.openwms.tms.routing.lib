@@ -57,4 +57,26 @@ class UpdateMessageConfiguration {
                 .to(updExchange)
                 .with(routingKey);
     }
+
+    @Bean
+    TopicExchange updxExchange(@Value("${owms.driver.osip.updx.exchange-name}") String exchangeName) {
+        return new TopicExchange(exchangeName, true, false);
+    }
+
+    @Bean
+    Queue updxQueue(@Value("${owms.driver.osip.updx.queue-name}") String queueName) {
+        return new Queue(queueName);
+    }
+
+    @Bean
+    Binding updxBinding(
+            TopicExchange updxExchange,
+            Queue updxQueue,
+            @Value("${owms.driver.osip.updx.routing-key-in}") String routingKey
+    ) {
+        return BindingBuilder
+                .bind(updxQueue)
+                .to(updxExchange)
+                .with(routingKey);
+    }
 }
