@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * This package contains all types of the COMMON COMM module used in this module.
+ * This package contains all types to describe locations.
  */
-package org.openwms.common.comm;
+package org.openwms.common.location;

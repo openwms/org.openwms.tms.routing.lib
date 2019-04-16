@@ -25,7 +25,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * A OSIPComponent.
+ * A OSIPComponent marks a Spring Component as OSIP type.
  *
  * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */

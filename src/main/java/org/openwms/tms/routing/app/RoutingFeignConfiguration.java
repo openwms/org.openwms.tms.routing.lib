@@ -37,7 +37,14 @@ import org.springframework.context.annotation.Profile;
 @Profile("!INMEM")
 @Configuration
 @AutoConfigureOrder(0)
-@EnableFeignClients(basePackageClasses = {TransportUnitApi.class, UIPackage.class, LocationGroupApi.class, LocationApi.class, TransportOrderApi.class})
+@EnableFeignClients(
+        basePackageClasses = {
+                TransportUnitApi.class,
+                UIPackage.class,
+                LocationGroupApi.class,
+                LocationApi.class,
+                TransportOrderApi.class
+        })
 public class RoutingFeignConfiguration {
 
     @Bean

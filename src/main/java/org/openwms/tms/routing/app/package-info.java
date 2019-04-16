@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * This package contains all types of the COMMON COMM module used in this module.
+ * This package contains Spring configuration classes.
  */
-package org.openwms.common.comm;
+package org.openwms.tms.routing.app;

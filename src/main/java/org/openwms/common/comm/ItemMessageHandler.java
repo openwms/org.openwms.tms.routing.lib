@@ -36,7 +36,7 @@ import java.util.List;
 import static java.lang.String.format;
 
 /**
- * A RequestMessageHandler.
+ * A ItemMessageHandler.
  *
  * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
