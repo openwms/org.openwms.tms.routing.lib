@@ -22,7 +22,7 @@ import org.springframework.lang.Nullable;
 /**
  * A Matrix.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 public interface Matrix {
 

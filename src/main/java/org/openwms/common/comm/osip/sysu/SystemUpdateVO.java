@@ -30,7 +30,7 @@ import java.util.StringJoiner;
 /**
  * A SystemUpdateVO.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 class SystemUpdateVO implements Serializable {
 

@@ -23,7 +23,7 @@ import java.util.Optional;
 /**
  * A RouteRepository.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 public interface RouteRepository extends JpaRepository<RouteImpl, Long> {
 

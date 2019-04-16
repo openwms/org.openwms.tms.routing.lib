@@ -42,7 +42,7 @@ import java.util.List;
 /**
  * A ActionResource.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 @CrossOrigin(origins = "*")
 @RestController

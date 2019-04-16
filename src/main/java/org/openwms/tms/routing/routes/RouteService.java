@@ -18,7 +18,7 @@ package org.openwms.tms.routing.routes;
 /**
  * A RouteService operates on {@code Route}s.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 public interface RouteService {
 

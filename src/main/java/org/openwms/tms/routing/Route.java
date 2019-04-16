@@ -18,7 +18,7 @@ package org.openwms.tms.routing;
 /**
  * A Route.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 public interface Route {
 

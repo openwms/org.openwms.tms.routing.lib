@@ -24,7 +24,7 @@ import java.util.Optional;
 /**
  * A LocationRepository.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 @Repository
 interface LocationRepository extends JpaRepository<LocationEO, Long> {

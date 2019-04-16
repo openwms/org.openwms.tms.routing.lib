@@ -21,7 +21,7 @@ import java.util.Optional;
 /**
  * A ProgramExecutor is responsible for the execution of material flow programs.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 public interface ProgramExecutor {
 

@@ -37,7 +37,7 @@ import static org.ameba.LoggingCategories.BOOT;
  * A RoutingAsyncConfiguration is activated when the service uses asynchronous
  * communication to access other services.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 @Profile(SpringProfiles.ASYNCHRONOUS_PROFILE)
 @EnableRabbit

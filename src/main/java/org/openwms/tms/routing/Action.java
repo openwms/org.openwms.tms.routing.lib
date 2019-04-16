@@ -31,7 +31,7 @@ import java.util.StringJoiner;
 /**
  * A Action.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 @Entity
 @Table(name = "RSRV_ACTION")

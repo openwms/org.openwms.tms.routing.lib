@@ -32,7 +32,7 @@ import org.springframework.web.client.RestTemplate;
 /**
  * A RoutingModuleConfiguration.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 @Configuration
 @EnableAspects(propagateRootCause = true)

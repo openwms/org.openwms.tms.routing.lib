@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * This package cares about processing the OSIP types.
+ * This package contains all the types for OSIP message handling.
  */
 package org.openwms.common.comm.osip;

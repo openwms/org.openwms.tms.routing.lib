@@ -18,7 +18,7 @@ package org.openwms.common.comm;
 /**
  * A CommPackage.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 public final class CommPackage {
 

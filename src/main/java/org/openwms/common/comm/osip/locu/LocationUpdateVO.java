@@ -29,7 +29,7 @@ import java.util.StringJoiner;
 /**
  * A LocationUpdateVO.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 class LocationUpdateVO implements Serializable {
 

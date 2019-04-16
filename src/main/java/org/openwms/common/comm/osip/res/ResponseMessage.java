@@ -23,7 +23,7 @@ import java.util.Date;
  *
  * See https://interface21-io.gitbook.io/osip/messaging-between-layer-n-and-layer-n-1#response-telegram-res_
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 // ajc has a problem here with lombok
 public class ResponseMessage implements Serializable {

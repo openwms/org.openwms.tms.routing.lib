@@ -33,7 +33,7 @@ import static java.lang.String.format;
 /**
  * A ActivitiExecutor delegates to Activiti for program execution.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 @Component
 class ActivitiExecutor implements ProgramExecutor {

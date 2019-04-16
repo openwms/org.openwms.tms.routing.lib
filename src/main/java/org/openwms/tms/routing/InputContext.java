@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 /**
  * A InputContext.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 public class InputContext {
 

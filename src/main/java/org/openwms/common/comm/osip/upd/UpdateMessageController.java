@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  * A UpdateMessageController is the http endpoint of the routing service component to
  * process UPD_ messages.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 @Profile("!" + SpringProfiles.ASYNCHRONOUS_PROFILE)
 @OSIP

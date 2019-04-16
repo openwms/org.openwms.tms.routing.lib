@@ -45,7 +45,7 @@ import java.util.Optional;
 /**
  * A ActivitiMatrix.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 @Component
 class ActivitiMatrix implements Matrix {

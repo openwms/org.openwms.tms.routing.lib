@@ -29,7 +29,7 @@ import static java.lang.String.format;
 /**
  * A ErrorMessageHandler.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 @OSIPComponent
 class ErrorMessageHandler {

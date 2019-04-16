@@ -34,7 +34,7 @@ import static java.lang.String.format;
  * A RouteServiceImpl is a transactional Spring managed bean that operated on
  * {@code Route}s.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 @TxService("routing")
 class RouteServiceImpl implements RouteService {

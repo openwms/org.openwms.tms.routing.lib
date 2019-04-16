@@ -25,7 +25,7 @@ import java.util.Optional;
 /**
  * A OwmsProperties.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 @Configuration
 @ConfigurationProperties("owms")

@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Profile;
  * A RoutingStandaloneConfiguration is activated when the service is deployed as a
  * microservice, not packaged within an application. Then Service Discovery is activated.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 @Profile("!INMEM")
 @Configuration
