@@ -16,11 +16,12 @@
 package org.openwms.tms.routing.routes;
 
 import org.ameba.exception.NotFoundException;
+import org.openwms.common.comm.NoRouteException;
 import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
-import org.openwms.tms.routing.NoRouteException;
 import org.openwms.tms.routing.Route;
+import org.openwms.tms.routing.RouteImpl;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

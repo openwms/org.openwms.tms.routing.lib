@@ -15,6 +15,7 @@
  */
 package org.openwms.tms.routing.routes;
 
+import org.openwms.tms.routing.RouteImpl;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

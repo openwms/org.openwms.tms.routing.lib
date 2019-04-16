@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing;
+package org.openwms.tms.routing.routes;
 
 /**
  * A RouteService operates on {@code Route}s.

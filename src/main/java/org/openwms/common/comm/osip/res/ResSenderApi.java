@@ -25,7 +25,7 @@ import org.openwms.core.SecurityUtils;
 import org.openwms.core.SpringProfiles;
 import org.openwms.core.exception.IllegalConfigurationValueException;
 import org.openwms.tms.routing.InputContext;
-import org.openwms.tms.routing.OwmsProperties;
+import org.openwms.tms.routing.config.OwmsProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.client.ServiceInstance;

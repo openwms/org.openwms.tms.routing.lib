@@ -18,7 +18,7 @@ package org.openwms.tms.routing.routes;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openwms.tms.routing.NoRouteException;
+import org.openwms.common.comm.NoRouteException;
 import org.openwms.tms.routing.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;

@@ -22,7 +22,7 @@ import org.openwms.common.comm.osip.OSIP;
 import org.openwms.core.SpringProfiles;
 import org.openwms.core.exception.IllegalConfigurationValueException;
 import org.openwms.tms.routing.InputContext;
-import org.openwms.tms.routing.OwmsProperties;
+import org.openwms.tms.routing.config.OwmsProperties;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;

@@ -18,6 +18,7 @@ package org.openwms.tms.routing;
 import org.ameba.annotation.EnableAspects;
 import org.ameba.mapping.BeanMapper;
 import org.ameba.mapping.DozerMapperImpl;
+import org.openwms.tms.routing.config.OwmsProperties;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;

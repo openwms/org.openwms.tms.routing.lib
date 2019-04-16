@@ -13,26 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing;
+package org.openwms.tms.routing.app;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
- * A NoRouteException.
+ * A RoutingStandaloneConfiguration is activated when the service is deployed as a
+ * microservice, not packaged within an application. Then Service Discovery is activated.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class NoRouteException extends RuntimeException {
-
-    /**
-     * Constructs a new runtime exception with the specified detail message. The cause is not initialized, and may subsequently be initialized
-     * by a call to {@link #initCause}.
-     *
-     * @param message the detail message. The detail message is saved for later retrieval by the {@link #getMessage()} method.
-     */
-    public NoRouteException(String message) {
-        super(message);
-    }
+@Profile("!INMEM")
+@Configuration
+@EnableDiscoveryClient
+@EnableCircuitBreaker
+public class RoutingStandaloneConfiguration {
 }

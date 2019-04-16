@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.openwms.tms.routing.RoutingFeignConfiguration
+org.openwms.tms.routing.config.RoutingFeignConfiguration

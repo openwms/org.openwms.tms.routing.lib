@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing.routes;
+package org.openwms.tms.routing;
 
 import org.ameba.integration.jpa.ApplicationEntity;
-import org.openwms.tms.routing.LocationEO;
-import org.openwms.tms.routing.Route;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
