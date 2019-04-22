@@ -286,15 +286,19 @@
                 <artifactId>jolokia-core</artifactId>
             </dependency>
             <dependency>
-                <groupId>org.flowable</groupId>
-                <artifactId>flowable-spring-boot-starter</artifactId>
-                <version>${flowable.version}</version>
+                <groupId>org.camunda.bpm</groupId>
+                <artifactId>camunda-bom</artifactId>
+                <version>7.10.0</version>
+                <scope>import</scope>
+                <type>pom</type>
             </dependency>
-            <dependency>
-                <groupId>org.flowable</groupId>
-                <artifactId>flowable-spring-boot-starter-dmn</artifactId>
-                <version>${flowable.version}</version>
-            </dependency>
+                <dependency>
+                    <groupId>org.camunda.bpm.dmn</groupId>
+                    <artifactId>camunda-engine-dmn-bom</artifactId>
+                    <version>7.10.0</version>
+                    <type>pom</type>
+                    <scope>import</scope>
+                </dependency>
             <dependency>
                 <groupId>net.sf.dozer</groupId>
                 <artifactId>dozer</artifactId>
@@ -418,12 +422,18 @@
             <artifactId>guava</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.flowable</groupId>
-            <artifactId>flowable-spring-boot-starter</artifactId>
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-engine-spring</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.flowable</groupId>
-            <artifactId>flowable-spring-boot-starter-dmn</artifactId>
+            <groupId>org.camunda.bpm.springboot</groupId>
+            <artifactId>camunda-bpm-spring-boot-starter</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.camunda.bpm.dmn</groupId>
+            <artifactId>camunda-engine-dmn</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
