@@ -17,8 +17,7 @@ spring:
     enabled: false
   mvc:
     static-path-pattern: /ui/**
-  rabbitmq:
-    virtual-host: openwms
+
 feign:
   httpclient:
     connection-timeout: 30000
@@ -31,11 +30,9 @@ owms:
   eureka:
     url: http://user:sa@localhost:8761
     zone: ${owms.eureka.url}/eureka/
-  driver:
-    osip:
-      enabled: true
   routing:
     serialization: json
+    common-service-name: common-service
   srv:
     protocol: http
     hostname: localhost
