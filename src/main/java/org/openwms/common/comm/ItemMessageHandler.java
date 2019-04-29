@@ -23,6 +23,7 @@ import org.openwms.common.location.api.LocationGroupVO;
 import org.openwms.common.location.api.LocationVO;
 import org.openwms.tms.api.TransportOrderApi;
 import org.openwms.tms.api.TransportOrderVO;
+import org.openwms.tms.routing.Action;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.ProgramExecutor;
@@ -91,6 +92,8 @@ public class ItemMessageHandler {
             }
         }
         in.put("route", route);
-        executor.execute(matrix.findBy(msg.getType(), route, actualLocation, locationGroup), in.getMsg());
+        Action action = matrix.findBy(msg.getType(), route, actualLocation, locationGroup);
+        in.putAll(action.getFlexVariables());
+        executor.execute(action, in.getMsg());
     }
 }
