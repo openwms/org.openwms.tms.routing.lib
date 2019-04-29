@@ -20,9 +20,9 @@ import org.openwms.common.comm.osip.OSIPComponent;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
 import org.openwms.tms.routing.InputContext;
-import org.openwms.tms.routing.Matrix;
-import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.RouteImpl;
+import org.openwms.tms.routing.spi.Matrix;
+import org.openwms.tms.routing.spi.ProgramExecutor;
 
 import static java.lang.String.format;
 
