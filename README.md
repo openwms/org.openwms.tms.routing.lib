@@ -65,11 +65,35 @@ by the `pos` attribute). The actual location from the telegram is used to determ
 next target. In the selected workflow just call `#{routing.sendToNextLocation()}` to choose
 the next routing location.
 
+# Development
+
+## Build
+
+The srvice includes an UI that need to be built as well as part of the standard Maven
+build. To build a deliverable JAR file that contains the backend and the frontend call:
+```
+$ mvn package -Pfrontend
+```
+
+To skip the frontend part just remove the -P parameter.
+
+## Deploy
+
+After the deliverable has been built it can be started with:
+```
+$ java -jar target/openwms-tms-routing-exec.jar --spring.profiles.active=ASYNCHRONOUS
+```
+
+To open the frontend application go to [http://localhost:8130/ui/index.html](http://localhost:8130/ui/index.html)
+ 
+
+# Appendix
+
 ## Open Issues
 
 ID   | Description
 ---- | -----------
-I001 | FeignClients are instantiated in an isolated child context and accessible by the hosting application only but not from Activiti.
+I001 | The BPMN process definitions are currently loaded from the JAR file. We should externalize that configuration
 
 ## Outlook
 

@@ -17,6 +17,13 @@ spring:
     enabled: false
   mvc:
     static-path-pattern: /ui/**
+  jpa:
+    database: h2
+
+camunda:
+  bpm:
+    auto-deployment-enabled: false
+    enabled: false
 
 feign:
   httpclient:
@@ -30,6 +37,9 @@ owms:
   eureka:
     url: http://user:sa@localhost:8761
     zone: ${owms.eureka.url}/eureka/
+  driver:
+    osip:
+      enabled: false
   routing:
     serialization: json
     common-service-name: common-service
@@ -50,6 +60,8 @@ logging:
 
 eureka:
   client:
+    healthcheck:
+      enabled: true
     instance-info-replication-interval-seconds: 10 # default is 30
     service-url:
       defaultZone: ${owms.eureka.zone}  # Must be camelCase
@@ -61,6 +73,7 @@ eureka:
       zone: ${owms.eureka.zone}
       config-protocol: http # The protocol used to access the config server
     hostname: ${owms.srv.hostname}
+
 hystrix:
   command:
     default:
@@ -68,6 +81,8 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 5000
+flowable:
+  process-definition-location-prefix: classpath*:/flowable/processes/
 ---
 spring:
   profiles: DEMO
@@ -80,6 +95,51 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
+
+---
+spring:
+  profiles: CAMUNDA
+flowable:
+  app:
+    enabled: false
+    deploy-resources: false
+    servlet:
+      load-on-startup: 0
+  cmmn:
+    enabled: false
+    deploy-resources: false
+    servlet:
+      load-on-startup: 0
+  content:
+    enabled: false
+    servlet:
+      load-on-startup: 0
+  database-schema-update: false
+  dmn:
+    enabled: false
+    deploy-resources: false
+    servlet:
+      load-on-startup: 0
+    history-enabled: false
+  form:
+    enabled: false
+    deploy-resources: false
+    servlet:
+      load-on-startup: 0
+  idm:
+    enabled: false
+    servlet:
+      load-on-startup: 0
+  process:
+    enabled: false
+    servlet:
+      load-on-startup: 0
+  jpa-enabled: false
+camunda:
+  bpm:
+    auto-deployment-enabled: true
+    enabled: true
+    deployment-resource-pattern: classpath*:**/camunda/processes/*.bpmn20.xml,classpath*:**/camunda/processes/*.bpmn,classpath*:**/camunda/processes/*.dmn11.xml,classpath*:**/camunda/processes/*.dmn
 
 ---
 spring:

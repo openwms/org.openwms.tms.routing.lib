@@ -25,11 +25,11 @@ import org.openwms.tms.api.TransportOrderApi;
 import org.openwms.tms.api.TransportOrderVO;
 import org.openwms.tms.routing.Action;
 import org.openwms.tms.routing.InputContext;
+import org.openwms.tms.routing.Matrix;
+import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.Route;
 import org.openwms.tms.routing.RouteImpl;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
-import org.openwms.tms.routing.spi.Matrix;
-import org.openwms.tms.routing.spi.ProgramExecutor;
 import org.springframework.util.Assert;
 
 import java.util.List;

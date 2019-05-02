@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing.spi;
+package org.openwms.tms.routing;
 
 import org.openwms.common.location.api.LocationGroupVO;
 import org.openwms.common.location.api.LocationVO;
-import org.openwms.tms.routing.Action;
-import org.openwms.tms.routing.Route;
 import org.springframework.lang.Nullable;
 
 /**

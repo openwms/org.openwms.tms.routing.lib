@@ -16,33 +16,16 @@
 
     <properties>
         <ameba-cloud.version>2.0</ameba-cloud.version>
+        <camunda.version>7.10.0</camunda.version>
         <common-service.version>1.3.0-SNAPSHOT</common-service.version>
         <core.version>1.4.0-SNAPSHOT</core.version>
         <feign-httpclient.version>9.5.1</feign-httpclient.version>
         <flowable.version>6.4.1</flowable.version>
+        <groovy-jsr223.version>2.4.7</groovy-jsr223.version>
         <guava.version>19.0</guava.version>
         <logstash-logback-encoder.version>5.3</logstash-logback-encoder.version>
         <transportation-service.version>1.3.0-SNAPSHOT</transportation-service.version>
-        <routing-camunda-service.version>${project.version}</routing-camunda-service.version>
     </properties>
-
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <properties>
-                <environment>:dev</environment>
-            </properties>
-        </profile>
-        <profile>
-            <id>production</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <environment>:production</environment>
-            </properties>
-        </profile>
-    </profiles>
 
     <issueManagement>
         <system>Github</system>
@@ -233,6 +216,24 @@
         </plugins>
     </reporting>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <environment>:dev</environment>
+            </properties>
+        </profile>
+        <profile>
+            <id>production</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <environment>:production</environment>
+            </properties>
+        </profile>
+    </profiles>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -251,11 +252,6 @@
                 <artifactId>org.openwms.tms.transportation</artifactId>
                 <version>${transportation-service.version}</version>
                 <classifier>client</classifier>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.tms.routing.camunda</artifactId>
-                <version>${routing-camunda-service.version}</version>
             </dependency>
 
             <dependency>
@@ -283,6 +279,11 @@
                 <version>${ameba-cloud.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-jsr223</artifactId>
+                <version>${groovy-jsr223.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>net.logstash.logback</groupId>
                 <artifactId>logstash-logback-encoder</artifactId>
                 <version>${logstash-logback-encoder.version}</version>
@@ -291,6 +292,35 @@
                 <groupId>org.jolokia</groupId>
                 <artifactId>jolokia-core</artifactId>
             </dependency>
+
+            <!-- Flowable -->
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-spring-boot-starter</artifactId>
+                <version>${flowable.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-spring-boot-starter-dmn</artifactId>
+                <version>${flowable.version}</version>
+            </dependency>
+
+            <!-- Camunda -->
+            <dependency>
+                <groupId>org.camunda.bpm</groupId>
+                <artifactId>camunda-bom</artifactId>
+                <version>${camunda.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.camunda.bpm.dmn</groupId>
+                <artifactId>camunda-engine-dmn-bom</artifactId>
+                <version>${camunda.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <dependency>
                 <groupId>net.sf.dozer</groupId>
                 <artifactId>dozer</artifactId>
@@ -405,6 +435,40 @@
         <dependency>
             <groupId>org.springframework.retry</groupId>
             <artifactId>spring-retry</artifactId>
+        </dependency>
+
+        <!-- Workflow -->
+        <dependency>
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-engine-spring</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-lang</groupId>
+                    <artifactId>commons-lang</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.camunda.bpm.springboot</groupId>
+            <artifactId>camunda-bpm-spring-boot-starter</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.camunda.bpm.dmn</groupId>
+            <artifactId>camunda-engine-dmn</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-spring-boot-starter-dmn</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-jsr223</artifactId>
         </dependency>
 
         <!-- 3rd party dependencies -->
