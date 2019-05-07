@@ -24,6 +24,9 @@ camunda:
   bpm:
     auto-deployment-enabled: false
     enabled: false
+    database:
+      schema-name: camunda
+      table-prefix: camunda.
 
 feign:
   httpclient:
@@ -83,6 +86,11 @@ hystrix:
             timeoutInMilliseconds: 5000
 flowable:
   process-definition-location-prefix: classpath*:/flowable/processes/
+  dmn:
+    resource-location: classpath*:/flowable/dmn/
+  database-schema: flowable
+  database-schema-update: false
+
 ---
 spring:
   profiles: DEMO
