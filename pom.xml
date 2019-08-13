@@ -18,7 +18,7 @@
         <ameba-cloud.version>2.0</ameba-cloud.version>
         <core.version>1.4.0-SNAPSHOT</core.version>
         <common-service.version>1.3.0-SNAPSHOT</common-service.version>
-        <feign-httpclient.version>9.5.1</feign-httpclient.version>
+        <feign-httpclient.version>10.3.0</feign-httpclient.version>
         <flowable.version>6.4.1</flowable.version>
         <guava.version>19.0</guava.version>
         <logstash-logback-encoder.version>5.3</logstash-logback-encoder.version>
