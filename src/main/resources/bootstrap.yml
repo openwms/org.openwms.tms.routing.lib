@@ -3,10 +3,11 @@ spring:
     name: routing-service
   cloud:
     config:
-      fail-fast: true # true means retry
       discovery:
-        enabled: true
+        enabled: false
         service-id: openwms-config
+      enabled: false
+      fail-fast: true # true means retry
       retry:
         max-attempts: 120
   security:
@@ -19,6 +20,10 @@ spring:
     static-path-pattern: /ui/**
   jpa:
     database: h2
+    show-sql: false
+    open-in-view: false
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
 
 camunda:
   bpm:
@@ -53,14 +58,6 @@ owms:
 server:
   port: ${PORT:8130}
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-logging:
-  file: "/tmp/owms/BOOT-TMS-Routing.log"
-
 eureka:
   client:
     healthcheck:
@@ -69,21 +66,28 @@ eureka:
     service-url:
       defaultZone: ${owms.eureka.zone}  # Must be camelCase
   instance:
+    hostname: ${owms.srv.hostname}
+    secure-port-enabled: false
+    non-secure-port-enabled: true
     metadata-map:
       username: ${spring.security.user.name}
       password: ${spring.security.user.password}
       protocol: ${owms.srv.protocol}
       zone: ${owms.eureka.zone}
       config-protocol: http # The protocol used to access the config server
-    hostname: ${owms.srv.hostname}
 
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 5000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    rabbit:
+      enabled: false
+
+logging:
+  file: "/tmp/owms/BOOT-TMS-Routing.log"
+
 flowable:
   process-definition-location-prefix: classpath*:/flowable/processes/
   dmn:
@@ -156,6 +160,9 @@ spring:
     banner-mode: "OFF"
   cloud:
     config:
+      discovery:
+        enabled: true
+      enabled: true
       headers:
         protocol: ${owms.cfgsrv.protocol:https}
 
@@ -173,3 +180,21 @@ eureka:
     homePageUrl: ${owms.srv.protocol}://${owms.srv.hostname}:${server.port}/actuator/
     metadata-map:
       config-protocol: ${owms.cfgsrv.protocol:https}
+
+---
+spring:
+  profiles: ASYNCHRONOUS
+
+management:
+  health:
+    rabbit:
+      enabled: true
+
+---
+spring:
+  profiles: TEST
+  cloud:
+    config:
+      fail-fast: false
+  main:
+    banner-mode: "off"
