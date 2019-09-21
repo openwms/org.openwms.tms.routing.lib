@@ -12,39 +12,23 @@
     <artifactId>org.openwms.tms.routing</artifactId>
     <version>1.2.0-SNAPSHOT</version>
     <name>OpenWMS.org TMS: Routing Services</name>
-    <url>https://www.interface21.io/docs/tms/routing/index.html</url>
+    <url>https://openwms.github.io/org.openwms.tms.routing/index.html</url>
 
     <properties>
         <ameba-cloud.version>2.0</ameba-cloud.version>
+        <camunda.version>7.10.0</camunda.version>
+        <common-service.version>1.4.0-SNAPSHOT</common-service.version>
         <core.version>1.4.0-SNAPSHOT</core.version>
-        <common-service.version>1.3.0-SNAPSHOT</common-service.version>
         <feign-httpclient.version>9.5.1</feign-httpclient.version>
         <flowable.version>6.4.1</flowable.version>
+        <groovy-jsr223.version>2.4.7</groovy-jsr223.version>
         <guava.version>19.0</guava.version>
         <logstash-logback-encoder.version>5.3</logstash-logback-encoder.version>
         <transportation-service.version>1.3.0-SNAPSHOT</transportation-service.version>
     </properties>
 
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <properties>
-                <environment>:dev</environment>
-            </properties>
-        </profile>
-        <profile>
-            <id>production</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <environment>:production</environment>
-            </properties>
-        </profile>
-    </profiles>
-
     <issueManagement>
-        <system>Github</system>
+        <system>github</system>
         <url>https://github.com/openwms/org.openwms.tms.routing/issues</url>
     </issueManagement>
 
@@ -66,6 +50,12 @@
         </site>
     </distributionManagement>
 
+    <scm>
+        <url>https://github.com/openwms/org.openwms.tms.routing</url>
+        <connection>scm:git:https://${scmuser}github.com/openwms/org.openwms.tms.routing.git</connection>
+        <developerConnection>scm:git:https://${scmuser}github.com/openwms/org.openwms.tms.routing.git</developerConnection>
+    </scm>
+
     <developers>
         <developer>
             <id>scherrer</id>
@@ -84,12 +74,6 @@
         </developer>
     </developers>
 
-    <scm>
-        <url>https://github.com/openwms/org.openwms.tms.routing</url>
-        <connection>scm:git:git://github.com/openwms/org.openwms.tms.routing.git</connection>
-        <developerConnection>scm:git:git@github.com:openwms/org.openwms.tms.routing.git</developerConnection>
-    </scm>
-
     <ciManagement>
         <system>travis</system>
         <url>https://travis-ci.com/openwms/org.openwms.tms.routing</url>
@@ -102,6 +86,26 @@
             </notifier>
         </notifiers>
     </ciManagement>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>index</report>
+                            <report>summary</report>
+                            <report>team</report>
+                            <report>issue-management</report>
+                            <report>ci-management</report>
+                            <report>scm</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <build>
         <finalName>openwms-tms-routing</finalName>
@@ -127,30 +131,9 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
-                <inherited>false</inherited>
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-ui</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.outputDirectory}/META-INF/resources</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src/main/ui/build</directory>
-                                    <includes>
-                                        <include>**</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>com.github.eirslett</groupId>
@@ -212,25 +195,23 @@
         </pluginManagement>
     </build>
 
-    <reporting>
-        <plugins>
-            <plugin>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>index</report>
-                            <report>summary</report>
-                            <report>project-team</report>
-                            <report>issue-tracking</report>
-                            <report>cim</report>
-                            <report>scm</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-        </plugins>
-    </reporting>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <environment>:dev</environment>
+            </properties>
+        </profile>
+        <profile>
+            <id>production</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <environment>:production</environment>
+            </properties>
+        </profile>
+    </profiles>
 
     <dependencyManagement>
         <dependencies>
@@ -277,6 +258,11 @@
                 <version>${ameba-cloud.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-jsr223</artifactId>
+                <version>${groovy-jsr223.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>net.logstash.logback</groupId>
                 <artifactId>logstash-logback-encoder</artifactId>
                 <version>${logstash-logback-encoder.version}</version>
@@ -285,6 +271,8 @@
                 <groupId>org.jolokia</groupId>
                 <artifactId>jolokia-core</artifactId>
             </dependency>
+
+            <!-- Flowable -->
             <dependency>
                 <groupId>org.flowable</groupId>
                 <artifactId>flowable-spring-boot-starter</artifactId>
@@ -295,6 +283,23 @@
                 <artifactId>flowable-spring-boot-starter-dmn</artifactId>
                 <version>${flowable.version}</version>
             </dependency>
+
+            <!-- Camunda -->
+            <dependency>
+                <groupId>org.camunda.bpm</groupId>
+                <artifactId>camunda-bom</artifactId>
+                <version>${camunda.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.camunda.bpm.dmn</groupId>
+                <artifactId>camunda-engine-dmn-bom</artifactId>
+                <version>${camunda.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <dependency>
                 <groupId>net.sf.dozer</groupId>
                 <artifactId>dozer</artifactId>
@@ -411,12 +416,27 @@
             <artifactId>spring-retry</artifactId>
         </dependency>
 
-        <!-- 3rd party dependencies -->
+        <!-- Workflow -->
         <dependency>
-            <!-- Required by eureka-client -->
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-engine-spring</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-lang</groupId>
+                    <artifactId>commons-lang</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.camunda.bpm.springboot</groupId>
+            <artifactId>camunda-bpm-spring-boot-starter</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.camunda.bpm.dmn</groupId>
+            <artifactId>camunda-engine-dmn</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.flowable</groupId>
             <artifactId>flowable-spring-boot-starter</artifactId>
@@ -424,6 +444,17 @@
         <dependency>
             <groupId>org.flowable</groupId>
             <artifactId>flowable-spring-boot-starter-dmn</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-jsr223</artifactId>
+        </dependency>
+
+        <!-- 3rd party dependencies -->
+        <dependency>
+            <!-- Required by eureka-client -->
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -473,8 +504,44 @@
 
         <!-- Test dependencies -->
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-surefire-provider</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.interface21</groupId>
+            <artifactId>ameba-lib</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <artifactId>spring-boot-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test-autoconfigure</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -483,8 +550,28 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5-engine</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -502,5 +589,4 @@
             </releases>
         </repository>
     </repositories>
-
 </project>

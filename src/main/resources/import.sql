@@ -15,7 +15,7 @@ insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c
 insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('FGIN/0001/RGHT/0000/0000','FGAISLE1RIGHT','13',13,'566882612743',now(),now());
 insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('FGIN/0002/LIFT/0000/0000','FGAISLE2LIFT','14',14,'439489938001',now(),now());
 insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('FGIN/0002/LEFT/0000/0000','FGAISLE2LEFT','15',15,'772618669088',now(),now());
-insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('FGIN/0002/RIGHT/0000/0000','FGAISLE2RIGHT','16',16,'810673969392',now(),now());
+insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('FGIN/0002/RGHT/0000/0000','FGAISLE2RIGHT','16',16,'810673969392',now(),now());
 insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('FGIN/PICK/WORK/0001/0000','FGWORKPLACE1','17',17,'13996750119',now(),now());
 insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('FGIN/PICK/WORK/0002/0000','FGWORKPLACE2','18',18,'688928801270',now(),now());
 insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('FGIN/PICK/WORK/0003/0000','FGWORKPLACE3','19',19,'619017918169',now(),now());
@@ -29,8 +29,8 @@ insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c
 insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('MANU/0000/0000/0000/0000','FGMANUAL','27',27,'723824617125',now(),now());
 insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('INIT/0000/0000/0000/0000','ZILE','28',28,'929308769594',now(),now());
 insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('EXT_/0000/0000/0000/0000','ZILE','29',29,'645065430190',now(),now());
-insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('WE__/IPNT/0001/0000/0000','IPOINT1','30',30,'88527472578',now(),now());
-insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('WE__/IPNT/0002/0000/0000','IPOINT2','31',31,'473074688589',now(),now());
+insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('FGIN/IPNT/0001/0000/0000','IPOINT1','30',30,'88527472578',now(),now());
+insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('FGIN/IPNT/0002/0000/0000','IPOINT2','31',31,'473074688589',now(),now());
 
 -- Routes
 insert into rsrv_route (c_name,c_description,c_source_location,c_target_location,c_source_loc_group_name,c_target_loc_group_name, c_enabled, c_pk, c_ol, c_created, c_updated,c_pid) values ('REC_CONV','Cartons coming from outside to the stock.',null,'0','FGRECEIVING','', true,'10000',0,now(),now(),'709957655206');
@@ -43,6 +43,6 @@ insert into rsrv_route (c_name,c_description,c_source_location,c_target_location
 insert into rsrv_route (c_name,c_description,c_source_location,c_target_location,c_source_loc_group_name,c_target_loc_group_name, c_enabled, c_pk, c_ol, c_created, c_updated,c_pid) values ('_DEFAULT','Route All',null,null,null,null, true,'99999',0,now(),now(),'222590552091');
 
 -- Actions
-insert into rsrv_action (c_name,c_description,c_route_id,c_program_name,c_location_key,c_location_group_name,c_action_type, c_enabled, c_pk, c_ol, c_created, c_updated) values ('A0001','All without Route going to error location','99998','CP001','','ZILE','REQ_',true,'10000',0,now(),now());
-insert into rsrv_action (c_name,c_description,c_route_id,c_program_name,c_location_key,c_location_group_name,c_action_type, c_enabled, c_pk, c_ol, c_created, c_updated) values ('A0002','Handle requests coming from inbound for all routes','99999','CP002','','FGRECEIVING','REQ_',true,'10001',0,now(),now());
-insert into rsrv_action (c_name,c_description,c_route_id,c_program_name,c_location_key,c_location_group_name,c_action_type, c_enabled, c_pk, c_ol, c_created, c_updated) values ('A0003','Handle requests coming from inbound wihout route','99998','CP002','','FGRECEIVING','REQ_',true,'10002',0,now(),now());
+insert into rsrv_action (c_name,c_description,c_route_id,c_program_name,c_location_key,c_location_group_name,c_action_type,c_flex_1, c_enabled,c_pk,c_ol,c_created,c_updated,c_pid) values ('A0001','All without Route going to error location','99998','CP001','','ZILE','REQ_','FGIN/ERR_/0001/0000/0000',true,'10000',0,now(),now(),'709957655206');
+insert into rsrv_action (c_name,c_description,c_route_id,c_program_name,c_location_key,c_location_group_name,c_action_type,c_flex_1, c_enabled,c_pk,c_ol,c_created,c_updated,c_pid) values ('A0002','Handle requests coming from inbound for all routes','99999','CP001','','IPOINT','REQ_','FGIN/CONV/0001/0000/0000',true,'10001',0,now(),now(),'889085346017');
+insert into rsrv_action (c_name,c_description,c_route_id,c_program_name,c_location_key,c_location_group_name,c_action_type,c_flex_1, c_enabled,c_pk,c_ol,c_created,c_updated,c_pid) values ('A0003','Handle requests coming from inbound wihout route','99998','CP001','','IPOINT','REQ_','FGIN/CONV/0001/0000/0000',true,'10002',0,now(),now(),'920761607535');

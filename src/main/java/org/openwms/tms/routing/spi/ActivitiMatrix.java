@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing.workflow;
+package org.openwms.tms.routing.spi;
 
 import org.ameba.exception.NotFoundException;
 import org.openwms.common.comm.NoRouteException;

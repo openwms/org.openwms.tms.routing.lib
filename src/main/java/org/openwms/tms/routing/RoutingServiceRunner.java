@@ -20,6 +20,7 @@ import org.ameba.app.SolutionApp;
 import org.openwms.common.comm.CommPackage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.retry.annotation.EnableRetry;
 
 /**
  * A RoutingServiceRunner.
@@ -33,6 +34,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
                 AmebaCloudModule.class,
                 CommPackage.class
         })
+@EnableRetry
 public class RoutingServiceRunner {
 
     /**

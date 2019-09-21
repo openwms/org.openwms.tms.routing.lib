@@ -3,16 +3,23 @@ language: java
 jdk:
   - openjdk8
 
+cache:
+  directories:
+    - .autoconf
+    - $HOME/.m2
+
 services:
   - docker
+  - rabbitmq
 
 addons:
   sonarcloud:
     organization: "openwms-github"
 
 script:
-  - sonar-scanner
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+  - mvn clean package sonar:sonar -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST -Dmaven.test.error.ignore=true -Dmaven.test.failure.ignore=true -Dci.buildNumber=$TRAVIS_BUILD_NUMBER -Psonar -U
+  - mvn site scm-publish:publish-scm -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST -Denforcer.skip=true -Dscmpublish.pubScmUrl=scm:git:https://${PUSHKEY}@github.com/openwms/org.openwms.tms.routing.git -DdeveloperConnectionUrl=scm:git:https://${PUSHKEY}@github.com/openwms/org.openwms.tms.routing.git -Dci.buildNumber=$TRAVIS_BUILD_NUMBER
+  - mvn clean package -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST -Denforcer.skip=true -DskipTests=true -Dci.buildNumber=$TRAVIS_BUILD_NUMBER -Prelease,gpg
 
 after_success:
   - docker build -t openwms/org.openwms.tms.routing:latest .

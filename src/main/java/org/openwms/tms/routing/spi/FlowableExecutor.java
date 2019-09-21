@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing.workflow;
+package org.openwms.tms.routing.spi;
 
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
@@ -23,6 +23,7 @@ import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.ProgramResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -31,18 +32,19 @@ import java.util.Optional;
 import static java.lang.String.format;
 
 /**
- * A ActivitiExecutor delegates to Activiti for program execution.
+ * A FlowableExecutor delegates to Flowable for program execution.
  *
  * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
+@Profile("!CAMUNDA")
 @Component
-class ActivitiExecutor implements ProgramExecutor {
+class FlowableExecutor implements ProgramExecutor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ActivitiExecutor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FlowableExecutor.class);
     private final RuntimeService runtimeService;
     private final RepositoryService repositoryService;
 
-    ActivitiExecutor(RuntimeService runtimeService, RepositoryService repositoryService) {
+    FlowableExecutor(RuntimeService runtimeService, RepositoryService repositoryService) {
         this.runtimeService = runtimeService;
         this.repositoryService = repositoryService;
     }
@@ -57,7 +59,7 @@ class ActivitiExecutor implements ProgramExecutor {
         }
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionKey(program.getProgramKey()).active().latestVersion().singleResult();
         if (null == processDefinition) {
-            throw new IllegalStateException(format("No active process with programkey %s found", program.getProgramKey()));
+            throw new IllegalStateException(format("No active process with programkey [%s] found", program.getProgramKey()));
         }
         runtimeService.startProcessInstanceById(processDefinition.getId(), runtimeVariables);
         return Optional.empty();

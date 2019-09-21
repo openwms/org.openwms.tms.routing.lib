@@ -1,14 +1,3 @@
-eureka:
-  client:
-    healthcheck:
-      enabled: true
-
-owms:
-  partners:
-    sps01: tcpip-palett1
-    sps02: tcpip-palett2
-
----
 spring:
   profiles: ASYNCHRONOUS
 
