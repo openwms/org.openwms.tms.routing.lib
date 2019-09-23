@@ -16,6 +16,7 @@
 package org.openwms.common.comm.osip.res;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.openwms.common.comm.osip.CommConstants;
 
 import java.io.Serializable;
 
@@ -25,11 +26,11 @@ import java.io.Serializable;
  * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 public class ResponseHeader implements Serializable {
-    @JsonProperty
+    @JsonProperty(CommConstants.SENDER)
     private String sender;
-    @JsonProperty
+    @JsonProperty(CommConstants.RECEIVER)
     private String receiver;
-    @JsonProperty
+    @JsonProperty(CommConstants.SEQUENCE_NO)
     private String sequenceNo;
 
     public ResponseHeader() {

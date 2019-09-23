@@ -76,8 +76,20 @@ class AmqpResponder implements Responder {
                 .targetLocation(target)
                 .errorCode(""+in.getMsg().get(CommConstants.ERROR_CODE))
                 ;
-        String routingKey = owmsProperties.getPartner(""+in.getMsg().get(CommConstants.SENDER)).orElseThrow(() -> new IllegalConfigurationValueException(format("No partner service with name [%s] configured in property owms.driver.partners", ""+in.getMsg().get(CommConstants.SENDER))));
-        amqpTemplate.convertAndSend(exchangeName, routingKey, builder.build());
+        String routingKey = owmsProperties
+                .getPartner(""+in.getMsg().get(CommConstants.SENDER))
+                .orElseThrow(() -> new IllegalConfigurationValueException(format("No partner service with name [%s] configured in property owms.driver.partners", ""+in.getMsg().get(CommConstants.SENDER))));
+
+        amqpTemplate.convertAndSend(
+                exchangeName,
+                routingKey,
+                builder.build(),
+                m -> {
+                    m.getMessageProperties().getHeaders().put(CommConstants.SENDER, "" + in.getMsg().get(CommConstants.RECEIVER));
+                    m.getMessageProperties().getHeaders().put(CommConstants.RECEIVER, "" + in.getMsg().get(CommConstants.SENDER));
+                    return m;
+                }
+        );
     }
 
     /**
