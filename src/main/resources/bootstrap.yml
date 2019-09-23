@@ -60,8 +60,6 @@ server:
 
 eureka:
   client:
-    healthcheck:
-      enabled: true
     instance-info-replication-interval-seconds: 10 # default is 30
     service-url:
       defaultZone: ${owms.eureka.zone}  # Must be camelCase
@@ -92,8 +90,7 @@ flowable:
   process-definition-location-prefix: classpath*:/flowable/processes/
   dmn:
     resource-location: classpath*:/flowable/dmn/
-  database-schema: flowable
-  database-schema-update: false
+  database-schema-update: true
 
 ---
 spring:
