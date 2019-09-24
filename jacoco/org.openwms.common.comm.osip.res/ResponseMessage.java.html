@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResponseMessage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services</a> &gt; <a href="index.source.html" class="el_package">org.openwms.common.comm.osip.res</a> &gt; <span class="el_source">ResponseMessage.java</span></div><h1>ResponseMessage.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2018 Heiko Scherrer
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.openwms.common.comm.osip.res;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * A OSIP ResponseMessage responds to an processed {@code RequestMessage}.
+ *
+ * See https://interface21-io.gitbook.io/osip/messaging-between-layer-n-and-layer-n-1#response-telegram-res_
+ *
+ * @author &lt;a href=&quot;mailto:hscherrer@openwms.org&quot;&gt;Heiko Scherrer&lt;/a&gt;
+ */
+// ajc has a problem here with lombok
+public class ResponseMessage implements Serializable {
+
+    private ResponseHeader header;
+    private String barcode;
+    private String actualLocation;
+    private String targetLocation;
+    private String targetLocationGroup;
+    private String errorCode;
+    private Date created;
+
+<span class="nc" id="L39">    public ResponseMessage() {</span>
+<span class="nc" id="L40">    }</span>
+
+    public ResponseHeader getHeader() {
+<span class="nc" id="L43">        return header;</span>
+    }
+
+    public void setHeader(ResponseHeader header) {
+<span class="nc" id="L47">        this.header = header;</span>
+<span class="nc" id="L48">    }</span>
+
+    public String getBarcode() {
+<span class="nc" id="L51">        return barcode;</span>
+    }
+
+    public void setBarcode(String barcode) {
+<span class="nc" id="L55">        this.barcode = barcode;</span>
+<span class="nc" id="L56">    }</span>
+
+    public String getActualLocation() {
+<span class="nc" id="L59">        return actualLocation;</span>
+    }
+
+    public void setActualLocation(String actualLocation) {
+<span class="nc" id="L63">        this.actualLocation = actualLocation;</span>
+<span class="nc" id="L64">    }</span>
+
+    public String getTargetLocation() {
+<span class="nc" id="L67">        return targetLocation;</span>
+    }
+
+    public void setTargetLocation(String targetLocation) {
+<span class="nc" id="L71">        this.targetLocation = targetLocation;</span>
+<span class="nc" id="L72">    }</span>
+
+    public String getTargetLocationGroup() {
+<span class="nc" id="L75">        return targetLocationGroup;</span>
+    }
+
+    public void setTargetLocationGroup(String targetLocationGroup) {
+<span class="nc" id="L79">        this.targetLocationGroup = targetLocationGroup;</span>
+<span class="nc" id="L80">    }</span>
+
+    public String getErrorCode() {
+<span class="nc" id="L83">        return errorCode;</span>
+    }
+
+    public void setErrorCode(String errorCode) {
+<span class="nc" id="L87">        this.errorCode = errorCode;</span>
+<span class="nc" id="L88">    }</span>
+
+    public Date getCreated() {
+<span class="nc" id="L91">        return created;</span>
+    }
+
+    public void setCreated(Date created) {
+<span class="nc" id="L95">        this.created = created;</span>
+<span class="nc" id="L96">    }</span>
+
+<span class="nc" id="L98">    private ResponseMessage(Builder builder) {</span>
+<span class="nc" id="L99">        header = builder.header;</span>
+<span class="nc" id="L100">        barcode = builder.barcode;</span>
+<span class="nc" id="L101">        actualLocation = builder.actualLocation;</span>
+<span class="nc" id="L102">        targetLocation = builder.targetLocation;</span>
+<span class="nc" id="L103">        targetLocationGroup = builder.targetLocationGroup;</span>
+<span class="nc" id="L104">        errorCode = builder.errorCode;</span>
+<span class="nc" id="L105">        created = builder.created;</span>
+<span class="nc" id="L106">    }</span>
+
+    public static Builder newBuilder() {
+<span class="nc" id="L109">        return new Builder();</span>
+    }
+
+
+    public static final class Builder {
+        private ResponseHeader header;
+        private String barcode;
+        private String actualLocation;
+        private String targetLocation;
+        private String targetLocationGroup;
+        private String errorCode;
+        private Date created;
+
+        private Builder() {
+        }
+
+        public Builder header(ResponseHeader val) {
+<span class="nc" id="L126">            header = val;</span>
+<span class="nc" id="L127">            return this;</span>
+        }
+
+        public Builder barcode(String val) {
+<span class="nc" id="L131">            barcode = val;</span>
+<span class="nc" id="L132">            return this;</span>
+        }
+
+        public Builder actualLocation(String val) {
+<span class="nc" id="L136">            actualLocation = val;</span>
+<span class="nc" id="L137">            return this;</span>
+        }
+
+        public Builder targetLocation(String val) {
+<span class="nc" id="L141">            targetLocation = val;</span>
+<span class="nc" id="L142">            return this;</span>
+        }
+
+        public Builder targetLocationGroup(String val) {
+<span class="nc" id="L146">            targetLocationGroup = val;</span>
+<span class="nc" id="L147">            return this;</span>
+        }
+
+        public Builder errorCode(String val) {
+<span class="nc" id="L151">            errorCode = val;</span>
+<span class="nc" id="L152">            return this;</span>
+        }
+
+        public Builder created(Date val) {
+<span class="nc" id="L156">            created = val;</span>
+<span class="nc" id="L157">            return this;</span>
+        }
+
+        public ResponseMessage build() {
+<span class="nc bnc" id="L161" title="All 2 branches missed.">            if (created == null) {</span>
+<span class="nc" id="L162">                created = new Date();</span>
+            }
+<span class="nc" id="L164">            return new ResponseMessage(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

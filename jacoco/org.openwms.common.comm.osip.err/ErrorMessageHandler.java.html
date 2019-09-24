@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ErrorMessageHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services</a> &gt; <a href="index.source.html" class="el_package">org.openwms.common.comm.osip.err</a> &gt; <span class="el_source">ErrorMessageHandler.java</span></div><h1>ErrorMessageHandler.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2018 Heiko Scherrer
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.openwms.common.comm.osip.err;
+
+import org.ameba.exception.NotFoundException;
+import org.openwms.common.comm.osip.OSIPComponent;
+import org.openwms.common.location.api.LocationGroupApi;
+import org.openwms.common.location.api.LocationGroupVO;
+import org.openwms.tms.routing.InputContext;
+import org.openwms.tms.routing.Matrix;
+import org.openwms.tms.routing.ProgramExecutor;
+import org.openwms.tms.routing.RouteImpl;
+
+import static java.lang.String.format;
+
+/**
+ * A ErrorMessageHandler.
+ *
+ * @author &lt;a href=&quot;mailto:hscherrer@openwms.org&quot;&gt;Heiko Scherrer&lt;/a&gt;
+ */
+@OSIPComponent
+class ErrorMessageHandler {
+
+    private final LocationGroupApi locationGroupApi;
+    private final Matrix matrix;
+    private final ProgramExecutor executor;
+    private final InputContext in;
+
+    ErrorMessageHandler(LocationGroupApi locationGroupApi, Matrix matrix,
+<span class="nc" id="L43">            ProgramExecutor executor, InputContext in) {</span>
+<span class="nc" id="L44">        this.locationGroupApi = locationGroupApi;</span>
+<span class="nc" id="L45">        this.matrix = matrix;</span>
+<span class="nc" id="L46">        this.executor = executor;</span>
+<span class="nc" id="L47">        this.in = in;</span>
+<span class="nc" id="L48">    }</span>
+
+    void handle(ErrorMessageVO msg) {
+<span class="nc" id="L51">        in.clear();</span>
+<span class="nc" id="L52">        LocationGroupVO locationGroup =</span>
+                locationGroupApi
+<span class="nc" id="L54">                        .findByName(msg.getLocationGroupName())</span>
+<span class="nc" id="L55">                        .orElseThrow(() -&gt; new NotFoundException(format(&quot;LocationGroup with name [%s] does not exists!&quot;, msg.getLocationGroupName())));</span>
+<span class="nc" id="L56">        in.getMsg().putAll(msg.getAll());</span>
+<span class="nc" id="L57">        executor.execute(matrix.findBy(</span>
+<span class="nc" id="L58">                msg.getType(),</span>
+                RouteImpl.DEF_ROUTE,
+                null, locationGroup),
+<span class="nc" id="L61">                new InputContext().setMsg(msg.getAll()).getMsg()</span>
+        );
+<span class="nc" id="L63">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

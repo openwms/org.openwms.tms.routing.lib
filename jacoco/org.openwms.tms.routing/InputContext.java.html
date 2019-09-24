@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InputContext.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing</a> &gt; <span class="el_source">InputContext.java</span></div><h1>InputContext.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2018 Heiko Scherrer
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.openwms.tms.routing;
+
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+
+/**
+ * A InputContext.
+ *
+ * @author &lt;a href=&quot;mailto:hscherrer@openwms.org&quot;&gt;Heiko Scherrer&lt;/a&gt;
+ */
+<span class="nc" id="L28">public class InputContext {</span>
+
+<span class="nc" id="L30">    private InheritableThreadLocal&lt;Map&lt;String, Object&gt;&gt; msg = new InheritableThreadLocal&lt;Map&lt;String, Object&gt;&gt;() {</span>
+        @Override
+        protected Map&lt;String, Object&gt; initialValue() {
+<span class="nc" id="L33">            return new ConcurrentHashMap&lt;&gt;();</span>
+        }
+    };
+
+    public void addBeanToMsg(String name, Object bean) {
+<span class="nc" id="L38">        msg.get().put(name, bean);</span>
+<span class="nc" id="L39">    }</span>
+
+    public void clear() {
+<span class="nc" id="L42">        this.msg.get().clear();</span>
+<span class="nc" id="L43">    }</span>
+
+    public Map&lt;String, Object&gt; getMsg() {
+<span class="nc" id="L46">        return msg.get();</span>
+    }
+
+    public &lt;T&gt; Optional&lt;T&gt; get(String key, Class&lt;T&gt; routeClass) {
+<span class="nc" id="L50">        return (Optional&lt;T&gt;) Optional.ofNullable(this.msg.get().get(key));</span>
+    }
+
+    public InputContext setMsg(Map&lt;String, Object&gt; msg) {
+<span class="nc" id="L54">        this.msg.set(msg);</span>
+<span class="nc" id="L55">        return this;</span>
+    }
+
+    public Object put(String key, Object val) {
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        if (val != null) {</span>
+<span class="nc" id="L60">            this.msg.get().put(key, val);</span>
+        }
+<span class="nc" id="L62">        return val;</span>
+    }
+
+    public void putAll(Map&lt;String, Object&gt; msg) {
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (msg != null) {</span>
+<span class="nc bnc" id="L67" title="All 4 branches missed.">            this.msg.get().putAll(msg.entrySet().stream().filter(e -&gt; e.getKey() != null &amp;&amp; e.getValue() != null).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));</span>
+        }
+<span class="nc" id="L69">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
