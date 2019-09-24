@@ -39,7 +39,7 @@ import static org.junit.Assert.fail;
  * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
 @RunWith(SpringRunner.class)
-@DataJpaTest
+@DataJpaTest(showSql = false)
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "org.openwms")
 @EntityScan(basePackages = "org.openwms")
