@@ -22,9 +22,10 @@ package org.openwms.common.comm.osip;
  */
 public final class CommConstants {
 
-    public static final String SENDER = "sender";
-    public static final String RECEIVER = "receiver";
-    public static final String SEQUENCE_NO = "sequenceNo";
+    public static final String PREFIX = "osip_";
+    public static final String SENDER = PREFIX + "sender";
+    public static final String RECEIVER = PREFIX + "receiver";
+    public static final String SEQUENCE_NO = PREFIX +"sequenceno";
     public static final String ERROR_CODE = "errorCode";
     public static final String BARCODE = "barcode";
     public static final String ACTUAL_LOCATION = "actualLocation";

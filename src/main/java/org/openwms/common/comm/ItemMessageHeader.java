@@ -15,6 +15,7 @@
  */
 package org.openwms.common.comm;
 
+import org.openwms.common.comm.osip.CommConstants;
 import org.openwms.tms.routing.InputContext;
 
 import java.io.Serializable;
@@ -59,15 +60,15 @@ public class ItemMessageHeader implements Serializable {
 
     public Map<String, Object> getAll() {
         Map<String, Object> result = new HashMap<>(3);
-        result.put("sequenceNo", sequenceNo);
-        result.put("sender", sender);
-        result.put("receiver", receiver);
+        result.put(CommConstants.SEQUENCE_NO, sequenceNo);
+        result.put(CommConstants.SENDER, sender);
+        result.put(CommConstants.RECEIVER, receiver);
         return Collections.unmodifiableMap(result);
     }
 
     void addFields(InputContext in) {
-        in.addBeanToMsg("sequenceNo", sequenceNo);
-        in.addBeanToMsg("sender", sender);
-        in.addBeanToMsg("receiver", receiver);
+        in.addBeanToMsg(CommConstants.SEQUENCE_NO, sequenceNo);
+        in.addBeanToMsg(CommConstants.SENDER, sender);
+        in.addBeanToMsg(CommConstants.RECEIVER, receiver);
     }
 }
