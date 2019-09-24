@@ -32,9 +32,9 @@ addons:
 
 script:
   - if [[ ( "$TRAVIS_BRANCH" != "master" ) ]]; then mvn $MAVEN_OPTS package -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST -Dci.buildNumber=$TRAVIS_BUILD_NUMBER -U; fi
-  - if [[ ( "$TRAVIS_BRANCH" == "master" ) ]]; then mvn $MAVEN_OPTS clean package sonar:sonar -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST -Dmaven.test.error.ignore=true -Dmaven.test.failure.ignore=true -Dci.buildNumber=$TRAVIS_BUILD_NUMBER -Psonar; fi
-  - if [[ ( "$TRAVIS_BRANCH" == "master" ) ]]; then mvn $MAVEN_OPTS site scm-publish:publish-scm -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST,TESTPG -Denforcer.skip=true -Dscmpublish.pubScmUrl=scm:git:https://${PUSHKEY}@github.com/openwms/org.openwms.tms.routing.git -DdeveloperConnectionUrl=scm:git:https://${PUSHKEY}@github.com/openwms/org.openwms.tms.routing.git -Dci.buildNumber=$TRAVIS_BUILD_NUMBER -Pschemagen; fi
-  - if [[ ( "$TRAVIS_BRANCH" == "master" ) ]]; then mvn $MAVEN_OPTS clean package -Denforcer.skip=true -DskipTests=true -Dci.buildNumber=$TRAVIS_BUILD_NUMBER -Prelease,gpg; fi
+  - if [[ ( "$TRAVIS_BRANCH" == "master" ) ]]; then mvn $MAVEN_OPTS clean package sonar:sonar -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST -Dmaven.test.error.ignore=true -Dmaven.test.failure.ignore=true -Dci.buildNumber=$TRAVIS_BUILD_NUMBER -Psonar,production; fi
+  - if [[ ( "$TRAVIS_BRANCH" == "master" ) ]]; then mvn $MAVEN_OPTS site scm-publish:publish-scm -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST,TESTPG -Denforcer.skip=true -Dscmpublish.pubScmUrl=scm:git:https://${PUSHKEY}@github.com/openwms/org.openwms.tms.routing.git -DdeveloperConnectionUrl=scm:git:https://${PUSHKEY}@github.com/openwms/org.openwms.tms.routing.git -Dci.buildNumber=$TRAVIS_BUILD_NUMBER -Pschemagen,production; fi
+  - if [[ ( "$TRAVIS_BRANCH" == "master" ) ]]; then mvn $MAVEN_OPTS clean package -Denforcer.skip=true -DskipTests=true -Dci.buildNumber=$TRAVIS_BUILD_NUMBER -Prelease,gpg,production; fi
 
 after_success:
   - docker build -t openwms/org.openwms.tms.routing:latest .

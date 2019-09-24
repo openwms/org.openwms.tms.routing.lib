@@ -39,6 +39,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+import static org.openwms.tms.routing.RoutingConstants.API_ACTIONS;
+
 /**
  * A ActionResource.
  *
@@ -58,19 +60,19 @@ class ActionResource {
         this.mapper = mapper;
     }
 
-    @GetMapping("/api/actions")
+    @GetMapping(API_ACTIONS)
     public List<ActionVO> getAll() {
         return mapper.map(actionRepository.findAll(Sort.by("name")), ActionVO.class);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
-    @DeleteMapping("/api/actions/{persistentKey}")
+    @DeleteMapping(API_ACTIONS + "/{persistentKey}")
     public void delete(@PathVariable("persistentKey") String persistentKey) {
         actionRepository.findByPKey(persistentKey).ifPresent(actionRepository::delete);
     }
 
-    @PutMapping("/api/actions")
+    @PutMapping(API_ACTIONS)
     @Transactional
     public ActionVO save(@RequestBody ActionVO actionVO) {
         Action eo = actionRepository.findByPKey(actionVO.getKey()).orElseThrow(NotFoundException::new);
@@ -81,7 +83,7 @@ class ActionResource {
 
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
-    @PostMapping("/api/actions")
+    @PostMapping(API_ACTIONS)
     public void create(@RequestBody ActionVO actionVO, HttpServletRequest req, HttpServletResponse resp) {
         Action action = mapper.map(actionVO, Action.class);
         action.setRoute(routeRepository.findByRouteId(actionVO.getRoute()).orElseThrow(NotFoundException::new));

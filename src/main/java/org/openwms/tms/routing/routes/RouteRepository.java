@@ -35,5 +35,7 @@ public interface RouteRepository extends JpaRepository<RouteImpl, Long> {
 
     Optional<RouteImpl> findBySourceLocation_LocationIdAndTargetLocationGroupNameAndEnabled(String sourceLocation, String targetLocationGroupName, boolean enabled);
 
+    Optional<RouteImpl> findBySourceLocationGroupNameAndTargetLocation_LocationIdAndEnabled(String sourceLocationGroupName, String targetLocation, boolean enabled);
+
     Optional<RouteImpl> findBySourceLocationGroupNameAndTargetLocationGroupNameAndEnabled(String sourceLocationGroupName, String targetLocationGroupName, boolean enabled);
 }
