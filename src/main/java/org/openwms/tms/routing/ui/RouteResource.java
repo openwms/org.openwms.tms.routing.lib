@@ -38,6 +38,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+import static org.openwms.tms.routing.RoutingConstants.API_ROUTES;
+
+
 /**
  * A RouteResource.
  *
@@ -57,19 +60,19 @@ class RouteResource {
         this.mapper = mapper;
     }
 
-    @GetMapping("/api/routes")
+    @GetMapping(API_ROUTES)
     public List<RouteVO> getAll() {
         return mapper.map(routeRepository.findAll(Sort.by("pk")), RouteVO.class);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
-    @DeleteMapping("/api/routes/{persistentKey}")
+    @DeleteMapping(API_ROUTES + "/{persistentKey}")
     public void delete(@PathVariable("persistentKey") String persistentKey) {
         routeRepository.findByPKey(persistentKey).ifPresent(routeRepository::delete);
     }
 
-    @PutMapping("/api/routes")
+    @PutMapping(API_ROUTES)
     @Transactional
     public RouteVO save(@RequestBody RouteVO routeVO) {
         RouteImpl eo = routeRepository.findByPKey(routeVO.getKey()).orElseThrow(NotFoundException::new);
@@ -84,7 +87,7 @@ class RouteResource {
 
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
-    @PostMapping("/api/routes")
+    @PostMapping(API_ROUTES)
     public void create(@RequestBody RouteVO routeVO, HttpServletRequest req, HttpServletResponse resp) {
         RouteImpl route = mapper.map(routeVO, RouteImpl.class);
         if (routeVO.hasSourceLocationName()) {

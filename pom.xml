@@ -199,6 +199,12 @@
                 <environment>:production</environment>
             </properties>
         </profile>
+        <profile>
+            <id>schemagen</id>
+            <properties>
+                <surefireArgs>-Dspring.profiles.active=ASYNCHRONOUS,TEST,TESTPG</surefireArgs>
+            </properties>
+        </profile>
     </profiles>
 
     <dependencyManagement>
