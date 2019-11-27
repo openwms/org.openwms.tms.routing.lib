@@ -127,7 +127,7 @@ class ActivitiMatrix implements Matrix {
                 cp = findInLocationGroupHierarchy(actionType, route, locationGroupApi.findByName(locationGroup.getParent()).orElseThrow(NotFoundException::new));
 
             } else if (locationGroup.hasLink("_parent")) {
-                cp = findInLocationGroupHierarchy(actionType, route, findLocationGroup(locationGroup.getLink("_parent")));
+                cp = findInLocationGroupHierarchy(actionType, route, findLocationGroup(locationGroup.getRequiredLink("_parent")));
 
             }
         }

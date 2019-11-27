@@ -69,13 +69,13 @@ class RouteResource {
     @Transactional
     @DeleteMapping(API_ROUTES + "/{persistentKey}")
     public void delete(@PathVariable("persistentKey") String persistentKey) {
-        routeRepository.findByPKey(persistentKey).ifPresent(routeRepository::delete);
+        routeRepository.findBypKey(persistentKey).ifPresent(routeRepository::delete);
     }
 
     @PutMapping(API_ROUTES)
     @Transactional
     public RouteVO save(@RequestBody RouteVO routeVO) {
-        RouteImpl eo = routeRepository.findByPKey(routeVO.getKey()).orElseThrow(NotFoundException::new);
+        RouteImpl eo = routeRepository.findBypKey(routeVO.getKey()).orElseThrow(NotFoundException::new);
         RouteImpl route = mapper.mapFromTo(routeVO, eo);
 
         route.setSourceLocation(routeVO.hasSourceLocationName() ? locationRepository.findByLocationId(routeVO.getSourceLocationName()).orElseThrow(NotFoundException::new) : null);

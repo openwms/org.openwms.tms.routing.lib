@@ -24,7 +24,8 @@ spring:
     open-in-view: false
   jackson:
     date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
-
+  main:
+    allow-bean-definition-overriding: true
 camunda:
   bpm:
     auto-deployment-enabled: false
@@ -182,6 +183,17 @@ eureka:
 spring:
   profiles: ASYNCHRONOUS
 
+owms:
+  requests:
+    tms:
+      to:
+        exchange-name: tms.requests
+    routing:
+      to:
+        exchange-name: routing.requests
+        queue-name: routing-requests-queue
+        routing-key: "*.*.*"
+
 management:
   health:
     rabbit:
@@ -208,6 +220,6 @@ spring:
       hibernate.default_schema: public
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql:testdb
-    username: karl
-    password: karl
+    url: jdbc:postgresql:RBDB
+    username: KARL
+    password: KARL

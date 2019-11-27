@@ -29,6 +29,5 @@ import org.springframework.context.annotation.Profile;
 @Profile("!INMEM")
 @Configuration
 @EnableDiscoveryClient
-@EnableCircuitBreaker
 public class RoutingStandaloneConfiguration {
 }

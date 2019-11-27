@@ -69,13 +69,13 @@ class ActionResource {
     @Transactional
     @DeleteMapping(API_ACTIONS + "/{persistentKey}")
     public void delete(@PathVariable("persistentKey") String persistentKey) {
-        actionRepository.findByPKey(persistentKey).ifPresent(actionRepository::delete);
+        actionRepository.findBypKey(persistentKey).ifPresent(actionRepository::delete);
     }
 
     @PutMapping(API_ACTIONS)
     @Transactional
     public ActionVO save(@RequestBody ActionVO actionVO) {
-        Action eo = actionRepository.findByPKey(actionVO.getKey()).orElseThrow(NotFoundException::new);
+        Action eo = actionRepository.findBypKey(actionVO.getKey()).orElseThrow(NotFoundException::new);
         Action action = mapper.mapFromTo(actionVO, eo);
         action.setRoute(routeRepository.findByRouteId(actionVO.getRoute()).orElseThrow(NotFoundException::new));
         return mapper.map(actionRepository.save(action), ActionVO.class);

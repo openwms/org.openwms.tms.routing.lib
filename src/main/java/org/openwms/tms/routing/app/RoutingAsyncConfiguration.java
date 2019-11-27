@@ -83,7 +83,7 @@ public class RoutingAsyncConfiguration {
     }
 
     @Bean
-    TopicExchange tmsRequestsExchange(@Value("${owms.requests.routing.to.exchange-name}") String exchangeName) {
+    TopicExchange tmsRequestsExchange(@Value("${owms.requests.tms.to.exchange-name}") String exchangeName) {
         return new TopicExchange(exchangeName, true, false);
     }
 
