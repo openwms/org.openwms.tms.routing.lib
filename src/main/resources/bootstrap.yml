@@ -85,7 +85,9 @@ management:
       enabled: false
 
 logging:
-  file: "/tmp/owms/BOOT-TMS-Routing.log"
+  file:
+    name: BOOT-TMS-Routing.log
+    path: "/tmp/owms"
 
 flowable:
   process-definition-location-prefix: classpath*:/flowable/processes/
@@ -105,6 +107,16 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        hbm2ddl:
+          import_files: import-DEMO.sql
+
+camunda:
+  bpm:
+    database:
+      schema-name:
+      table-prefix:
 
 ---
 spring:
