@@ -8,7 +8,6 @@ owms:
     sps01: osip.res.1
     sps02: osip.res.2
     sps03: osip.res.3
-
 ---
 spring:
   profiles: ASYNCHRONOUS
