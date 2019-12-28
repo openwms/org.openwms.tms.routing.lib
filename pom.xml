@@ -66,6 +66,7 @@
     <properties>
         <ameba-cloud.version>2.0</ameba-cloud.version>
         <camunda.version>7.10.0</camunda.version>
+        <camunda-bpm-spring-boot-starter.version>3.4.0-alpha2</camunda-bpm-spring-boot-starter.version>
         <common-service.version>1.5.0</common-service.version>
         <core.version>1.6.0</core.version>
         <flowable.version>6.4.1</flowable.version>
@@ -223,6 +224,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.camunda.bpm.springboot</groupId>
+                <artifactId>camunda-bpm-spring-boot-starter</artifactId>
+                <version>${camunda-bpm-spring-boot-starter.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>net.sf.dozer</groupId>
@@ -366,7 +372,6 @@
         <dependency>
             <groupId>org.camunda.bpm.springboot</groupId>
             <artifactId>camunda-bpm-spring-boot-starter</artifactId>
-            <version>3.2.0</version>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm.dmn</groupId>
@@ -387,6 +392,10 @@
         </dependency>
 
         <!-- 3rd party dependencies -->
+        <dependency>
+            <groupId>io.interface21</groupId>
+            <artifactId>ameba-lib</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.interface21</groupId>
             <artifactId>ameba-cloud</artifactId>
