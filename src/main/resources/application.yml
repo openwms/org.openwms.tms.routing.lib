@@ -44,3 +44,20 @@ owms:
         queue-name: tms-rtng-updx
         exchange-name: osip
         routing-key-in: osip.updx.ss
+  routing:
+    serialization: json
+  commands:
+    common:
+      tu:
+        exchange-name: common.tu.commands
+        routing-key: common.tu.command.asNextLocation
+  requests:
+    routing:
+      to:
+        queue-name: routing-requests-queue
+        routing-key: request.state.change
+        exchange-name: tms.requests
+
+health:
+  config:
+    enabled: true

@@ -31,10 +31,9 @@ import java.util.Optional;
 import static java.lang.String.format;
 
 /**
- * A RouteServiceImpl is a transactional Spring managed bean that operated on
- * {@code Route}s.
+ * A RouteServiceImpl is a transactional Spring managed bean that operated on {@code Route}s.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @TxService("routing")
 class RouteServiceImpl implements RouteService {
@@ -45,7 +44,12 @@ class RouteServiceImpl implements RouteService {
     private final RouteDetailsRepository routeDetailsRepository;
     private final InputContext in;
 
-    RouteServiceImpl(@Autowired(required = false) Responder responder, RouteRepository routeRepository, RouteDetailsRepository routeDetailsRepository, InputContext in) {
+    RouteServiceImpl(
+            @Autowired(required = false) Responder responder,
+            RouteRepository routeRepository,
+            RouteDetailsRepository routeDetailsRepository,
+            InputContext in
+    ) {
         this.responder = responder;
         this.routeRepository = routeRepository;
         this.routeDetailsRepository = routeDetailsRepository;

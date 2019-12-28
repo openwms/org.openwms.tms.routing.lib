@@ -36,7 +36,7 @@ import static java.lang.String.format;
  *
  * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
-@Profile("!CAMUNDA")
+@Profile("FLOWABLE")
 @Component
 class FlowableExecutor implements ProgramExecutor {
 

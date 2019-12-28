@@ -28,7 +28,7 @@ import java.util.Optional;
  */
 public interface ActionRepository extends JpaRepository<Action, Long> {
 
-    Optional<Action> findByPKey(String pKey);
+    Optional<Action> findBypKey(String pKey);
 
     @Query("select a from Action a where a.actionType = :actionType and a.route.routeId = :routeId and a.locationKey is not null and a.locationKey = :locationKey and a.enabled = true")
     Optional<Action> findByActionTypeAndRouteAndLocationKey(@Param("actionType") String actionType, @Param("routeId") String routeId, @Param("locationKey") String locationKey);

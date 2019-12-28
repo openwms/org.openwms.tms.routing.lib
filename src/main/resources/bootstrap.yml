@@ -16,6 +16,8 @@ spring:
       name: user
   liquibase:
     enabled: false
+  main:
+    allow-bean-definition-overriding: true
   mvc:
     static-path-pattern: /ui/**
   jpa:
@@ -24,14 +26,15 @@ spring:
     open-in-view: false
   jackson:
     date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+  zipkin:
+    sender:
+      type: web
 
 camunda:
   bpm:
-    auto-deployment-enabled: false
-    enabled: false
-    database:
-      schema-name: camunda
-      table-prefix: camunda.
+    auto-deployment-enabled: true
+    enabled: true
+    deployment-resource-pattern: classpath*:**/camunda/processes/*.bpmn20.xml,classpath*:**/camunda/processes/*.bpmn,classpath*:**/camunda/processes/*.dmn11.xml,classpath*:**/camunda/processes/*.dmn
 
 feign:
   httpclient:
@@ -45,18 +48,22 @@ owms:
   eureka:
     url: http://user:sa@localhost:8761
     zone: ${owms.eureka.url}/eureka/
-  driver:
-    osip:
-      enabled: false
-  routing:
-    serialization: json
-    common-service-name: common-service
   srv:
     protocol: http
     hostname: localhost
 
 server:
   port: ${PORT:8130}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+logging:
+  file:
+    name: BOOT-TMS-Routing.log
+    path: "/tmp/owms"
 
 eureka:
   client:
@@ -74,40 +81,6 @@ eureka:
       zone: ${owms.eureka.zone}
       config-protocol: http # The protocol used to access the config server
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  health:
-    rabbit:
-      enabled: false
-
-logging:
-  file: "/tmp/owms/BOOT-TMS-Routing.log"
-
-flowable:
-  process-definition-location-prefix: classpath*:/flowable/processes/
-  dmn:
-    resource-location: classpath*:/flowable/dmn/
-  database-schema-update: true
-
----
-spring:
-  profiles: DEMO
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: true
-  jpa:
-    generate-ddl: true
-    hibernate:
-      ddl-auto: update
-
----
-spring:
-  profiles: CAMUNDA
 flowable:
   app:
     enabled: false
@@ -127,6 +100,7 @@ flowable:
   dmn:
     enabled: false
     deploy-resources: false
+    resource-location: classpath*:/flowable/dmn/
     servlet:
       load-on-startup: 0
     history-enabled: false
@@ -139,16 +113,69 @@ flowable:
     enabled: false
     servlet:
       load-on-startup: 0
+  process-definition-location-prefix: classpath*:/flowable/processes/
   process:
     enabled: false
     servlet:
       load-on-startup: 0
   jpa-enabled: false
+
+---
+spring:
+  profiles: DEMO
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
+---
+spring:
+  profiles: FLOWABLE
+flowable:
+  app:
+    enabled: true
+    deploy-resources: true
+    servlet:
+      load-on-startup: 1
+  cmmn:
+    enabled: true
+    deploy-resources: true
+    servlet:
+      load-on-startup: 1
+  content:
+    enabled: true
+    servlet:
+      load-on-startup: 1
+  database-schema-update: true
+  dmn:
+    enabled: true
+    deploy-resources: true
+    servlet:
+      load-on-startup: 1
+    history-enabled: true
+  form:
+    enabled: true
+    deploy-resources: true
+    servlet:
+      load-on-startup: 1
+  idm:
+    enabled: true
+    servlet:
+      load-on-startup: 1
+  process:
+    enabled: true
+    servlet:
+      load-on-startup: 1
+  jpa-enabled: true
 camunda:
   bpm:
-    auto-deployment-enabled: true
-    enabled: true
-    deployment-resource-pattern: classpath*:**/camunda/processes/*.bpmn20.xml,classpath*:**/camunda/processes/*.bpmn,classpath*:**/camunda/processes/*.dmn11.xml,classpath*:**/camunda/processes/*.dmn
+    auto-deployment-enabled: false
+    enabled: false
 
 ---
 spring:

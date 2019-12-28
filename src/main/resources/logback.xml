@@ -15,6 +15,7 @@
     <logger name="org.hibernate.type" level="OFF" />
     <logger name="org.springframework" level="WARN" />
     <logger name="liquibase" level="WARN" />
+    <logger name="org.camunda" level="INFO" />
     <logger name="org.flowable" level="WARN" />
     <logger name="org.openwms" level="DEBUG" />
     <logger name="org.openwms.common.comm.res.ResSenderApi" level="OFF" />

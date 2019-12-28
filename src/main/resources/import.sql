@@ -1,4 +1,4 @@
-CREATE SCHEMA flowable AUTHORIZATION sa;
+--CREATE SCHEMA flowable AUTHORIZATION sa;
 
 -- Locations
 insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('FGIN/CONV/0001/0000/0000','FGCONVEYOR','0',0,'316869541651',now(),now());

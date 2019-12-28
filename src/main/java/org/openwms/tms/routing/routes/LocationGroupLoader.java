@@ -40,7 +40,7 @@ class LocationGroupLoader {
     /**
      * This public method is surrounded with a retry advice in order to retry the remote operation in case of an error.
      *
-     * @return All LocationGrooups as List implementation
+     * @return All LocationGroups as List implementation
      */
     @Retryable(backoff = @Backoff(delay = 5000L))
     public Collection<LocationGroupVO> loadLocGroups() {
