@@ -73,7 +73,7 @@ public class ItemMessageHandler {
 <span class="nc" id="L73">                .findLocationByCoordinate(msg.getActualLocation())</span>
 <span class="nc" id="L74">                .orElseThrow(() -&gt; new NotFoundException(format(&quot;Location with coordinate [%s] does not exist&quot;, msg.getActualLocation())));</span>
 
-<span class="nc" id="L76">        LocationGroupVO locationGroup =</span>
+        LocationGroupVO locationGroup =
 <span class="nc bnc" id="L77" title="All 2 branches missed.">                msg.hasLocationGroupName() ?</span>
 <span class="nc" id="L78">                        locationGroupApi.findByName(msg.getLocationGroupName())</span>
 <span class="nc" id="L79">                                .orElseThrow(() -&gt; new NotFoundException(format(&quot;LocationGroup with name [%s] does not exist&quot;, msg.getLocationGroupName()))) :</span>
@@ -97,4 +97,4 @@ public class ItemMessageHandler {
 <span class="nc" id="L97">        executor.execute(action, in.getMsg());</span>
 <span class="nc" id="L98">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -127,7 +127,7 @@ class ActivitiMatrix implements Matrix {
 <span class="nc" id="L127">                cp = findInLocationGroupHierarchy(actionType, route, locationGroupApi.findByName(locationGroup.getParent()).orElseThrow(NotFoundException::new));</span>
 
 <span class="nc bnc" id="L129" title="All 2 branches missed.">            } else if (locationGroup.hasLink(&quot;_parent&quot;)) {</span>
-<span class="nc" id="L130">                cp = findInLocationGroupHierarchy(actionType, route, findLocationGroup(locationGroup.getLink(&quot;_parent&quot;)));</span>
+<span class="nc" id="L130">                cp = findInLocationGroupHierarchy(actionType, route, findLocationGroup(locationGroup.getRequiredLink(&quot;_parent&quot;)));</span>
 
             }
         }
@@ -147,4 +147,4 @@ class ActivitiMatrix implements Matrix {
 <span class="nc" id="L147">        return lg.getBody();</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

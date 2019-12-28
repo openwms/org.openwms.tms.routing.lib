@@ -83,7 +83,7 @@ import static org.ameba.LoggingCategories.BOOT;
     }
 
     @Bean
-    TopicExchange tmsRequestsExchange(@Value(&quot;${owms.requests.routing.to.exchange-name}&quot;) String exchangeName) {
+    TopicExchange tmsRequestsExchange(@Value(&quot;${owms.requests.tms.to.exchange-name}&quot;) String exchangeName) {
 <span class="nc" id="L87">        return new TopicExchange(exchangeName, true, false);</span>
     }
 
@@ -100,4 +100,4 @@ import static org.ameba.LoggingCategories.BOOT;
 <span class="nc" id="L100">                .with(routingKey);</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

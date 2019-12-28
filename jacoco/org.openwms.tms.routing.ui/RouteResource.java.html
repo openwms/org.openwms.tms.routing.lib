@@ -69,13 +69,13 @@ class RouteResource {
     @Transactional
     @DeleteMapping(API_ROUTES + &quot;/{persistentKey}&quot;)
     public void delete(@PathVariable(&quot;persistentKey&quot;) String persistentKey) {
-<span class="nc" id="L72">        routeRepository.findByPKey(persistentKey).ifPresent(routeRepository::delete);</span>
+<span class="nc" id="L72">        routeRepository.findBypKey(persistentKey).ifPresent(routeRepository::delete);</span>
 <span class="nc" id="L73">    }</span>
 
     @PutMapping(API_ROUTES)
     @Transactional
     public RouteVO save(@RequestBody RouteVO routeVO) {
-<span class="nc" id="L78">        RouteImpl eo = routeRepository.findByPKey(routeVO.getKey()).orElseThrow(NotFoundException::new);</span>
+<span class="nc" id="L78">        RouteImpl eo = routeRepository.findBypKey(routeVO.getKey()).orElseThrow(NotFoundException::new);</span>
 <span class="nc" id="L79">        RouteImpl route = mapper.mapFromTo(routeVO, eo);</span>
 
 <span class="nc bnc" id="L81" title="All 2 branches missed.">        route.setSourceLocation(routeVO.hasSourceLocationName() ? locationRepository.findByLocationId(routeVO.getSourceLocationName()).orElseThrow(NotFoundException::new) : null);</span>
@@ -107,4 +107,4 @@ class RouteResource {
 <span class="nc" id="L107">        return template.expand(objId).toASCIIString();</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

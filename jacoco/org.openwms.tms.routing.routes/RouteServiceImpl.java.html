@@ -31,65 +31,69 @@ import java.util.Optional;
 import static java.lang.String.format;
 
 /**
- * A RouteServiceImpl is a transactional Spring managed bean that operated on
- * {@code Route}s.
+ * A RouteServiceImpl is a transactional Spring managed bean that operated on {@code Route}s.
  *
- * @author &lt;a href=&quot;mailto:hscherrer@openwms.org&quot;&gt;Heiko Scherrer&lt;/a&gt;
+ * @author Heiko Scherrer
  */
 @TxService(&quot;routing&quot;)
 class RouteServiceImpl implements RouteService {
 
-<span class="nc" id="L42">    private static final Logger LOGGER = LoggerFactory.getLogger(RouteServiceImpl.class);</span>
+<span class="nc" id="L41">    private static final Logger LOGGER = LoggerFactory.getLogger(RouteServiceImpl.class);</span>
     private final Responder responder;
     private final RouteRepository routeRepository;
     private final RouteDetailsRepository routeDetailsRepository;
     private final InputContext in;
 
-<span class="nc" id="L48">    RouteServiceImpl(@Autowired(required = false) Responder responder, RouteRepository routeRepository, RouteDetailsRepository routeDetailsRepository, InputContext in) {</span>
-<span class="nc" id="L49">        this.responder = responder;</span>
-<span class="nc" id="L50">        this.routeRepository = routeRepository;</span>
-<span class="nc" id="L51">        this.routeDetailsRepository = routeDetailsRepository;</span>
-<span class="nc" id="L52">        this.in = in;</span>
-<span class="nc" id="L53">    }</span>
+    RouteServiceImpl(
+            @Autowired(required = false) Responder responder,
+            RouteRepository routeRepository,
+            RouteDetailsRepository routeDetailsRepository,
+            InputContext in
+<span class="nc" id="L52">    ) {</span>
+<span class="nc" id="L53">        this.responder = responder;</span>
+<span class="nc" id="L54">        this.routeRepository = routeRepository;</span>
+<span class="nc" id="L55">        this.routeDetailsRepository = routeDetailsRepository;</span>
+<span class="nc" id="L56">        this.in = in;</span>
+<span class="nc" id="L57">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void sendToNextLocation() {
-<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (responder == null) {</span>
-<span class="nc" id="L61">            LOGGER.warn(&quot;Please provide a bean instance of Responder. Default implementations are disabled. If property 'owms.osip.enabled' is set to false a custom Responder is expected&quot;);</span>
-<span class="nc" id="L62">            return;</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (responder == null) {</span>
+<span class="nc" id="L65">            LOGGER.warn(&quot;Please provide a bean instance of Responder. Default implementations are disabled. If property 'owms.osip.enabled' is set to false a custom Responder is expected&quot;);</span>
+<span class="nc" id="L66">            return;</span>
         }
-<span class="nc" id="L64">        Route route = in.get(&quot;route&quot;, Route.class).orElseThrow(() -&gt; new NoRouteException(&quot;No Route information in current context, can't load the next Location from the RouteDetails&quot;));</span>
-<span class="nc" id="L65">        String actualLocation = in.get(&quot;actualLocation&quot;, String.class).orElseThrow(() -&gt; new NoRouteException(&quot;No information about the actual Location in the current context, can't load the next Location from the RouteDetails&quot;));</span>
-<span class="nc" id="L66">        Optional&lt;RouteDetails&gt; optAsNext = routeDetailsRepository.findByRoute_RouteId_OrderByPos(route.getRouteId())</span>
-<span class="nc" id="L67">                .stream()</span>
-<span class="nc" id="L68">                .filter(r -&gt; r.getSource().equals(actualLocation))</span>
-<span class="nc" id="L69">                .findFirst();</span>
+<span class="nc" id="L68">        Route route = in.get(&quot;route&quot;, Route.class).orElseThrow(() -&gt; new NoRouteException(&quot;No Route information in current context, can't load the next Location from the RouteDetails&quot;));</span>
+<span class="nc" id="L69">        String actualLocation = in.get(&quot;actualLocation&quot;, String.class).orElseThrow(() -&gt; new NoRouteException(&quot;No information about the actual Location in the current context, can't load the next Location from the RouteDetails&quot;));</span>
+<span class="nc" id="L70">        Optional&lt;RouteDetails&gt; optAsNext = routeDetailsRepository.findByRoute_RouteId_OrderByPos(route.getRouteId())</span>
+<span class="nc" id="L71">                .stream()</span>
+<span class="nc" id="L72">                .filter(r -&gt; r.getSource().equals(actualLocation))</span>
+<span class="nc" id="L73">                .findFirst();</span>
         String asNext;
-<span class="nc bnc" id="L71" title="All 2 branches missed.">        if (optAsNext.isPresent()) {</span>
-<span class="nc" id="L72">            asNext = optAsNext.get().getNext();</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (optAsNext.isPresent()) {</span>
+<span class="nc" id="L76">            asNext = optAsNext.get().getNext();</span>
         } else {
-<span class="nc" id="L74">            asNext = routeDetailsRepository.findByRoute_RouteId_OrderByPos(RouteImpl.DEF_ROUTE.getRouteId())</span>
-<span class="nc" id="L75">                    .stream()</span>
-<span class="nc" id="L76">                    .filter(r -&gt; r.getSource().equals(actualLocation))</span>
-<span class="nc" id="L77">                    .findFirst()</span>
-<span class="nc" id="L78">                    .orElseThrow(() -&gt; new NoRouteException(format(&quot;No entry in RouteDetails that matches the sourceLocation [%s] and route [%s]&quot;, actualLocation, route.getRouteId())))</span>
-<span class="nc" id="L79">                    .getNext();</span>
+<span class="nc" id="L78">            asNext = routeDetailsRepository.findByRoute_RouteId_OrderByPos(RouteImpl.DEF_ROUTE.getRouteId())</span>
+<span class="nc" id="L79">                    .stream()</span>
+<span class="nc" id="L80">                    .filter(r -&gt; r.getSource().equals(actualLocation))</span>
+<span class="nc" id="L81">                    .findFirst()</span>
+<span class="nc" id="L82">                    .orElseThrow(() -&gt; new NoRouteException(format(&quot;No entry in RouteDetails that matches the sourceLocation [%s] and route [%s]&quot;, actualLocation, route.getRouteId())))</span>
+<span class="nc" id="L83">                    .getNext();</span>
         }
-<span class="nc" id="L81">        LOGGER.debug(&quot;Sending to next Location [{}]&quot;, asNext);</span>
-<span class="nc" id="L82">        responder.sendToLocation(asNext);</span>
-<span class="nc" id="L83">    }</span>
+<span class="nc" id="L85">        LOGGER.debug(&quot;Sending to next Location [{}]&quot;, asNext);</span>
+<span class="nc" id="L86">        responder.sendToLocation(asNext);</span>
+<span class="nc" id="L87">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void changeRoute(String routeId) {
-<span class="nc" id="L90">        Route route = routeRepository.findByRouteId(routeId).orElseThrow(() -&gt; new NotFoundException(format(&quot;Route with routeId [%s] was not found&quot;, routeId)));</span>
-<span class="nc" id="L91">        in.put(&quot;route&quot;, route);</span>
-<span class="nc" id="L92">        LOGGER.debug(&quot;Set Route with routeId [{}] in current call context&quot;, routeId);</span>
-<span class="nc" id="L93">    }</span>
+<span class="nc" id="L94">        Route route = routeRepository.findByRouteId(routeId).orElseThrow(() -&gt; new NotFoundException(format(&quot;Route with routeId [%s] was not found&quot;, routeId)));</span>
+<span class="nc" id="L95">        in.put(&quot;route&quot;, route);</span>
+<span class="nc" id="L96">        LOGGER.debug(&quot;Set Route with routeId [{}] in current call context&quot;, routeId);</span>
+<span class="nc" id="L97">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
