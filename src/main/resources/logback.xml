@@ -17,7 +17,7 @@
     <logger name="liquibase" level="WARN" />
     <logger name="org.camunda" level="INFO" />
     <logger name="org.flowable" level="WARN" />
-    <logger name="org.openwms" level="DEBUG" />
+    <logger name="org.openwms" level="INFO" />
     <logger name="org.openwms.common.comm.res.ResSenderApi" level="OFF" />
 
     <logger name="PRESENTATION_LAYER_EXCEPTION" level="ERROR" additivity="false">

@@ -1,6 +1,5 @@
 FROM azul/zulu-openjdk-alpine:11-jre
-VOLUME library
+VOLUME /tmp
+ARG JAVA_OPTS="-noverify -Xmx300m -Xss512k"
 ADD target/openwms-tms-routing.jar app.jar
-RUN sh -c 'touch /app.jar'
-ENV JAVA_OPTS="-noverify -XX:+UseSerialGC -Xss512k"
-ENTRYPOINT exec java -Djava.security.egd=file:/dev/./urandom $JAVA_OPTS -jar /app.jar
+ENTRYPOINT exec java $JAVA_OPTS -jar /app.jar
