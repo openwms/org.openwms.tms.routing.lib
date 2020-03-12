@@ -80,6 +80,18 @@ management:
   health:
     rabbit:
       enabled: false
+  metrics:
+    web:
+      server:
+        request:
+          autotime:
+            enabled: true
+    export:
+      prometheus:
+        enabled: true
+  info:
+    git:
+      mode: full
 
 logging:
   file:
