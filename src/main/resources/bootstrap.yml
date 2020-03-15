@@ -12,6 +12,8 @@ spring:
         max-attempts: 120
     discovery:
       enabled: false
+  config:
+    location: classpath:application.yml
   security:
     user:
       password: sa
