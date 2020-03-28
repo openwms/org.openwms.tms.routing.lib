@@ -20,7 +20,6 @@ owms:
         queue-name: tms-rtng-err
         exchange-name: osip
         routing-key-in: osip.err.ss
-        routing-key-out: osip.err.mfc
       locu:
         queue-name: tms-rtng-locu
         exchange-name: osip
@@ -45,18 +44,13 @@ owms:
         routing-key-in: osip.updx.ss
   routing:
     serialization: json
-  commands:
-    common:
-      tu:
-        exchange-name: common.tu.commands
-        routing-key: common.tu.command.asNextLocation
   requests:
     tms:
       to:
         exchange-name: tms.requests
     routing:
       to:
-        exchange-name: routing.requests
+        exchange-name: tms.requests
         queue-name: routing-requests-queue
         routing-key: "*.*.*"
 
