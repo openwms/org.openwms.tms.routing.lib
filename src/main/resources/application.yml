@@ -15,7 +15,6 @@ spring:
 owms:
   driver:
     osip:
-      enabled: true
       err:
         queue-name: tms-rtng-err
         exchange-name: osip
