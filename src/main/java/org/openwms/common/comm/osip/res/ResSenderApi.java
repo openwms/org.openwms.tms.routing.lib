@@ -75,7 +75,7 @@ class ResSenderApi implements Responder {
         String sender = owmsProperties.getPartner(""+in.getMsg().get(CommConstants.SENDER)).orElseThrow(() -> new IllegalConfigurationValueException(format("No partner service with name [%s] configured in property owms.driver.partners", ""+in.getMsg().get(CommConstants.SENDER))));
         List<ServiceInstance> list = dc.getInstances(sender);
         if (list == null || list.isEmpty()) {
-            throw new NotFoundException(format("No deployed service with name [%s] found", ""+in.getMsg().get(CommConstants.SENDER)));
+            throw new NotFoundException(format("No deployed service with name [%s] found", sender));
         }
         ResponseHeader header = ResponseHeader.newBuilder()
                 .sender("" + in.getMsg().get(CommConstants.RECEIVER))
@@ -96,6 +96,7 @@ class ResSenderApi implements Responder {
             LOGGER.debug("Calling driver URL [{}]", endpoint);
         }
         HttpHeaders headers = SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"));
+        headers.add(CommConstants.RECEIVER, header.getReceiver());
         try {
             aLoadBalanced.exchange(
                 endpoint,
