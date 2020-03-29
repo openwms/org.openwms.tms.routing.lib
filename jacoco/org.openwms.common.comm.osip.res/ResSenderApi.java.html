@@ -75,7 +75,7 @@ class ResSenderApi implements Responder {
 <span class="nc" id="L75">        String sender = owmsProperties.getPartner(&quot;&quot;+in.getMsg().get(CommConstants.SENDER)).orElseThrow(() -&gt; new IllegalConfigurationValueException(format(&quot;No partner service with name [%s] configured in property owms.driver.partners&quot;, &quot;&quot;+in.getMsg().get(CommConstants.SENDER))));</span>
 <span class="nc" id="L76">        List&lt;ServiceInstance&gt; list = dc.getInstances(sender);</span>
 <span class="nc bnc" id="L77" title="All 4 branches missed.">        if (list == null || list.isEmpty()) {</span>
-<span class="nc" id="L78">            throw new NotFoundException(format(&quot;No deployed service with name [%s] found&quot;, &quot;&quot;+in.getMsg().get(CommConstants.SENDER)));</span>
+<span class="nc" id="L78">            throw new NotFoundException(format(&quot;No deployed service with name [%s] found&quot;, sender));</span>
         }
 <span class="nc" id="L80">        ResponseHeader header = ResponseHeader.newBuilder()</span>
 <span class="nc" id="L81">                .sender(&quot;&quot; + in.getMsg().get(CommConstants.RECEIVER))</span>
@@ -96,24 +96,25 @@ class ResSenderApi implements Responder {
 <span class="nc" id="L96">            LOGGER.debug(&quot;Calling driver URL [{}]&quot;, endpoint);</span>
         }
 <span class="nc" id="L98">        HttpHeaders headers = SecurityUtils.createHeaders(si.getMetadata().get(&quot;username&quot;), si.getMetadata().get(&quot;password&quot;));</span>
+<span class="nc" id="L99">        headers.add(CommConstants.RECEIVER, header.getReceiver());</span>
         try {
-<span class="nc" id="L100">            aLoadBalanced.exchange(</span>
+<span class="nc" id="L101">            aLoadBalanced.exchange(</span>
                 endpoint,
                 HttpMethod.POST,
-<span class="nc" id="L103">                new HttpEntity&lt;&gt;(builder.build(), headers),</span>
+<span class="nc" id="L104">                new HttpEntity&lt;&gt;(builder.build(), headers),</span>
                 Void.class
             );
-<span class="nc" id="L106">        } catch (Exception e) {</span>
-<span class="nc" id="L107">            throw new MessageProcessingException(e.getMessage(), e);</span>
-<span class="nc" id="L108">        }</span>
-<span class="nc" id="L109">    }</span>
+<span class="nc" id="L107">        } catch (Exception e) {</span>
+<span class="nc" id="L108">            throw new MessageProcessingException(e.getMessage(), e);</span>
+<span class="nc" id="L109">        }</span>
+<span class="nc" id="L110">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void sendToLocation(String barcode, String sourceLocation, String targetLocation) {
-<span class="nc" id="L116">        throw new UnsupportedOperationException(&quot;Currently not implemented&quot;);</span>
+<span class="nc" id="L117">        throw new UnsupportedOperationException(&quot;Currently not implemented&quot;);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
