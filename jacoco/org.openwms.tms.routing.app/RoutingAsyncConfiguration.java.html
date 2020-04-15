@@ -99,5 +99,41 @@ import static org.ameba.LoggingCategories.BOOT;
 <span class="nc" id="L99">                .to(tmsRequestsExchange)</span>
 <span class="nc" id="L100">                .with(routingKey);</span>
     }
+
+    /*~ -------------- Location Updates --------------- */
+    @Bean
+    TopicExchange locExchange(@Value(&quot;${owms.events.common.loc.exchange-name}&quot;) String exchangeName) {
+<span class="nc" id="L106">        return new TopicExchange(exchangeName, true, false);</span>
+    }
+
+    @Bean
+    Queue locQueue(@Value(&quot;${owms.events.common.loc.queue-name}&quot;) String queueName) {
+<span class="nc" id="L111">        return new Queue(queueName, false);</span>
+    }
+
+    @Bean
+    Binding locBinding(TopicExchange locExchange, Queue locQueue, @Value(&quot;${owms.events.common.loc.routing-key}&quot;) String routingKey) {
+<span class="nc" id="L116">        return BindingBuilder.bind(locQueue)</span>
+<span class="nc" id="L117">                .to(locExchange)</span>
+<span class="nc" id="L118">                .with(routingKey);</span>
+    }
+
+    /*~ -------------- LocationGroup Updates --------------- */
+    @Bean
+    TopicExchange lgExchange(@Value(&quot;${owms.events.common.lg.exchange-name}&quot;) String exchangeName) {
+<span class="nc" id="L124">        return new TopicExchange(exchangeName, true, false);</span>
+    }
+
+    @Bean
+    Queue lgQueue(@Value(&quot;${owms.events.common.lg.queue-name}&quot;) String queueName) {
+<span class="nc" id="L129">        return new Queue(queueName, false);</span>
+    }
+
+    @Bean
+    Binding lgBinding(TopicExchange lgExchange, Queue lgQueue, @Value(&quot;${owms.events.common.lg.routing-key}&quot;) String routingKey) {
+<span class="nc" id="L134">        return BindingBuilder.bind(lgQueue)</span>
+<span class="nc" id="L135">                .to(lgExchange)</span>
+<span class="nc" id="L136">                .with(routingKey);</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
