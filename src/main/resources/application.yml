@@ -20,12 +20,6 @@ spring:
   profiles: ASYNCHRONOUS
 
 owms:
-  partners:
-    sps01: osip.res.1
-    sps02: osip.res.2
-    sps03: osip.res.3
-    sps04: osip.res.4
-    sps05: osip.res.5
   driver:
     osip:
       err:
@@ -54,8 +48,22 @@ owms:
         queue-name: tms-rtng-updx
         exchange-name: osip
         routing-key-in: osip.updx.ss
-  routing:
-    serialization: json
+  events:
+    common:
+      lg:
+        exchange-name: common.lg
+        queue-name: routing-lg-queue
+        routing-key: lg.event.*
+      loc:
+        exchange-name: common.lg
+        queue-name: routing-loc-queue
+        routing-key: loc.event.*
+  partners:
+    sps01: osip.res.1
+    sps02: osip.res.2
+    sps03: osip.res.3
+    sps04: osip.res.4
+    sps05: osip.res.5
   requests:
     tms:
       to:
@@ -65,6 +73,8 @@ owms:
         exchange-name: tms.requests
         queue-name: routing-requests-queue
         routing-key: "*.*.*"
+  routing:
+    serialization: json
 
 health:
   config:

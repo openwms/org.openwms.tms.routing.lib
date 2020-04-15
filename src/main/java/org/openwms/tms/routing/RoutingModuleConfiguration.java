@@ -21,6 +21,7 @@ import org.ameba.mapping.DozerMapperImpl;
 import org.openwms.tms.routing.config.OwmsProperties;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +34,7 @@ import org.springframework.web.client.RestTemplate;
 /**
  * A RoutingModuleConfiguration.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Configuration
 @EnableAspects(propagateRootCause = true)
@@ -42,6 +43,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableTransactionManagement
 @EnableJpaRepositories
 @EnableJpaAuditing
+@EnableCaching
 @EntityScan
 public class RoutingModuleConfiguration {
 

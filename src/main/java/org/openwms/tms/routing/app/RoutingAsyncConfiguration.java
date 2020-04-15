@@ -99,4 +99,40 @@ public class RoutingAsyncConfiguration {
                 .to(tmsRequestsExchange)
                 .with(routingKey);
     }
+
+    /*~ -------------- Location Updates --------------- */
+    @Bean
+    TopicExchange locExchange(@Value("${owms.events.common.loc.exchange-name}") String exchangeName) {
+        return new TopicExchange(exchangeName, true, false);
+    }
+
+    @Bean
+    Queue locQueue(@Value("${owms.events.common.loc.queue-name}") String queueName) {
+        return new Queue(queueName, false);
+    }
+
+    @Bean
+    Binding locBinding(TopicExchange locExchange, Queue locQueue, @Value("${owms.events.common.loc.routing-key}") String routingKey) {
+        return BindingBuilder.bind(locQueue)
+                .to(locExchange)
+                .with(routingKey);
+    }
+
+    /*~ -------------- LocationGroup Updates --------------- */
+    @Bean
+    TopicExchange lgExchange(@Value("${owms.events.common.lg.exchange-name}") String exchangeName) {
+        return new TopicExchange(exchangeName, true, false);
+    }
+
+    @Bean
+    Queue lgQueue(@Value("${owms.events.common.lg.queue-name}") String queueName) {
+        return new Queue(queueName, false);
+    }
+
+    @Bean
+    Binding lgBinding(TopicExchange lgExchange, Queue lgQueue, @Value("${owms.events.common.lg.routing-key}") String routingKey) {
+        return BindingBuilder.bind(lgQueue)
+                .to(lgExchange)
+                .with(routingKey);
+    }
 }
