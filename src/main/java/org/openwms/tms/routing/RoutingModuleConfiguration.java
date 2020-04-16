@@ -19,16 +19,12 @@ import org.ameba.annotation.EnableAspects;
 import org.ameba.mapping.BeanMapper;
 import org.ameba.mapping.DozerMapperImpl;
 import org.openwms.tms.routing.config.OwmsProperties;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.retry.annotation.EnableRetry;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -40,11 +36,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableAspects(propagateRootCause = true)
 @EnableConfigurationProperties
 @EnableRetry
-@EnableTransactionManagement
-@EnableJpaRepositories
-@EnableJpaAuditing
 @EnableCaching
-@EntityScan
 public class RoutingModuleConfiguration {
 
     @LoadBalanced

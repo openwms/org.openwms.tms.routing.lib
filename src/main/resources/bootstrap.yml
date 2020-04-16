@@ -32,13 +32,19 @@ spring:
   zipkin:
     sender:
       type: web
+  datasource:
+    url: jdbc:h2:mem:camunda
+    jdbc-url: jdbc:h2:mem:camunda
+    username: sa
+    password: sa
+    driver-class-name: org.h2.Driver
 
 camunda:
   bpm:
     auto-deployment-enabled: true
     enabled: true
     deployment-resource-pattern: classpath*:**/camunda/processes/*.bpmn20.xml,classpath*:**/camunda/processes/*.bpmn,classpath*:**/camunda/processes/*.dmn11.xml,classpath*:**/camunda/processes/*.dmn
-
+    history-level: full
 feign:
   httpclient:
     connection-timeout: 30000
@@ -48,6 +54,12 @@ ribbon:
   ReadTimeout: 30000
 
 owms:
+  camunda:
+    datasource:
+      jdbc-url: jdbc:h2:mem:camunda
+      username: sa
+      password: sa
+      driver-class-name: org.h2.Driver
   driver:
     osip:
       enabled: true
@@ -275,8 +287,11 @@ spring:
       hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
       hibernate.temp.use_jdbc_metadata_defaults: false
       hibernate.default_schema: public
+    hibernate:
+      ddl-auto: create-drop
   datasource:
     driver-class-name: org.postgresql.Driver
+    jdbc-url: jdbc:postgresql:testdb
     url: jdbc:postgresql:testdb
     username: KARL
     password: KARL

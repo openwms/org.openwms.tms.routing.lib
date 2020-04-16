@@ -68,7 +68,7 @@
         <camunda.version>7.10.0</camunda.version>
         <camunda-bpm-spring-boot-starter.version>3.4.0-alpha2</camunda-bpm-spring-boot-starter.version>
         <common-service.version>1.5.0</common-service.version>
-        <core.version>1.6.0</core.version>
+        <core.version>1.7.0</core.version>
         <flowable.version>6.4.1</flowable.version>
         <groovy-jsr223.version>2.4.7</groovy-jsr223.version>
         <transportation-service.version>1.3.0</transportation-service.version>
