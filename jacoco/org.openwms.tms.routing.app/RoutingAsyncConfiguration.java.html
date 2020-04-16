@@ -83,7 +83,7 @@ import static org.ameba.LoggingCategories.BOOT;
     }
 
     @Bean
-    TopicExchange tmsRequestsExchange(@Value(&quot;${owms.requests.tms.to.exchange-name}&quot;) String exchangeName) {
+    TopicExchange tmsRequestsExchange(@Value(&quot;${owms.requests.routing.to.exchange-name}&quot;) String exchangeName) {
 <span class="nc" id="L87">        return new TopicExchange(exchangeName, true, false);</span>
     }
 
