@@ -65,9 +65,6 @@ owms:
     sps04: osip.res.4
     sps05: osip.res.5
   requests:
-    tms:
-      to:
-        exchange-name: tms.requests
     routing:
       to:
         exchange-name: tms.requests

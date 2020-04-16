@@ -3,11 +3,11 @@ spring:
     name: routing-service
   cloud:
     config:
+      fail-fast: true # true means retry
       discovery:
         enabled: false
         service-id: openwms-config
       enabled: false
-      fail-fast: true # true means retry
       retry:
         max-attempts: 120
     discovery:
@@ -54,6 +54,8 @@ owms:
   eureka:
     url: http://user:sa@localhost:8761
     zone: ${owms.eureka.url}/eureka/
+  routing:
+    serialization: json
   srv:
     protocol: http
     hostname: localhost
