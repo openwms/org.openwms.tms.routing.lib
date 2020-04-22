@@ -27,9 +27,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A Route.
+ * A RouteImpl.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Entity
 @Table(name = "RSRV_ROUTE")

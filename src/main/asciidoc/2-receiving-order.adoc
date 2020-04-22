@@ -10,7 +10,7 @@ The response lists all the operations possible on `Routes` with a name and the c
 
 == Find a Route
 
-== Find all Routea
+== Find all Routes
 
 == Change a Route
 

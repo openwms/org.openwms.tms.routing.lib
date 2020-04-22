@@ -24,31 +24,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
 /**
  * A Action.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Entity
 @Table(name = "RSRV_ACTION")
 public class Action extends ApplicationEntity implements Serializable {
-
-    public Action() {
-    }
-
-    public Action(RouteImpl route, String name, String locationKey, String locationGroupName, String actionType, String programKey, String description) {
-        this.route = route;
-        this.name = name;
-        this.locationKey = locationKey;
-        this.locationGroupName = locationGroupName;
-        this.actionType = actionType;
-        this.programKey = programKey;
-        this.description = description;
-    }
 
     @NotNull
     @ManyToOne
@@ -83,15 +69,22 @@ public class Action extends ApplicationEntity implements Serializable {
     @Column(name = "C_FLEX_5")
     private String flexField5;
 
+    /** Dear JPA... */
+    protected Action() {
+    }
+
+    public Action(RouteImpl route, String name, String locationKey, String locationGroupName, String actionType, String programKey, String description) {
+        this.route = route;
+        this.name = name;
+        this.locationKey = locationKey;
+        this.locationGroupName = locationGroupName;
+        this.actionType = actionType;
+        this.programKey = programKey;
+        this.description = description;
+    }
+
     public Map<String, Object> getFlexVariables() {
-        // TODO [openwms]: 17.03.19 Improve this with Java9 Map.of
-        Map<String, Object> result = new HashMap<>(5);
-        result.put("flexField1", flexField1);
-        result.put("flexField2", flexField2);
-        result.put("flexField3", flexField3);
-        result.put("flexField4", flexField4);
-        result.put("flexField5", flexField5);
-        return result;
+        return Map.of("flexField1", flexField1, "flexField2", flexField2, "flexField3", flexField3,"flexField4", flexField4,"flexField5", flexField5);
     }
 
     public RouteImpl getRoute() {
