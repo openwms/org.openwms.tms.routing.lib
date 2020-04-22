@@ -6,7 +6,7 @@ OpenWMS.org TMS: Routing Services,org.openwms.common.comm.osip.sysu,SystemUpdate
 OpenWMS.org TMS: Routing Services,org.openwms.common.comm.osip.sysu,SystemUpdateMessageConfiguration,22,0,0,0,7,0,4,0,4,0
 OpenWMS.org TMS: Routing Services,org.openwms.tms.routing.config,OwmsProperties,35,0,0,0,12,0,6,0,6,0
 OpenWMS.org TMS: Routing Services,org.openwms.tms.routing.config,OwmsProperties.Routing,13,0,0,0,4,0,3,0,3,0
-OpenWMS.org TMS: Routing Services,org.openwms.tms.routing,Action,173,6,0,0,34,3,18,1,18,1
+OpenWMS.org TMS: Routing Services,org.openwms.tms.routing,Action,153,6,0,0,28,3,18,1,18,1
 OpenWMS.org TMS: Routing Services,org.openwms.tms.routing,RouteConst,43,6,8,0,9,3,8,1,4,1
 OpenWMS.org TMS: Routing Services,org.openwms.tms.routing,InputContext.new InheritableThreadLocal() {...},10,0,0,0,2,0,2,0,2,0
 OpenWMS.org TMS: Routing Services,org.openwms.tms.routing,RoutingServiceRunner,5,3,0,0,2,1,1,1,1,1
