@@ -17,7 +17,6 @@ package org.openwms.common.location;
 
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +27,6 @@ import java.util.List;
  *
  * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
  */
-@CrossOrigin(origins = "*")
 @RestController
 class LocationGroupController {
 
