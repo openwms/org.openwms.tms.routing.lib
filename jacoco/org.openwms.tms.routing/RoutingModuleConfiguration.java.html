@@ -16,6 +16,8 @@
 package org.openwms.tms.routing;
 
 import org.ameba.annotation.EnableAspects;
+import org.ameba.app.SpringProfiles;
+import org.ameba.http.PermitAllCorsConfigurationSource;
 import org.ameba.mapping.BeanMapper;
 import org.ameba.mapping.DozerMapperImpl;
 import org.openwms.tms.routing.config.OwmsProperties;
@@ -25,11 +27,15 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.filter.CorsFilter;
+
+import javax.servlet.Filter;
 
 /**
  * A RoutingModuleConfiguration.
@@ -45,32 +51,38 @@ import org.springframework.web.client.RestTemplate;
 @EnableJpaAuditing
 @EnableCaching
 @EntityScan
-<span class="nc" id="L48">public class RoutingModuleConfiguration {</span>
+<span class="nc" id="L54">public class RoutingModuleConfiguration {</span>
 
     @LoadBalanced
     @Bean
     RestTemplate aLoadBalanced() {
-<span class="nc" id="L53">        return new RestTemplate();</span>
+<span class="nc" id="L59">        return new RestTemplate();</span>
     }
 
     @Bean
     RestTemplate simpleRestTemplate() {
-<span class="nc" id="L58">        return new RestTemplate();</span>
+<span class="nc" id="L64">        return new RestTemplate();</span>
     }
 
     @Bean
     BeanMapper beanMapper() {
-<span class="nc" id="L63">        return new DozerMapperImpl(&quot;META-INF/dozer/tms-bean-mappings.xml&quot;);</span>
+<span class="nc" id="L69">        return new DozerMapperImpl(&quot;META-INF/dozer/tms-bean-mappings.xml&quot;);</span>
+    }
+
+    @Profile(SpringProfiles.DEVELOPMENT_PROFILE)
+    public @Bean
+    Filter corsFiler() {
+<span class="nc" id="L75">        return new CorsFilter(new PermitAllCorsConfigurationSource());</span>
     }
 
     @Bean
     InputContext in() {
-<span class="nc" id="L68">        return new InputContext();</span>
+<span class="nc" id="L80">        return new InputContext();</span>
     }
 
     @Bean
     OwmsProperties owmsProperties() {
-<span class="nc" id="L73">        return new OwmsProperties();</span>
+<span class="nc" id="L85">        return new OwmsProperties();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

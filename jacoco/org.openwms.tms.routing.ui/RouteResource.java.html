@@ -23,7 +23,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,7 +45,6 @@ import static org.openwms.tms.routing.RoutingConstants.API_ROUTES;
  *
  * @author &lt;a href=&quot;mailto:hscherrer@openwms.org&quot;&gt;Heiko Scherrer&lt;/a&gt;
  */
-@CrossOrigin(origins = &quot;*&quot;)
 @RestController
 class RouteResource {
 
@@ -54,57 +52,57 @@ class RouteResource {
     private final RouteRepository routeRepository;
     private final BeanMapper mapper;
 
-<span class="nc" id="L57">    RouteResource(LocationRepository locationRepository, RouteRepository routeRepository, BeanMapper mapper) {</span>
-<span class="nc" id="L58">        this.locationRepository = locationRepository;</span>
-<span class="nc" id="L59">        this.routeRepository = routeRepository;</span>
-<span class="nc" id="L60">        this.mapper = mapper;</span>
-<span class="nc" id="L61">    }</span>
+<span class="nc" id="L55">    RouteResource(LocationRepository locationRepository, RouteRepository routeRepository, BeanMapper mapper) {</span>
+<span class="nc" id="L56">        this.locationRepository = locationRepository;</span>
+<span class="nc" id="L57">        this.routeRepository = routeRepository;</span>
+<span class="nc" id="L58">        this.mapper = mapper;</span>
+<span class="nc" id="L59">    }</span>
 
     @GetMapping(API_ROUTES)
     public List&lt;RouteVO&gt; getAll() {
-<span class="nc" id="L65">        return mapper.map(routeRepository.findAll(Sort.by(&quot;pk&quot;)), RouteVO.class);</span>
+<span class="nc" id="L63">        return mapper.map(routeRepository.findAll(Sort.by(&quot;pk&quot;)), RouteVO.class);</span>
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
     @DeleteMapping(API_ROUTES + &quot;/{persistentKey}&quot;)
     public void delete(@PathVariable(&quot;persistentKey&quot;) String persistentKey) {
-<span class="nc" id="L72">        routeRepository.findBypKey(persistentKey).ifPresent(routeRepository::delete);</span>
-<span class="nc" id="L73">    }</span>
+<span class="nc" id="L70">        routeRepository.findBypKey(persistentKey).ifPresent(routeRepository::delete);</span>
+<span class="nc" id="L71">    }</span>
 
     @PutMapping(API_ROUTES)
     @Transactional
     public RouteVO save(@RequestBody RouteVO routeVO) {
-<span class="nc" id="L78">        RouteImpl eo = routeRepository.findBypKey(routeVO.getKey()).orElseThrow(NotFoundException::new);</span>
-<span class="nc" id="L79">        RouteImpl route = mapper.mapFromTo(routeVO, eo);</span>
+<span class="nc" id="L76">        RouteImpl eo = routeRepository.findBypKey(routeVO.getKey()).orElseThrow(NotFoundException::new);</span>
+<span class="nc" id="L77">        RouteImpl route = mapper.mapFromTo(routeVO, eo);</span>
 
-<span class="nc bnc" id="L81" title="All 2 branches missed.">        route.setSourceLocation(routeVO.hasSourceLocationName() ? locationRepository.findByLocationId(routeVO.getSourceLocationName()).orElseThrow(NotFoundException::new) : null);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        route.setSourceLocation(routeVO.hasSourceLocationName() ? locationRepository.findByLocationId(routeVO.getSourceLocationName()).orElseThrow(NotFoundException::new) : null);</span>
 
-<span class="nc bnc" id="L83" title="All 2 branches missed.">        route.setTargetLocation(routeVO.hasTargetLocationName() ? locationRepository.findByLocationId(routeVO.getTargetLocationName()).orElseThrow(NotFoundException::new) : null);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        route.setTargetLocation(routeVO.hasTargetLocationName() ? locationRepository.findByLocationId(routeVO.getTargetLocationName()).orElseThrow(NotFoundException::new) : null);</span>
 
-<span class="nc" id="L85">        return mapper.map(routeRepository.save(route), RouteVO.class);</span>
+<span class="nc" id="L83">        return mapper.map(routeRepository.save(route), RouteVO.class);</span>
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
     @PostMapping(API_ROUTES)
     public void create(@RequestBody RouteVO routeVO, HttpServletRequest req, HttpServletResponse resp) {
-<span class="nc" id="L92">        RouteImpl route = mapper.map(routeVO, RouteImpl.class);</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (routeVO.hasSourceLocationName()) {</span>
-<span class="nc" id="L94">            route.setSourceLocation(locationRepository.findByLocationId(routeVO.getSourceLocationName()).orElseThrow(NotFoundException::new));</span>
+<span class="nc" id="L90">        RouteImpl route = mapper.map(routeVO, RouteImpl.class);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        if (routeVO.hasSourceLocationName()) {</span>
+<span class="nc" id="L92">            route.setSourceLocation(locationRepository.findByLocationId(routeVO.getSourceLocationName()).orElseThrow(NotFoundException::new));</span>
         }
-<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (routeVO.hasTargetLocationName()) {</span>
-<span class="nc" id="L97">            route.setTargetLocation(locationRepository.findByLocationId(routeVO.getTargetLocationName()).orElseThrow(NotFoundException::new));</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        if (routeVO.hasTargetLocationName()) {</span>
+<span class="nc" id="L95">            route.setTargetLocation(locationRepository.findByLocationId(routeVO.getTargetLocationName()).orElseThrow(NotFoundException::new));</span>
         }
-<span class="nc" id="L99">        route = routeRepository.save(route);</span>
-<span class="nc" id="L100">        resp.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,HttpHeaders.LOCATION);</span>
-<span class="nc" id="L101">        resp.addHeader(HttpHeaders.LOCATION, getCreatedResourceURI(req, route.getPersistentKey()));</span>
-<span class="nc" id="L102">    }</span>
+<span class="nc" id="L97">        route = routeRepository.save(route);</span>
+<span class="nc" id="L98">        resp.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,HttpHeaders.LOCATION);</span>
+<span class="nc" id="L99">        resp.addHeader(HttpHeaders.LOCATION, getCreatedResourceURI(req, route.getPersistentKey()));</span>
+<span class="nc" id="L100">    }</span>
 
     private String getCreatedResourceURI(HttpServletRequest req, String objId) {
-<span class="nc" id="L105">        StringBuffer url = req.getRequestURL();</span>
-<span class="nc" id="L106">        UriTemplate template = new UriTemplate(url.append(&quot;/{objId}&quot;).toString());</span>
-<span class="nc" id="L107">        return template.expand(objId).toASCIIString();</span>
+<span class="nc" id="L103">        StringBuffer url = req.getRequestURL();</span>
+<span class="nc" id="L104">        UriTemplate template = new UriTemplate(url.append(&quot;/{objId}&quot;).toString());</span>
+<span class="nc" id="L105">        return template.expand(objId).toASCIIString();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

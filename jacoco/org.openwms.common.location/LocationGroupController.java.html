@@ -17,7 +17,6 @@ package org.openwms.common.location;
 
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,19 +27,18 @@ import java.util.List;
  *
  * @author &lt;a href=&quot;mailto:hscherrer@openwms.org&quot;&gt;Heiko Scherrer&lt;/a&gt;
  */
-@CrossOrigin(origins = &quot;*&quot;)
 @RestController
 class LocationGroupController {
 
     private final LocationGroupApi locationGroupApi;
 
-<span class="nc" id="L37">    LocationGroupController(LocationGroupApi locationGroupApi) {</span>
-<span class="nc" id="L38">        this.locationGroupApi = locationGroupApi;</span>
-<span class="nc" id="L39">    }</span>
+<span class="nc" id="L35">    LocationGroupController(LocationGroupApi locationGroupApi) {</span>
+<span class="nc" id="L36">        this.locationGroupApi = locationGroupApi;</span>
+<span class="nc" id="L37">    }</span>
 
     @GetMapping(&quot;/api/location-groups&quot;)
     public List&lt;LocationGroupVO&gt; findAll() {
-<span class="nc" id="L43">        return locationGroupApi.findAll();</span>
+<span class="nc" id="L41">        return locationGroupApi.findAll();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
