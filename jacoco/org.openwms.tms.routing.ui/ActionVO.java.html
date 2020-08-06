@@ -15,6 +15,7 @@
  */
 package org.openwms.tms.routing.ui;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.ameba.http.AbstractBase;
 
 import javax.validation.constraints.NotNull;
@@ -24,112 +25,121 @@ import java.util.Objects;
 /**
  * A ActionVO.
  *
- * @author &lt;a href=&quot;mailto:hscherrer@openwms.org&quot;&gt;Heiko Scherrer&lt;/a&gt;
+ * @author Heiko Scherrer
  */
-<span class="nc" id="L29">public class ActionVO extends AbstractBase implements Serializable {</span>
+<span class="nc" id="L30">public class ActionVO extends AbstractBase implements Serializable {</span>
 
     @NotNull
+    @JsonProperty(&quot;name&quot;)
     private String name;
+    @JsonProperty(&quot;type&quot;)
     private String type;
+    @JsonProperty(&quot;description&quot;)
     private String description;
+    @JsonProperty(&quot;route&quot;)
     private String route;
+    @JsonProperty(&quot;program&quot;)
     private String program;
+    @JsonProperty(&quot;locationGroupName&quot;)
     private String locationGroupName;
+    @JsonProperty(&quot;location&quot;)
     private String location;
+    @JsonProperty(&quot;key&quot;)
     private String key;
+    @JsonProperty(&quot;enabled&quot;)
     private boolean enabled;
 
     public String getName() {
-<span class="nc" id="L43">        return name;</span>
+<span class="nc" id="L53">        return name;</span>
     }
 
     public void setName(String name) {
-<span class="nc" id="L47">        this.name = name;</span>
-<span class="nc" id="L48">    }</span>
+<span class="nc" id="L57">        this.name = name;</span>
+<span class="nc" id="L58">    }</span>
 
     public String getType() {
-<span class="nc" id="L51">        return type;</span>
+<span class="nc" id="L61">        return type;</span>
     }
 
     public void setType(String type) {
-<span class="nc" id="L55">        this.type = type;</span>
-<span class="nc" id="L56">    }</span>
+<span class="nc" id="L65">        this.type = type;</span>
+<span class="nc" id="L66">    }</span>
 
     public String getDescription() {
-<span class="nc" id="L59">        return description;</span>
+<span class="nc" id="L69">        return description;</span>
     }
 
     public void setDescription(String description) {
-<span class="nc" id="L63">        this.description = description;</span>
-<span class="nc" id="L64">    }</span>
+<span class="nc" id="L73">        this.description = description;</span>
+<span class="nc" id="L74">    }</span>
 
     public String getRoute() {
-<span class="nc" id="L67">        return route;</span>
+<span class="nc" id="L77">        return route;</span>
     }
 
     public void setRoute(String route) {
-<span class="nc" id="L71">        this.route = route;</span>
-<span class="nc" id="L72">    }</span>
+<span class="nc" id="L81">        this.route = route;</span>
+<span class="nc" id="L82">    }</span>
 
     public String getProgram() {
-<span class="nc" id="L75">        return program;</span>
+<span class="nc" id="L85">        return program;</span>
     }
 
     public void setProgram(String program) {
-<span class="nc" id="L79">        this.program = program;</span>
-<span class="nc" id="L80">    }</span>
+<span class="nc" id="L89">        this.program = program;</span>
+<span class="nc" id="L90">    }</span>
 
     public String getLocationGroupName() {
-<span class="nc" id="L83">        return locationGroupName;</span>
+<span class="nc" id="L93">        return locationGroupName;</span>
     }
 
     public void setLocationGroupName(String locationGroupName) {
-<span class="nc" id="L87">        this.locationGroupName = locationGroupName;</span>
-<span class="nc" id="L88">    }</span>
+<span class="nc" id="L97">        this.locationGroupName = locationGroupName;</span>
+<span class="nc" id="L98">    }</span>
 
     public String getLocation() {
-<span class="nc" id="L91">        return location;</span>
+<span class="nc" id="L101">        return location;</span>
     }
 
     public void setLocation(String location) {
-<span class="nc" id="L95">        this.location = location;</span>
-<span class="nc" id="L96">    }</span>
+<span class="nc" id="L105">        this.location = location;</span>
+<span class="nc" id="L106">    }</span>
 
     public String getKey() {
-<span class="nc" id="L99">        return key;</span>
+<span class="nc" id="L109">        return key;</span>
     }
 
     public void setKey(String key) {
-<span class="nc" id="L103">        this.key = key;</span>
-<span class="nc" id="L104">    }</span>
+<span class="nc" id="L113">        this.key = key;</span>
+<span class="nc" id="L114">    }</span>
 
     public boolean isEnabled() {
-<span class="nc" id="L107">        return enabled;</span>
+<span class="nc" id="L117">        return enabled;</span>
     }
 
     public void setEnabled(boolean enabled) {
-<span class="nc" id="L111">        this.enabled = enabled;</span>
-<span class="nc" id="L112">    }</span>
+<span class="nc" id="L121">        this.enabled = enabled;</span>
+<span class="nc" id="L122">    }</span>
 
     public boolean hasRoute() {
-<span class="nc bnc" id="L115" title="All 4 branches missed.">        return route != null &amp;&amp; !route.isEmpty();</span>
+<span class="nc bnc" id="L125" title="All 4 branches missed.">        return route != null &amp;&amp; !route.isEmpty();</span>
     }
 
     @Override
     public boolean equals(Object o) {
-<span class="nc bnc" id="L120" title="All 2 branches missed.">        if (this == o)</span>
-<span class="nc" id="L121">            return true;</span>
-<span class="nc bnc" id="L122" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass())</span>
-<span class="nc" id="L123">            return false;</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">        if (!super.equals(o))</span>
-<span class="nc" id="L125">            return false;</span>
-<span class="nc" id="L126">        ActionVO actionVO = (ActionVO) o;</span>
-<span class="nc bnc" id="L127" title="All 18 branches missed.">        return enabled == actionVO.enabled &amp;&amp; Objects.equals(name, actionVO.name) &amp;&amp; Objects.equals(type, actionVO.type) &amp;&amp; Objects.equals(description, actionVO.description) &amp;&amp; Objects.equals(route, actionVO.route) &amp;&amp; Objects.equals(program, actionVO.program) &amp;&amp; Objects.equals(locationGroupName, actionVO.locationGroupName) &amp;&amp; Objects.equals(location, actionVO.location) &amp;&amp; Objects.equals(key, actionVO.key);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        if (this == o)</span>
+<span class="nc" id="L131">            return true;</span>
+<span class="nc bnc" id="L132" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass())</span>
+<span class="nc" id="L133">            return false;</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">        if (!super.equals(o))</span>
+<span class="nc" id="L135">            return false;</span>
+<span class="nc" id="L136">        ActionVO actionVO = (ActionVO) o;</span>
+<span class="nc bnc" id="L137" title="All 18 branches missed.">        return enabled == actionVO.enabled &amp;&amp; Objects.equals(name, actionVO.name) &amp;&amp; Objects.equals(type, actionVO.type) &amp;&amp; Objects.equals(description, actionVO.description) &amp;&amp; Objects.equals(route, actionVO.route) &amp;&amp; Objects.equals(program, actionVO.program) &amp;&amp; Objects.equals(locationGroupName, actionVO.locationGroupName) &amp;&amp; Objects.equals(location, actionVO.location) &amp;&amp; Objects.equals(key, actionVO.key);</span>
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L132">        return Objects.hash(super.hashCode(), name, type, description, route, program, locationGroupName, location, key, enabled);</span>
+<span class="nc" id="L142">        return Objects.hash(super.hashCode(), name, type, description, route, program, locationGroupName, location, key, enabled);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
