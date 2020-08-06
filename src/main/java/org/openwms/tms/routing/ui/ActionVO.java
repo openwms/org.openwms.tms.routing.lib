@@ -15,6 +15,7 @@
  */
 package org.openwms.tms.routing.ui;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.ameba.http.AbstractBase;
 
 import javax.validation.constraints.NotNull;
@@ -24,19 +25,28 @@ import java.util.Objects;
 /**
  * A ActionVO.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class ActionVO extends AbstractBase implements Serializable {
 
     @NotNull
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("type")
     private String type;
+    @JsonProperty("description")
     private String description;
+    @JsonProperty("route")
     private String route;
+    @JsonProperty("program")
     private String program;
+    @JsonProperty("locationGroupName")
     private String locationGroupName;
+    @JsonProperty("location")
     private String location;
+    @JsonProperty("key")
     private String key;
+    @JsonProperty("enabled")
     private boolean enabled;
 
     public String getName() {
