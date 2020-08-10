@@ -27,7 +27,7 @@ import java.util.Optional;
  */
 public interface RouteRepository extends JpaRepository<RouteImpl, Long> {
 
-    Optional<RouteImpl> findBypKey(String pKey);
+    Optional<RouteImpl> findBypKey(String persistentKey);
 
     Optional<RouteImpl> findByRouteId(String routeId);
 
