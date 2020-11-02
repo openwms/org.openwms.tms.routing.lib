@@ -39,7 +39,7 @@ OpenWMS.org TMS: Routing Services,org.openwms.common.comm.osip.locu,LocationUpda
 OpenWMS.org TMS: Routing Services,org.openwms.common.comm.osip.upd,UpdateMessageConfiguration,41,0,0,0,13,0,7,0,7,0
 OpenWMS.org TMS: Routing Services,org.openwms.common.comm.osip.upd,UpdateMessageController,11,0,0,0,5,0,2,0,2,0
 OpenWMS.org TMS: Routing Services,org.openwms.common.comm.osip.upd,UpdateMessageListener,34,0,0,0,13,0,3,0,3,0
-OpenWMS.org TMS: Routing Services,org.openwms.tms.routing.app,RoutingAsyncConfiguration,118,0,0,0,34,0,14,0,14,0
+OpenWMS.org TMS: Routing Services,org.openwms.tms.routing.app,RoutingAsyncConfiguration,150,0,0,0,46,0,17,0,17,0
 OpenWMS.org TMS: Routing Services,org.openwms.tms.routing.app,RoutingStandaloneConfiguration,21,0,0,0,2,0,3,0,3,0
 OpenWMS.org TMS: Routing Services,org.openwms.tms.routing.app,RoutingFeignConfiguration,9,0,0,0,2,0,2,0,2,0
 OpenWMS.org TMS: Routing Services,org.openwms.tms.routing.app,CacheJanitor,15,0,0,0,6,0,4,0,4,0
