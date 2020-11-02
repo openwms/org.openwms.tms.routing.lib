@@ -32,6 +32,14 @@ spring:
   zipkin:
     sender:
       type: web
+  rabbitmq:
+    listener:
+      simple:
+        retry:
+          max-attempts: 3
+          enabled: true
+          initial-interval: 1s
+          max-interval: 1s
 
 camunda:
   bpm:
@@ -143,6 +151,22 @@ flowable:
 
 ---
 spring:
+  profiles: ASYNCHRONOUS
+  cloud:
+    config:
+      discovery:
+        enabled: true
+      enabled: true
+    discovery:
+      enabled: true
+
+management:
+  health:
+    rabbit:
+      enabled: true
+
+---
+spring:
   profiles: DEMO
   h2:
     console:
@@ -227,22 +251,6 @@ eureka:
     homePageUrl: ${owms.srv.protocol}://${owms.srv.hostname}:${server.port}/actuator/
     metadata-map:
       config-protocol: ${owms.cfgsrv.protocol:https}
-
----
-spring:
-  profiles: ASYNCHRONOUS
-  cloud:
-    config:
-      discovery:
-        enabled: true
-      enabled: true
-    discovery:
-      enabled: true
-
-management:
-  health:
-    rabbit:
-      enabled: true
 
 ---
 spring:

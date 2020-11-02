@@ -72,6 +72,9 @@ owms:
         routing-key: "*.*.*"
   routing:
     serialization: json
+    dead-letter:
+      exchange-name: dle.routing
+      queue-name: routing-dl-queue
 
 health:
   config:
