@@ -82,7 +82,9 @@ class RouteServiceImpl implements RouteService {
                     .orElseThrow(() -> new NoRouteException(format("No entry in RouteDetails that matches the sourceLocation [%s] and route [%s]", actualLocation, route.getRouteId())))
                     .getNext();
         }
-        LOGGER.debug("Sending to next Location [{}]", asNext);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Sending to next Location [{}]", asNext);
+        }
         responder.sendToLocation(asNext);
     }
 

@@ -6,7 +6,7 @@ workflow, with extensions of the used Workflow Engine.
 # Resources
 Documentation at [GitHub](https://github.com/openwms/org.openwms.tms.routing/wiki)
 
-[![Build status](https://img.shields.io/travis/openwms/org.openwms.tms.routing.svg?style=flat-square)](https://travis-ci.com/openwms/org.openwms.tms.routing)
+[![Build status](https://travis-ci.com/openwms/org.openwms.tms.routing.svg?style=flat-square)](https://travis-ci.com/openwms/org.openwms.tms.routing)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Quality](https://sonarcloud.io/api/project_badges/measure?project=org.openwms:org.openwms.tms.routing&metric=alert_status)](https://sonarcloud.io/dashboard?id=org.openwms:org.openwms.tms.routing)
 [![Join the chat at https://gitter.im/openwms/org.openwms](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/openwms/org.openwms?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
