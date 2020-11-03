@@ -26,7 +26,7 @@ OpenWMS.org TMS: Routing Services,org.openwms.common.location,LocationPK.Builder
 OpenWMS.org TMS: Routing Services,org.openwms.common.location,LocationPK,203,0,22,0,43,0,26,0,15,0
 OpenWMS.org TMS: Routing Services,org.openwms.common.location,LocationGroupController,10,0,0,0,4,0,2,0,2,0
 OpenWMS.org TMS: Routing Services,org.openwms.tms.routing.routes,ExternalStartListener,120,0,2,0,28,0,4,0,3,0
-OpenWMS.org TMS: Routing Services,org.openwms.tms.routing.routes,RouteServiceImpl,154,0,4,0,31,0,11,0,9,0
+OpenWMS.org TMS: Routing Services,org.openwms.tms.routing.routes,RouteServiceImpl,157,0,6,0,32,0,12,0,9,0
 OpenWMS.org TMS: Routing Services,org.openwms.tms.routing.routes,LocationGroupLoader,10,0,0,0,4,0,2,0,2,0
 OpenWMS.org TMS: Routing Services,org.openwms.tms.routing.routes,RouteDetails,29,3,0,0,12,2,7,1,7,1
 OpenWMS.org TMS: Routing Services,org.openwms.tms.routing.routes,RouteSearchAlgorithmImpl,610,0,62,0,104,0,45,0,14,0

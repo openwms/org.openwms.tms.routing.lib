@@ -82,18 +82,20 @@ class RouteServiceImpl implements RouteService {
 <span class="nc" id="L82">                    .orElseThrow(() -&gt; new NoRouteException(format(&quot;No entry in RouteDetails that matches the sourceLocation [%s] and route [%s]&quot;, actualLocation, route.getRouteId())))</span>
 <span class="nc" id="L83">                    .getNext();</span>
         }
-<span class="nc" id="L85">        LOGGER.debug(&quot;Sending to next Location [{}]&quot;, asNext);</span>
-<span class="nc" id="L86">        responder.sendToLocation(asNext);</span>
-<span class="nc" id="L87">    }</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (LOGGER.isDebugEnabled()) {</span>
+<span class="nc" id="L86">            LOGGER.debug(&quot;Sending to next Location [{}]&quot;, asNext);</span>
+        }
+<span class="nc" id="L88">        responder.sendToLocation(asNext);</span>
+<span class="nc" id="L89">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void changeRoute(String routeId) {
-<span class="nc" id="L94">        Route route = routeRepository.findByRouteId(routeId).orElseThrow(() -&gt; new NotFoundException(format(&quot;Route with routeId [%s] was not found&quot;, routeId)));</span>
-<span class="nc" id="L95">        in.put(&quot;route&quot;, route);</span>
-<span class="nc" id="L96">        LOGGER.debug(&quot;Set Route with routeId [{}] in current call context&quot;, routeId);</span>
-<span class="nc" id="L97">    }</span>
+<span class="nc" id="L96">        Route route = routeRepository.findByRouteId(routeId).orElseThrow(() -&gt; new NotFoundException(format(&quot;Route with routeId [%s] was not found&quot;, routeId)));</span>
+<span class="nc" id="L97">        in.put(&quot;route&quot;, route);</span>
+<span class="nc" id="L98">        LOGGER.debug(&quot;Set Route with routeId [{}] in current call context&quot;, routeId);</span>
+<span class="nc" id="L99">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
