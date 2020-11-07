@@ -121,6 +121,9 @@ flowable:
     deploy-resources: false
     servlet:
       load-on-startup: 0
+    async:
+      executor:
+        auto-activate: false
   content:
     enabled: false
     servlet:
@@ -147,7 +150,12 @@ flowable:
     enabled: false
     servlet:
       load-on-startup: 0
+    async-history:
+      executor:
+        auto-activate: false
   jpa-enabled: false
+  async-executor-activate: false
+
 
 ---
 spring:
@@ -192,6 +200,9 @@ flowable:
     deploy-resources: true
     servlet:
       load-on-startup: 1
+    async:
+      executor:
+        auto-activate: true
   content:
     enabled: true
     servlet:
@@ -216,7 +227,12 @@ flowable:
     enabled: true
     servlet:
       load-on-startup: 1
+    async-history:
+      executor:
+        auto-activate: true
   jpa-enabled: true
+  async-executor-activate: true
+
 camunda:
   bpm:
     auto-deployment-enabled: false

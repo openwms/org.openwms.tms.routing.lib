@@ -74,7 +74,7 @@ owms:
     serialization: json
     dead-letter:
       exchange-name: dle.routing
-      queue-name: routing-dl-queue
+      queue-name: dlq-routing-queue
 
 health:
   config:
