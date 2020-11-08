@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * This package contains Spring Boot application configuration classes.
+ * This package contains service provider interface implementations.
  */
-package org.openwms.tms.routing.config;
+package org.openwms.tms.routing.spi;

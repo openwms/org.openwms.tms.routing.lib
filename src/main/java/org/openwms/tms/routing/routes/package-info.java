@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * This package contains Spring Boot application configuration classes.
+ * This package contains types responsible for route and path finding.
  */
-package org.openwms.tms.routing.config;
+package org.openwms.tms.routing.routes;
