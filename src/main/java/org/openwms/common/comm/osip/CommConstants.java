@@ -18,7 +18,7 @@ package org.openwms.common.comm.osip;
 /**
  * A CommConstants.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public final class CommConstants {
 

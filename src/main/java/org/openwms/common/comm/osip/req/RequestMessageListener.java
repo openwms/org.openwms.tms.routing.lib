@@ -28,7 +28,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 /**
  * A RequestMessageListener.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Profile(SpringProfiles.ASYNCHRONOUS_PROFILE)
 @OSIPComponent

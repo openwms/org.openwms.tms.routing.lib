@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Profile;
 /**
  * A UpdateMessageConfiguration.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Profile(SpringProfiles.ASYNCHRONOUS_PROFILE)
 @OSIP

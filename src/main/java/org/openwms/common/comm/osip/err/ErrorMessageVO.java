@@ -30,7 +30,7 @@ import java.util.StringJoiner;
 /**
  * A ErrorMessageVO.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 class ErrorMessageVO implements Serializable {
 

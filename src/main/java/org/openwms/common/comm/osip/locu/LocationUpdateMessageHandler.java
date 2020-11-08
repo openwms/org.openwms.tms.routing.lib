@@ -33,7 +33,7 @@ import static java.lang.String.format;
 /**
  * A LocationUpdateMessageHandler.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @OSIPComponent
 class LocationUpdateMessageHandler {

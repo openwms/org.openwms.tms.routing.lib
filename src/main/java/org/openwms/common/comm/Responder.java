@@ -18,7 +18,7 @@ package org.openwms.common.comm;
 /**
  * A Responder is sending messages to a given target.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface Responder {
 

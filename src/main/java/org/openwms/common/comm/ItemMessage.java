@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * A ItemMessage.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class ItemMessage {
 

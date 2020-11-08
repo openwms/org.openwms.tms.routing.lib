@@ -35,7 +35,7 @@ import static java.lang.String.format;
 /**
  * A ConfigServerResourcePatternResolver.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Primary
 @Component

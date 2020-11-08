@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * A ItemMessageHeader.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class ItemMessageHeader implements Serializable {
 

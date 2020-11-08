@@ -39,7 +39,7 @@ import static java.lang.String.format;
 /**
  * A ItemMessageHandler.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @TxService
 public class ItemMessageHandler {

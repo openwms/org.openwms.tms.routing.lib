@@ -36,7 +36,7 @@ import static org.junit.Assert.fail;
 /**
  * A ExplicitRouteSearchIT.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest(showSql = false)

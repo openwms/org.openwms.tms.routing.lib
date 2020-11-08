@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * A NoRouteException.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class NoRouteException extends RuntimeException {

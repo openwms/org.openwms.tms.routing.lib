@@ -32,7 +32,7 @@ import org.springframework.context.annotation.Profile;
  * services. This is deactivated when the service is packaged and deployed as part of a
  * whole application.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Profile("!INMEM")
 @Configuration

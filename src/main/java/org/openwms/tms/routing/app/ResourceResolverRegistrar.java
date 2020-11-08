@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 /**
  * A ResourceResolverRegistrar.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Component
 public class ResourceResolverRegistrar implements BeanPostProcessor, BeanFactoryPostProcessor {

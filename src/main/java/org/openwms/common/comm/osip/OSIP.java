@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 /**
  * A OSIP annotation marks a type as OSIP type.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @ConditionalOnExpression("${owms.driver.osip.enabled}")
 @Retention(RetentionPolicy.RUNTIME)

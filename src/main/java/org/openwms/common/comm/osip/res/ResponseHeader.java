@@ -23,7 +23,7 @@ import java.io.Serializable;
 /**
  * A ResponseHeader.
  *
- * @author <a href="mailto:hscherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class ResponseHeader implements Serializable {
     @JsonProperty(CommConstants.SENDER)
