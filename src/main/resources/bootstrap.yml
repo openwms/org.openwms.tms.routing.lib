@@ -30,8 +30,7 @@ spring:
   jackson:
     date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
   zipkin:
-    sender:
-      type: web
+    enabled: false
   rabbitmq:
     listener:
       simple:
@@ -160,13 +159,6 @@ flowable:
 ---
 spring:
   profiles: ASYNCHRONOUS
-  cloud:
-    config:
-      discovery:
-        enabled: true
-      enabled: true
-    discovery:
-      enabled: true
 
 management:
   health:
@@ -185,6 +177,21 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
+
+---
+spring:
+  profiles: DISTRIBUTED
+  cloud:
+    config:
+      discovery:
+        enabled: true
+      enabled: true
+    discovery:
+      enabled: true
+  zipkin:
+    sender:
+      type: web
+    enabled: true
 
 ---
 spring:
