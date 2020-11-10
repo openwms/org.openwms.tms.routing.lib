@@ -94,13 +94,14 @@
       </header>
         <main id="bodyColumn" >
 <h1>Development Process</h1>
-<p>The TMS Routing component consists of a frontend and a backend software component. Both parts are considered in the common Maven build process. After you&#x2019;ve cloned the repository you call Maven to build the project and create the deliverables:</p>
+<p>The TMS Routing service consists of a frontend and a backend part. Both parts are considered in the common Maven build process. After you&#x2019;ve cloned the repository you call Maven to build the project and create the executable:</p>
 
 <div class="source">
 <div class="source"><pre class="prettyprint linenums">$ mvn package
 </pre></div></div>
 
 <h1>Release</h1>
+<p>Building the service and deploying it to the Sonatype staging repository works like:</p>
 
 <div class="source">
 <div class="source"><pre class="prettyprint linenums">$ mvn clean deploy -Prelease,gpg
