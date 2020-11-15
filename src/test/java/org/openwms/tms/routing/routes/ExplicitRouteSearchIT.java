@@ -15,9 +15,8 @@
  */
 package org.openwms.tms.routing.routes;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openwms.common.comm.NoRouteException;
 import org.openwms.tms.routing.Route;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +26,20 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * A ExplicitRouteSearchIT.
  *
  * @author Heiko Scherrer
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @DataJpaTest(showSql = false)
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "org.openwms")
@@ -108,19 +109,19 @@ public class ExplicitRouteSearchIT {
     public @Test
     void shall_pass_when_at_least_one_target_is_given() {
         Route result = testee.findBy("STCK/0001/0001/0000/0000", "STCK/0001/0002/0000/0000", null);
-        Assert.assertNotEquals("", result.getRouteId());
+        assertNotEquals("", result.getRouteId());
     }
 
     public @Test
     void shall_pass_when_at_least_one_target_is_given2() {
         Route result = testee.findBy("STCK/0001/0001/0000/0000", null, "FGRECEIVING");
-        Assert.assertEquals("REC_CONV", result.getRouteId());
+        assertEquals("REC_CONV", result.getRouteId());
     }
 
     public @Test
     void shall_pass_when_all_targets_are_given() {
         Route result = testee.findBy("STCK/0001/0001/0000/0000", "STCK/0001/0002/0000/0000", "FGRECEIVING");
-        Assert.assertEquals("SRC_TRG", result.getRouteId());
+        assertEquals("SRC_TRG", result.getRouteId());
     }
 
     @TestConfiguration

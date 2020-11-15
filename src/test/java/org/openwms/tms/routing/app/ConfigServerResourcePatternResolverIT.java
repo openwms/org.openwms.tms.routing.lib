@@ -15,17 +15,17 @@
  */
 package org.openwms.tms.routing.app;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openwms.tms.routing.RoutingServiceRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.io.Resource;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.client.RestTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,8 +35,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Heiko Scherrer
  */
-@Ignore("work in progress")
-@RunWith(SpringRunner.class)
+@Disabled("work in progress")
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = RoutingServiceRunner.class)
 public class ConfigServerResourcePatternResolverIT {
 
@@ -51,12 +51,12 @@ public class ConfigServerResourcePatternResolverIT {
 
     private ConfigServerResourcePatternResolver testee;
 
-    @Before
+    @BeforeEach
     public void onBefore() {
         testee = new ConfigServerResourcePatternResolver(restTemplate, "openwms-config", "http", "user", "sa");
     }
 
-    @Ignore("work in progress")
+    @Disabled("work in progress")
     public final
     @Test
     void shall_resolve_from_GitHub() {
