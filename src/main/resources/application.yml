@@ -264,10 +264,11 @@ spring:
   config:
     activate:
       on-profile: DISTRIBUTED
+    import: configserver:http://localhost:8099
   cloud:
     config:
-      discovery:
-        enabled: true
+#      discovery:
+#        enabled: true
       enabled: true
     discovery:
       enabled: true
