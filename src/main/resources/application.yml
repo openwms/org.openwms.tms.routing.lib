@@ -157,7 +157,6 @@ flowable:
   jpa-enabled: false
   async-executor-activate: false
 
-
 ---
 spring:
   config:
