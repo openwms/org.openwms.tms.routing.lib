@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RoutingAsyncConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing.app</a> &gt; <span class="el_source">RoutingAsyncConfiguration.java</span></div><h1>RoutingAsyncConfiguration.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2018 Heiko Scherrer
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.openwms.tms.routing.app;
+
+import org.openwms.core.SpringProfiles;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.QueueBuilder;
+import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.amqp.support.converter.SerializerMessageConverter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.retry.backoff.ExponentialBackOffPolicy;
+import org.springframework.retry.support.RetryTemplate;
+
+import static org.ameba.LoggingCategories.BOOT;
+
+/**
+ * A RoutingAsyncConfiguration is activated when the service uses asynchronous
+ * communication to access other services.
+ *
+ * @author Heiko Scherrer
+ */
+@Profile(SpringProfiles.ASYNCHRONOUS_PROFILE)
+@EnableRabbit
+@Configuration
+<span class="nc" id="L52">public class RoutingAsyncConfiguration {</span>
+
+<span class="nc" id="L54">    private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(BOOT);</span>
+
+    @ConditionalOnExpression(&quot;'${owms.routing.serialization}'=='json'&quot;)
+    @Bean
+    MessageConverter messageConverter() {
+<span class="nc" id="L59">        Jackson2JsonMessageConverter messageConverter = new Jackson2JsonMessageConverter();</span>
+<span class="nc" id="L60">        BOOT_LOGGER.info(&quot;Using JSON serialization over AMQP&quot;);</span>
+<span class="nc" id="L61">        return messageConverter;</span>
+    }
+
+    @ConditionalOnExpression(&quot;'${owms.routing.serialization}'=='barray'&quot;)
+    @Bean
+    MessageConverter serializerMessageConverter() {
+<span class="nc" id="L67">        SerializerMessageConverter messageConverter = new SerializerMessageConverter();</span>
+<span class="nc" id="L68">        BOOT_LOGGER.info(&quot;Using byte array serialization over AMQP&quot;);</span>
+<span class="nc" id="L69">        return messageConverter;</span>
+    }
+
+    @Bean
+    RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory,
+            MessageConverter messageConverter) {
+<span class="nc" id="L75">        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);</span>
+<span class="nc" id="L76">        ExponentialBackOffPolicy backOffPolicy = new ExponentialBackOffPolicy();</span>
+<span class="nc" id="L77">        backOffPolicy.setMultiplier(2);</span>
+<span class="nc" id="L78">        backOffPolicy.setMaxInterval(15000);</span>
+<span class="nc" id="L79">        backOffPolicy.setInitialInterval(500);</span>
+<span class="nc" id="L80">        RetryTemplate retryTemplate = new RetryTemplate();</span>
+<span class="nc" id="L81">        retryTemplate.setBackOffPolicy(backOffPolicy);</span>
+<span class="nc" id="L82">        rabbitTemplate.setRetryTemplate(retryTemplate);</span>
+<span class="nc" id="L83">        rabbitTemplate.setMessageConverter(messageConverter);</span>
+<span class="nc" id="L84">        return rabbitTemplate;</span>
+    }
+
+    @Bean
+    TopicExchange tmsRequestsExchange(@Value(&quot;${owms.requests.routing.to.exchange-name}&quot;) String exchangeName) {
+<span class="nc" id="L89">        return new TopicExchange(exchangeName, true, false);</span>
+    }
+
+    @Bean
+    Queue tmsRequestsQueue(@Value(&quot;${owms.requests.routing.to.queue-name}&quot;) String queueName,
+            @Value(&quot;${owms.routing.dead-letter.exchange-name}&quot;) String exchangeName) {
+<span class="nc" id="L95">        return QueueBuilder.durable(queueName)</span>
+<span class="nc" id="L96">                .withArgument(&quot;x-dead-letter-exchange&quot;, exchangeName)</span>
+<span class="nc" id="L97">                .withArgument(&quot;x-dead-letter-routing-key&quot;, &quot;poison-message&quot;)</span>
+<span class="nc" id="L98">                .build();</span>
+    }
+
+    @Bean
+    Binding tmsRequestsBinding(TopicExchange tmsRequestsExchange, Queue tmsRequestsQueue, @Value(&quot;${owms.requests.routing.to.routing-key}&quot;) String routingKey) {
+<span class="nc" id="L103">        return BindingBuilder</span>
+<span class="nc" id="L104">                .bind(tmsRequestsQueue)</span>
+<span class="nc" id="L105">                .to(tmsRequestsExchange)</span>
+<span class="nc" id="L106">                .with(routingKey);</span>
+    }
+
+    /*~ -------------- Location Updates --------------- */
+    @Bean
+    TopicExchange locExchange(@Value(&quot;${owms.events.common.loc.exchange-name}&quot;) String exchangeName) {
+<span class="nc" id="L112">        return new TopicExchange(exchangeName, true, false);</span>
+    }
+
+    @Bean
+    Queue locQueue(@Value(&quot;${owms.events.common.loc.queue-name}&quot;) String queueName,
+            @Value(&quot;${owms.routing.dead-letter.exchange-name}&quot;) String exchangeName) {
+<span class="nc" id="L118">        return QueueBuilder.nonDurable(queueName)</span>
+<span class="nc" id="L119">                .withArgument(&quot;x-dead-letter-exchange&quot;, exchangeName)</span>
+<span class="nc" id="L120">                .withArgument(&quot;x-dead-letter-routing-key&quot;, &quot;poison-message&quot;)</span>
+<span class="nc" id="L121">                .build();</span>
+    }
+
+    @Bean
+    Binding locBinding(TopicExchange locExchange, Queue locQueue, @Value(&quot;${owms.events.common.loc.routing-key}&quot;) String routingKey) {
+<span class="nc" id="L126">        return BindingBuilder.bind(locQueue)</span>
+<span class="nc" id="L127">                .to(locExchange)</span>
+<span class="nc" id="L128">                .with(routingKey);</span>
+    }
+
+    /*~ -------------- LocationGroup Updates --------------- */
+    @Bean
+    TopicExchange lgExchange(@Value(&quot;${owms.events.common.lg.exchange-name}&quot;) String exchangeName) {
+<span class="nc" id="L134">        return new TopicExchange(exchangeName, true, false);</span>
+    }
+
+    @Bean
+    Queue lgQueue(@Value(&quot;${owms.events.common.lg.queue-name}&quot;) String queueName,
+            @Value(&quot;${owms.routing.dead-letter.exchange-name}&quot;) String exchangeName) {
+<span class="nc" id="L140">        return QueueBuilder.nonDurable(queueName)</span>
+<span class="nc" id="L141">                .withArgument(&quot;x-dead-letter-exchange&quot;, exchangeName)</span>
+<span class="nc" id="L142">                .withArgument(&quot;x-dead-letter-routing-key&quot;, &quot;poison-message&quot;)</span>
+<span class="nc" id="L143">                .build();</span>
+    }
+
+    @Bean
+    Binding lgBinding(TopicExchange lgExchange, Queue lgQueue, @Value(&quot;${owms.events.common.lg.routing-key}&quot;) String routingKey) {
+<span class="nc" id="L148">        return BindingBuilder.bind(lgQueue)</span>
+<span class="nc" id="L149">                .to(lgExchange)</span>
+<span class="nc" id="L150">                .with(routingKey);</span>
+    }
+
+    @Bean
+    DirectExchange dlExchange(@Value(&quot;${owms.routing.dead-letter.exchange-name}&quot;) String exchangeName) {
+<span class="nc" id="L155">        return new DirectExchange(exchangeName);</span>
+    }
+
+    @Bean
+    Queue dlq(@Value(&quot;${owms.routing.dead-letter.queue-name}&quot;) String queueName) {
+<span class="nc" id="L160">        return QueueBuilder.durable(queueName).build();</span>
+    }
+
+    @Bean
+    Binding dlBinding(@Value(&quot;${owms.routing.dead-letter.queue-name}&quot;) String queueName,
+            @Value(&quot;${owms.routing.dead-letter.exchange-name}&quot;) String exchangeName) {
+<span class="nc" id="L166">        return BindingBuilder.bind(dlq(queueName)).to(dlExchange(exchangeName)).with(&quot;poison-message&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

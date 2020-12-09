@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Action.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing</a> &gt; <span class="el_source">Action.java</span></div><h1>Action.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2005-2020 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.openwms.tms.routing;
+
+import org.ameba.integration.jpa.ApplicationEntity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Map;
+import java.util.StringJoiner;
+
+/**
+ * A Action.
+ *
+ * @author Heiko Scherrer
+ */
+@Entity
+@Table(name = &quot;RSRV_ACTION&quot;)
+public class Action extends ApplicationEntity implements Serializable {
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = &quot;C_ROUTE_ID&quot;)
+    private RouteImpl route;
+    @NotNull
+    @Column(name = &quot;C_PROGRAM_NAME&quot;)
+    private String programKey;
+    @NotNull
+    @Column(name = &quot;C_NAME&quot;, unique = true)
+    private String name;
+    @Column(name = &quot;C_LOCATION_KEY&quot;)
+    private String locationKey;
+    @Column(name = &quot;C_LOCATION_GROUP_NAME&quot;)
+    private String locationGroupName;
+    @NotNull
+    @Column(name = &quot;C_ACTION_TYPE&quot;)
+    private String actionType;
+    @NotNull
+    @Column(name = &quot;C_DESCRIPTION&quot;)
+    private String description;
+<span class="pc" id="L59">    @Column(name = &quot;C_ENABLED&quot;)</span>
+    private boolean enabled = true;
+    @Column(name = &quot;C_FLEX_1&quot;)
+    private String flexField1;
+    @Column(name = &quot;C_FLEX_2&quot;)
+    private String flexField2;
+    @Column(name = &quot;C_FLEX_3&quot;)
+    private String flexField3;
+    @Column(name = &quot;C_FLEX_4&quot;)
+    private String flexField4;
+    @Column(name = &quot;C_FLEX_5&quot;)
+    private String flexField5;
+
+    /** Dear JPA... */
+<span class="fc" id="L73">    protected Action() {</span>
+<span class="fc" id="L74">    }</span>
+
+<span class="nc" id="L76">    public Action(RouteImpl route, String name, String locationKey, String locationGroupName, String actionType, String programKey, String description) {</span>
+<span class="nc" id="L77">        this.route = route;</span>
+<span class="nc" id="L78">        this.name = name;</span>
+<span class="nc" id="L79">        this.locationKey = locationKey;</span>
+<span class="nc" id="L80">        this.locationGroupName = locationGroupName;</span>
+<span class="nc" id="L81">        this.actionType = actionType;</span>
+<span class="nc" id="L82">        this.programKey = programKey;</span>
+<span class="nc" id="L83">        this.description = description;</span>
+<span class="nc" id="L84">    }</span>
+
+    public Map&lt;String, Object&gt; getFlexVariables() {
+<span class="nc" id="L87">        return Map.of(&quot;flexField1&quot;, flexField1, &quot;flexField2&quot;, flexField2, &quot;flexField3&quot;, flexField3,&quot;flexField4&quot;, flexField4,&quot;flexField5&quot;, flexField5);</span>
+    }
+
+    public RouteImpl getRoute() {
+<span class="nc" id="L91">        return route;</span>
+    }
+
+    public void setRoute(RouteImpl route) {
+<span class="nc" id="L95">        this.route = route;</span>
+<span class="nc" id="L96">    }</span>
+
+    public String getProgramKey() {
+<span class="nc" id="L99">        return programKey;</span>
+    }
+
+    public String getName() {
+<span class="nc" id="L103">        return name;</span>
+    }
+
+    public String getLocationKey() {
+<span class="nc" id="L107">        return locationKey;</span>
+    }
+
+    public String getLocationGroupName() {
+<span class="nc" id="L111">        return locationGroupName;</span>
+    }
+
+    public String getActionType() {
+<span class="nc" id="L115">        return actionType;</span>
+    }
+
+    public String getDescription() {
+<span class="nc" id="L119">        return description;</span>
+    }
+
+    public boolean isEnabled() {
+<span class="nc" id="L123">        return enabled;</span>
+    }
+
+    public void setEnabled(boolean enabled) {
+<span class="nc" id="L127">        this.enabled = enabled;</span>
+<span class="nc" id="L128">    }</span>
+
+    public String getFlexField1() {
+<span class="nc" id="L131">        return flexField1;</span>
+    }
+
+    public String getFlexField2() {
+<span class="nc" id="L135">        return flexField2;</span>
+    }
+
+    public String getFlexField3() {
+<span class="nc" id="L139">        return flexField3;</span>
+    }
+
+    public String getFlexField4() {
+<span class="nc" id="L143">        return flexField4;</span>
+    }
+
+    public String getFlexField5() {
+<span class="nc" id="L147">        return flexField5;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L152">        return new StringJoiner(&quot;, &quot;, Action.class.getSimpleName() + &quot;[&quot;, &quot;]&quot;).add(&quot;route=&quot; + route).add(&quot;programKey='&quot; + programKey + &quot;'&quot;).add(&quot;name='&quot; + name + &quot;'&quot;).add(&quot;locationKey='&quot; + locationKey + &quot;'&quot;).add(&quot;locationGroupName='&quot; + locationGroupName + &quot;'&quot;).add(&quot;actionType='&quot; + actionType + &quot;'&quot;).add(&quot;description='&quot; + description + &quot;'&quot;).add(&quot;enabled=&quot; + enabled).add(&quot;flexField1='&quot; + flexField1 + &quot;'&quot;).add(&quot;flexField2='&quot; + flexField2 + &quot;'&quot;).add(&quot;flexField3='&quot; + flexField3 + &quot;'&quot;).add(&quot;flexField4='&quot; + flexField4 + &quot;'&quot;).add(&quot;flexField5='&quot; + flexField5 + &quot;'&quot;).toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
