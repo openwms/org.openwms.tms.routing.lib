@@ -68,12 +68,13 @@
         <common-service.version>1.7.0-SNAPSHOT</common-service.version>
         <core.version>1.9.0-SNAPSHOT</core.version>
         <flowable.version>6.4.2</flowable.version>
-        <groovy-jsr223.version>2.4.7</groovy-jsr223.version>
+        <groovy-jsr223.version>2.4.21</groovy-jsr223.version>
         <guava.version>30.0-jre</guava.version>
         <servo-core.version>0.12.21</servo-core.version>
         <spring-cloud-dependencies.version>2020.0.0-SNAPSHOT</spring-cloud-dependencies.version>
         <spring-cloud-sleuth-dependencies.version>3.0.0-SNAPSHOT</spring-cloud-sleuth-dependencies.version>
         <transportation-service.version>1.4.0-SNAPSHOT</transportation-service.version>
+        <xstream.version>1.4.14</xstream.version>
     </properties>
 
     <reporting>
@@ -192,6 +193,11 @@
                 <groupId>com.netflix.servo</groupId>
                 <artifactId>servo-core</artifactId>
                 <version>${servo-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.thoughtworks.xstream</groupId>
+                <artifactId>xstream</artifactId>
+                <version>${xstream.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.interface21</groupId>
@@ -336,6 +342,11 @@
                     <groupId>com.netflix.servo</groupId>
                     <artifactId>servo-core</artifactId>
                 </exclusion>
+                <exclusion>
+                    <!-- Internal clash -->
+                    <groupId>com.thoughtworks.xstream</groupId>
+                    <artifactId>xstream</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -388,6 +399,11 @@
         <dependency>
             <groupId>com.netflix.servo</groupId>
             <artifactId>servo-core</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
             <optional>true</optional>
         </dependency>
 
