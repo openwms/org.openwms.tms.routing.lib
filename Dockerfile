@@ -1,5 +1,4 @@
-FROM azul/zulu-openjdk-alpine:11-jre
-VOLUME /tmp
-ARG JAVA_OPTS="-noverify -Xss512k"
+FROM adoptopenjdk/openjdk11-openj9:jre-11.0.7_10_openj9-0.20.0-alpine
+ARG JAVA_OPTS="-Xss512k -noverify"
 ADD target/openwms-tms-routing-exec.jar app.jar
 ENTRYPOINT exec java $JAVA_OPTS -jar /app.jar
