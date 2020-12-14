@@ -24,6 +24,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
@@ -84,7 +85,13 @@ public class Action extends ApplicationEntity implements Serializable {
     }
 
     public Map<String, Object> getFlexVariables() {
-        return Map.of("flexField1", flexField1, "flexField2", flexField2, "flexField3", flexField3,"flexField4", flexField4,"flexField5", flexField5);
+        Map<String, Object> result = new HashMap<>(5);
+        result.put("flexField1", flexField1);
+        result.put("flexField2", flexField2);
+        result.put("flexField3", flexField3);
+        result.put("flexField4", flexField4);
+        result.put("flexField5", flexField5);
+        return result;
     }
 
     public RouteImpl getRoute() {

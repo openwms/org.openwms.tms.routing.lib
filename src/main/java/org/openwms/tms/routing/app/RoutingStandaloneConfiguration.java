@@ -18,10 +18,12 @@ package org.openwms.tms.routing.app;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * A RoutingStandaloneConfiguration is activated when the service is deployed as a
@@ -33,6 +35,11 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @EnableDiscoveryClient
 public class RoutingStandaloneConfiguration {
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplateBuilder().basicAuthentication("user", "sa").build();
+    }
 
     @Bean
     MeterRegistryCustomizer<MeterRegistry> metricsCommonTags(@Value("${spring.application.name}") String applicationName) {
