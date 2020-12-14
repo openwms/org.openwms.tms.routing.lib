@@ -18,10 +18,12 @@ package org.openwms.tms.routing.app;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * A RoutingStandaloneConfiguration is activated when the service is deployed as a
@@ -32,11 +34,16 @@ import org.springframework.context.annotation.Profile;
 @Profile(&quot;!INMEM&quot;)
 @Configuration
 @EnableDiscoveryClient
-<span class="nc" id="L35">public class RoutingStandaloneConfiguration {</span>
+<span class="nc" id="L37">public class RoutingStandaloneConfiguration {</span>
+
+    @Bean
+    public RestTemplate restTemplate() {
+<span class="nc" id="L41">        return new RestTemplateBuilder().basicAuthentication(&quot;user&quot;, &quot;sa&quot;).build();</span>
+    }
 
     @Bean
     MeterRegistryCustomizer&lt;MeterRegistry&gt; metricsCommonTags(@Value(&quot;${spring.application.name}&quot;) String applicationName) {
-<span class="nc" id="L39">        return registry -&gt; registry.config().commonTags(&quot;application&quot;, applicationName);</span>
+<span class="nc" id="L46">        return registry -&gt; registry.config().commonTags(&quot;application&quot;, applicationName);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
