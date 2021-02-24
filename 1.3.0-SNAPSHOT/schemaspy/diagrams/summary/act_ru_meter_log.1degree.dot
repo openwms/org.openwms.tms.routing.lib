@@ -1,0 +1,35 @@
+// dot 2.43.0 on Linux 5.4.0-1039-azure
+// SchemaSpy rev Unknown
+digraph "act_ru_meter_log" {
+  graph [
+    rankdir="RL"
+    bgcolor="#f7f7f7"
+    nodesep="0.18"
+    ranksep="0.46"
+    fontname="Helvetica"
+    fontsize="11"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="11"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
+  "act_ru_meter_log" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">act_ru_meter_log</TD></TR>
+      <TR><TD PORT="id_" COLSPAN="3" BGCOLOR="#bed1b8" ALIGN="LEFT">id_</TD></TR>
+      <TR><TD PORT="name_" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">name_</TD></TR>
+      <TR><TD PORT="reporter_" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">reporter_</TD></TR>
+      <TR><TD PORT="value_" COLSPAN="3" ALIGN="LEFT">value_</TD></TR>
+      <TR><TD PORT="timestamp_" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">timestamp_</TD></TR>
+      <TR><TD PORT="milliseconds_" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">milliseconds_</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">10 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/act_ru_meter_log.html"
+    tooltip="act_ru_meter_log"
+  ];
+}
