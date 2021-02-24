@@ -13,15 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.common.comm;
+package org.openwms.tms.routing;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * A CommPackage.
+ * A RunSchemaGenerationTest is an empty test class to bootstrap the test ApplicationContext and run the database schema generation. It is
+ * a Unit test and is executed with the surefire plugin.
  *
  * @author Heiko Scherrer
  */
-public final class CommPackage {
+@RoutingApplicationTest
+class RunSchemaGenerationTest {
 
-    private CommPackage() {
+    @Test
+    void runSchemaGeneration() {
+        assertEquals(this.getClass(), (RunSchemaGenerationTest.class));
     }
 }
