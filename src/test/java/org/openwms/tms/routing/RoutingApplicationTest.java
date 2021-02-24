@@ -18,8 +18,6 @@ package org.openwms.tms.routing;
 import org.ameba.test.categories.SpringTestSupport;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlGroup;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -39,9 +37,6 @@ import java.lang.annotation.Target;
 @Inherited
 @EnableSpringConfigured
 @SpringTestSupport
-@SqlGroup({
-        @Sql(scripts = "classpath:import.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-})
 @SpringBootTest(classes = {
         RoutingServiceRunner.class
 }, properties = {
