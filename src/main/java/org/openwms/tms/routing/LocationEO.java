@@ -21,16 +21,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+import java.util.Objects;
 
 /**
- * A LocationEO.
+ * A LocationEO is an Entity Object (EO) that represents a Location in a simple way.
  *
  * @author Heiko Scherrer
  */
 @Entity
 @Table(name = "RSRV_LOCATION")
-public class LocationEO extends ApplicationEntity implements Serializable {
+public class LocationEO extends ApplicationEntity {
 
     @NotNull
     @Column(name = "C_LOCATION_ID")
@@ -47,5 +47,30 @@ public class LocationEO extends ApplicationEntity implements Serializable {
 
     public String getLocationGroupName() {
         return locationGroupName;
+    }
+
+    @Override
+    public String toString() {
+        return locationId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        LocationEO that = (LocationEO) o;
+        return Objects.equals(locationId, that.locationId) && Objects.equals(locationGroupName, that.locationGroupName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), locationId, locationGroupName);
     }
 }

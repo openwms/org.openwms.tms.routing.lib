@@ -52,6 +52,9 @@ import static org.ameba.LoggingCategories.BOOT;
 public class RoutingAsyncConfiguration {
 
     private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(BOOT);
+    public static final String X_DEAD_LETTER_EXCHANGE = "x-dead-letter-exchange";
+    public static final String X_DEAD_LETTER_ROUTING_KEY = "x-dead-letter-routing-key";
+    public static final String POISON_MESSAGE = "poison-message";
 
     @ConditionalOnExpression("'${owms.routing.serialization}'=='json'")
     @Bean
@@ -93,8 +96,8 @@ public class RoutingAsyncConfiguration {
     Queue tmsRequestsQueue(@Value("${owms.requests.routing.to.queue-name}") String queueName,
             @Value("${owms.routing.dead-letter.exchange-name}") String exchangeName) {
         return QueueBuilder.durable(queueName)
-                .withArgument("x-dead-letter-exchange", exchangeName)
-                .withArgument("x-dead-letter-routing-key", "poison-message")
+                .withArgument(X_DEAD_LETTER_EXCHANGE, exchangeName)
+                .withArgument(X_DEAD_LETTER_ROUTING_KEY, POISON_MESSAGE)
                 .build();
     }
 
@@ -116,8 +119,8 @@ public class RoutingAsyncConfiguration {
     Queue locQueue(@Value("${owms.events.common.loc.queue-name}") String queueName,
             @Value("${owms.routing.dead-letter.exchange-name}") String exchangeName) {
         return QueueBuilder.nonDurable(queueName)
-                .withArgument("x-dead-letter-exchange", exchangeName)
-                .withArgument("x-dead-letter-routing-key", "poison-message")
+                .withArgument(X_DEAD_LETTER_EXCHANGE, exchangeName)
+                .withArgument(X_DEAD_LETTER_ROUTING_KEY, POISON_MESSAGE)
                 .build();
     }
 
@@ -138,8 +141,8 @@ public class RoutingAsyncConfiguration {
     Queue lgQueue(@Value("${owms.events.common.lg.queue-name}") String queueName,
             @Value("${owms.routing.dead-letter.exchange-name}") String exchangeName) {
         return QueueBuilder.nonDurable(queueName)
-                .withArgument("x-dead-letter-exchange", exchangeName)
-                .withArgument("x-dead-letter-routing-key", "poison-message")
+                .withArgument(X_DEAD_LETTER_EXCHANGE, exchangeName)
+                .withArgument(X_DEAD_LETTER_ROUTING_KEY, POISON_MESSAGE)
                 .build();
     }
 
@@ -163,6 +166,6 @@ public class RoutingAsyncConfiguration {
     @Bean
     Binding dlBinding(@Value("${owms.routing.dead-letter.queue-name}") String queueName,
             @Value("${owms.routing.dead-letter.exchange-name}") String exchangeName) {
-        return BindingBuilder.bind(dlq(queueName)).to(dlExchange(exchangeName)).with("poison-message");
+        return BindingBuilder.bind(dlq(queueName)).to(dlExchange(exchangeName)).with(POISON_MESSAGE);
     }
 }

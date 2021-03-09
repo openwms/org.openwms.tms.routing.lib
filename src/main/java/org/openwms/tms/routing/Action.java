@@ -23,19 +23,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
- * A Action.
+ * A Action declares what needs to be done (executed) in case an event or trigger occurs at a given Location or LocationGroup.
  *
  * @author Heiko Scherrer
  */
 @Entity
 @Table(name = "RSRV_ACTION")
-public class Action extends ApplicationEntity implements Serializable {
+public class Action extends ApplicationEntity {
 
     @NotNull
     @ManyToOne
@@ -157,5 +157,30 @@ public class Action extends ApplicationEntity implements Serializable {
     @Override
     public String toString() {
         return new StringJoiner(", ", Action.class.getSimpleName() + "[", "]").add("route=" + route).add("programKey='" + programKey + "'").add("name='" + name + "'").add("locationKey='" + locationKey + "'").add("locationGroupName='" + locationGroupName + "'").add("actionType='" + actionType + "'").add("description='" + description + "'").add("enabled=" + enabled).add("flexField1='" + flexField1 + "'").add("flexField2='" + flexField2 + "'").add("flexField3='" + flexField3 + "'").add("flexField4='" + flexField4 + "'").add("flexField5='" + flexField5 + "'").toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        Action action = (Action) o;
+        return enabled == action.enabled && Objects.equals(route, action.route) && Objects.equals(programKey, action.programKey)
+                && Objects.equals(name, action.name) && Objects.equals(locationKey, action.locationKey)
+                && Objects.equals(locationGroupName, action.locationGroupName) && Objects.equals(actionType, action.actionType)
+                && Objects.equals(description, action.description) && Objects.equals(flexField1, action.flexField1)
+                && Objects.equals(flexField2, action.flexField2) && Objects.equals(flexField3, action.flexField3)
+                && Objects.equals(flexField4, action.flexField4) && Objects.equals(flexField5, action.flexField5);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), route, programKey, name, locationKey, locationGroupName, actionType, description, enabled, flexField1, flexField2, flexField3, flexField4, flexField5);
     }
 }
