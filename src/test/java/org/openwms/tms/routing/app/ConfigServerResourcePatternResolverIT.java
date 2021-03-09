@@ -38,7 +38,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Disabled("work in progress")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = RoutingServiceRunner.class)
-public class ConfigServerResourcePatternResolverIT {
+class ConfigServerResourcePatternResolverIT {
 
     @TestConfiguration
     @ComponentScan("org.openwms")
@@ -57,7 +57,6 @@ public class ConfigServerResourcePatternResolverIT {
     }
 
     @Disabled("work in progress")
-    public final
     @Test
     void shall_resolve_from_GitHub() {
         Resource resource = testee.getResource("config:routing-service");

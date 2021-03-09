@@ -45,13 +45,12 @@ import static org.junit.jupiter.api.Assertions.fail;
 @EnableJpaRepositories(basePackages = "org.openwms")
 @EntityScan(basePackages = "org.openwms")
 @ActiveProfiles("SIMPLE")
-public class ExplicitRouteSearchIT {
+class ExplicitRouteSearchIT {
 
     @Autowired
     private ExplicitRouteSearch testee;
 
-
-    public @Test
+    @Test
     void shall_fail_when_no_source_is_given() {
         try {
             testee.findBy(null, "IPUNKT", "LAGER");
@@ -62,7 +61,7 @@ public class ExplicitRouteSearchIT {
         }
     }
 
-    public @Test
+    @Test
     void shall_fail_when_no_target_is_given() {
         try {
             testee.findBy("STCK/0001/0001/0000/0000", null, null);
@@ -73,7 +72,7 @@ public class ExplicitRouteSearchIT {
         }
     }
 
-    public @Test
+    @Test
     void shall_fail_when_no_target_is_given3() {
         try {
             testee.findBy("STCK/0001/0001/0000/0000", " ", null);
@@ -84,7 +83,7 @@ public class ExplicitRouteSearchIT {
         }
     }
 
-    public @Test
+    @Test
     void shall_fail_when_no_target_is_given4() {
         try {
             testee.findBy("STCK/0001/0001/0000/0000", null, " ");
@@ -95,7 +94,7 @@ public class ExplicitRouteSearchIT {
         }
     }
 
-    public @Test
+    @Test
     void shall_fail_with_invalid_target() {
         try {
             testee.findBy("STCK/0001/0001/0000/0000", "", "STOCK");
@@ -106,13 +105,13 @@ public class ExplicitRouteSearchIT {
         }
     }
 
-    public @Test
+    @Test
     void shall_pass_when_at_least_one_target_is_given() {
         Route result = testee.findBy("STCK/0001/0001/0000/0000", "STCK/0001/0002/0000/0000", null);
         assertNotEquals("", result.getRouteId());
     }
 
-    public @Test
+    @Test
     void shall_pass_when_at_least_one_target_is_given2() {
         Route result = testee.findBy("STCK/0001/0001/0000/0000", null, "FGRECEIVING");
         assertEquals("REC_CONV", result.getRouteId());

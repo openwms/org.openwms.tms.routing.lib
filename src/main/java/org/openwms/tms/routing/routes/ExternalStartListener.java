@@ -45,6 +45,7 @@ import static java.lang.String.format;
 class ExternalStartListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExternalStartListener.class);
+    public static final String RESPONSE_STATE_CHANGE = "response.state.change";
     private final TransportOrderApi transportOrderApi;
     private final RouteSearchAlgorithm routeSearch;
     private final AmqpTemplate amqpTemplate;
@@ -66,13 +67,13 @@ class ExternalStartListener {
                 TransportOrderVO vo = transportOrderApi.findByPKey(request.getTransportOrderPkey());
                 Route route = routeSearch.findBy(vo.getSourceLocation(), vo.getTargetLocation(), vo.getTargetLocationGroup());
                 LOGGER.debug("TransportOrder to start has a Route [{}] ", route.getRouteId());
-                amqpTemplate.convertAndSend(exchangeName, "response.state.change", new StateChangeResponse(request, "STARTED", null));
+                amqpTemplate.convertAndSend(exchangeName, RESPONSE_STATE_CHANGE, new StateChangeResponse(request, "STARTED", null));
             } catch (NoRouteException ex) {
 
                 // not that bad we know no Route exists...
                 String msg = format("A TransportOrder was requested to start that has no Route. PKey: [%s]", request.getTransportOrderPkey());
                 LOGGER.warn(msg, msg);
-                amqpTemplate.convertAndSend(exchangeName, "response.state.change", new StateChangeResponse(request, "XX",
+                amqpTemplate.convertAndSend(exchangeName, RESPONSE_STATE_CHANGE, new StateChangeResponse(request, "XX",
                         MessageVO.newBuilder()
                                 .message(msg)
                                 .build()
@@ -80,12 +81,11 @@ class ExternalStartListener {
             } catch (Exception ex) {
                 String msg = format("Generic exception. Route for TransportOrder [%s] could not be determined", request.getTransportOrderPkey());
                 LOGGER.warn(msg, msg);
-                amqpTemplate.convertAndSend(exchangeName, "response.state.change", new StateChangeResponse(request, "XX",
+                amqpTemplate.convertAndSend(exchangeName, RESPONSE_STATE_CHANGE, new StateChangeResponse(request, "XX",
                         MessageVO.newBuilder()
                                 .message(msg)
                                 .build()
                 ));
-                //throw new AmqpRejectAndDontRequeueException(ex.getMessage(), ex);
             }
         }
     }
