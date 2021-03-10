@@ -23,7 +23,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -33,7 +32,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "RSRV_ROUTE")
-public class RouteImpl extends ApplicationEntity implements Route, Serializable {
+public class RouteImpl extends ApplicationEntity implements Route {
 
     /** For TransportUnits without active TransportOrder. */
     public static final Route NO_ROUTE = new RouteConst("_NO_ROUTE");

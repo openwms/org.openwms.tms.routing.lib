@@ -57,11 +57,11 @@ jobs:
       - name: Site
         run: >
           ./mvnw post-integration-test site scm-publish:publish-scm
-          -DM2_REPO_DIR=/home/runner/.m2/repository
           -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST,TESTPG
           -Dargs=-Dspring.profiles.active=ASYNCHRONOUS,TEST,TESTPG
           -Dspring.datasource.url=jdbc:postgresql://localhost:5432/testdb
           -Dspring.rabbitmq.host=localhost
+          -DM2_REPO_DIR=/home/runner/.m2/repository
           -DDB_HOST=localhost
           -DDB_USERNAME=KARL
           -DDB_PASSWORD=KARL
@@ -74,12 +74,13 @@ jobs:
           PUSHKEY: ${{ secrets.PUSHKEY }}
       - name: Sonar
         run: >
-          ./mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar
-          -Dsonar.login=$SONAR_TOKEN
-          -Dspring.rabbitmq.host=localhost
+          ./mvnw clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar
           -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST
-          -Dci.buildNumber=$GITHUB_RUN_NUMBER
+          -Dargs=-Dspring.profiles.active=ASYNCHRONOUS,TEST
+          -Dspring.rabbitmq.host=localhost
+          -Dsonar.login=$SONAR_TOKEN
           -DSONAR_TOKEN=$SONAR_TOKEN
+          -Dci.buildNumber=$GITHUB_RUN_NUMBER
           -Pcoverage -B $MAVEN_OPTS
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
