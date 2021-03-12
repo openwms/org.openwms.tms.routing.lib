@@ -15,6 +15,7 @@
  */
 package org.openwms.tms.routing;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,9 +26,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  *
  * @author Heiko Scherrer
  */
-@RoutingApplicationTest
+//@RoutingApplicationTest
 class RunSchemaGenerationTest {
 
+    @Disabled
     @Test
     void runSchemaGeneration() {
         assertEquals(this.getClass(), (RunSchemaGenerationTest.class));
