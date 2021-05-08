@@ -67,6 +67,7 @@
         <camunda-bpm-spring-boot-starter.version>3.4.4</camunda-bpm-spring-boot-starter.version>
         <common-service.version>1.7.0-SNAPSHOT</common-service.version>
         <commons-configuration.version>1.10</commons-configuration.version>
+        <commons-io.version>2.6</commons-io.version>
         <core.version>1.9.0-SNAPSHOT</core.version>
         <flowable.version>6.4.2</flowable.version>
         <groovy-jsr223.version>2.4.21</groovy-jsr223.version>
@@ -250,6 +251,11 @@
                 <groupId>commons-configuration</groupId>
                 <artifactId>commons-configuration</artifactId>
                 <version>${commons-configuration.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
             </dependency>
             <dependency>
                 <!-- com.netflix.eureka:eureka has an internal clash -->
