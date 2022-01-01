@@ -5,7 +5,9 @@ eureka:
 
 ---
 spring:
-  profiles: "!ASYNCHRONOUS"
+  config:
+    activate:
+      on-profile: "!ASYNCHRONOUS"
 
 owms:
   partners:
@@ -17,7 +19,9 @@ owms:
 
 ---
 spring:
-  profiles: ASYNCHRONOUS
+  config:
+    activate:
+      on-profile: ASYNCHRONOUS
 
 owms:
   driver:

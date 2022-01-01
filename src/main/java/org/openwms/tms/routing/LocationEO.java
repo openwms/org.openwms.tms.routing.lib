@@ -45,8 +45,16 @@ public class LocationEO extends ApplicationEntity {
         return locationId;
     }
 
+    public void setLocationId(String locationId) {
+        this.locationId = locationId;
+    }
+
     public String getLocationGroupName() {
         return locationGroupName;
+    }
+
+    public void setLocationGroupName(String locationGroupName) {
+        this.locationGroupName = locationGroupName;
     }
 
     @Override

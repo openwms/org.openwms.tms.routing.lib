@@ -18,8 +18,6 @@ package org.openwms.tms.routing;
 import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SpringProfiles;
 import org.ameba.http.PermitAllCorsConfigurationSource;
-import org.ameba.mapping.BeanMapper;
-import org.ameba.mapping.DozerMapperImpl;
 import org.openwms.tms.routing.config.OwmsProperties;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -53,20 +51,12 @@ import javax.servlet.Filter;
 @EntityScan
 public class RoutingModuleConfiguration {
 
-    @LoadBalanced
-    @Bean
-    RestTemplate aLoadBalanced() {
+    @LoadBalanced @Bean RestTemplate aLoadBalanced() {
         return new RestTemplate();
     }
 
-    @Bean
-    RestTemplate simpleRestTemplate() {
+    @Bean RestTemplate simpleRestTemplate() {
         return new RestTemplate();
-    }
-
-    @Bean
-    BeanMapper beanMapper() {
-        return new DozerMapperImpl("META-INF/dozer/tms-bean-mappings.xml");
     }
 
     @Profile(SpringProfiles.DEVELOPMENT_PROFILE)
@@ -75,13 +65,11 @@ public class RoutingModuleConfiguration {
         return new CorsFilter(new PermitAllCorsConfigurationSource());
     }
 
-    @Bean
-    InputContext in() {
+    @Bean InputContext in() {
         return new InputContext();
     }
 
-    @Bean
-    OwmsProperties owmsProperties() {
+    @Bean OwmsProperties owmsProperties() {
         return new OwmsProperties();
     }
 }

@@ -23,6 +23,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.beans.ConstructorProperties;
 import java.util.Objects;
 
 /**
@@ -62,14 +63,25 @@ public class RouteImpl extends ApplicationEntity implements Route {
     protected RouteImpl() {
     }
 
+    @ConstructorProperties("routeId")
     public RouteImpl(String routeId) {
         this.routeId = routeId;
     }
 
     /*~ ----------------------------- accessors ------------------- */
+
+    @Override
+    public void setPersistentKey(String pKey) {
+        super.setPersistentKey(pKey);
+    }
+
     @Override
     public String getRouteId() {
         return routeId;
+    }
+
+    public void setRouteId(String routeId) {
+        this.routeId = routeId;
     }
 
     public String getDescription() {

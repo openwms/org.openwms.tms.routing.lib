@@ -16,8 +16,10 @@
 package org.openwms.tms.routing.ui;
 
 import org.ameba.exception.NotFoundException;
-import org.ameba.mapping.BeanMapper;
+import org.ameba.http.MeasuredRestController;
+import org.openwms.core.http.AbstractWebController;
 import org.openwms.tms.routing.Action;
+import org.openwms.tms.routing.ActionMapper;
 import org.openwms.tms.routing.ActionRepository;
 import org.openwms.tms.routing.routes.RouteRepository;
 import org.springframework.data.domain.Sort;
@@ -31,7 +33,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriTemplate;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,14 +46,14 @@ import static org.openwms.tms.routing.RoutingConstants.API_ACTIONS;
  *
  * @author Heiko Scherrer
  */
-@RestController
-class ActionResource {
+@MeasuredRestController
+class ActionResource extends AbstractWebController {
 
     private final ActionRepository actionRepository;
     private final RouteRepository routeRepository;
-    private final BeanMapper mapper;
+    private final ActionMapper mapper;
 
-    ActionResource(ActionRepository actionRepository, RouteRepository routeRepository, BeanMapper mapper) {
+    ActionResource(ActionRepository actionRepository, RouteRepository routeRepository, ActionMapper mapper) {
         this.actionRepository = actionRepository;
         this.routeRepository = routeRepository;
         this.mapper = mapper;
@@ -60,7 +61,7 @@ class ActionResource {
 
     @GetMapping(API_ACTIONS)
     public List<ActionVO> getAll() {
-        return mapper.map(actionRepository.findAll(Sort.by("name")), ActionVO.class);
+        return mapper.convertEO(actionRepository.findAll(Sort.by("name")));
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -74,16 +75,16 @@ class ActionResource {
     @Transactional
     public ActionVO save(@RequestBody ActionVO actionVO) {
         Action eo = actionRepository.findBypKey(actionVO.getKey()).orElseThrow(NotFoundException::new);
-        Action action = mapper.mapFromTo(actionVO, eo);
+        Action action = mapper.copy(actionVO, eo);
         action.setRoute(routeRepository.findByRouteId(actionVO.getRoute()).orElseThrow(NotFoundException::new));
-        return mapper.map(actionRepository.save(action), ActionVO.class);
+        return mapper.convertEO(actionRepository.save(action));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
     @PostMapping(API_ACTIONS)
     public void create(@RequestBody ActionVO actionVO, HttpServletRequest req, HttpServletResponse resp) {
-        Action action = mapper.map(actionVO, Action.class);
+        Action action = mapper.convertVO(actionVO);
         action.setRoute(routeRepository.findByRouteId(actionVO.getRoute()).orElseThrow(NotFoundException::new));
         action = actionRepository.save(action);
         resp.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,HttpHeaders.LOCATION);
