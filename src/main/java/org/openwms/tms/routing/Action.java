@@ -84,6 +84,11 @@ public class Action extends ApplicationEntity {
         this.description = description;
     }
 
+    @Override
+    public void setPersistentKey(String pKey) {
+        super.setPersistentKey(pKey);
+    }
+
     public Map<String, Object> getFlexVariables() {
         Map<String, Object> result = new HashMap<>(5);
         result.put("flexField1", flexField1);
@@ -106,6 +111,10 @@ public class Action extends ApplicationEntity {
         return programKey;
     }
 
+    public void setProgramKey(String programKey) {
+        this.programKey = programKey;
+    }
+
     public String getName() {
         return name;
     }
@@ -114,12 +123,20 @@ public class Action extends ApplicationEntity {
         return locationKey;
     }
 
+    public void setLocationKey(String locationKey) {
+        this.locationKey = locationKey;
+    }
+
     public String getLocationGroupName() {
         return locationGroupName;
     }
 
     public String getActionType() {
         return actionType;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
     }
 
     public String getDescription() {

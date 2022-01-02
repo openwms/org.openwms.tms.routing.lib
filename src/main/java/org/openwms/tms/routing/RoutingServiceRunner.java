@@ -33,7 +33,8 @@ import org.springframework.retry.annotation.EnableRetry;
                 RoutingModuleConfiguration.class,
                 AmebaCloudModule.class,
                 CommPackage.class
-        })
+        }
+)
 @EnableRetry
 public class RoutingServiceRunner {
 

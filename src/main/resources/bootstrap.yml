@@ -1,19 +1,6 @@
 spring:
   application:
     name: routing-service
-  cloud:
-    config:
-      fail-fast: true # true means retry
-      discovery:
-        enabled: false
-        service-id: openwms-config
-      enabled: false
-      retry:
-        max-attempts: 120
-    discovery:
-      enabled: false
-  config:
-    location: classpath:application.yml
   security:
     user:
       password: sa
@@ -157,7 +144,9 @@ flowable:
 
 ---
 spring:
-  profiles: ASYNCHRONOUS
+  config:
+    activate:
+      on-profile: ASYNCHRONOUS
 
 management:
   health:
@@ -166,7 +155,9 @@ management:
 
 ---
 spring:
-  profiles: DEMO
+  config:
+    activate:
+      on-profile: DEMO
   h2:
     console:
       enabled: true
@@ -179,7 +170,9 @@ spring:
 
 ---
 spring:
-  profiles: DISTRIBUTED
+  config:
+    activate:
+      on-profile: DISTRIBUTED
   cloud:
     config:
       discovery:
@@ -194,7 +187,10 @@ spring:
 
 ---
 spring:
-  profiles: FLOWABLE
+  config:
+    activate:
+      on-profile: FLOWABLE
+
 flowable:
   app:
     enabled: true
@@ -246,9 +242,9 @@ camunda:
 
 ---
 spring:
-  profiles: HEROKU
-  main:
-    banner-mode: "OFF"
+  config:
+    activate:
+      on-profile: HEROKU
   cloud:
     config:
       discovery:
@@ -258,6 +254,8 @@ spring:
         protocol: ${owms.cfgsrv.protocol:https}
     discovery:
       enabled: true
+  main:
+    banner-mode: "OFF"
 
 owms:
   srv:
@@ -276,7 +274,9 @@ eureka:
 
 ---
 spring:
-  profiles: SYNCHRONOUS
+  config:
+    activate:
+      on-profile: SYNCHRONOUS
   cloud:
     config:
       discovery:
@@ -287,7 +287,9 @@ spring:
 
 ---
 spring:
-  profiles: TEST
+  config:
+    activate:
+      on-profile: TEST
   cloud:
     config:
       fail-fast: false
@@ -296,7 +298,9 @@ spring:
 
 ---
 spring:
-  profiles: TESTPG
+  config:
+    activate:
+      on-profile: TESTPG
   jpa:
     database: postgresql
     generate-ddl: true
