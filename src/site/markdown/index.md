@@ -6,9 +6,11 @@ compliant workflow, with extensions of the used workflow engine.
 # Resources
 Documentation at [GitHub](https://github.com/openwms/org.openwms.tms.routing/wiki)
 
-[![Build status](https://travis-ci.com/openwms/org.openwms.tms.routing.svg?style=flat-square)](https://travis-ci.com/openwms/org.openwms.tms.routing)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Build status](https://github.com/openwms/org.openwms.tms.routing/actions/workflows/master-build.yml/badge.svg)](https://github.com/openwms/org.openwms.tms.routing/actions/workflows/master-build.yml)
 [![Quality](https://sonarcloud.io/api/project_badges/measure?project=org.openwms:org.openwms.tms.routing&metric=alert_status)](https://sonarcloud.io/dashboard?id=org.openwms:org.openwms.tms.routing)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Maven central](https://img.shields.io/maven-central/v/org.openwms/org.openwms.tms.routing)](https://search.maven.org/search?q=a:org.openwms.tms.routing)
+[![Docker pulls](https://img.shields.io/docker/pulls/openwms/org.openwms.tms.routing)](https://hub.docker.com/r/openwms/org.openwms.tms.routing)
 [![Join the chat at https://gitter.im/openwms/org.openwms](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/openwms/org.openwms?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # Details
@@ -79,3 +81,44 @@ The following Spring profiles are currently supported:
 `CAMUNDA` - Enable Camunda as workflow engine
 `DISTRIBUTED` - Enables the service to run in a microservice system
 `FLOWABLE` - Use Flowable as workflow engine (default)
+
+# Development
+
+## Build
+
+To build an executable JAR file that can run either in a standalone or in a distributed environment call:
+
+```
+$ mvn package
+```
+
+## Run
+
+After the deliverable has been built it can be started with:
+```
+$ java -jar target/openwms-tms-routing-exec.jar
+```
+
+In case the service has been started in a distributed environment along a central configuration server and service registry the
+`DISTRIBUTED` profile needs to be activated. For processing over AMQP also the `ASYNCHRONOUS` profile must be active:
+
+```
+$ java -jar target/openwms-tms-routing-exec.jar --spring.profiles.active=DISTRIBUTED,ASYNCHRONOUS
+```
+
+The service is also available as Docker image on Docker Hub and can be started with:
+```
+$ docker run -it openwms/org.openwms.tms.routing:latest
+```
+ 
+# Appendix
+
+## Further reading
+
+ID   | Description
+---- | -----------
+L001 | [Secured Eureka First Microservices](https://github.com/openwms/org.openwms/wiki/Secured-Eureka-First-services-on-Heroku)
+L002 | [Development Process](src/site/markdown/development.md)
+
+[1]: src/site/resources/images/workflow.png
+
