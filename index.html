@@ -99,10 +99,10 @@
 <p>The TMS Routing service is used in automatic warehouses to route <code>TransportUnits</code> on conveyors through the warehouse. It is responsible to handle incoming messages and selects the appropriate workflow process that finally executes the handling. The workflow is a BPMN 2.0 compliant workflow, with extensions of the used workflow engine.</p>
 <h1>Resources</h1>
 <p>Documentation at <a class="externalLink" href="https://github.com/openwms/org.openwms.tms.routing/wiki">GitHub</a></p>
-<p><a class="externalLink" href="https://travis-ci.com/openwms/org.openwms.tms.routing"><img src="https://travis-ci.com/openwms/org.openwms.tms.routing.svg?style=flat-square" alt="Build status" /></a> <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License" /></a> <a class="externalLink" href="https://sonarcloud.io/dashboard?id=org.openwms:org.openwms.tms.routing"><img src="https://sonarcloud.io/api/project_badges/measure?project=org.openwms:org.openwms.tms.routing&amp;metric=alert_status" alt="Quality" /></a> <a class="externalLink" href="https://gitter.im/openwms/org.openwms?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/openwms/org.openwms" /></a></p>
+<p><a class="externalLink" href="https://github.com/openwms/org.openwms.tms.routing/actions/workflows/master-build.yml"><img src="https://github.com/openwms/org.openwms.tms.routing/actions/workflows/master-build.yml/badge.svg" alt="Build status" /></a> <a class="externalLink" href="https://sonarcloud.io/dashboard?id=org.openwms:org.openwms.tms.routing"><img src="https://sonarcloud.io/api/project_badges/measure?project=org.openwms:org.openwms.tms.routing&amp;metric=alert_status" alt="Quality" /></a> <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License" /></a> <a class="externalLink" href="https://search.maven.org/search?q=a:org.openwms.tms.routing"><img src="https://img.shields.io/maven-central/v/org.openwms/org.openwms.tms.routing" alt="Maven central" /></a> <a class="externalLink" href="https://hub.docker.com/r/openwms/org.openwms.tms.routing"><img src="https://img.shields.io/docker/pulls/openwms/org.openwms.tms.routing" alt="Docker pulls" /></a> <a class="externalLink" href="https://gitter.im/openwms/org.openwms?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/openwms/org.openwms" /></a></p>
 <h1>Details</h1>
 <p>A typical and simple workflow to handle incoming OSIP REQ_ messages could look like this:</p>
-<p>![Workflow][1]</p>
+<p><img src="src/site/resources/images/workflow.png" alt="Workflow" /></p>
 <p>(1) Whenever a REQ_ message arrives, the <code>TransportUnit</code> with the given <code>Barcode</code> is booked onto the <code>Location</code> provided in the message.</p>
 <p>(2) For the current <code>TransportUnit</code> a <code>TransportOrder</code> is created with the target <code>LocationGroup</code> equals to <code>FGSTOCK</code>.</p>
 <p>(3) In the final step the system triggers a service to send an OSIP RES_ message to the underlying subsystem (i.e. PLC or Raspberry Pi) with the next <code>Location</code> coordinate to move the <code>TransportUnit</code> to.</p>
@@ -128,7 +128,52 @@
 <h3><a name="Dynamic_Routing"></a>Dynamic Routing</h3>
 <p>Dynamic routing is another strategy in contrast to static or hard-coded routing. The workflow can be customized with so called <i>Flex Attributes</i>. This means a workflow can be called with parameters and these parameters come from a defined <code>Action</code>. The <code>Action</code> might be specific to the project. BPMN workflows should be reusable across projects - <code>Actions</code> may not.</p>
 <h1>Configuration</h1>
-<p>The following Spring profiles are currently supported: <code>ASYNCHRONOUS</code> - Run with AMQP communication <code>CAMUNDA</code> - Enable Camunda as workflow engine <code>DISTRIBUTED</code> - Enables the service to run in a microservice system <code>FLOWABLE</code> - Use Flowable as workflow engine (default)</p></section></section>
+<p>The following Spring profiles are currently supported: <code>ASYNCHRONOUS</code> - Run with AMQP communication <code>CAMUNDA</code> - Enable Camunda as workflow engine <code>DISTRIBUTED</code> - Enables the service to run in a microservice system <code>FLOWABLE</code> - Use Flowable as workflow engine (default)</p>
+<h1>Development</h1></section></section><section>
+<h2><a name="Build"></a>Build</h2>
+<p>To build an executable JAR file that can run either in a standalone or in a distributed environment call:</p>
+
+<div class="source">
+<div class="source"><pre class="prettyprint linenums">$ mvn package
+</pre></div></div>
+</section><section>
+<h2><a name="Run"></a>Run</h2>
+<p>After the deliverable has been built it can be started with:</p>
+
+<div class="source">
+<div class="source"><pre class="prettyprint linenums">$ java -jar target/openwms-tms-routing-exec.jar
+</pre></div></div>
+
+<p>In case the service has been started in a distributed environment along a central configuration server and service registry the <code>DISTRIBUTED</code> profile needs to be activated. For processing over AMQP also the <code>ASYNCHRONOUS</code> profile must be active:</p>
+
+<div class="source">
+<div class="source"><pre class="prettyprint linenums">$ java -jar target/openwms-tms-routing-exec.jar --spring.profiles.active=DISTRIBUTED,ASYNCHRONOUS
+</pre></div></div>
+
+<p>The service is also available as Docker image on Docker Hub and can be started with:</p>
+
+<div class="source">
+<div class="source"><pre class="prettyprint linenums">$ docker run -it openwms/org.openwms.tms.routing:latest
+</pre></div></div>
+
+<h1>Appendix</h1></section><section>
+<h2><a name="Further_reading"></a>Further reading</h2>
+<table border="0" class="table table-striped">
+<thead>
+
+<tr class="a">
+<th>ID   </th>
+<th> Description</th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td>L001 </td>
+<td> <a class="externalLink" href="https://github.com/openwms/org.openwms/wiki/Secured-Eureka-First-services-on-Heroku">Secured Eureka First Microservices</a></td></tr>
+<tr class="a">
+<td>L002 </td>
+<td> <a href="src/site/markdown/development.html">Development Process</a></td></tr>
+</tbody>
+</table></section>
         </main>
     </div>
     <hr/>
