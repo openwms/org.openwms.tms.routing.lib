@@ -120,5 +120,5 @@ ID   | Description
 L001 | [Secured Eureka First Microservices](https://github.com/openwms/org.openwms/wiki/Secured-Eureka-First-services-on-Heroku)
 L002 | [Development Process](src/site/markdown/development.md)
 
-[1]: src/site/resources/images/workflow.png
+[1]: images/workflow.png
 
