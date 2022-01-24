@@ -112,14 +112,14 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
 
                 // No targetLocationGroup, search for the targetLocation upwards:
 
-                final String targetLocationLocationGroupName = mappingLocationToParent.computeIfAbsent(targetLocation, k -> locationApi.findLocationByCoordinate(k).orElseThrow(()->new NotFoundException(format("TargetLocation with coordinate [%s] does not exist", targetLocation))).getLocationGroupName());
+                final String targetLocationLocationGroupName = mappingLocationToParent.computeIfAbsent(targetLocation, k -> locationApi.findById(k).orElseThrow(()->new NotFoundException(format("TargetLocation with coordinate [%s] does not exist", targetLocation))).getLocationGroupName());
                 result = findInTargetGroupHierarchy(sourceLocation, targetLocationLocationGroupName, allLocationGroups);
                 if (result.isPresent()) {
                     LOGGER.debug("Route found 3: {}", result.get());
                     return result.get();
                 }
 
-                final String sourceLocationGroupName = mappingLocationToParent.computeIfAbsent(sourceLocation, k -> locationApi.findLocationByCoordinate(k).orElseThrow(()->new NotFoundException(format("SourceLocation with locationId [%s] does not exist", sourceLocation))).getLocationGroupName());
+                final String sourceLocationGroupName = mappingLocationToParent.computeIfAbsent(sourceLocation, k -> locationApi.findById(k).orElseThrow(()->new NotFoundException(format("SourceLocation with locationId [%s] does not exist", sourceLocation))).getLocationGroupName());
                 result = repository.findBySourceLocationGroupNameAndTargetLocation_LocationIdAndEnabled(sourceLocationGroupName, targetLocation, true);
                 if (result.isPresent()) {
                     LOGGER.debug("(1) Route found SourceLG -> TargetLoc: {}", result.get());
@@ -212,14 +212,14 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
         if (LocationPK.isValid(targetLocation)) {
 
             // first step is target then source...
-            String targetLocationLocationGroupName = mappingLocationToParent.computeIfAbsent(targetLocation, k -> locationApi.findLocationByCoordinate(k).orElseThrow(()->new NotFoundException(format("TargetLocation with coordinate [%s] does not exist", targetLocation))).getLocationGroupName());
+            String targetLocationLocationGroupName = mappingLocationToParent.computeIfAbsent(targetLocation, k -> locationApi.findById(k).orElseThrow(()->new NotFoundException(format("TargetLocation with coordinate [%s] does not exist", targetLocation))).getLocationGroupName());
             route = findInTargetGroupHierarchy(sourceLocation, targetLocationLocationGroupName, allLocationGroups);
             if (route.isPresent()) {
                 return route;
             }
         }
 
-        final String sourceLocationGroupName = mappingLocationToParent.computeIfAbsent(sourceLocation, k -> locationApi.findLocationByCoordinate(k).orElseThrow(()->new NotFoundException(format("SourceLocation with locationId [%s] does not exist", sourceLocation))).getLocationGroupName());
+        final String sourceLocationGroupName = mappingLocationToParent.computeIfAbsent(sourceLocation, k -> locationApi.findById(k).orElseThrow(()->new NotFoundException(format("SourceLocation with locationId [%s] does not exist", sourceLocation))).getLocationGroupName());
         route = findInSourceGroupHierarchy(sourceLocationGroupName, targetLocationGroupName, allLocationGroups);
         return route;
 
@@ -232,7 +232,7 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
             return route;
         }
 
-        final String sourceLocationGroupName = mappingLocationToParent.computeIfAbsent(sourceLocation, k -> locationApi.findLocationByCoordinate(k).orElseThrow(()->new NotFoundException(format("SourceLocation with locationId [%s] does not exist", sourceLocation))).getLocationGroupName());
+        final String sourceLocationGroupName = mappingLocationToParent.computeIfAbsent(sourceLocation, k -> locationApi.findById(k).orElseThrow(()->new NotFoundException(format("SourceLocation with locationId [%s] does not exist", sourceLocation))).getLocationGroupName());
         route = findInSourceGroupHierarchy(sourceLocationGroupName, targetLocationGroupName, allLocationGroups);
         return route;
 

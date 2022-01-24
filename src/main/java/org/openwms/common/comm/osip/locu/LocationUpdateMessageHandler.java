@@ -52,7 +52,7 @@ class LocationUpdateMessageHandler {
 
     void handle(LocationUpdateVO msg) {
         Optional<LocationGroupVO> locationGroupOpt = locationGroupApi.findByName(msg.getLocationGroupName());
-        Optional<LocationVO> locationOpt = locationApi.findLocationByCoordinate(msg.getLocation());
+        Optional<LocationVO> locationOpt = locationApi.findById(msg.getLocation());
 
         if (!locationOpt.isPresent() && !locationGroupOpt.isPresent()) {
             throw new NotFoundException(format("Either the Location [%s] or the LocationGroup [%s] must exists! Can't process LOCU", msg.getLocation(), msg.getLocationGroupName()));

@@ -70,7 +70,7 @@ public class ItemMessageHandler {
         in.putAll(msg.getHeader().getAll());
 
         LocationVO actualLocation = locationApi
-                .findLocationByCoordinate(msg.getActualLocation())
+                .findById(msg.getActualLocation())
                 .orElseThrow(() -> new NotFoundException(format("Location with coordinate [%s] does not exist", msg.getActualLocation())));
 
         LocationGroupVO locationGroup =
