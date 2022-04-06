@@ -181,28 +181,6 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.openwms</groupId>
-                <artifactId>org.openwms.core.units</artifactId>
-                <version>${core.units.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.openwms</groupId>
-                <artifactId>org.openwms.core.util</artifactId>
-                <version>${core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.openwms</groupId>
-                <artifactId>org.openwms.common.service</artifactId>
-                <version>${common-service.version}</version>
-                <classifier>client</classifier>
-            </dependency>
-            <dependency>
-                <groupId>org.openwms</groupId>
-                <artifactId>org.openwms.tms.transportation</artifactId>
-                <version>${transportation-service.version}</version>
-                <classifier>client</classifier>
-            </dependency>
-            <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
@@ -289,6 +267,28 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
+                <groupId>org.openwms</groupId>
+                <artifactId>org.openwms.core.units</artifactId>
+                <version>${core.units.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openwms</groupId>
+                <artifactId>org.openwms.core.util</artifactId>
+                <version>${core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openwms</groupId>
+                <artifactId>org.openwms.common.service</artifactId>
+                <version>${common-service.version}</version>
+                <classifier>client</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.openwms</groupId>
+                <artifactId>org.openwms.tms.transportation</artifactId>
+                <version>${transportation-service.version}</version>
+                <classifier>client</classifier>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud-dependencies.version}</version>
@@ -314,6 +314,7 @@
             <groupId>org.openwms</groupId>
             <artifactId>org.openwms.common.service</artifactId>
             <classifier>client</classifier>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.openwms</groupId>
@@ -345,6 +346,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
+			<optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -439,10 +441,12 @@
                     <artifactId>commons-lang</artifactId>
                 </exclusion>
             </exclusions>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm.springboot</groupId>
             <artifactId>camunda-bpm-spring-boot-starter</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm.dmn</groupId>

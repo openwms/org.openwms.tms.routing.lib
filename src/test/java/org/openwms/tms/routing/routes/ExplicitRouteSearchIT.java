@@ -40,10 +40,10 @@ import static org.junit.jupiter.api.Assertions.fail;
  * @author Heiko Scherrer
  */
 @ExtendWith(SpringExtension.class)
-@DataJpaTest(showSql = false)
+@DataJpaTest(showSql = true)
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "org.openwms")
-@EntityScan(basePackages = "org.openwms")
+@EnableJpaRepositories(basePackages = "org.openwms.tms.routing")
+@EntityScan(basePackages = "org.openwms.tms.routing")
 @ActiveProfiles("SIMPLE")
 class ExplicitRouteSearchIT {
 
