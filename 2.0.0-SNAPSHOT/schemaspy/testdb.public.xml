@@ -1849,6 +1849,9 @@
          <index name="uk_8mack82inwedm9infr36w97nx" unique="true">
             <column ascending="true" name="c_name"/>
          </index>
+         <index name="uk_sebx2ubcvnl1bbsa2pfxjdnii" unique="true">
+            <column ascending="true" name="c_pid"/>
+         </index>
       </table>
       <table name="rsrv_location" numRows="0" remarks="" schema="public" type="TABLE">
          <column autoUpdated="false" digits="0" id="0" name="c_pk" nullable="false" remarks="" size="19" type="int8">
@@ -1864,6 +1867,9 @@
          <primaryKey column="c_pk" sequenceNumberInPK="1"/>
          <index name="rsrv_location_pkey" unique="true">
             <column ascending="true" name="c_pk"/>
+         </index>
+         <index name="uk_13qyxx1oko1hm0vlladvb4htr" unique="true">
+            <column ascending="true" name="c_pid"/>
          </index>
       </table>
       <table name="rsrv_route" numRows="0" remarks="" schema="public" type="TABLE">
@@ -1892,6 +1898,9 @@
          </index>
          <index name="uk_f8h0uuf0xc0ev98q2lj07uq2x" unique="true">
             <column ascending="true" name="c_name"/>
+         </index>
+         <index name="uk_o3t7beeh3lxgtcr5cnj89m4ap" unique="true">
+            <column ascending="true" name="c_pid"/>
          </index>
       </table>
       <table name="rsrv_route_details" numRows="0" remarks="" schema="public" type="TABLE">
