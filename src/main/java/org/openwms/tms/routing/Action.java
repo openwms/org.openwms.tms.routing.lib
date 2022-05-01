@@ -29,7 +29,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
- * A Action declares what needs to be done (executed) in case an event or trigger occurs at a given Location or LocationGroup.
+ * An Action declares what needs to be done (executed) in case an event or trigger occurs at a given Location or LocationGroup.
  *
  * @author Heiko Scherrer
  */

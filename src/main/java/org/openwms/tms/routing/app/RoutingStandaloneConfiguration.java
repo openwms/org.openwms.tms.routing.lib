@@ -26,8 +26,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * A RoutingStandaloneConfiguration is activated when the service is deployed as a
- * microservice, not packaged within an application. Then Service Discovery is activated.
+ * A RoutingStandaloneConfiguration is activated when the service is deployed as a microservice, not packaged within an application. Then
+ * Service Discovery is activated.
  *
  * @author Heiko Scherrer
  */

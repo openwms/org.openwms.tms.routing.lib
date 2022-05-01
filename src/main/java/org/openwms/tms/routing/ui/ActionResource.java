@@ -22,6 +22,7 @@ import org.openwms.tms.routing.Action;
 import org.openwms.tms.routing.ActionMapper;
 import org.openwms.tms.routing.ActionRepository;
 import org.openwms.tms.routing.routes.RouteRepository;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -64,14 +65,16 @@ class ActionResource extends AbstractWebController {
         return mapper.convertEO(actionRepository.findAll(Sort.by("name")));
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Transactional
     @DeleteMapping(API_ACTIONS + "/{persistentKey}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CacheEvict("actions")
+    @Transactional
     public void delete(@PathVariable("persistentKey") String persistentKey) {
         actionRepository.findBypKey(persistentKey).ifPresent(actionRepository::delete);
     }
 
     @PutMapping(API_ACTIONS)
+    @CacheEvict("actions")
     @Transactional
     public ActionVO save(@RequestBody ActionVO actionVO) {
         Action eo = actionRepository.findBypKey(actionVO.getKey()).orElseThrow(NotFoundException::new);
@@ -80,9 +83,10 @@ class ActionResource extends AbstractWebController {
         return mapper.convertEO(actionRepository.save(action));
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @Transactional
     @PostMapping(API_ACTIONS)
+    @ResponseStatus(HttpStatus.CREATED)
+    @CacheEvict("actions")
+    @Transactional
     public void create(@RequestBody ActionVO actionVO, HttpServletRequest req, HttpServletResponse resp) {
         Action action = mapper.convertVO(actionVO);
         action.setRoute(routeRepository.findByRouteId(actionVO.getRoute()).orElseThrow(NotFoundException::new));

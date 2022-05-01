@@ -28,7 +28,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 /**
- * A EntityEventListener.
+ * A EntityEventListener listens on changes on entities managed on foreign services.
  *
  * @author Heiko Scherrer
  */
@@ -43,6 +43,7 @@ class EntityEventListener {
         this.janitor = janitor;
     }
 
+    /** Listens on LocationGroup messages. */
     @Measured
     @RabbitListener(queues = "${owms.events.common.lg.queue-name}")
     public void onLocationGroupEvent(@Payload LocationGroupMO msg, @Header("amqp_receivedRoutingKey") String routingKey) {
@@ -51,32 +52,32 @@ class EntityEventListener {
             return;
         }
         switch (routingKey) {
-            case "lg.event.boot":
+            case "lg.event.boot" -> {
                 LOGGER.debug("[Cache] Location(Group) master data source has restarted -> evicting cache");
                 janitor.evictLocationGroupCache();
                 janitor.evictLocationCache();
-                break;
-            case "lg.event.changed":
+            }
+            case "lg.event.changed" -> {
                 LOGGER.debug("[Cache] LocationGroup has changed -> evicting cache");
                 janitor.evictLocationGroupCache();
-                break;
-            case "lg.event.deleted":
+            }
+            case "lg.event.deleted" -> {
                 LOGGER.debug("[Cache] LocationGroup was deleted -> evicting cache");
                 janitor.evictLocationGroupCache();
-                break;
-            case "lg.event.state-changed":
+            }
+            case "lg.event.state-changed" -> {
                 LOGGER.debug("[Cache] LocationGroup has changed state -> evicting cache");
                 janitor.evictLocationGroupCache();
-                break;
-            case "lg.event.changed-operation-mode":
+            }
+            case "lg.event.changed-operation-mode" -> {
                 LOGGER.debug("[Cache] LocationGroup Operation Mode has changed -> evicting cache");
                 janitor.evictLocationGroupCache();
-                break;
-            default:
-                LOGGER.warn("Eventtype [{}] currently not supported", routingKey);
+            }
+            default -> LOGGER.warn("Eventtype [{}] currently not supported", routingKey);
         }
     }
 
+    /** Listens on Location messages. */
     @Measured
     @RabbitListener(queues = "${owms.events.common.loc.queue-name}")
     public void onLocationEvent(@Payload LocationMO msg, @Header("amqp_receivedRoutingKey") String routingKey) {
@@ -85,20 +86,19 @@ class EntityEventListener {
             return;
         }
         switch (routingKey) {
-            case "loc.event.changed":
+            case "loc.event.changed" -> {
                 LOGGER.debug("[Cache] Location has changed -> evicting cache");
                 janitor.evictLocationCache();
-                break;
-            case "loc.event.deleted":
+            }
+            case "loc.event.deleted" -> {
                 LOGGER.debug("[Cache] Location deleted -> evicting cache");
                 janitor.evictLocationCache();
-                break;
-            case "loc.event.state-changed":
+            }
+            case "loc.event.state-changed" -> {
                 LOGGER.debug("[Cache] Location State has changed state -> evicting cache");
                 janitor.evictLocationCache();
-                break;
-            default:
-                LOGGER.warn("Eventtype [{}] currently not supported", routingKey);
+            }
+            default -> LOGGER.warn("Eventtype [{}] currently not supported", routingKey);
         }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Heiko Scherrer
+ * Copyright 2005-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,9 +28,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 /**
- * A RoutingFeignConfiguration activates client stubs using Feign to connect to other
- * services. This is deactivated when the service is packaged and deployed as part of a
- * whole application.
+ * A RoutingFeignConfiguration activates client stubs using Feign to connect to other services. This is deactivated when the service is
+ * packaged and deployed as part of a whole application.
  *
  * @author Heiko Scherrer
  */

@@ -27,7 +27,7 @@ import java.util.Objects;
  *
  * @author Heiko Scherrer
  */
-public class ActionVO extends AbstractBase implements Serializable {
+public class ActionVO extends AbstractBase<ActionVO> implements Serializable {
 
     @NotNull
     @JsonProperty("name")

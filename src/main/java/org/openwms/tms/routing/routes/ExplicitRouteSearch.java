@@ -30,7 +30,7 @@ import java.util.Optional;
 import static java.lang.String.format;
 
 /**
- * A ExplicitRouteSearch.
+ * A ExplicitRouteSearch is a "simple" implementation of the {@link RouteSearchAlgorithm} activated with the Spring Profile "SIMPLE".
  *
  * @author Heiko Scherrer
  */
@@ -53,24 +53,29 @@ class ExplicitRouteSearch implements RouteSearchAlgorithm {
         Assert.hasText(sourceLocation, "The sourceLocation must be given when searching for a Route");
         final boolean targetLocExists = StringUtils.hasText(targetLocation);
 
-        Optional<RouteImpl> result;
         // First try explicit declaration
         if (targetLocExists) {
 
             // (1) Have both. Search for a match:
-            result = repository.findBySourceLocation_LocationIdAndTargetLocation_LocationIdAndEnabled(sourceLocation, targetLocation, true);
+            var result = repository.findBySourceLocation_LocationIdAndTargetLocation_LocationIdAndEnabled(
+                    sourceLocation, targetLocation, true
+            );
             if (result.isPresent()) {
                 // Match with locations
                 LOGGER.debug("Route in direct location match found: {}", result.get());
                 return result.get();
             }
-            throw new NoRouteException(format("No route found for TransportOrder with sourceLocation [%s] and targetLocation [%s]", sourceLocation, targetLocation));
+            throw new NoRouteException(format("No route found for TransportOrder with sourceLocation [%s] and targetLocation [%s]",
+                    sourceLocation, targetLocation));
         }
         Assert.hasText(targetLocationGroup, "The targetLocation did not find a match, hence a TargetLocationGroup is required");
-        return findInGroup(sourceLocation, targetLocationGroup).orElseThrow(() -> new NoRouteException(format("No route found for TransportOrder with sourceLocation [%s] and targetLocationGroup [%s]", sourceLocation, targetLocationGroup)));
+        return findInGroup(sourceLocation, targetLocationGroup)
+                .orElseThrow(() -> new NoRouteException(format("No route found for TransportOrder with sourceLocation [%s] and targetLocationGroup [%s]", sourceLocation, targetLocationGroup)));
     }
 
     private Optional<RouteImpl> findInGroup(String sourceLocation, String targetLocationGroup) {
-        return repository.findBySourceLocation_LocationIdAndTargetLocationGroupNameAndEnabled(sourceLocation, targetLocationGroup, true);
+        return repository.findBySourceLocation_LocationIdAndTargetLocationGroupNameAndEnabled(
+                sourceLocation, targetLocationGroup, true
+        );
     }
 }

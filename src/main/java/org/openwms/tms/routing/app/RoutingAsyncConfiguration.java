@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Heiko Scherrer
+ * Copyright 2005-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package org.openwms.tms.routing.app;
 
+import org.ameba.amqp.RabbitTemplateConfigurable;
 import org.openwms.core.SpringProfiles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,10 +31,13 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.amqp.support.converter.SerializerMessageConverter;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.retry.backoff.ExponentialBackOffPolicy;
 import org.springframework.retry.support.RetryTemplate;
@@ -41,8 +45,7 @@ import org.springframework.retry.support.RetryTemplate;
 import static org.ameba.LoggingCategories.BOOT;
 
 /**
- * A RoutingAsyncConfiguration is activated when the service uses asynchronous
- * communication to access other services.
+ * A RoutingAsyncConfiguration is activated when the service uses asynchronous communication to access other services.
  *
  * @author Heiko Scherrer
  */
@@ -72,18 +75,23 @@ public class RoutingAsyncConfiguration {
         return messageConverter;
     }
 
-    @Bean
-    RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory,
-            MessageConverter messageConverter) {
-        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        ExponentialBackOffPolicy backOffPolicy = new ExponentialBackOffPolicy();
+    @Primary
+    @Bean(name = "amqpTemplate")
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory,
+            ObjectProvider<MessageConverter> messageConverter,
+            @Autowired(required = false) RabbitTemplateConfigurable rabbitTemplateConfigurable) {
+        var rabbitTemplate = new RabbitTemplate(connectionFactory);
+        var backOffPolicy = new ExponentialBackOffPolicy();
         backOffPolicy.setMultiplier(2);
         backOffPolicy.setMaxInterval(15000);
         backOffPolicy.setInitialInterval(500);
         RetryTemplate retryTemplate = new RetryTemplate();
         retryTemplate.setBackOffPolicy(backOffPolicy);
         rabbitTemplate.setRetryTemplate(retryTemplate);
-        rabbitTemplate.setMessageConverter(messageConverter);
+        rabbitTemplate.setMessageConverter(messageConverter.getIfUnique());
+        if (rabbitTemplateConfigurable != null) {
+            rabbitTemplateConfigurable.configure(rabbitTemplate);
+        }
         return rabbitTemplate;
     }
 

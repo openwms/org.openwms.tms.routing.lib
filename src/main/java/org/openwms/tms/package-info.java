@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * This package contains contains the TMS types.
+ * This package contains the TMS types.
  */
 package org.openwms.tms;

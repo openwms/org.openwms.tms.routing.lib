@@ -37,17 +37,21 @@ import java.io.Serializable;
 public class RouteDetails extends BaseEntity implements Serializable {
 
     public static final String COLUMN_ROUTE_ID = "C_ROUTE_ID";
+    /** The Route this details entry belongs to.*/
     @ManyToOne
     @JoinColumn(name = COLUMN_ROUTE_ID)
     private RouteImpl route;
 
     public static final String COLUMN_POS = "C_POS";
+    /** A sequence number unique within the referenced Route. */
     @Column(name = COLUMN_POS)
     private int pos;
 
+    /** The source Location where the path starts from. */
     @Column(name = "C_SOURCE_LOCATION")
     private String source;
 
+    /** The next Location is the next hop where to move to. */
     @Column(name = "C_NEXT_LOCATION")
     private String next;
 

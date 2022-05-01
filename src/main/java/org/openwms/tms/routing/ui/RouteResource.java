@@ -16,9 +16,11 @@
 package org.openwms.tms.routing.ui;
 
 import org.ameba.exception.NotFoundException;
-import org.openwms.tms.routing.RouteImpl;
+import org.ameba.http.MeasuredRestController;
+import org.openwms.core.http.AbstractWebController;
 import org.openwms.tms.routing.RouteMapper;
 import org.openwms.tms.routing.routes.RouteRepository;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,7 +32,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriTemplate;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,8 +46,8 @@ import static org.openwms.tms.routing.RoutingConstants.API_ROUTES;
  *
  * @author Heiko Scherrer
  */
-@RestController
-class RouteResource {
+@MeasuredRestController
+class RouteResource extends AbstractWebController {
 
     private final LocationRepository locationRepository;
     private final RouteRepository routeRepository;
@@ -63,31 +64,35 @@ class RouteResource {
         return mapper.convertEO(routeRepository.findAll(Sort.by("pk")));
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Transactional
     @DeleteMapping(API_ROUTES + "/{persistentKey}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CacheEvict("routes")
+    @Transactional
     public void delete(@PathVariable("persistentKey") String persistentKey) {
         routeRepository.findBypKey(persistentKey).ifPresent(routeRepository::delete);
     }
 
     @PutMapping(API_ROUTES)
+    @CacheEvict("routes")
     @Transactional
     public RouteVO save(@RequestBody RouteVO routeVO) {
-        RouteImpl eo = routeRepository.findBypKey(routeVO.getKey()).orElseThrow(NotFoundException::new);
-        RouteImpl route = mapper.copy(routeVO, eo);
-
-        route.setSourceLocation(routeVO.hasSourceLocationName() ? locationRepository.findByLocationId(routeVO.getSourceLocationName()).orElseThrow(NotFoundException::new) : null);
-
-        route.setTargetLocation(routeVO.hasTargetLocationName() ? locationRepository.findByLocationId(routeVO.getTargetLocationName()).orElseThrow(NotFoundException::new) : null);
-
+        var eo = routeRepository.findBypKey(routeVO.getKey()).orElseThrow(NotFoundException::new);
+        var route = mapper.copy(routeVO, eo);
+        route.setSourceLocation(routeVO.hasSourceLocationName()
+                ? locationRepository.findByLocationId(routeVO.getSourceLocationName()).orElseThrow(NotFoundException::new)
+                : null);
+        route.setTargetLocation(routeVO.hasTargetLocationName()
+                ? locationRepository.findByLocationId(routeVO.getTargetLocationName()).orElseThrow(NotFoundException::new)
+                : null);
         return mapper.convertEO(routeRepository.save(route));
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @Transactional
     @PostMapping(API_ROUTES)
+    @ResponseStatus(HttpStatus.CREATED)
+    @CacheEvict("routes")
+    @Transactional
     public void create(@RequestBody RouteVO routeVO, HttpServletRequest req, HttpServletResponse resp) {
-        RouteImpl route = mapper.convertVO(routeVO);
+        var route = mapper.convertVO(routeVO);
         if (routeVO.hasSourceLocationName()) {
             route.setSourceLocation(locationRepository.findByLocationId(routeVO.getSourceLocationName()).orElseThrow(NotFoundException::new));
         }
@@ -100,8 +105,8 @@ class RouteResource {
     }
 
     private String getCreatedResourceURI(HttpServletRequest req, String objId) {
-        StringBuffer url = req.getRequestURL();
-        UriTemplate template = new UriTemplate(url.append("/{objId}").toString());
+        var url = req.getRequestURL();
+        var template = new UriTemplate(url.append("/{objId}").toString());
         return template.expand(objId).toASCIIString();
     }
 }

@@ -20,10 +20,8 @@ import org.openwms.common.comm.NoRouteException;
 import org.openwms.core.SpringProfiles;
 import org.openwms.tms.api.MessageVO;
 import org.openwms.tms.api.TransportOrderApi;
-import org.openwms.tms.api.TransportOrderVO;
 import org.openwms.tms.api.requests.state.StateChangeRequest;
 import org.openwms.tms.api.requests.state.StateChangeResponse;
-import org.openwms.tms.routing.Route;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,14 +62,14 @@ class ExternalStartListener {
     public void onRequest(StateChangeRequest request) {
         if ("STARTED".equals(request.getRequestedState())) {
             try {
-                TransportOrderVO vo = transportOrderApi.findByPKey(request.getTransportOrderPkey());
-                Route route = routeSearch.findBy(vo.getSourceLocation(), vo.getTargetLocation(), vo.getTargetLocationGroup());
+                var vo = transportOrderApi.findByPKey(request.getTransportOrderPkey());
+                var route = routeSearch.findBy(vo.getSourceLocation(), vo.getTargetLocation(), vo.getTargetLocationGroup());
                 LOGGER.debug("TransportOrder to start has a Route [{}] ", route.getRouteId());
                 amqpTemplate.convertAndSend(exchangeName, RESPONSE_STATE_CHANGE, new StateChangeResponse(request, "STARTED", null));
             } catch (NoRouteException ex) {
 
                 // not that bad we know no Route exists...
-                String msg = format("A TransportOrder was requested to start that has no Route. PKey: [%s]", request.getTransportOrderPkey());
+                var msg = format("A TransportOrder was requested to start that has no Route. PKey: [%s]", request.getTransportOrderPkey());
                 LOGGER.warn(msg, msg);
                 amqpTemplate.convertAndSend(exchangeName, RESPONSE_STATE_CHANGE, new StateChangeResponse(request, "XX",
                         MessageVO.newBuilder()
@@ -79,7 +77,7 @@ class ExternalStartListener {
                                 .build()
                 ));
             } catch (Exception ex) {
-                String msg = format("Generic exception. Route for TransportOrder [%s] could not be determined", request.getTransportOrderPkey());
+                var msg = format("Generic exception. Route for TransportOrder [%s] could not be determined", request.getTransportOrderPkey());
                 LOGGER.warn(msg, msg);
                 amqpTemplate.convertAndSend(exchangeName, RESPONSE_STATE_CHANGE, new StateChangeResponse(request, "XX",
                         MessageVO.newBuilder()

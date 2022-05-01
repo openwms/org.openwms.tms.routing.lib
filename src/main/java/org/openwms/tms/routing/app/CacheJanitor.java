@@ -21,7 +21,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Component;
 
 /**
- * A CacheJanitor.
+ * A CacheJanitor is used to evict caches.
  *
  * @author Heiko Scherrer
  */

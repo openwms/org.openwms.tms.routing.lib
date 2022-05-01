@@ -29,17 +29,15 @@ import org.openwms.tms.routing.RouteImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -69,6 +67,7 @@ class ActivitiMatrix implements Matrix {
      * {@inheritDoc}
      */
     @Override
+    @Cacheable(value = "actions")
     public Action findBy(String actionType, Route route, @Nullable LocationVO location, @Nullable LocationGroupVO locationGroup) {
         // search explicitly...
         Optional<Action> prg = Optional.empty();
@@ -76,15 +75,15 @@ class ActivitiMatrix implements Matrix {
 
             // First explicitly search for the Location and Route
             prg = repository.findByActionTypeAndRouteAndLocationKey(actionType, route.getRouteId(), location.getLocationId());
-            if (!prg.isPresent()) {
+            if (prg.isEmpty()) {
 
                 if (!RouteImpl.DEF_ROUTE.getRouteId().equals(route.getRouteId())) {
                     prg = repository.findByActionTypeAndRouteAndLocationKey(actionType, RouteImpl.DEF_ROUTE.getRouteId(), location.getLocationId());
                 }
-                if (!prg.isPresent()) {
+                if (prg.isEmpty()) {
                     // Not found with Location => check by Location's.LocationGroup
                     prg = findInLocationGroupHierarchy(actionType, route, locationGroupApi.findByName(location.getLocationGroupName()).orElseThrow(NotFoundException::new));
-                    if (!prg.isPresent()) {
+                    if (prg.isEmpty()) {
 
                         // Search the LocationGroup hierarchy the way up...
                         if (locationGroup == null) {
@@ -92,16 +91,16 @@ class ActivitiMatrix implements Matrix {
                         }
                         prg = findInLocationGroupHierarchy(actionType, route, locationGroup);
 
-                        if (!prg.isPresent() && route.equals(RouteImpl.NO_ROUTE)) {
+                        if (prg.isEmpty() && route.equals(RouteImpl.NO_ROUTE)) {
                             throw new NoRouteException(String.format(MSG, actionType, route, location.getLocationId(), location.getLocationGroupName()));
                         }
 
-                        if (!prg.isPresent() && !route.equals(RouteImpl.DEF_ROUTE)) {
+                        if (prg.isEmpty() && !route.equals(RouteImpl.DEF_ROUTE)) {
                             // Last chance: Search for the default route
                             prg = findInLocationGroupHierarchy(actionType, RouteImpl.DEF_ROUTE, locationGroup);
                         }
 
-                        if (!prg.isPresent()) {
+                        if (prg.isEmpty()) {
                             throw new NoRouteException(String.format(MSG, actionType, route, location.getLocationId(), location.getLocationGroupName()));
                         }
                     }
@@ -110,7 +109,7 @@ class ActivitiMatrix implements Matrix {
         }
 
         // search for locgroup...
-        if (!prg.isPresent()) {
+        if (prg.isEmpty()) {
             if (null == locationGroup) {
                 throw new NoRouteException(String.format("No Action found for ActionType [%s] and Route [%s] and Location [%s] without LocationGroup", actionType, route, location));
             }
@@ -121,7 +120,7 @@ class ActivitiMatrix implements Matrix {
 
     private Optional<Action> findInLocationGroupHierarchy(String actionType, Route route, LocationGroupVO locationGroup) {
         Optional<Action> cp = repository.findByActionTypeAndRouteAndLocationGroupName(actionType, route.getRouteId(), locationGroup.getName());
-        if (!cp.isPresent()) {
+        if (cp.isEmpty()) {
 
             if (locationGroup.hasParent()) {
                 cp = findInLocationGroupHierarchy(actionType, route, locationGroupApi.findByName(locationGroup.getParent()).orElseThrow(NotFoundException::new));
@@ -135,15 +134,15 @@ class ActivitiMatrix implements Matrix {
     }
 
     private LocationGroupVO findLocationGroup(Link parent) {
-        List<ServiceInstance> list = dc.getInstances("common-service");
+        var list = dc.getInstances("common-service");
         if (list == null || list.isEmpty()) {
             throw new NotFoundException("No deployed service with name common-service found");
         }
-        ServiceInstance si = list.get(0);
+        var si = list.get(0);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Calling common-service URL [{}]", parent.getHref());
         }
-        ResponseEntity<LocationGroupVO> lg = restTemplate.exchange(parent.getHref(), HttpMethod.GET, new HttpEntity<>(SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))), LocationGroupVO.class);
+        var lg = restTemplate.exchange(parent.getHref(), HttpMethod.GET, new HttpEntity<>(SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))), LocationGroupVO.class);
         return lg.getBody();
     }
 }

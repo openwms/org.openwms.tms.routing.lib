@@ -26,7 +26,7 @@ import java.util.Objects;
  * @author Heiko Scherrer
  */
 // ajc has a problem here with lombok
-public class RouteVO extends AbstractBase implements Serializable {
+public class RouteVO extends AbstractBase<RouteVO> implements Serializable {
 
     private String name;
     private String description;

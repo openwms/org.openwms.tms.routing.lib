@@ -17,7 +17,6 @@ package org.openwms.tms.routing.spi;
 
 import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.openwms.tms.routing.Action;
 import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.ProgramResult;
@@ -57,7 +56,7 @@ class CamundaExecutor implements ProgramExecutor {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Executing program : {}", program);
         }
-        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionKey(program.getProgramKey()).active().latestVersion().singleResult();
+        var processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionKey(program.getProgramKey()).active().latestVersion().singleResult();
         if (null == processDefinition) {
             throw new IllegalStateException(format("No active process with programkey [%s] found", program.getProgramKey()));
         }

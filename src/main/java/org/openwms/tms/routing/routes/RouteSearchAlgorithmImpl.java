@@ -25,6 +25,7 @@ import org.openwms.tms.routing.RouteImpl;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -38,7 +39,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import static java.lang.String.format;
 
 /**
- * A RouteSearchAlgorithmImpl.
+ * A RouteSearchAlgorithmImpl is the extended and standard version of the {@link RouteSearchAlgorithm}.
  *
  * @author Heiko Scherrer
  */
@@ -52,7 +53,7 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
     private final LocationApi locationApi;
     private final LocationGroupLoader locationGroupLoader;
 
-    private Map<String, String> mappingLocationToParent = new ConcurrentHashMap<>();
+    private final Map<String, String> mappingLocationToParent = new ConcurrentHashMap<>();
     private Collection<LocationGroupVO> allLocationGroups;
 
     RouteSearchAlgorithmImpl(RouteRepository repository, LocationApi locationApi, LocationGroupLoader locationGroupLoader) {
@@ -65,13 +66,14 @@ class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
      * {@inheritDoc}
      */
     @Override
+    @Cacheable("routes")
     public Route findBy(String sourceLocation, String targetLocation, String targetLocationGroup) {
         if (allLocationGroups == null) {
             allLocationGroups = locationGroupLoader.loadLocGroups();
         }
         Assert.hasText(sourceLocation, "The sourceLocation must be given when searching for a Route");
-        boolean targetLocExists = StringUtils.hasText(targetLocation);
-        boolean targetLgExists = StringUtils.hasText(targetLocationGroup);
+        var targetLocExists = StringUtils.hasText(targetLocation);
+        var targetLgExists = StringUtils.hasText(targetLocationGroup);
 
         Optional<RouteImpl> result;
         // First try explicit declaration

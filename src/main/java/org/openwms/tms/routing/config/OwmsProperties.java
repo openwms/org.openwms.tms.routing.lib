@@ -55,7 +55,7 @@ public class OwmsProperties {
         this.routing = routing;
     }
 
-    public class Routing {
+    public static class Routing {
         private String serialization;
 
         public String getSerialization() {

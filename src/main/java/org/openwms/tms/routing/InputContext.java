@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  */
 public class InputContext {
 
-    private InheritableThreadLocal<Map<String, Object>> msg = new InheritableThreadLocal<Map<String, Object>>() {
+    private final InheritableThreadLocal<Map<String, Object>> msg = new InheritableThreadLocal<Map<String, Object>>() {
         @Override
         protected Map<String, Object> initialValue() {
             return new ConcurrentHashMap<>();
