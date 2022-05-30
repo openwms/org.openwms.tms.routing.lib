@@ -73,7 +73,7 @@ class ExternalStartListener {
                 LOGGER.warn(msg, msg);
                 amqpTemplate.convertAndSend(exchangeName, RESPONSE_STATE_CHANGE, new StateChangeResponse(request, "XX",
                         MessageVO.newBuilder()
-                                .message(msg)
+                                .messageText(msg)
                                 .build()
                 ));
             } catch (Exception ex) {
@@ -81,7 +81,7 @@ class ExternalStartListener {
                 LOGGER.warn(msg, msg);
                 amqpTemplate.convertAndSend(exchangeName, RESPONSE_STATE_CHANGE, new StateChangeResponse(request, "XX",
                         MessageVO.newBuilder()
-                                .message(msg)
+                                .messageText(msg)
                                 .build()
                 ));
             }
