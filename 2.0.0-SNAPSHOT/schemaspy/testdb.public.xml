@@ -901,8 +901,14 @@
             <column ascending="true" name="name_"/>
             <column ascending="true" name="var_type_"/>
          </index>
+         <index name="act_idx_hi_varinst_act_inst_id" unique="false">
+            <column ascending="true" name="act_inst_id_"/>
+         </index>
          <index name="act_idx_hi_varinst_bytear" unique="false">
             <column ascending="true" name="bytearray_id_"/>
+         </index>
+         <index name="act_idx_hi_varinst_name" unique="false">
+            <column ascending="true" name="name_"/>
          </index>
          <index name="act_idx_hi_varinst_rm_time" unique="false">
             <column ascending="true" name="removal_time_"/>
@@ -1433,6 +1439,7 @@
          <column autoUpdated="false" digits="0" id="14" name="act_inst_id_" nullable="true" remarks="" size="64" type="varchar"/>
          <column autoUpdated="false" digits="0" id="15" name="tenant_id_" nullable="true" remarks="" size="64" type="varchar"/>
          <column autoUpdated="false" defaultValue="0" digits="0" id="16" name="priority_" nullable="false" remarks="" size="19" type="int8"/>
+         <column autoUpdated="false" digits="0" id="17" name="last_failure_log_id_" nullable="true" remarks="" size="64" type="varchar"/>
          <primaryKey column="id_" sequenceNumberInPK="1"/>
          <index name="act_ru_ext_task_pkey" unique="true">
             <column ascending="true" name="id_"/>
@@ -1586,6 +1593,7 @@
          <column autoUpdated="false" digits="0" id="23" name="sequence_counter_" nullable="true" remarks="" size="19" type="int8"/>
          <column autoUpdated="false" digits="0" id="24" name="tenant_id_" nullable="true" remarks="" size="64" type="varchar"/>
          <column autoUpdated="false" digits="6" id="25" name="create_time_" nullable="true" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="0" id="26" name="last_failure_log_id_" nullable="true" remarks="" size="64" type="varchar"/>
          <primaryKey column="id_" sequenceNumberInPK="1"/>
          <index name="act_ru_job_pkey" unique="true">
             <column ascending="true" name="id_"/>
@@ -1824,22 +1832,24 @@
       <table name="rsrv_action" numRows="0" remarks="" schema="public" type="TABLE">
          <column autoUpdated="false" digits="0" id="0" name="c_pk" nullable="false" remarks="" size="19" type="int8"/>
          <column autoUpdated="false" digits="6" id="1" name="c_created" nullable="true" remarks="" size="29" type="timestamp"/>
-         <column autoUpdated="false" digits="6" id="2" name="c_updated" nullable="true" remarks="" size="29" type="timestamp"/>
-         <column autoUpdated="false" digits="0" id="3" name="c_ol" nullable="true" remarks="" size="19" type="int8"/>
-         <column autoUpdated="false" digits="0" id="4" name="c_pid" nullable="false" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="5" name="c_action_type" nullable="false" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="6" name="c_description" nullable="false" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="7" name="c_enabled" nullable="true" remarks="" size="1" type="bool"/>
-         <column autoUpdated="false" digits="0" id="8" name="c_flex_1" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="9" name="c_flex_2" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="10" name="c_flex_3" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="11" name="c_flex_4" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="12" name="c_flex_5" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="13" name="c_location_group_name" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="14" name="c_location_key" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="15" name="c_name" nullable="false" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="16" name="c_program_name" nullable="false" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="17" name="c_route_id" nullable="false" remarks="" size="19" type="int8">
+         <column autoUpdated="false" digits="0" id="2" name="c_created_by" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="c_updated_by" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="6" id="4" name="c_updated" nullable="true" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="0" id="5" name="c_ol" nullable="true" remarks="" size="19" type="int8"/>
+         <column autoUpdated="false" digits="0" id="6" name="c_pid" nullable="false" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="7" name="c_action_type" nullable="false" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="8" name="c_description" nullable="false" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="9" name="c_enabled" nullable="true" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="10" name="c_flex_1" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="11" name="c_flex_2" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="12" name="c_flex_3" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="13" name="c_flex_4" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="14" name="c_flex_5" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="15" name="c_location_group_name" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="16" name="c_location_key" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="17" name="c_name" nullable="false" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="18" name="c_program_name" nullable="false" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="19" name="c_route_id" nullable="false" remarks="" size="19" type="int8">
             <parent column="c_pk" foreignKey="fklxix4fythi8yy6eornb00m6ud" implied="false" onDeleteCascade="false" table="rsrv_route"/>
          </column>
          <primaryKey column="c_pk" sequenceNumberInPK="1"/>
@@ -1859,11 +1869,13 @@
             <child column="c_target_location" foreignKey="fkev0msagl6aloybhfdrqd0lu2q" implied="false" onDeleteCascade="false" table="rsrv_route"/>
          </column>
          <column autoUpdated="false" digits="6" id="1" name="c_created" nullable="true" remarks="" size="29" type="timestamp"/>
-         <column autoUpdated="false" digits="6" id="2" name="c_updated" nullable="true" remarks="" size="29" type="timestamp"/>
-         <column autoUpdated="false" digits="0" id="3" name="c_ol" nullable="true" remarks="" size="19" type="int8"/>
-         <column autoUpdated="false" digits="0" id="4" name="c_pid" nullable="false" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="5" name="c_location_group_name" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="6" name="c_location_id" nullable="false" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="c_created_by" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="c_updated_by" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="6" id="4" name="c_updated" nullable="true" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="0" id="5" name="c_ol" nullable="true" remarks="" size="19" type="int8"/>
+         <column autoUpdated="false" digits="0" id="6" name="c_pid" nullable="false" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="7" name="c_location_group_name" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="8" name="c_location_id" nullable="false" remarks="" size="255" type="varchar"/>
          <primaryKey column="c_pk" sequenceNumberInPK="1"/>
          <index name="rsrv_location_pkey" unique="true">
             <column ascending="true" name="c_pk"/>
@@ -1878,18 +1890,20 @@
             <child column="c_route_id" foreignKey="fksb26oisxtw8yc72ur7d0pqxym" implied="false" onDeleteCascade="false" table="rsrv_route_details"/>
          </column>
          <column autoUpdated="false" digits="6" id="1" name="c_created" nullable="true" remarks="" size="29" type="timestamp"/>
-         <column autoUpdated="false" digits="6" id="2" name="c_updated" nullable="true" remarks="" size="29" type="timestamp"/>
-         <column autoUpdated="false" digits="0" id="3" name="c_ol" nullable="true" remarks="" size="19" type="int8"/>
-         <column autoUpdated="false" digits="0" id="4" name="c_pid" nullable="false" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="5" name="c_description" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="6" name="c_enabled" nullable="true" remarks="" size="1" type="bool"/>
-         <column autoUpdated="false" digits="0" id="7" name="c_name" nullable="false" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="8" name="c_source_loc_group_name" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="9" name="c_target_loc_group_name" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="10" name="c_source_location" nullable="true" remarks="" size="19" type="int8">
+         <column autoUpdated="false" digits="0" id="2" name="c_created_by" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="c_updated_by" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="6" id="4" name="c_updated" nullable="true" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="0" id="5" name="c_ol" nullable="true" remarks="" size="19" type="int8"/>
+         <column autoUpdated="false" digits="0" id="6" name="c_pid" nullable="false" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="7" name="c_description" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="8" name="c_enabled" nullable="true" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="9" name="c_name" nullable="false" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="10" name="c_source_loc_group_name" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="11" name="c_target_loc_group_name" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="12" name="c_source_location" nullable="true" remarks="" size="19" type="int8">
             <parent column="c_pk" foreignKey="fkh6pwflfvy0ek6nt9odqahmng0" implied="false" onDeleteCascade="false" table="rsrv_location"/>
          </column>
-         <column autoUpdated="false" digits="0" id="11" name="c_target_location" nullable="true" remarks="" size="19" type="int8">
+         <column autoUpdated="false" digits="0" id="13" name="c_target_location" nullable="true" remarks="" size="19" type="int8">
             <parent column="c_pk" foreignKey="fkev0msagl6aloybhfdrqd0lu2q" implied="false" onDeleteCascade="false" table="rsrv_location"/>
          </column>
          <primaryKey column="c_pk" sequenceNumberInPK="1"/>
@@ -1906,12 +1920,14 @@
       <table name="rsrv_route_details" numRows="0" remarks="" schema="public" type="TABLE">
          <column autoUpdated="false" digits="0" id="0" name="c_pk" nullable="false" remarks="" size="19" type="int8"/>
          <column autoUpdated="false" digits="6" id="1" name="c_created" nullable="true" remarks="" size="29" type="timestamp"/>
-         <column autoUpdated="false" digits="6" id="2" name="c_updated" nullable="true" remarks="" size="29" type="timestamp"/>
-         <column autoUpdated="false" digits="0" id="3" name="c_ol" nullable="true" remarks="" size="19" type="int8"/>
-         <column autoUpdated="false" digits="0" id="4" name="c_next_location" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="5" name="c_pos" nullable="true" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" digits="0" id="6" name="c_source_location" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="7" name="c_route_id" nullable="true" remarks="" size="19" type="int8">
+         <column autoUpdated="false" digits="0" id="2" name="c_created_by" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="c_updated_by" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="6" id="4" name="c_updated" nullable="true" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="0" id="5" name="c_ol" nullable="true" remarks="" size="19" type="int8"/>
+         <column autoUpdated="false" digits="0" id="6" name="c_next_location" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="7" name="c_pos" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="8" name="c_source_location" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="9" name="c_route_id" nullable="true" remarks="" size="19" type="int8">
             <parent column="c_pk" foreignKey="fksb26oisxtw8yc72ur7d0pqxym" implied="false" onDeleteCascade="false" table="rsrv_route"/>
          </column>
          <primaryKey column="c_pk" sequenceNumberInPK="1"/>

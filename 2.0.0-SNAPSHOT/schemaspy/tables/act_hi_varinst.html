@@ -149,7 +149,7 @@
  <td class='comment detail'></td>
 </tr>
 <tr class='even'>
- <td class='detail'>act_inst_id_</td>
+ <td class='indexedColumn' title='Indexed'>act_inst_id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
  <td class='detail' align='center' title='nullable'>&nbsp;&radic;&nbsp;</td>
@@ -347,7 +347,7 @@
  <td class='comment detail'></td>
 </tr>
 </table>
-<p title='24 columns'>Table contained 0 rows at Fri May 06 20:18 UTC 2022<p/>
+<p title='24 columns'>Table contained 0 rows at Mon Aug 15 20:31 UTC 2022<p/>
 </td></tr></table>
 <div class='indent'>
 <b>Indexes:</b>
@@ -404,10 +404,22 @@
   <td class='constraint' style='text-align:left;'>act_idx_hi_var_pi_name_type</td>
  </tr>
  <tr>
+  <td class='indexedColumn'>act_inst_id_</td>
+  <td class='detail'>Performance</td>
+  <td class='detail' style='text-align:left;'><span title='Ascending'>Asc</span></td>
+  <td class='constraint' style='text-align:left;'>act_idx_hi_varinst_act_inst_id</td>
+ </tr>
+ <tr>
   <td class='indexedColumn'>bytearray_id_</td>
   <td class='detail'>Performance</td>
   <td class='detail' style='text-align:left;'><span title='Ascending'>Asc</span></td>
   <td class='constraint' style='text-align:left;'>act_idx_hi_varinst_bytear</td>
+ </tr>
+ <tr>
+  <td class='indexedColumn'>name_</td>
+  <td class='detail'>Performance</td>
+  <td class='detail' style='text-align:left;'><span title='Ascending'>Asc</span></td>
+  <td class='constraint' style='text-align:left;'>act_idx_hi_varinst_name</td>
  </tr>
  <tr>
   <td class='indexedColumn'>removal_time_</td>

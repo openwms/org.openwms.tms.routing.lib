@@ -82,7 +82,7 @@
 </tr>
 </thead>
 <tbody valign='top'>
-<tr class='odd'>
+<tr class='even'>
  <td class='primaryKey' title='Primary Key'>id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
@@ -91,7 +91,7 @@
  <td class='detail'></td>
  <td class='detail'>
   <table border='0' width='100%' cellspacing='0' cellpadding='0'>
-   <tr class='relative odd' valign='top'>
+   <tr class='relative even' valign='top'>
     <td class='relatedTable detail' title="act_ru_variable.batch_id_ refs act_ru_batch.id_ via act_fk_var_batch"><a href='act_ru_variable.html'>act_ru_variable</a><span class='relatedKey'>.batch_id_</span>
     </td>
     <td class='constraint detail'>act_fk_var_batch<span title='Restrict delete:
@@ -102,7 +102,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>rev_</td>
  <td class='detail'>int4</td>
  <td class='detail' align='right'>10</td>
@@ -113,7 +113,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='detail'>type_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>255</td>
@@ -124,7 +124,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>total_jobs_</td>
  <td class='detail'>int4</td>
  <td class='detail' align='right'>10</td>
@@ -135,7 +135,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='detail'>jobs_created_</td>
  <td class='detail'>int4</td>
  <td class='detail' align='right'>10</td>
@@ -146,7 +146,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>jobs_per_seed_</td>
  <td class='detail'>int4</td>
  <td class='detail' align='right'>10</td>
@@ -157,7 +157,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='detail'>invocations_per_job_</td>
  <td class='detail'>int4</td>
  <td class='detail' align='right'>10</td>
@@ -168,7 +168,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='indexedColumn' title='Indexed'>seed_job_def_id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
@@ -178,7 +178,7 @@
  <td class='detail'></td>
  <td class='detail'>
   <table border='0' width='100%' cellspacing='0' cellpadding='0'>
-   <tr class='relative even' valign='top'>
+   <tr class='relative odd' valign='top'>
     <td class='relatedTable detail' title="act_ru_batch.seed_job_def_id_ refs act_ru_jobdef.id_ via act_fk_batch_seed_job_def"><a href='act_ru_jobdef.html'>act_ru_jobdef</a><span class='relatedKey'>.id_</span>
     </td>
     <td class='constraint detail'>act_fk_batch_seed_job_def<span title='Restrict delete:
@@ -188,7 +188,7 @@
  </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='indexedColumn' title='Indexed'>batch_job_def_id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
@@ -198,7 +198,7 @@
  <td class='detail'></td>
  <td class='detail'>
   <table border='0' width='100%' cellspacing='0' cellpadding='0'>
-   <tr class='relative odd' valign='top'>
+   <tr class='relative even' valign='top'>
     <td class='relatedTable detail' title="act_ru_batch.batch_job_def_id_ refs act_ru_jobdef.id_ via act_fk_batch_job_def"><a href='act_ru_jobdef.html'>act_ru_jobdef</a><span class='relatedKey'>.id_</span>
     </td>
     <td class='constraint detail'>act_fk_batch_job_def<span title='Restrict delete:
@@ -208,7 +208,7 @@
  </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='indexedColumn' title='Indexed'>monitor_job_def_id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
@@ -218,7 +218,7 @@
  <td class='detail'></td>
  <td class='detail'>
   <table border='0' width='100%' cellspacing='0' cellpadding='0'>
-   <tr class='relative even' valign='top'>
+   <tr class='relative odd' valign='top'>
     <td class='relatedTable detail' title="act_ru_batch.monitor_job_def_id_ refs act_ru_jobdef.id_ via act_fk_batch_monitor_job_def"><a href='act_ru_jobdef.html'>act_ru_jobdef</a><span class='relatedKey'>.id_</span>
     </td>
     <td class='constraint detail'>act_fk_batch_monitor_job_def<span title='Restrict delete:
@@ -228,7 +228,7 @@
  </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='detail'>suspension_state_</td>
  <td class='detail'>int4</td>
  <td class='detail' align='right'>10</td>
@@ -239,7 +239,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>configuration_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>255</td>
@@ -250,7 +250,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='detail'>tenant_id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
@@ -261,7 +261,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>create_user_id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>255</td>
@@ -273,7 +273,7 @@
  <td class='comment detail'></td>
 </tr>
 </table>
-<p title='14 columns'>Table contained 0 rows at Fri May 06 20:18 UTC 2022<p/>
+<p title='14 columns'>Table contained 0 rows at Mon Aug 15 20:31 UTC 2022<p/>
 </td></tr></table>
 <div class='indent'>
 <b>Indexes:</b>
