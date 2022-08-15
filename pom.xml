@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.parent</artifactId>
-        <version>20</version>
+        <version>21</version>
         <relativePath />
     </parent>
     <artifactId>org.openwms.tms.routing</artifactId>
@@ -65,18 +65,18 @@
 
     <properties>
         <ameba-cloud.version>2.0</ameba-cloud.version>
-        <camunda.version>7.16.0</camunda.version>
-        <common-service.version>2.0.0-SNAPSHOT</common-service.version>
+        <camunda.version>7.17.0</camunda.version>
         <commons-configuration.version>1.10</commons-configuration.version>
+        <common-service.version>2.0.0-SNAPSHOT</common-service.version>
         <commons-io.version>2.6</commons-io.version>
-        <core.units.version>0.5.0-SNAPSHOT</core.units.version>
         <core.version>2.0.0-SNAPSHOT</core.version>
+        <core.units.version>0.5.0-SNAPSHOT</core.units.version>
         <flowable.version>6.7.2</flowable.version>
         <groovy-jsr223.version>3.0.9</groovy-jsr223.version>
         <guava.version>30.0-jre</guava.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <servo-core.version>0.12.21</servo-core.version>
-        <spring-cloud-dependencies.version>2021.0.0</spring-cloud-dependencies.version>
+        <spring-cloud-dependencies.version>2021.0.3</spring-cloud-dependencies.version>
         <transportation-service.version>2.0.0-SNAPSHOT</transportation-service.version>
     </properties>
 
@@ -543,12 +543,7 @@
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
+            <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

@@ -35,7 +35,7 @@ import org.springframework.context.annotation.Profile;
  */
 @Profile("!INMEM")
 @Configuration
-@AutoConfigureOrder(0)
+@AutoConfigureOrder
 @EnableFeignClients(
         basePackageClasses = {
                 TransportUnitApi.class,
