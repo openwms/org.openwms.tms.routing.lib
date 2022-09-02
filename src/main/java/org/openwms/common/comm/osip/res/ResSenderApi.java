@@ -28,16 +28,12 @@ import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.config.OwmsProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
 
 import static java.lang.String.format;
 
@@ -72,17 +68,17 @@ class ResSenderApi implements Responder {
     @Override
     @Measured
     public void sendToLocation(String target) {
-        String sender = owmsProperties.getPartner(""+in.getMsg().get(CommConstants.SENDER)).orElseThrow(() -> new IllegalConfigurationValueException(format("No partner service with name [%s] configured in property owms.driver.partners", ""+in.getMsg().get(CommConstants.SENDER))));
-        List<ServiceInstance> list = dc.getInstances(sender);
+        var sender = owmsProperties.getPartner(""+in.getMsg().get(CommConstants.SENDER)).orElseThrow(() -> new IllegalConfigurationValueException(format("No partner service with name [%s] configured in property owms.driver.partners", ""+in.getMsg().get(CommConstants.SENDER))));
+        var list = dc.getInstances(sender);
         if (list == null || list.isEmpty()) {
             throw new NotFoundException(format("No deployed service with name [%s] found", sender));
         }
-        ResponseHeader header = ResponseHeader.newBuilder()
+        var header = ResponseHeader.newBuilder()
                 .sender("" + in.getMsg().get(CommConstants.RECEIVER))
                 .receiver(""+in.getMsg().get(CommConstants.SENDER))
                 .build();
 
-        ResponseMessage.Builder builder = ResponseMessage
+        var builder = ResponseMessage
                 .newBuilder()
                 .header(header)
                 .barcode(""+in.getMsg().get(CommConstants.BARCODE))
@@ -90,12 +86,12 @@ class ResSenderApi implements Responder {
                 .errorCode(""+in.getMsg().get(CommConstants.ERROR_CODE))
                 .targetLocation(target);
 
-        ServiceInstance si = list.get(0);
-        String endpoint = si.getMetadata().get("protocol") + "://" + si.getServiceId() + "/res";
+        var si = list.get(0);
+        var endpoint = si.getMetadata().get("protocol") + "://" + si.getServiceId() + "/res";
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Calling driver URL [{}]", endpoint);
         }
-        HttpHeaders headers = SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"));
+        var headers = SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"));
         headers.add(CommConstants.RECEIVER, header.getReceiver());
         try {
             aLoadBalanced.exchange(

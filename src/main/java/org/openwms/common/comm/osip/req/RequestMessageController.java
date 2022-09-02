@@ -15,14 +15,15 @@
  */
 package org.openwms.common.comm.osip.req;
 
+import org.ameba.http.MeasuredRestController;
 import org.openwms.common.comm.ItemMessage;
 import org.openwms.common.comm.ItemMessageHandler;
 import org.openwms.common.comm.osip.OSIP;
 import org.openwms.core.SpringProfiles;
+import org.openwms.core.http.AbstractWebController;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * A RequestMessageController is the http endpoint of the routing service component to
@@ -32,8 +33,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Profile("!"+ SpringProfiles.ASYNCHRONOUS_PROFILE)
 @OSIP
-@RestController
-class RequestMessageController {
+@MeasuredRestController
+class RequestMessageController extends AbstractWebController {
 
     private final ItemMessageHandler handler;
 

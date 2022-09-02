@@ -18,6 +18,7 @@ package org.openwms.tms.routing;
 import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SpringProfiles;
 import org.ameba.http.PermitAllCorsConfigurationSource;
+import org.ameba.http.identity.EnableIdentityAwareness;
 import org.openwms.tms.routing.config.OwmsProperties;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -42,6 +43,7 @@ import javax.servlet.Filter;
  */
 @Configuration
 @EnableAspects(propagateRootCause = true)
+@EnableIdentityAwareness
 @EnableConfigurationProperties
 @EnableRetry
 @EnableTransactionManagement
