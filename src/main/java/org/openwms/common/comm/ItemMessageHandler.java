@@ -19,20 +19,13 @@ import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupApi;
-import org.openwms.common.location.api.LocationGroupVO;
-import org.openwms.common.location.api.LocationVO;
 import org.openwms.tms.api.TransportOrderApi;
-import org.openwms.tms.api.TransportOrderVO;
-import org.openwms.tms.routing.Action;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.ProgramExecutor;
-import org.openwms.tms.routing.Route;
 import org.openwms.tms.routing.RouteImpl;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
 import org.springframework.util.Assert;
-
-import java.util.List;
 
 import static java.lang.String.format;
 
@@ -69,21 +62,21 @@ public class ItemMessageHandler {
         in.putAll(msg.getAll());
         in.putAll(msg.getHeader().getAll());
 
-        LocationVO actualLocation = locationApi
+        var actualLocation = locationApi
                 .findById(msg.getActualLocation())
                 .orElseThrow(() -> new NotFoundException(format("Location with coordinate [%s] does not exist", msg.getActualLocation())));
 
-        LocationGroupVO locationGroup =
+        var locationGroup =
                 msg.hasLocationGroupName() ?
                         locationGroupApi.findByName(msg.getLocationGroupName())
                                 .orElseThrow(() -> new NotFoundException(format("LocationGroup with name [%s] does not exist", msg.getLocationGroupName()))) :
                         locationGroupApi.findByName(actualLocation.getLocationGroupName())
                                 .orElseThrow(() -> new NotFoundException(format("LocationGroup with name [%s] does not exist", actualLocation.getLocationGroupName())));
 
-        Route route = RouteImpl.NO_ROUTE;
-        List<TransportOrderVO> transportOrders = transportOrderApi.findBy(msg.getBarcode(), "STARTED");
+        var route = RouteImpl.NO_ROUTE;
+        var transportOrders = transportOrderApi.findBy(msg.getBarcode(), "STARTED");
         if (transportOrders != null && !transportOrders.isEmpty()) {
-            TransportOrderVO transportOrder = transportOrders.get(0);
+            var transportOrder = transportOrders.get(0);
             in.putAll(transportOrder.getAll());
             try {
                 route = routeSearch.findBy(transportOrder.getSourceLocation(), transportOrder.getTargetLocation(), transportOrder.getTargetLocationGroup());
@@ -92,7 +85,7 @@ public class ItemMessageHandler {
             }
         }
         in.put("route", route);
-        Action action = matrix.findBy(msg.getType(), route, actualLocation, locationGroup);
+        var action = matrix.findBy(msg.getType(), route, actualLocation, locationGroup);
         in.putAll(action.getFlexVariables());
         executor.execute(action, in.getMsg());
     }

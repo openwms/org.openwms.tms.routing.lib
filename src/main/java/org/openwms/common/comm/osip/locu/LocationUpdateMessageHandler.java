@@ -25,6 +25,7 @@ import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.RouteImpl;
+import org.springframework.util.Assert;
 
 import java.util.Optional;
 
@@ -40,24 +41,31 @@ class LocationUpdateMessageHandler {
 
     private final LocationGroupApi locationGroupApi;
     private final LocationApi locationApi;
+    private final InputContext in;
     private final Matrix matrix;
     private final ProgramExecutor executor;
 
-    LocationUpdateMessageHandler(LocationGroupApi locationGroupApi, LocationApi locationApi, Matrix matrix, ProgramExecutor executor) {
+    LocationUpdateMessageHandler(LocationGroupApi locationGroupApi, LocationApi locationApi, InputContext in, Matrix matrix, ProgramExecutor executor) {
         this.locationGroupApi = locationGroupApi;
         this.locationApi = locationApi;
+        this.in = in;
         this.matrix = matrix;
         this.executor = executor;
     }
 
     void handle(LocationUpdateVO msg) {
+        Assert.notNull(msg, "handle called with null message");
+        in.clear();
+        in.putAll(msg.getAll());
         Optional<LocationGroupVO> locationGroupOpt = locationGroupApi.findByName(msg.getLocationGroupName());
         Optional<LocationVO> locationOpt = locationApi.findById(msg.getLocation());
 
-        if (!locationOpt.isPresent() && !locationGroupOpt.isPresent()) {
+        if (locationOpt.isEmpty() && locationGroupOpt.isEmpty()) {
             throw new NotFoundException(format("Either the Location [%s] or the LocationGroup [%s] must exists! Can't process LOCU", msg.getLocation(), msg.getLocationGroupName()));
         }
 
-        executor.execute(matrix.findBy(msg.getType(), RouteImpl.NO_ROUTE, locationOpt.orElse(null), locationGroupOpt.orElse(null)), new InputContext().setMsg(msg.getAll()).getMsg());
+        var action = matrix.findBy(msg.getType(), RouteImpl.NO_ROUTE, locationOpt.orElse(null), locationGroupOpt.orElse(null));
+        in.putAll(action.getFlexVariables());
+        executor.execute(action, in.getMsg());
     }
 }

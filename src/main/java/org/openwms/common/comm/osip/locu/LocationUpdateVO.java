@@ -47,11 +47,19 @@ class LocationUpdateVO implements Serializable {
     /*~-------------------- Methods --------------------*/
     public Map<String, Object> getAll() {
         Map<String, Object> result = new HashMap<>(4);
-        result.put("location", location);
-        result.put("locationGroupName", locationGroupName);
+        if (isValid(location)) {
+            result.put("location", location);
+        }
+        if (isValid(location)) {
+            result.put("locationGroupName", locationGroupName);
+        }
         result.put("errorCode", new ErrorCodeVO(errorCode));
         result.put("created", created);
         return Collections.unmodifiableMap(result);
+    }
+
+    private boolean isValid(String id) {
+        return id != null && !id.startsWith("*") && !id.startsWith(("?"));
     }
 
     /*~-------------------- Accessors --------------------*/
