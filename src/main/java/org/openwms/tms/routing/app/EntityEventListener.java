@@ -86,6 +86,10 @@ class EntityEventListener {
             return;
         }
         switch (routingKey) {
+            case "loc.event.created" -> {
+                LOGGER.debug("[Cache] Location has been created -> evicting cache");
+                janitor.evictLocationCache();
+            }
             case "loc.event.changed" -> {
                 LOGGER.debug("[Cache] Location has changed -> evicting cache");
                 janitor.evictLocationCache();
