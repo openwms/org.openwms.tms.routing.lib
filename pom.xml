@@ -75,7 +75,7 @@
         <groovy-jsr223.version>3.0.9</groovy-jsr223.version>
         <guava.version>30.0-jre</guava.version>
         <servo-core.version>0.12.21</servo-core.version>
-        <spring-cloud-dependencies.version>2021.0.6</spring-cloud-dependencies.version>
+        <spring-cloud-dependencies.version>2021.0.7</spring-cloud-dependencies.version>
         <transportation-service.version>2.0.0-SNAPSHOT</transportation-service.version>
     </properties>
 
