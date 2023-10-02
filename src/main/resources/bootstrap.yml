@@ -14,8 +14,6 @@ spring:
     show-sql: false
   liquibase:
     enabled: false
-  jackson:
-    date-format: "yyyy-MM-dd'T'HH:mm:ssXXX" # Only matches Dates no Instants!
   main:
     allow-bean-definition-overriding: true
   mvc:

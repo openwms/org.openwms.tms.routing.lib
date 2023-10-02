@@ -18,7 +18,7 @@ package org.openwms.tms.routing.ui;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.ameba.http.AbstractBase;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -29,7 +29,7 @@ import java.util.Objects;
  */
 public class ActionVO extends AbstractBase<ActionVO> implements Serializable {
 
-    @NotNull
+    @NotBlank
     @JsonProperty("name")
     private String name;
     @JsonProperty("type")
