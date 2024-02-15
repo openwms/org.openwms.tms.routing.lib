@@ -4,7 +4,7 @@ handle incoming messages and selects the appropriate workflow process that final
 compliant workflow, with extensions of the used workflow engine.
 
 # Resources
-Documentation at [Wiki](https://wiki.butan092.startdedicated.de/projects/tms-routing-service/wiki)
+Documentation at [Wiki](https://wiki.openwms.cloud/projects/tms-routing-service/wiki)
 
 [![Build status](https://github.com/openwms/org.openwms.tms.routing/actions/workflows/master-build.yml/badge.svg)](https://github.com/openwms/org.openwms.tms.routing/actions/workflows/master-build.yml)
 [![Quality](https://sonarcloud.io/api/project_badges/measure?project=org.openwms:org.openwms.tms.routing&metric=alert_status)](https://sonarcloud.io/dashboard?id=org.openwms:org.openwms.tms.routing)
