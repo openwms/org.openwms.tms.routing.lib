@@ -1,4 +1,4 @@
-// dot 2.43.0 on Linux 6.2.0-1019-azure
+// dot 2.43.0 on Linux 6.5.0-1017-azure
 // SchemaSpy rev Unknown
 digraph "oneDegreeRelationshipsDiagram" {
   graph [
@@ -63,8 +63,10 @@ digraph "oneDegreeRelationshipsDiagram" {
       <TR><TD PORT="c_updated" COLSPAN="3" ALIGN="LEFT">c_updated</TD></TR>
       <TR><TD PORT="c_ol" COLSPAN="3" ALIGN="LEFT">c_ol</TD></TR>
       <TR><TD PORT="c_pid" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">c_pid</TD></TR>
+      <TR><TD PORT="c_foreign_pid" COLSPAN="3" ALIGN="LEFT">c_foreign_pid</TD></TR>
       <TR><TD PORT="c_location_group_name" COLSPAN="3" ALIGN="LEFT">c_location_group_name</TD></TR>
       <TR><TD PORT="c_location_id" COLSPAN="3" ALIGN="LEFT">c_location_id</TD></TR>
+      <TR><TD PORT="c_marked_deletion" COLSPAN="3" ALIGN="LEFT">c_marked_deletion</TD></TR>
       <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">2 &gt;</TD></TR>
     </TABLE>>
     URL="rsrv_location.html"
