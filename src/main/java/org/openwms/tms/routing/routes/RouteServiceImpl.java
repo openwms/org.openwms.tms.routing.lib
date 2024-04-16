@@ -15,6 +15,7 @@
  */
 package org.openwms.tms.routing.routes;
 
+import org.ameba.annotation.Measured;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.openwms.common.comm.NoRouteException;
@@ -25,6 +26,8 @@ import org.openwms.tms.routing.RouteImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.validation.constraints.NotBlank;
 
 import static java.lang.String.format;
 
@@ -52,6 +55,19 @@ class RouteServiceImpl implements RouteService {
         this.routeRepository = routeRepository;
         this.routeDetailsRepository = routeDetailsRepository;
         this.in = in;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Measured
+    public boolean routeExistsWithLocationId(@NotBlank String locationId) {
+        var exists = routeRepository.existsWithLocation(locationId);
+        if (exists) {
+            return true;
+        }
+        return routeDetailsRepository.existsWithLocation(locationId);
     }
 
     /**

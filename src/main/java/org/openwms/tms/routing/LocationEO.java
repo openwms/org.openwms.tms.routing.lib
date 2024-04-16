@@ -32,13 +32,31 @@ import java.util.Objects;
 @Table(name = "RSRV_LOCATION")
 public class LocationEO extends ApplicationEntity {
 
+    /** The foreign persistent key of the Location. */
+    @Column(name = "C_FOREIGN_PID")
+    private String foreignPKey;
+
+    /** The unique business key. */
     @NotNull
     @Column(name = "C_LOCATION_ID")
     private String locationId;
+
+    /** The name of the LocationGroup this Location belongs to. */
     @Column(name = "C_LOCATION_GROUP_NAME")
     private String locationGroupName;
 
-    protected LocationEO() {
+    /** Flag to determine if this Location is marked for deletion and cannot be used anymore. */
+    @Column(name = "C_MARKED_DELETION")
+    private boolean markForDeletion;
+
+    protected LocationEO() {}
+
+    public String getForeignPKey() {
+        return foreignPKey;
+    }
+
+    public void setForeignPKey(String foreignPKey) {
+        this.foreignPKey = foreignPKey;
     }
 
     public String getLocationId() {
@@ -57,28 +75,39 @@ public class LocationEO extends ApplicationEntity {
         this.locationGroupName = locationGroupName;
     }
 
+    public boolean isMarkForDeletion() {
+        return markForDeletion;
+    }
+
+    public void setMarkForDeletion(boolean markForDeletion) {
+        this.markForDeletion = markForDeletion;
+    }
+
     @Override
     public String toString() {
         return locationId;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-        LocationEO that = (LocationEO) o;
-        return Objects.equals(locationId, that.locationId) && Objects.equals(locationGroupName, that.locationGroupName);
+        if (this == o) return true;
+        if (!(o instanceof LocationEO that)) return false;
+        if (!super.equals(o)) return false;
+        return markForDeletion == that.markForDeletion && Objects.equals(foreignPKey, that.foreignPKey) && Objects.equals(locationId, that.locationId) && Objects.equals(locationGroupName, that.locationGroupName);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), locationId, locationGroupName);
+        return Objects.hash(super.hashCode(), foreignPKey, locationId, locationGroupName, markForDeletion);
     }
 }

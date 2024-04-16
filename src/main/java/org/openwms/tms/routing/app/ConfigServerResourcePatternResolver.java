@@ -23,7 +23,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
@@ -73,8 +72,8 @@ public class ConfigServerResourcePatternResolver extends PathMatchingResourcePat
     }
 
     private Optional<Resource> resolveConfiguredValue(String locationPattern) {
-        String path = locationPattern.substring(locationPattern.indexOf(':')+1, locationPattern.length());
-        ResponseEntity<Resource> exchange =
+        var path = locationPattern.substring(locationPattern.indexOf(':')+1, locationPattern.length());
+        var exchange =
                 restTemplate.exchange(
                         format("%s://%s/%s/%s/%s", configServerProtocol, configServerId, path, "default", "master"),
                         HttpMethod.GET,

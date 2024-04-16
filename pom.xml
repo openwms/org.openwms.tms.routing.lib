@@ -270,7 +270,7 @@
             </dependency>
             <dependency>
                 <groupId>org.openwms</groupId>
-                <artifactId>org.openwms.common.service</artifactId>
+                <artifactId>org.openwms.common.service.lib</artifactId>
                 <version>${common-service.version}</version>
                 <classifier>client</classifier>
             </dependency>
@@ -304,7 +304,7 @@
         </dependency>
         <dependency>
             <groupId>org.openwms</groupId>
-            <artifactId>org.openwms.common.service</artifactId>
+            <artifactId>org.openwms.common.service.lib</artifactId>
             <classifier>client</classifier>
             <optional>true</optional>
         </dependency>
@@ -312,6 +312,7 @@
             <groupId>org.openwms</groupId>
             <artifactId>org.openwms.tms.transportation</artifactId>
             <classifier>client</classifier>
+            <optional>true</optional>
         </dependency>
 
         <!-- Spring Dependencies -->

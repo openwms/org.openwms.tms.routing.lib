@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2022 the original author or authors.
+ * Copyright 2005-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing.ui;
+package org.openwms.tms.routing.location.impl;
 
 import org.openwms.tms.routing.LocationEO;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
@@ -26,8 +26,12 @@ import java.util.Optional;
  *
  * @author Heiko Scherrer
  */
-@Repository
-interface LocationRepository extends JpaRepository<LocationEO, Long> {
+public interface LocationRepository extends JpaRepository<LocationEO, Long> {
 
     Optional<LocationEO> findByLocationId(String locationId);
+
+    @Query("from LocationEO l where l.foreignPKey = :foreignPKey and l.markForDeletion = :markForDeletion")
+    Optional<LocationEO> findByForeignPKeyAndDeleted(String foreignPKey, boolean markForDeletion);
+
+    Optional<LocationEO> findByForeignPKey(String foreignPKey);
 }

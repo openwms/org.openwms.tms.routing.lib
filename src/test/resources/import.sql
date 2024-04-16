@@ -1,6 +1,6 @@
 -- Locations
-insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('STCK/0001/0001/0000/0000','REC_CONV',1000,0,'316869541651',now(),now());
-insert into rsrv_location (c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_created,c_updated) values ('STCK/0001/0002/0000/0000','REC_CONV',1001,0,'705831012876',now(),now());
+insert into rsrv_location (c_foreign_pid,c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_marked_deletion,c_created,c_updated) values ('1000','STCK/0001/0001/0000/0000','REC_CONV',1000,0,'316869541651',false,now(),now());
+insert into rsrv_location (c_foreign_pid,c_location_id,c_location_group_name,c_pk,c_ol,c_pid,c_marked_deletion,c_created,c_updated) values ('1001','STCK/0001/0002/0000/0000','REC_CONV',1001,0,'705831012876',false,now(),now());
 
 -- Routes
 insert into rsrv_route (c_name,c_description,c_source_location,c_target_location,c_source_loc_group_name,c_target_loc_group_name, c_enabled, c_pk, c_ol, c_created, c_updated,c_pid) values ('SRC_TRG','Source -> Target' ,1000,1001,null,null,true,'10000',0,now(),now(),'709957655206');

@@ -15,12 +15,23 @@
  */
 package org.openwms.tms.routing.routes;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * A RouteService operates on {@code Route}s.
  *
  * @author Heiko Scherrer
  */
 public interface RouteService {
+
+    /**
+     * Checks if a {@code Route} exists that uses a {@code Location} with the given {@code locationId}.
+     *
+     * @param locationId The location ID to check for.
+     * @return {@code true} if a route exists with the given location ID, {@code false} otherwise.
+     * @throws IllegalArgumentException if the parameter 'locationId' is blank.
+     */
+    boolean routeExistsWithLocationId(@NotBlank String locationId);
 
     /**
      * Send a RES_ telegram to the next location that is defined in the static Route Details.

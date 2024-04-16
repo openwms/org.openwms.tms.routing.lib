@@ -204,6 +204,10 @@ management:
       enabled: true
 
 owms:
+  commands:
+    common:
+      registration:
+        exchange-name: common.registration.commands # Send commands to Common
   driver:
     osip:
       err:
@@ -259,6 +263,9 @@ owms:
     dead-letter:
       exchange-name: dle.routing
       queue-name: dlq-routing-queue
+    registration:
+      location-request-removal-path: /v1/locations/remove
+      location-removal-path: /v1/locations
 
 ---
 # Might run in standalone or distributed environment

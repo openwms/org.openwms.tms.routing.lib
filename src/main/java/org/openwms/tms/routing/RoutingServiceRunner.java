@@ -44,6 +44,7 @@ public class RoutingServiceRunner {
      * @param args Some args
      */
     public static void main(String[] args) {
-        SpringApplication.run(RoutingServiceRunner.class, args);
+        var ctx = SpringApplication.run(RoutingServiceRunner.class, args);
+        ctx.start();
     }
 }

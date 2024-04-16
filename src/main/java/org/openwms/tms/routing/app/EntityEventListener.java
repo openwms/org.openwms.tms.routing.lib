@@ -17,7 +17,6 @@ package org.openwms.tms.routing.app;
 
 import org.ameba.annotation.Measured;
 import org.openwms.common.location.api.messages.LocationGroupMO;
-import org.openwms.common.location.api.messages.LocationMO;
 import org.openwms.core.SpringProfiles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,35 +71,6 @@ class EntityEventListener {
             case "lg.event.changed-operation-mode" -> {
                 LOGGER.debug("[Cache] LocationGroup Operation Mode has changed -> evicting cache");
                 janitor.evictLocationGroupCache();
-            }
-            default -> LOGGER.warn("Eventtype [{}] currently not supported", routingKey);
-        }
-    }
-
-    /** Listens on Location messages. */
-    @Measured
-    @RabbitListener(queues = "${owms.events.common.loc.queue-name}")
-    public void onLocationEvent(@Payload LocationMO msg, @Header("amqp_receivedRoutingKey") String routingKey) {
-        if (msg == null) {
-            LOGGER.warn("Got an event for a Location with empty body and routingKey [{}]", routingKey);
-            return;
-        }
-        switch (routingKey) {
-            case "loc.event.created" -> {
-                LOGGER.debug("[Cache] Location has been created -> evicting cache");
-                janitor.evictLocationCache();
-            }
-            case "loc.event.changed" -> {
-                LOGGER.debug("[Cache] Location has changed -> evicting cache");
-                janitor.evictLocationCache();
-            }
-            case "loc.event.deleted" -> {
-                LOGGER.debug("[Cache] Location deleted -> evicting cache");
-                janitor.evictLocationCache();
-            }
-            case "loc.event.state-changed" -> {
-                LOGGER.debug("[Cache] Location State has changed state -> evicting cache");
-                janitor.evictLocationCache();
             }
             default -> LOGGER.warn("Eventtype [{}] currently not supported", routingKey);
         }

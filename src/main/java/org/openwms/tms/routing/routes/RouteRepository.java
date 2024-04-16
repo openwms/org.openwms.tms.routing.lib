@@ -17,6 +17,8 @@ package org.openwms.tms.routing.routes;
 
 import org.openwms.tms.routing.RouteImpl;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -26,6 +28,9 @@ import java.util.Optional;
  * @author Heiko Scherrer
  */
 public interface RouteRepository extends JpaRepository<RouteImpl, Long> {
+
+    @Query("select count(r) > 0 from RouteImpl r where r.sourceLocation.locationId = :locationId or r.targetLocation.locationId = :locationId")
+    boolean existsWithLocation(@Param("locationId") String locationId);
 
     Optional<RouteImpl> findBypKey(String persistentKey);
 

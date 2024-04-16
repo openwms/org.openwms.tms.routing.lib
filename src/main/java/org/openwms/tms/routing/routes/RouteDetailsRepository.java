@@ -16,6 +16,8 @@
 package org.openwms.tms.routing.routes;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -25,6 +27,9 @@ import java.util.List;
  * @author Heiko Scherrer
  */
 public interface RouteDetailsRepository extends JpaRepository<RouteDetails, Long> {
+
+    @Query("select count(rd) > 0 from RouteDetails rd where rd.source = :locationId or rd.next = :locationId")
+    boolean existsWithLocation(@Param("locationId") String locationId);
 
     List<RouteDetails> findByRoute_RouteId_OrderByPos(String routeId);
 }

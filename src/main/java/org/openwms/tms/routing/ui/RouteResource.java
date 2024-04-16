@@ -19,6 +19,7 @@ import org.ameba.exception.NotFoundException;
 import org.ameba.http.MeasuredRestController;
 import org.openwms.core.http.AbstractWebController;
 import org.openwms.tms.routing.RouteMapper;
+import org.openwms.tms.routing.location.impl.LocationRepository;
 import org.openwms.tms.routing.routes.RouteRepository;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Sort;
