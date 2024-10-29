@@ -67,6 +67,7 @@
 
     <properties>
         <ameba-cloud.version>2.0</ameba-cloud.version>
+        <asm.version>9.3</asm.version>
         <camunda.version>7.17.0</camunda.version>
         <common-service.version>2.1.0-SNAPSHOT</common-service.version>
         <commons-io.version>2.6</commons-io.version>
@@ -78,6 +79,7 @@
         <servo-core.version>0.12.21</servo-core.version>
         <spring-cloud-dependencies.version>2021.0.8</spring-cloud-dependencies.version>
         <transportation-service.version>2.0.0-SNAPSHOT</transportation-service.version>
+        <activiti-spring-boot-starter.version>8.7.0-alpha.28</activiti-spring-boot-starter.version>
     </properties>
 
     <reporting>
@@ -189,6 +191,13 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Activiti -->
+            <dependency>
+                <groupId>org.activiti</groupId>
+                <artifactId>activiti-spring-boot-starter</artifactId>
+                <version>${activiti-spring-boot-starter.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
@@ -199,6 +208,7 @@
                 <artifactId>ameba-cloud</artifactId>
                 <version>${ameba-cloud.version}</version>
             </dependency>
+
             <!-- Camunda -->
             <dependency>
                 <groupId>org.camunda.bpm</groupId>
@@ -224,6 +234,7 @@
                 <artifactId>groovy-jsr223</artifactId>
                 <version>${groovy-jsr223.version}</version>
             </dependency>
+
             <!-- Flowable >
             <dependency>
                 <groupId>org.flowable</groupId>
@@ -279,6 +290,12 @@
                 <artifactId>org.openwms.tms.transportation</artifactId>
                 <version>${transportation-service.version}</version>
                 <classifier>client</classifier>
+            </dependency>
+            <dependency>
+                <!-- Clash between activiti-spring-boot-starter and json-path -->
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm</artifactId>
+                <version>${asm.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -423,6 +440,11 @@
         </dependency>
 
         <!-- Workflow -->
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-spring-boot-starter</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine-spring</artifactId>
@@ -595,6 +617,11 @@
             <releases>
                 <enabled>true</enabled>
             </releases>
+        </repository>
+        <repository>
+            <id>activiti</id>
+            <name>activiti</name>
+            <url>https://artifacts.alfresco.com/nexus/content/repositories/activiti-releases</url>
         </repository>
     </repositories>
     <pluginRepositories>

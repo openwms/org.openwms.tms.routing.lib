@@ -33,12 +33,6 @@ spring:
           initial-interval: 1s
           max-interval: 1s
 
-camunda:
-  bpm:
-    auto-deployment-enabled: true
-    enabled: true
-    deployment-resource-pattern: classpath*:**/camunda/processes/*.bpmn20.xml,classpath*:**/camunda/processes/*.bpmn,classpath*:**/camunda/processes/*.dmn11.xml,classpath*:**/camunda/processes/*.dmn
-
 feign:
   httpclient:
     connection-timeout: 30000
@@ -164,6 +158,38 @@ flowable:
         auto-activate: false
   jpa-enabled: false
   async-executor-activate: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "!FLOWABLE && !ACTIVITI"
+
+camunda:
+  bpm:
+    auto-deployment-enabled: true
+    enabled: true
+    deployment-resource-pattern: classpath*:**/camunda/processes/*.bpmn20.xml,classpath*:**/camunda/processes/*.bpmn,classpath*:**/camunda/processes/*.dmn11.xml,classpath*:**/camunda/processes/*.dmn
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "ACTIVITI"
+  activiti:
+    process-definition-location-prefix: classpath:activiti/
+    database-schema-update: false
+    database-schema: public
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+
+camunda:
+  bpm:
+    auto-deployment-enabled: false
+    enabled: false
 
 ---
 spring:

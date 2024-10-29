@@ -15,8 +15,8 @@
  */
 package org.openwms.tms.routing.spi;
 
-import org.camunda.bpm.engine.RepositoryService;
-import org.camunda.bpm.engine.RuntimeService;
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
 import org.openwms.tms.routing.Action;
 import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.ProgramResult;
@@ -29,19 +29,19 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * A CamundaExecutor delegates to Camunda for program execution.
+ * A ActivitiExecutor delegates to Activiti for program execution.
  *
  * @author Heiko Scherrer
  */
-@Profile("!FLOWABLE && !ACTIVITI")
+@Profile("ACTIVITI")
 @Component
-class CamundaExecutor implements ProgramExecutor {
+class ActivitiExecutor implements ProgramExecutor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CamundaExecutor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ActivitiExecutor.class);
     private final RuntimeService runtimeService;
     private final RepositoryService repositoryService;
 
-    CamundaExecutor(RuntimeService runtimeService, RepositoryService repositoryService) {
+    ActivitiExecutor(RuntimeService runtimeService, RepositoryService repositoryService) {
         this.runtimeService = runtimeService;
         this.repositoryService = repositoryService;
     }
@@ -56,7 +56,7 @@ class CamundaExecutor implements ProgramExecutor {
         }
         var processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionKey(program.getProgramKey()).active().latestVersion().singleResult();
         if (null == processDefinition) {
-            throw new IllegalStateException("No active process with programkey [%s] found".formatted(program.getProgramKey()));
+            throw new IllegalStateException("No active process with programkey %s found".formatted(program.getProgramKey()));
         }
         runtimeService.startProcessInstanceById(processDefinition.getId(), runtimeVariables);
         return Optional.empty();
