@@ -108,7 +108,7 @@ management:
             enabled: true
     export:
       prometheus:
-            enabled: true
+        enabled: true
   info:
     git:
       mode: simple
@@ -171,7 +171,6 @@ camunda:
     enabled: true
     deployment-resource-pattern: classpath*:**/camunda/processes/*.bpmn20.xml,classpath*:**/camunda/processes/*.bpmn,classpath*:**/camunda/processes/*.dmn11.xml,classpath*:**/camunda/processes/*.dmn
 
-
 ---
 spring:
   config:
@@ -179,7 +178,7 @@ spring:
       on-profile: "ACTIVITI"
   activiti:
     process-definition-location-prefix: classpath:activiti/
-    database-schema-update: false
+    database-schema-update: true
     database-schema: public
   jpa:
     generate-ddl: true

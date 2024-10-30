@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1sye8xn" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.1">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:activiti="http://activiti.org/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1sye8xn" targetNamespace="http://bpmn.io/schema/bpmn">
   <bpmn:process id="CP001" name="Book on Location and forward" isExecutable="true">
     <bpmn:startEvent id="start">
       <bpmn:outgoing>startTask1</bpmn:outgoing>
@@ -8,11 +8,11 @@
     <bpmn:endEvent id="end">
       <bpmn:incoming>task2End</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="task2" name="Send RES to next Location" camunda:expression="#{responder.sendToLocation(in.msg.flexField1)}">
+    <bpmn:serviceTask id="task2" name="Send RES to next Location" activiti:expression="#{responder.sendToLocation(in.msg.flexField1)}">
       <bpmn:incoming>task1Task2</bpmn:incoming>
       <bpmn:outgoing>task2End</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="task1" name="Create TransportUnit if not exists" camunda:expression="#{transportUnitApi.createTU(in.msg.barcode, in.msg.actualLocation, &#34;PALLET&#34;, false)}">
+    <bpmn:serviceTask id="task1" name="Create TransportUnit if not exists" activiti:expression="#{transportUnitApi.createTU(in.msg.barcode, in.msg.actualLocation, &#34;PALLET&#34;, false)}">
       <bpmn:incoming>startTask1</bpmn:incoming>
       <bpmn:outgoing>task1Task2</bpmn:outgoing>
     </bpmn:serviceTask>

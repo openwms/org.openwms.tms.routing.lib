@@ -28,6 +28,8 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.ameba.LoggingCategories.BOOT;
+
 /**
  * A ActivitiExecutor delegates to Activiti for program execution.
  *
@@ -37,6 +39,7 @@ import java.util.Optional;
 @Component
 class ActivitiExecutor implements ProgramExecutor {
 
+    private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(BOOT);
     private static final Logger LOGGER = LoggerFactory.getLogger(ActivitiExecutor.class);
     private final RuntimeService runtimeService;
     private final RepositoryService repositoryService;
@@ -44,6 +47,7 @@ class ActivitiExecutor implements ProgramExecutor {
     ActivitiExecutor(RuntimeService runtimeService, RepositoryService repositoryService) {
         this.runtimeService = runtimeService;
         this.repositoryService = repositoryService;
+        BOOT_LOGGER.info("--w/ Activiti executor");
     }
 
     /**
