@@ -252,6 +252,7 @@ digraph "twoDegreesRelationshipsDiagram" {
       <TR><TD PORT="delegation_" COLSPAN="3" ALIGN="LEFT">delegation_</TD></TR>
       <TR><TD PORT="priority_" COLSPAN="3" ALIGN="LEFT">priority_</TD></TR>
       <TR><TD PORT="create_time_" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">create_time_</TD></TR>
+      <TR><TD PORT="last_updated_" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">last_updated_</TD></TR>
       <TR><TD PORT="due_date_" COLSPAN="3" ALIGN="LEFT">due_date_</TD></TR>
       <TR><TD PORT="follow_up_date_" COLSPAN="3" ALIGN="LEFT">follow_up_date_</TD></TR>
       <TR><TD PORT="suspension_state_" COLSPAN="3" ALIGN="LEFT">suspension_state_</TD></TR>

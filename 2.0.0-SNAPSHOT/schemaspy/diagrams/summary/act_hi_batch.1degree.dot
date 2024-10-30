@@ -34,6 +34,7 @@ digraph "act_hi_batch" {
       <TR><TD PORT="start_time_" COLSPAN="3" ALIGN="LEFT">start_time_</TD></TR>
       <TR><TD PORT="end_time_" COLSPAN="3" ALIGN="LEFT">end_time_</TD></TR>
       <TR><TD PORT="removal_time_" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">removal_time_</TD></TR>
+      <TR><TD PORT="exec_start_time_" COLSPAN="3" ALIGN="LEFT">exec_start_time_</TD></TR>
       <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
     </TABLE>>
     URL="tables/act_hi_batch.html"

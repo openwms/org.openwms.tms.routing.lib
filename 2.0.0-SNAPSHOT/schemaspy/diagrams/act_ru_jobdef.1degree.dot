@@ -41,6 +41,8 @@ digraph "oneDegreeRelationshipsDiagram" {
       <TR><TD PORT="configuration_" COLSPAN="3" ALIGN="LEFT">configuration_</TD></TR>
       <TR><TD PORT="tenant_id_" COLSPAN="3" ALIGN="LEFT">tenant_id_</TD></TR>
       <TR><TD PORT="create_user_id_" COLSPAN="3" ALIGN="LEFT">create_user_id_</TD></TR>
+      <TR><TD PORT="start_time_" COLSPAN="3" ALIGN="LEFT">start_time_</TD></TR>
+      <TR><TD PORT="exec_start_time_" COLSPAN="3" ALIGN="LEFT">exec_start_time_</TD></TR>
       <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">1 &gt;</TD></TR>
     </TABLE>>
     URL="act_ru_batch.html"

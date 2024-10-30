@@ -212,6 +212,7 @@ digraph "twoDegreesRelationshipsDiagram" {
       <TR><TD PORT="delegation_" COLSPAN="2" ALIGN="LEFT">delegation_</TD><TD PORT="delegation_.type" ALIGN="LEFT">varchar[64]</TD></TR>
       <TR><TD PORT="priority_" COLSPAN="2" ALIGN="LEFT">priority_</TD><TD PORT="priority_.type" ALIGN="LEFT">int4[10]</TD></TR>
       <TR><TD PORT="create_time_" COLSPAN="2" BGCOLOR="#f4f7da" ALIGN="LEFT">create_time_</TD><TD PORT="create_time_.type" ALIGN="LEFT">timestamp[29,6]</TD></TR>
+      <TR><TD PORT="last_updated_" COLSPAN="2" BGCOLOR="#f4f7da" ALIGN="LEFT">last_updated_</TD><TD PORT="last_updated_.type" ALIGN="LEFT">timestamp[29,6]</TD></TR>
       <TR><TD PORT="due_date_" COLSPAN="2" ALIGN="LEFT">due_date_</TD><TD PORT="due_date_.type" ALIGN="LEFT">timestamp[29,6]</TD></TR>
       <TR><TD PORT="follow_up_date_" COLSPAN="2" ALIGN="LEFT">follow_up_date_</TD><TD PORT="follow_up_date_.type" ALIGN="LEFT">timestamp[29,6]</TD></TR>
       <TR><TD PORT="suspension_state_" COLSPAN="2" ALIGN="LEFT">suspension_state_</TD><TD PORT="suspension_state_.type" ALIGN="LEFT">int4[10]</TD></TR>

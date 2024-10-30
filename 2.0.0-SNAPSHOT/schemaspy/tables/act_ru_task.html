@@ -82,7 +82,7 @@
 </tr>
 </thead>
 <tbody valign='top'>
-<tr class='odd'>
+<tr class='even'>
  <td class='primaryKey' title='Primary Key'>id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
@@ -91,7 +91,7 @@
  <td class='detail'></td>
  <td class='detail'>
   <table border='0' width='100%' cellspacing='0' cellpadding='0'>
-   <tr class='relative odd' valign='top'>
+   <tr class='relative even' valign='top'>
     <td class='relatedTable detail' title="act_ru_identitylink.task_id_ refs act_ru_task.id_ via act_fk_tskass_task"><a href='act_ru_identitylink.html'>act_ru_identitylink</a><span class='relatedKey'>.task_id_</span>
     </td>
     <td class='constraint detail'>act_fk_tskass_task<span title='Restrict delete:
@@ -102,7 +102,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>rev_</td>
  <td class='detail'>int4</td>
  <td class='detail' align='right'>10</td>
@@ -113,7 +113,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='indexedColumn' title='Indexed'>execution_id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
@@ -123,7 +123,7 @@
  <td class='detail'></td>
  <td class='detail'>
   <table border='0' width='100%' cellspacing='0' cellpadding='0'>
-   <tr class='relative odd' valign='top'>
+   <tr class='relative even' valign='top'>
     <td class='relatedTable detail' title="act_ru_task.execution_id_ refs act_ru_execution.id_ via act_fk_task_exe"><a href='act_ru_execution.html'>act_ru_execution</a><span class='relatedKey'>.id_</span>
     </td>
     <td class='constraint detail'>act_fk_task_exe<span title='Restrict delete:
@@ -133,7 +133,7 @@
  </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='indexedColumn' title='Indexed'>proc_inst_id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
@@ -143,7 +143,7 @@
  <td class='detail'></td>
  <td class='detail'>
   <table border='0' width='100%' cellspacing='0' cellpadding='0'>
-   <tr class='relative even' valign='top'>
+   <tr class='relative odd' valign='top'>
     <td class='relatedTable detail' title="act_ru_task.proc_inst_id_ refs act_ru_execution.id_ via act_fk_task_procinst"><a href='act_ru_execution.html'>act_ru_execution</a><span class='relatedKey'>.id_</span>
     </td>
     <td class='constraint detail'>act_fk_task_procinst<span title='Restrict delete:
@@ -153,7 +153,7 @@
  </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='indexedColumn' title='Indexed'>proc_def_id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
@@ -163,7 +163,7 @@
  <td class='detail'></td>
  <td class='detail'>
   <table border='0' width='100%' cellspacing='0' cellpadding='0'>
-   <tr class='relative odd' valign='top'>
+   <tr class='relative even' valign='top'>
     <td class='relatedTable detail' title="act_ru_task.proc_def_id_ refs act_re_procdef.id_ via act_fk_task_procdef"><a href='act_re_procdef.html'>act_re_procdef</a><span class='relatedKey'>.id_</span>
     </td>
     <td class='constraint detail'>act_fk_task_procdef<span title='Restrict delete:
@@ -173,7 +173,7 @@
  </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='indexedColumn' title='Indexed'>case_execution_id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
@@ -183,7 +183,7 @@
  <td class='detail'></td>
  <td class='detail'>
   <table border='0' width='100%' cellspacing='0' cellpadding='0'>
-   <tr class='relative even' valign='top'>
+   <tr class='relative odd' valign='top'>
     <td class='relatedTable detail' title="act_ru_task.case_execution_id_ refs act_ru_case_execution.id_ via act_fk_task_case_exe"><a href='act_ru_case_execution.html'>act_ru_case_execution</a><span class='relatedKey'>.id_</span>
     </td>
     <td class='constraint detail'>act_fk_task_case_exe<span title='Restrict delete:
@@ -193,7 +193,7 @@
  </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='detail'>case_inst_id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
@@ -204,7 +204,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='indexedColumn' title='Indexed'>case_def_id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
@@ -214,7 +214,7 @@
  <td class='detail'></td>
  <td class='detail'>
   <table border='0' width='100%' cellspacing='0' cellpadding='0'>
-   <tr class='relative even' valign='top'>
+   <tr class='relative odd' valign='top'>
     <td class='relatedTable detail' title="act_ru_task.case_def_id_ refs act_re_case_def.id_ via act_fk_task_case_def"><a href='act_re_case_def.html'>act_re_case_def</a><span class='relatedKey'>.id_</span>
     </td>
     <td class='constraint detail'>act_fk_task_case_def<span title='Restrict delete:
@@ -224,7 +224,7 @@
  </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='detail'>name_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>255</td>
@@ -235,7 +235,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>parent_task_id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
@@ -246,7 +246,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='detail'>description_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>4000</td>
@@ -257,7 +257,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>task_def_key_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>255</td>
@@ -268,7 +268,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='indexedColumn' title='Indexed'>owner_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>255</td>
@@ -279,7 +279,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='indexedColumn' title='Indexed'>assignee_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>255</td>
@@ -290,7 +290,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='detail'>delegation_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
@@ -301,7 +301,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>priority_</td>
  <td class='detail'>int4</td>
  <td class='detail' align='right'>10</td>
@@ -312,8 +312,19 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='indexedColumn' title='Indexed'>create_time_</td>
+ <td class='detail'>timestamp</td>
+ <td class='detail' align='right'>29,6</td>
+ <td class='detail' align='center' title='nullable'>&nbsp;&radic;&nbsp;</td>
+ <td class='detail' align='center'></td>
+ <td class='detail' align='right'>null</td>
+ <td class='detail'></td>
+ <td class='detail'> </td>
+ <td class='comment detail'></td>
+</tr>
+<tr class='odd'>
+ <td class='indexedColumn' title='Indexed'>last_updated_</td>
  <td class='detail'>timestamp</td>
  <td class='detail' align='right'>29,6</td>
  <td class='detail' align='center' title='nullable'>&nbsp;&radic;&nbsp;</td>
@@ -368,7 +379,7 @@
  <td class='comment detail'></td>
 </tr>
 </table>
-<p title='21 columns'>Table contained 0 rows at Wed Oct 30 09:58 UTC 2024<p/>
+<p title='22 columns'>Table contained 0 rows at Wed Oct 30 11:40 UTC 2024<p/>
 </td></tr></table>
 <div class='indent'>
 <b>Indexes:</b>
@@ -419,6 +430,12 @@
   <td class='constraint' style='text-align:left;'>act_idx_task_exec</td>
  </tr>
  <tr>
+  <td class='indexedColumn'>last_updated_</td>
+  <td class='detail'>Performance</td>
+  <td class='detail' style='text-align:left;'><span title='Ascending'>Asc</span></td>
+  <td class='constraint' style='text-align:left;'>act_idx_task_last_updated</td>
+ </tr>
+ <tr>
   <td class='indexedColumn'>owner_</td>
   <td class='detail'>Performance</td>
   <td class='detail' style='text-align:left;'><span title='Ascending'>Asc</span></td>
@@ -453,20 +470,20 @@
 <area shape="rect" id="node3" href="act_ru_execution.html" title="act_ru_execution" alt="" coords="256,87,427,625">
 <area shape="rect" id="node4" href="act_re_procdef.html" title="act_re_procdef" alt="" coords="5,231,200,649">
 <area shape="rect" id="node5" href="act_ru_identitylink.html" title="act_ru_identitylink" alt="" coords="833,5,996,256">
-<area shape="rect" id="node6" href="act_ru_task.html" title="act_ru_task" alt="" coords="483,383,789,951">
+<area shape="rect" id="node6" href="act_ru_task.html" title="act_ru_task" alt="" coords="483,383,789,975">
 </map>
   <a name='diagram'><img id='oneDegreeImg' src='../diagrams/act_ru_task.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>
 <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="act_ru_case_execution.html" title="act_ru_case_execution" alt="" coords="244,20,439,391">
-<area shape="rect" id="node2" href="act_re_case_def.html" title="act_re_case_def" alt="" coords="5,283,200,605">
+<area shape="rect" id="node1" href="act_ru_case_execution.html" title="act_ru_case_execution" alt="" coords="244,25,439,396">
+<area shape="rect" id="node2" href="act_re_case_def.html" title="act_re_case_def" alt="" coords="5,288,200,611">
 <area shape="rect" id="node3" href="act_ru_case_sentry_part.html" title="act_ru_case_sentry_part" alt="" coords="533,5,739,88">
-<area shape="rect" id="node4" href="act_ru_event_subscr.html" title="act_ru_event_subscr" alt="" coords="547,891,725,973">
-<area shape="rect" id="node5" href="act_ru_execution.html" title="act_ru_execution" alt="" coords="256,444,427,983">
-<area shape="rect" id="node6" href="act_re_procdef.html" title="act_re_procdef" alt="" coords="5,985,200,1404">
-<area shape="rect" id="node7" href="act_ru_ext_task.html" title="act_ru_ext_task" alt="" coords="564,791,708,873">
-<area shape="rect" id="node8" href="act_ru_identitylink.html" title="act_ru_identitylink" alt="" coords="833,501,996,752">
-<area shape="rect" id="node9" href="act_ru_task.html" title="act_ru_task" alt="" coords="483,205,789,773">
-<area shape="rect" id="node10" href="act_ru_incident.html" title="act_ru_incident" alt="" coords="562,991,710,1073">
+<area shape="rect" id="node4" href="act_ru_event_subscr.html" title="act_ru_event_subscr" alt="" coords="547,915,725,997">
+<area shape="rect" id="node5" href="act_ru_execution.html" title="act_ru_execution" alt="" coords="256,455,427,993">
+<area shape="rect" id="node6" href="act_re_procdef.html" title="act_re_procdef" alt="" coords="5,996,200,1415">
+<area shape="rect" id="node7" href="act_ru_ext_task.html" title="act_ru_ext_task" alt="" coords="564,815,708,897">
+<area shape="rect" id="node8" href="act_ru_identitylink.html" title="act_ru_identitylink" alt="" coords="833,513,996,764">
+<area shape="rect" id="node9" href="act_ru_task.html" title="act_ru_task" alt="" coords="483,205,789,797">
+<area shape="rect" id="node10" href="act_ru_incident.html" title="act_ru_incident" alt="" coords="562,1015,710,1097">
 <area shape="rect" id="node11" href="act_ru_variable.html" title="act_ru_variable" alt="" coords="565,105,707,188">
 </map>
 

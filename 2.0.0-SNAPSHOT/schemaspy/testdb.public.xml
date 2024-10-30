@@ -170,6 +170,7 @@
          <column autoUpdated="false" digits="6" id="10" name="start_time_" nullable="false" remarks="" size="29" type="timestamp"/>
          <column autoUpdated="false" digits="6" id="11" name="end_time_" nullable="true" remarks="" size="29" type="timestamp"/>
          <column autoUpdated="false" digits="6" id="12" name="removal_time_" nullable="true" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="6" id="13" name="exec_start_time_" nullable="true" remarks="" size="29" type="timestamp"/>
          <primaryKey column="id_" sequenceNumberInPK="1"/>
          <index name="act_hi_batch_pkey" unique="true">
             <column ascending="true" name="id_"/>
@@ -1229,6 +1230,8 @@
          <column autoUpdated="false" digits="0" id="11" name="configuration_" nullable="true" remarks="" size="255" type="varchar"/>
          <column autoUpdated="false" digits="0" id="12" name="tenant_id_" nullable="true" remarks="" size="64" type="varchar"/>
          <column autoUpdated="false" digits="0" id="13" name="create_user_id_" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="6" id="14" name="start_time_" nullable="true" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="6" id="15" name="exec_start_time_" nullable="true" remarks="" size="29" type="timestamp"/>
          <primaryKey column="id_" sequenceNumberInPK="1"/>
          <index name="act_ru_batch_pkey" unique="true">
             <column ascending="true" name="id_"/>
@@ -1710,10 +1713,11 @@
          <column autoUpdated="false" digits="0" id="14" name="delegation_" nullable="true" remarks="" size="64" type="varchar"/>
          <column autoUpdated="false" digits="0" id="15" name="priority_" nullable="true" remarks="" size="10" type="int4"/>
          <column autoUpdated="false" digits="6" id="16" name="create_time_" nullable="true" remarks="" size="29" type="timestamp"/>
-         <column autoUpdated="false" digits="6" id="17" name="due_date_" nullable="true" remarks="" size="29" type="timestamp"/>
-         <column autoUpdated="false" digits="6" id="18" name="follow_up_date_" nullable="true" remarks="" size="29" type="timestamp"/>
-         <column autoUpdated="false" digits="0" id="19" name="suspension_state_" nullable="true" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" digits="0" id="20" name="tenant_id_" nullable="true" remarks="" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="6" id="17" name="last_updated_" nullable="true" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="6" id="18" name="due_date_" nullable="true" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="6" id="19" name="follow_up_date_" nullable="true" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="0" id="20" name="suspension_state_" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="21" name="tenant_id_" nullable="true" remarks="" size="64" type="varchar"/>
          <primaryKey column="id_" sequenceNumberInPK="1"/>
          <index name="act_ru_task_pkey" unique="true">
             <column ascending="true" name="id_"/>
@@ -1732,6 +1736,9 @@
          </index>
          <index name="act_idx_task_exec" unique="false">
             <column ascending="true" name="execution_id_"/>
+         </index>
+         <index name="act_idx_task_last_updated" unique="false">
+            <column ascending="true" name="last_updated_"/>
          </index>
          <index name="act_idx_task_owner" unique="false">
             <column ascending="true" name="owner_"/>
