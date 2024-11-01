@@ -21,6 +21,7 @@
     <logger name="org.hibernate.type" level="OFF" />
     <logger name="org.springframework" level="WARN" />
     <logger name="org.openwms" level="INFO" />
+    <logger name="org.activiti" level="INFO" />
     <logger name="org.openwms.common.comm.res.ResSenderApi" level="OFF" />
 
     <logger name="CORE_INTEGRATION_MESSAGING" level="INFO"/>

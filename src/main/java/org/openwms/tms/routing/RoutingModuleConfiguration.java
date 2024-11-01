@@ -32,7 +32,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.retry.annotation.EnableRetry;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.CorsFilter;
@@ -57,6 +59,15 @@ import javax.servlet.Filter;
 @EntityScan
 @Import(JSONConfiguration.class)
 public class RoutingModuleConfiguration {
+
+    @Bean
+    public TaskScheduler taskScheduler() {
+        var scheduler = new ThreadPoolTaskScheduler();
+        scheduler.setPoolSize(5);
+        scheduler.setThreadNamePrefix("RoutingModule-");
+        scheduler.setWaitForTasksToCompleteOnShutdown(true);
+        return scheduler;
+    }
 
     @LoadBalanced @Bean RestTemplate aLoadBalanced() {
         return new RestTemplate();

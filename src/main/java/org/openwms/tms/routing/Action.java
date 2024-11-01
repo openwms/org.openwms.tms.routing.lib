@@ -74,6 +74,12 @@ public class Action extends ApplicationEntity {
     protected Action() {
     }
 
+    public Action(String programKey, String description) {
+        this.name = programKey;
+        this.programKey = programKey;
+        this.description = description;
+    }
+
     public Action(RouteImpl route, String name, String locationKey, String locationGroupName, String actionType, String programKey, String description) {
         this.route = route;
         this.name = name;
