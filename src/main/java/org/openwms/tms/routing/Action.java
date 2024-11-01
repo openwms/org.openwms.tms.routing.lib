@@ -34,7 +34,7 @@ import java.util.StringJoiner;
  * @author Heiko Scherrer
  */
 @Entity
-@Table(name = "RSRV_ACTION")
+@Table(name = "TMS_RSRV_ACTION")
 public class Action extends ApplicationEntity {
 
     @NotNull

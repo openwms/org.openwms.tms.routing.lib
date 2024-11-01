@@ -36,7 +36,7 @@ import java.util.Map;
  * @author Heiko Scherrer
  */
 @Entity
-@Table(name = "RSV_TIMER_CONFIG")
+@Table(name = "TMS_RSRV_TIMER_CONFIG")
 public class TimerConfiguration extends ApplicationEntity {
 
     /** Name of the workflow to execute. */
@@ -52,7 +52,7 @@ public class TimerConfiguration extends ApplicationEntity {
     private String cronExpression;
     /** An arbitrary map of runtime variables that are passed to the workflow execution. */
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "RSV_TIMER_CONFIG_VARS",
+    @CollectionTable(name = "TMS_RSRV_TIMER_CONFIG_VARS",
             joinColumns = {
                     @JoinColumn(name = "C_TC_PK", referencedColumnName = "C_PK")
             },

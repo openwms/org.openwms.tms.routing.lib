@@ -32,7 +32,7 @@ import java.util.Objects;
  * @author Heiko Scherrer
  */
 @Entity
-@Table(name = "RSRV_ROUTE")
+@Table(name = "TMS_RSRV_ROUTE")
 public class RouteImpl extends ApplicationEntity implements Route {
 
     /** For TransportUnits without active TransportOrder. */

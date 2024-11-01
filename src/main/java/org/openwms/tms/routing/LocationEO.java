@@ -29,7 +29,7 @@ import java.util.Objects;
  * @author Heiko Scherrer
  */
 @Entity
-@Table(name = "RSRV_LOCATION")
+@Table(name = "TMS_RSRV_LOCATION")
 public class LocationEO extends ApplicationEntity {
 
     /** The foreign persistent key of the Location. */

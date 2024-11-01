@@ -33,7 +33,7 @@ import java.io.Serializable;
  * @author Heiko Scherrer
  */
 @Entity
-@Table(name = "RSRV_ROUTE_DETAILS", uniqueConstraints = {@UniqueConstraint(name = "UC_ROUTE_POS", columnNames = {RouteDetails.COLUMN_ROUTE_ID, RouteDetails.COLUMN_POS})})
+@Table(name = "TMS_RSRV_ROUTE_DETAILS", uniqueConstraints = {@UniqueConstraint(name = "UC_ROUTE_POS", columnNames = {RouteDetails.COLUMN_ROUTE_ID, RouteDetails.COLUMN_POS})})
 public class RouteDetails extends BaseEntity implements Serializable {
 
     public static final String COLUMN_ROUTE_ID = "C_ROUTE_ID";
