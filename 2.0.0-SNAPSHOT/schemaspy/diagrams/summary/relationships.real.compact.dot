@@ -355,10 +355,10 @@ digraph "compactRelationshipsDiagram" {
     URL="tables/act_ru_variable.html"
     tooltip="act_ru_variable"
   ];
-  "rsrv_action" [
+  "tms_rsrv_action" [
     label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
-      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">rsrv_action</TD></TR>
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">tms_rsrv_action</TD></TR>
       <TR><TD PORT="c_pk" COLSPAN="3" BGCOLOR="#bed1b8" ALIGN="LEFT">c_pk</TD></TR>
       <TR><TD PORT="c_pid" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">c_pid</TD></TR>
       <TR><TD PORT="c_name" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">c_name</TD></TR>
@@ -366,25 +366,25 @@ digraph "compactRelationshipsDiagram" {
       <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
       <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">&lt; 1</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
     </TABLE>>
-    URL="tables/rsrv_action.html"
-    tooltip="rsrv_action"
+    URL="tables/tms_rsrv_action.html"
+    tooltip="tms_rsrv_action"
   ];
-  "rsrv_location" [
+  "tms_rsrv_location" [
     label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
-      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">rsrv_location</TD></TR>
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">tms_rsrv_location</TD></TR>
       <TR><TD PORT="c_pk" COLSPAN="3" BGCOLOR="#bed1b8" ALIGN="LEFT">c_pk</TD></TR>
       <TR><TD PORT="c_pid" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">c_pid</TD></TR>
       <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
       <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">2 &gt;</TD></TR>
     </TABLE>>
-    URL="tables/rsrv_location.html"
-    tooltip="rsrv_location"
+    URL="tables/tms_rsrv_location.html"
+    tooltip="tms_rsrv_location"
   ];
-  "rsrv_route" [
+  "tms_rsrv_route" [
     label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
-      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">rsrv_route</TD></TR>
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">tms_rsrv_route</TD></TR>
       <TR><TD PORT="c_pk" COLSPAN="3" BGCOLOR="#bed1b8" ALIGN="LEFT">c_pk</TD></TR>
       <TR><TD PORT="c_pid" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">c_pid</TD></TR>
       <TR><TD PORT="c_name" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">c_name</TD></TR>
@@ -393,21 +393,45 @@ digraph "compactRelationshipsDiagram" {
       <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
       <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">2 &gt;</TD></TR>
     </TABLE>>
-    URL="tables/rsrv_route.html"
-    tooltip="rsrv_route"
+    URL="tables/tms_rsrv_route.html"
+    tooltip="tms_rsrv_route"
   ];
-  "rsrv_route_details" [
+  "tms_rsrv_route_details" [
     label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
-      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">rsrv_route_details</TD></TR>
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">tms_rsrv_route_details</TD></TR>
       <TR><TD PORT="c_pk" COLSPAN="3" BGCOLOR="#bed1b8" ALIGN="LEFT">c_pk</TD></TR>
       <TR><TD PORT="c_pos" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">c_pos</TD></TR>
       <TR><TD PORT="c_route_id" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">c_route_id</TD></TR>
       <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
       <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">&lt; 1</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
     </TABLE>>
-    URL="tables/rsrv_route_details.html"
-    tooltip="rsrv_route_details"
+    URL="tables/tms_rsrv_route_details.html"
+    tooltip="tms_rsrv_route_details"
+  ];
+  "tms_rsrv_timer_config" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">tms_rsrv_timer_config</TD></TR>
+      <TR><TD PORT="c_pk" COLSPAN="3" BGCOLOR="#bed1b8" ALIGN="LEFT">c_pk</TD></TR>
+      <TR><TD PORT="c_pid" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">c_pid</TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">1 &gt;</TD></TR>
+    </TABLE>>
+    URL="tables/tms_rsrv_timer_config.html"
+    tooltip="tms_rsrv_timer_config"
+  ];
+  "tms_rsrv_timer_config_vars" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">tms_rsrv_timer_config_vars</TD></TR>
+      <TR><TD PORT="c_tc_pk" COLSPAN="3" BGCOLOR="#bed1b8" ALIGN="LEFT">c_tc_pk</TD></TR>
+      <TR><TD PORT="c_key" COLSPAN="3" BGCOLOR="#bed1b8" ALIGN="LEFT">c_key</TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">&lt; 1</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/tms_rsrv_timer_config_vars.html"
+    tooltip="tms_rsrv_timer_config_vars"
   ];
   "act_ge_bytearray":"deployment_id_":w -> "act_re_deployment":"id_":e [arrowhead=none dir=back arrowtail=crowodot];
   "act_id_membership":"group_id_":w -> "act_id_group":"id_":e [arrowhead=none dir=back arrowtail=crowodot];
@@ -451,8 +475,9 @@ digraph "compactRelationshipsDiagram" {
   "act_ru_variable":"case_inst_id_":w -> "act_ru_case_execution":"id_":e [arrowhead=none dir=back arrowtail=crowodot];
   "act_ru_variable":"execution_id_":w -> "act_ru_execution":"id_":e [arrowhead=none dir=back arrowtail=crowodot];
   "act_ru_variable":"proc_inst_id_":w -> "act_ru_execution":"id_":e [arrowhead=none dir=back arrowtail=crowodot];
-  "rsrv_action":"c_route_id":w -> "rsrv_route":"c_pk":e [arrowhead=none dir=back arrowtail=crowodot];
-  "rsrv_route":"c_source_location":w -> "rsrv_location":"c_pk":e [arrowhead=none dir=back arrowtail=crowodot];
-  "rsrv_route":"c_target_location":w -> "rsrv_location":"c_pk":e [arrowhead=none dir=back arrowtail=crowodot];
-  "rsrv_route_details":"c_route_id":w -> "rsrv_route":"c_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "tms_rsrv_action":"c_route_id":w -> "tms_rsrv_route":"c_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "tms_rsrv_route":"c_source_location":w -> "tms_rsrv_location":"c_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "tms_rsrv_route":"c_target_location":w -> "tms_rsrv_location":"c_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "tms_rsrv_route_details":"c_route_id":w -> "tms_rsrv_route":"c_pk":e [arrowhead=none dir=back arrowtail=crowodot];
+  "tms_rsrv_timer_config_vars":"c_tc_pk":w -> "tms_rsrv_timer_config":"c_pk":e [arrowhead=none dir=back arrowtail=crowodot];
 }
