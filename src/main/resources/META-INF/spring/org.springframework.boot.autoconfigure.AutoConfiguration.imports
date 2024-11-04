@@ -1,0 +1,2 @@
+org.openwms.tms.routing.app.RoutingOtlpConfiguration
+org.openwms.tms.routing.app.RoutingFeignConfiguration

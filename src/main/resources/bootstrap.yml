@@ -53,6 +53,8 @@ owms:
   srv:
     protocol: http
     hostname: localhost
+  tracing:
+    url: http://localhost:4317
 
 server:
   port: ${PORT:8130}
