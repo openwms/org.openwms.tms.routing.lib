@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ActionMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services Library</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing</a> &gt; <span class="el_source">ActionMapperImpl.java</span></div><h1>ActionMapperImpl.java</h1><pre class="source lang-java linenums">package org.openwms.tms.routing;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.processing.Generated;
+import org.openwms.tms.routing.ui.ActionVO;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;
+)
+@Component
+<span class="nc" id="L13">public class ActionMapperImpl extends ActionMapper {</span>
+
+    @Override
+    public Action convertVO(ActionVO vo) {
+<span class="nc bnc" id="L17" title="All 2 branches missed.">        if ( vo == null ) {</span>
+<span class="nc" id="L18">            return null;</span>
+        }
+
+<span class="nc" id="L21">        Action action = new Action();</span>
+
+<span class="nc" id="L23">        action.setPersistentKey( vo.getKey() );</span>
+<span class="nc" id="L24">        action.setActionType( vo.getType() );</span>
+<span class="nc" id="L25">        action.setProgramKey( vo.getProgram() );</span>
+<span class="nc" id="L26">        action.setLocationKey( vo.getLocation() );</span>
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        if ( vo.getOl() != null ) {</span>
+<span class="nc" id="L28">            action.setOl( vo.getOl() );</span>
+        }
+<span class="nc" id="L30">        action.setEnabled( vo.isEnabled() );</span>
+
+<span class="nc" id="L32">        action.setRoute( super.routeRepository.findByRouteId(vo.getRoute()).orElseThrow() );</span>
+
+<span class="nc" id="L34">        return action;</span>
+    }
+
+    @Override
+    public ActionVO convertEO(Action eo) {
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        if ( eo == null ) {</span>
+<span class="nc" id="L40">            return null;</span>
+        }
+
+<span class="nc" id="L43">        ActionVO actionVO = new ActionVO();</span>
+
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        if ( eo.hasPersistentKey() ) {</span>
+<span class="nc" id="L46">            actionVO.setKey( eo.getPersistentKey() );</span>
+        }
+<span class="nc" id="L48">        actionVO.setType( eo.getActionType() );</span>
+<span class="nc" id="L49">        actionVO.setProgram( eo.getProgramKey() );</span>
+<span class="nc" id="L50">        actionVO.setLocation( eo.getLocationKey() );</span>
+<span class="nc" id="L51">        actionVO.setRoute( eoRouteRouteId( eo ) );</span>
+<span class="nc" id="L52">        actionVO.setOl( eo.getOl() );</span>
+<span class="nc" id="L53">        actionVO.setName( eo.getName() );</span>
+<span class="nc" id="L54">        actionVO.setDescription( eo.getDescription() );</span>
+<span class="nc" id="L55">        actionVO.setLocationGroupName( eo.getLocationGroupName() );</span>
+<span class="nc" id="L56">        actionVO.setEnabled( eo.isEnabled() );</span>
+
+<span class="nc" id="L58">        return actionVO;</span>
+    }
+
+    @Override
+    public List&lt;ActionVO&gt; convertEO(List&lt;Action&gt; eos) {
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        if ( eos == null ) {</span>
+<span class="nc" id="L64">            return null;</span>
+        }
+
+<span class="nc" id="L67">        List&lt;ActionVO&gt; list = new ArrayList&lt;ActionVO&gt;( eos.size() );</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        for ( Action action : eos ) {</span>
+<span class="nc" id="L69">            list.add( convertEO( action ) );</span>
+<span class="nc" id="L70">        }</span>
+
+<span class="nc" id="L72">        return list;</span>
+    }
+
+    @Override
+    public Action copy(ActionVO vo, Action target) {
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        if ( vo == null ) {</span>
+<span class="nc" id="L78">            return target;</span>
+        }
+
+<span class="nc" id="L81">        target.setPersistentKey( vo.getKey() );</span>
+<span class="nc" id="L82">        target.setActionType( vo.getType() );</span>
+<span class="nc" id="L83">        target.setProgramKey( vo.getProgram() );</span>
+<span class="nc" id="L84">        target.setLocationKey( vo.getLocation() );</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if ( vo.getOl() != null ) {</span>
+<span class="nc" id="L86">            target.setOl( vo.getOl() );</span>
+        }
+<span class="nc" id="L88">        target.setEnabled( vo.isEnabled() );</span>
+
+<span class="nc" id="L90">        target.setRoute( super.routeRepository.findByRouteId(vo.getRoute()).orElseThrow() );</span>
+
+<span class="nc" id="L92">        return target;</span>
+    }
+
+    private String eoRouteRouteId(Action action) {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if ( action == null ) {</span>
+<span class="nc" id="L97">            return null;</span>
+        }
+<span class="nc" id="L99">        RouteImpl route = action.getRoute();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        if ( route == null ) {</span>
+<span class="nc" id="L101">            return null;</span>
+        }
+<span class="nc" id="L103">        String routeId = route.getRouteId();</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        if ( routeId == null ) {</span>
+<span class="nc" id="L105">            return null;</span>
+        }
+<span class="nc" id="L107">        return routeId;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

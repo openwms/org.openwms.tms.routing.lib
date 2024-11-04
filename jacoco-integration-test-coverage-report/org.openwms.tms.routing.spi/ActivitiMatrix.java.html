@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ActivitiMatrix.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services Library</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing.spi</a> &gt; <span class="el_source">ActivitiMatrix.java</span></div><h1>ActivitiMatrix.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2005-2022 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.openwms.tms.routing.spi;
+
+import org.ameba.exception.NotFoundException;
+import org.openwms.common.comm.NoRouteException;
+import org.openwms.common.location.api.LocationGroupApi;
+import org.openwms.common.location.api.LocationGroupVO;
+import org.openwms.common.location.api.LocationVO;
+import org.openwms.core.SecurityUtils;
+import org.openwms.tms.routing.Action;
+import org.openwms.tms.routing.ActionRepository;
+import org.openwms.tms.routing.Matrix;
+import org.openwms.tms.routing.Route;
+import org.openwms.tms.routing.RouteImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.hateoas.Link;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Optional;
+
+/**
+ * A ActivitiMatrix.
+ *
+ * @author Heiko Scherrer
+ */
+@Component
+class ActivitiMatrix implements Matrix {
+
+<span class="nc" id="L51">    private static final Logger LOGGER = LoggerFactory.getLogger(ActivitiMatrix.class);</span>
+    public static final String MSG = &quot;No Action found for ActionType [%s], Route [%s], Location [%s] and LocationGroup [%s]&quot;;
+
+    private final ActionRepository repository;
+    private final RestTemplate restTemplate;
+    private final LocationGroupApi locationGroupApi;
+    private final DiscoveryClient dc;
+
+<span class="nc" id="L59">    ActivitiMatrix(ActionRepository repository, @Qualifier(&quot;simpleRestTemplate&quot;) RestTemplate restTemplate, LocationGroupApi locationGroupApi, DiscoveryClient dc) {</span>
+<span class="nc" id="L60">        this.repository = repository;</span>
+<span class="nc" id="L61">        this.restTemplate = restTemplate;</span>
+<span class="nc" id="L62">        this.locationGroupApi = locationGroupApi;</span>
+<span class="nc" id="L63">        this.dc = dc;</span>
+<span class="nc" id="L64">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Cacheable(value = &quot;actions&quot;)
+    public Action findBy(String actionType, Route route, @Nullable LocationVO location, @Nullable LocationGroupVO locationGroup) {
+        // search explicitly...
+<span class="nc" id="L73">        Optional&lt;Action&gt; prg = Optional.empty();</span>
+<span class="nc bnc" id="L74" title="All 4 branches missed.">        if (null != location &amp;&amp; location.getLocationId() != null) {</span>
+
+            // First explicitly search for the Location and Route
+<span class="nc" id="L77">            prg = repository.findByActionTypeAndRouteAndLocationKey(actionType, route.getRouteId(), location.getLocationId());</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">            if (prg.isEmpty()) {</span>
+
+<span class="nc bnc" id="L80" title="All 2 branches missed.">                if (!RouteImpl.DEF_ROUTE.getRouteId().equals(route.getRouteId())) {</span>
+<span class="nc" id="L81">                    prg = repository.findByActionTypeAndRouteAndLocationKey(actionType, RouteImpl.DEF_ROUTE.getRouteId(), location.getLocationId());</span>
+                }
+<span class="nc bnc" id="L83" title="All 2 branches missed.">                if (prg.isEmpty()) {</span>
+                    // Not found with Location =&gt; check by Location's.LocationGroup
+<span class="nc" id="L85">                    prg = findInLocationGroupHierarchy(actionType, route, locationGroupApi.findByName(location.getLocationGroupName()).orElseThrow(NotFoundException::new));</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">                    if (prg.isEmpty()) {</span>
+
+                        // Search the LocationGroup hierarchy the way up...
+<span class="nc bnc" id="L89" title="All 2 branches missed.">                        if (locationGroup == null) {</span>
+<span class="nc" id="L90">                            throw new NoRouteException(String.format(MSG, actionType, route, location.getLocationId(), location.getLocationGroupName()));</span>
+                        }
+<span class="nc" id="L92">                        prg = findInLocationGroupHierarchy(actionType, route, locationGroup);</span>
+
+<span class="nc bnc" id="L94" title="All 4 branches missed.">                        if (prg.isEmpty() &amp;&amp; route.equals(RouteImpl.NO_ROUTE)) {</span>
+<span class="nc" id="L95">                            throw new NoRouteException(String.format(MSG, actionType, route, location.getLocationId(), location.getLocationGroupName()));</span>
+                        }
+
+<span class="nc bnc" id="L98" title="All 4 branches missed.">                        if (prg.isEmpty() &amp;&amp; !route.equals(RouteImpl.DEF_ROUTE)) {</span>
+                            // Last chance: Search for the default route
+<span class="nc" id="L100">                            prg = findInLocationGroupHierarchy(actionType, RouteImpl.DEF_ROUTE, locationGroup);</span>
+                        }
+
+<span class="nc bnc" id="L103" title="All 2 branches missed.">                        if (prg.isEmpty()) {</span>
+<span class="nc" id="L104">                            throw new NoRouteException(String.format(MSG, actionType, route, location.getLocationId(), location.getLocationGroupName()));</span>
+                        }
+                    }
+                }
+            }
+        }
+
+        // search for locgroup...
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        if (prg.isEmpty()) {</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">            if (null == locationGroup) {</span>
+<span class="nc" id="L114">                throw new NoRouteException(String.format(&quot;No Action found for ActionType [%s] and Route [%s] and Location [%s] without LocationGroup&quot;, actionType, route, location));</span>
+            }
+<span class="nc" id="L116">            prg = findInLocationGroupHierarchy(actionType, route, locationGroup);</span>
+        }
+<span class="nc" id="L118">        return prg.orElseThrow(() -&gt; new NoRouteException(String.format(MSG, actionType, route, location, locationGroup)));</span>
+    }
+
+    private Optional&lt;Action&gt; findInLocationGroupHierarchy(String actionType, Route route, LocationGroupVO locationGroup) {
+<span class="nc" id="L122">        Optional&lt;Action&gt; cp = repository.findByActionTypeAndRouteAndLocationGroupName(actionType, route.getRouteId(), locationGroup.getName());</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">        if (cp.isEmpty()) {</span>
+
+<span class="nc bnc" id="L125" title="All 2 branches missed.">            if (locationGroup.hasParent()) {</span>
+<span class="nc" id="L126">                cp = findInLocationGroupHierarchy(actionType, route, locationGroupApi.findByName(locationGroup.getParent()).orElseThrow(NotFoundException::new));</span>
+
+<span class="nc bnc" id="L128" title="All 2 branches missed.">            } else if (locationGroup.hasLink(&quot;_parent&quot;)) {</span>
+<span class="nc" id="L129">                cp = findInLocationGroupHierarchy(actionType, route, findLocationGroup(locationGroup.getRequiredLink(&quot;_parent&quot;)));</span>
+
+            }
+        }
+<span class="nc" id="L133">        return cp;</span>
+    }
+
+    private LocationGroupVO findLocationGroup(Link parent) {
+<span class="nc" id="L137">        var list = dc.getInstances(&quot;common-service&quot;);</span>
+<span class="nc bnc" id="L138" title="All 4 branches missed.">        if (list == null || list.isEmpty()) {</span>
+<span class="nc" id="L139">            throw new NotFoundException(&quot;No deployed service with name common-service found&quot;);</span>
+        }
+<span class="nc" id="L141">        var si = list.get(0);</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">        if (LOGGER.isDebugEnabled()) {</span>
+<span class="nc" id="L143">            LOGGER.debug(&quot;Calling common-service URL [{}]&quot;, parent.getHref());</span>
+        }
+<span class="nc" id="L145">        var lg = restTemplate.exchange(parent.getHref(), HttpMethod.GET, new HttpEntity&lt;&gt;(SecurityUtils.createHeaders(si.getMetadata().get(&quot;username&quot;), si.getMetadata().get(&quot;password&quot;))), LocationGroupVO.class);</span>
+<span class="nc" id="L146">        return lg.getBody();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

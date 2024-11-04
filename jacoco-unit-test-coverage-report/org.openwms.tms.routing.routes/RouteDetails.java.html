@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RouteDetails.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services Library</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing.routes</a> &gt; <span class="el_source">RouteDetails.java</span></div><h1>RouteDetails.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2005-2022 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.openwms.tms.routing.routes;
+
+import org.ameba.integration.jpa.BaseEntity;
+import org.openwms.tms.routing.Route;
+import org.openwms.tms.routing.RouteImpl;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import java.io.Serializable;
+
+/**
+ * A RouteDetails.
+ *
+ * @author Heiko Scherrer
+ */
+@Entity
+@Table(name = &quot;TMS_RSRV_ROUTE_DETAILS&quot;, uniqueConstraints = {@UniqueConstraint(name = &quot;UC_ROUTE_POS&quot;, columnNames = {RouteDetails.COLUMN_ROUTE_ID, RouteDetails.COLUMN_POS})})
+public class RouteDetails extends BaseEntity implements Serializable {
+
+    public static final String COLUMN_ROUTE_ID = &quot;C_ROUTE_ID&quot;;
+    /** The Route this details entry belongs to.*/
+    @ManyToOne
+    @JoinColumn(name = COLUMN_ROUTE_ID)
+    private RouteImpl route;
+
+    public static final String COLUMN_POS = &quot;C_POS&quot;;
+    /** A sequence number unique within the referenced Route. */
+    @Column(name = COLUMN_POS)
+    private int pos;
+
+    /** The source Location where the path starts from. */
+    @Column(name = &quot;C_SOURCE_LOCATION&quot;)
+    private String source;
+
+    /** The next Location is the next hop where to move to. */
+    @Column(name = &quot;C_NEXT_LOCATION&quot;)
+    private String next;
+
+    /*~ ----------------------------- constructors ------------------- */
+
+    /** Dear JPA ... */
+<span class="fc" id="L61">    protected RouteDetails() {</span>
+<span class="fc" id="L62">    }</span>
+
+<span class="nc" id="L64">    public RouteDetails(RouteImpl route, int pos) {</span>
+<span class="nc" id="L65">        this.route = route;</span>
+<span class="nc" id="L66">        this.pos = pos;</span>
+<span class="nc" id="L67">    }</span>
+
+    /*~ ----------------------------- accessors ------------------- */
+    public Route getRoute() {
+<span class="nc" id="L71">        return route;</span>
+    }
+
+    public int getPos() {
+<span class="nc" id="L75">        return pos;</span>
+    }
+
+    public String getSource() {
+<span class="nc" id="L79">        return source;</span>
+    }
+
+    public void setSource(String source) {
+<span class="nc" id="L83">        this.source = source;</span>
+<span class="nc" id="L84">    }</span>
+
+    public String getNext() {
+<span class="nc" id="L87">        return next;</span>
+    }
+
+    public void setNext(String next) {
+<span class="nc" id="L91">        this.next = next;</span>
+<span class="nc" id="L92">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

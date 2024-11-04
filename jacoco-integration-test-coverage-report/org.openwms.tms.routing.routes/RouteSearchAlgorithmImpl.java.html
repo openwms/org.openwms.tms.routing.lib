@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RouteSearchAlgorithmImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services Library</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing.routes</a> &gt; <span class="el_source">RouteSearchAlgorithmImpl.java</span></div><h1>RouteSearchAlgorithmImpl.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2005-2022 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.openwms.tms.routing.routes;
+
+import org.ameba.exception.NotFoundException;
+import org.openwms.common.comm.NoRouteException;
+import org.openwms.common.location.LocationPK;
+import org.openwms.common.location.api.LocationApi;
+import org.openwms.common.location.api.LocationGroupVO;
+import org.openwms.tms.routing.Route;
+import org.openwms.tms.routing.RouteImpl;
+import org.openwms.tms.routing.RouteSearchAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static java.lang.String.format;
+
+/**
+ * A RouteSearchAlgorithmImpl is the extended and standard version of the {@link RouteSearchAlgorithm}.
+ *
+ * @author Heiko Scherrer
+ */
+@Profile(&quot;!SIMPLE&quot;)
+@Component
+class RouteSearchAlgorithmImpl implements RouteSearchAlgorithm {
+
+<span class="nc" id="L50">    private static final Logger LOGGER = LoggerFactory.getLogger(RouteSearchAlgorithmImpl.class);</span>
+    public static final String MSG = &quot;No route found for TransportOrder with sourceLocation [%s], targetLocation [%s] and targetLocationGroup [%s]&quot;;
+    private final RouteRepository repository;
+    private final LocationApi locationApi;
+    private final LocationGroupLoader locationGroupLoader;
+
+<span class="nc" id="L56">    private final Map&lt;String, String&gt; mappingLocationToParent = new ConcurrentHashMap&lt;&gt;();</span>
+    private Collection&lt;LocationGroupVO&gt; allLocationGroups;
+
+<span class="nc" id="L59">    RouteSearchAlgorithmImpl(RouteRepository repository, LocationApi locationApi, LocationGroupLoader locationGroupLoader) {</span>
+<span class="nc" id="L60">        this.repository = repository;</span>
+<span class="nc" id="L61">        this.locationApi = locationApi;</span>
+<span class="nc" id="L62">        this.locationGroupLoader = locationGroupLoader;</span>
+<span class="nc" id="L63">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Cacheable(&quot;routes&quot;)
+    public Route findBy(String sourceLocation, String targetLocation, String targetLocationGroup) {
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        if (allLocationGroups == null) {</span>
+<span class="nc" id="L72">            allLocationGroups = locationGroupLoader.loadLocGroups();</span>
+        }
+<span class="nc" id="L74">        Assert.hasText(sourceLocation, &quot;The sourceLocation must be given when searching for a Route&quot;);</span>
+<span class="nc" id="L75">        var targetLocExists = StringUtils.hasText(targetLocation);</span>
+<span class="nc" id="L76">        var targetLgExists = StringUtils.hasText(targetLocationGroup);</span>
+
+        Optional&lt;RouteImpl&gt; result;
+        // First try explicit declaration
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if (targetLocExists) {</span>
+
+            // (1) Have both. Search for a match:
+<span class="nc" id="L83">            result = repository.findBySourceLocation_LocationIdAndTargetLocation_LocationIdAndEnabled(sourceLocation, targetLocation, true);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">            if (result.isPresent()) {</span>
+                // Match with locations
+<span class="nc" id="L86">                LOGGER.debug(&quot;Route in direct location match found: {}&quot;, result.get());</span>
+<span class="nc" id="L87">                return result.get();</span>
+            }
+
+            // No direct match
+<span class="nc bnc" id="L91" title="All 2 branches missed.">            if (targetLgExists) {</span>
+<span class="nc" id="L92">                result = repository.findBySourceLocation_LocationIdAndTargetLocationGroupNameAndEnabled(sourceLocation, targetLocationGroup, true);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">                if (result.isPresent()) {</span>
+<span class="nc" id="L94">                    LOGGER.debug(&quot;Route with sourceLocation and targetLocation direct match found: {}&quot;, result.get());</span>
+<span class="nc" id="L95">                    return result.get();</span>
+                }
+
+                // (2) We don't find a Route for either 2 Locations nor source Location and target LocationGroup -&gt; climb up the target
+<span class="nc" id="L99">                result = findInHierarchy(sourceLocation, targetLocation, targetLocationGroup, allLocationGroups);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">                if (result.isPresent()) {</span>
+<span class="nc" id="L101">                    LOGGER.debug(&quot;Route found 1: {}&quot;, result.get());</span>
+<span class="nc" id="L102">                    return result.get();</span>
+                }
+
+                // strange but we haven't found something above the target Location, try LocationGroup at last...
+<span class="nc" id="L106">                result = findInTargetGroupHierarchy(sourceLocation, targetLocationGroup, allLocationGroups);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">                if (result.isPresent()) {</span>
+<span class="nc" id="L108">                    LOGGER.debug(&quot;Route found 2: {}&quot;, result.get());</span>
+<span class="nc" id="L109">                    return result.get();</span>
+                }
+
+<span class="nc" id="L112">                throw new NoRouteException(format(MSG, sourceLocation, targetLocation, targetLocationGroup));</span>
+            } else {
+
+                // No targetLocationGroup, search for the targetLocation upwards:
+
+<span class="nc" id="L117">                final String targetLocationLocationGroupName = mappingLocationToParent.computeIfAbsent(targetLocation, k -&gt; locationApi.findById(k).orElseThrow(()-&gt;new NotFoundException(format(&quot;TargetLocation with coordinate [%s] does not exist&quot;, targetLocation))).getLocationGroupName());</span>
+<span class="nc" id="L118">                result = findInTargetGroupHierarchy(sourceLocation, targetLocationLocationGroupName, allLocationGroups);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">                if (result.isPresent()) {</span>
+<span class="nc" id="L120">                    LOGGER.debug(&quot;Route found 3: {}&quot;, result.get());</span>
+<span class="nc" id="L121">                    return result.get();</span>
+                }
+
+<span class="nc" id="L124">                final String sourceLocationGroupName = mappingLocationToParent.computeIfAbsent(sourceLocation, k -&gt; locationApi.findById(k).orElseThrow(()-&gt;new NotFoundException(format(&quot;SourceLocation with locationId [%s] does not exist&quot;, sourceLocation))).getLocationGroupName());</span>
+<span class="nc" id="L125">                result = repository.findBySourceLocationGroupNameAndTargetLocation_LocationIdAndEnabled(sourceLocationGroupName, targetLocation, true);</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">                if (result.isPresent()) {</span>
+<span class="nc" id="L127">                    LOGGER.debug(&quot;(1) Route found SourceLG -&gt; TargetLoc: {}&quot;, result.get());</span>
+<span class="nc" id="L128">                    return result.get();</span>
+                }
+<span class="nc" id="L130">                result = findInSourceGroupHierarchyWithTargetLocation(sourceLocationGroupName, targetLocation, targetLocationGroup, allLocationGroups);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">                if (result.isPresent()) {</span>
+<span class="nc" id="L132">                    LOGGER.debug(&quot;(2) Route found SourceLG -&gt; TargetLoc: {}&quot;, result.get());</span>
+<span class="nc" id="L133">                    return result.get();</span>
+                }
+<span class="nc" id="L135">                throw new NoRouteException(format(MSG, sourceLocation, targetLocation, targetLocationGroup));</span>
+            }
+        }
+<span class="nc" id="L138">        Assert.hasText(targetLocationGroup, &quot;The targetLocation did not find a match, hence a TargetLocationGroup is required&quot;);</span>
+
+<span class="nc" id="L140">        result = findInTargetGroupHierarchy(sourceLocation, targetLocationGroup, allLocationGroups);</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">        if (result.isPresent()) {</span>
+<span class="nc" id="L142">            return result.get();</span>
+        }
+
+<span class="nc" id="L145">        result = findInHierarchy2(sourceLocation, targetLocationGroup, allLocationGroups);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        if (result.isPresent()) {</span>
+<span class="nc" id="L147">            return result.get();</span>
+        }
+
+<span class="nc" id="L150">        throw new NoRouteException(format(MSG, sourceLocation, targetLocation, targetLocationGroup));</span>
+    }
+
+    private Optional&lt;RouteImpl&gt; findInTargetGroupHierarchy(String sourceLocation, String targetLocationGroup, Collection&lt;LocationGroupVO&gt; allLocationGroups) {
+        // climb up group
+<span class="nc" id="L155">        Optional&lt;RouteImpl&gt; route = repository.findBySourceLocation_LocationIdAndTargetLocationGroupNameAndEnabled(sourceLocation, targetLocationGroup, true);</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">        if (!route.isPresent()) {</span>
+<span class="nc" id="L157">            LocationGroupVO current = allLocationGroups.stream().filter(lg -&gt; lg.getName().equals(targetLocationGroup)).findFirst().orElseThrow(() -&gt; new NotFoundException(format(&quot;The LocationGroup with name [%s] does not exist&quot;, targetLocationGroup)));</span>
+<span class="nc bnc" id="L158" title="All 4 branches missed.">            if (current.getParent() == null || current.getParent().isEmpty()) {</span>
+<span class="nc" id="L159">                return Optional.empty();</span>
+            }
+<span class="nc" id="L161">            route = findInTargetGroupHierarchy(sourceLocation, current.getParent(), allLocationGroups);</span>
+<span class="nc" id="L162">        } return route;</span>
+    }
+
+    private Optional&lt;RouteImpl&gt; findInSourceGroupHierarchyWithTargetLocation(String sourceLocationGroup, String targetLocation, String targetLocationGroup, Collection&lt;LocationGroupVO&gt; allLocationGroups) {
+        // climb up group
+<span class="nc" id="L167">        Optional&lt;RouteImpl&gt; route = repository.findBySourceLocationGroupNameAndTargetLocation_LocationIdAndEnabled(sourceLocationGroup, targetLocation, true);</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">        if (!route.isPresent()) {</span>
+<span class="nc" id="L169">            LocationGroupVO currentSource = allLocationGroups.stream().filter(lg -&gt; lg.getName().equals(sourceLocationGroup)).findFirst().orElseThrow(() -&gt; new NotFoundException(format(&quot;The LocationGroup with name [%s] does not exist&quot;, sourceLocationGroup)));</span>
+<span class="nc bnc" id="L170" title="All 4 branches missed.">            if (currentSource.getParent() == null || currentSource.getParent().isEmpty()) {</span>
+<span class="nc" id="L171">                return Optional.empty();</span>
+            }
+<span class="nc" id="L173">            route = findInSourceGroupHierarchyWithTargetLocation(currentSource.getParent(), targetLocation, targetLocationGroup, allLocationGroups);</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">            if (route.isPresent()) {</span>
+<span class="nc" id="L175">                return route;</span>
+            }
+
+<span class="nc" id="L178">            LocationGroupVO currentTarget = allLocationGroups.stream().filter(lg -&gt; lg.getName().equals(targetLocationGroup)).findFirst().orElseThrow(() -&gt; new NotFoundException(format(&quot;The LocationGroup with name [%s] does not exist&quot;, targetLocationGroup)));</span>
+<span class="nc bnc" id="L179" title="All 4 branches missed.">            if (currentTarget.getParent() == null || currentTarget.getParent().isEmpty()) {</span>
+<span class="nc" id="L180">                return Optional.empty();</span>
+            }
+<span class="nc" id="L182">            route = findInSourceGroupHierarchyWithTargetLocation(sourceLocationGroup, targetLocation, currentTarget.getParent(), allLocationGroups);</span>
+<span class="nc" id="L183">        } return route;</span>
+    }
+
+    private Optional&lt;RouteImpl&gt; findInSourceGroupHierarchy(String sourceLocationGroup, String targetLocationGroup, Collection&lt;LocationGroupVO&gt; allLocationGroups) {
+        // climb up group
+<span class="nc" id="L188">        Optional&lt;RouteImpl&gt; route = repository.findBySourceLocationGroupNameAndTargetLocationGroupNameAndEnabled(sourceLocationGroup, targetLocationGroup, true);</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">        if (!route.isPresent()) {</span>
+<span class="nc" id="L190">            LocationGroupVO currentSource = allLocationGroups.stream().filter(lg -&gt; lg.getName().equals(sourceLocationGroup)).findFirst().orElseThrow(() -&gt; new NotFoundException(format(&quot;The LocationGroup with name [%s] does not exist&quot;, sourceLocationGroup)));</span>
+<span class="nc bnc" id="L191" title="All 4 branches missed.">            if (currentSource.getParent() == null || currentSource.getParent().isEmpty()) {</span>
+<span class="nc" id="L192">                return Optional.empty();</span>
+            }
+<span class="nc" id="L194">            route = findInSourceGroupHierarchy(currentSource.getParent(), targetLocationGroup, allLocationGroups);</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">            if (route.isPresent()) {</span>
+<span class="nc" id="L196">                return route;</span>
+            }
+
+<span class="nc" id="L199">            LocationGroupVO currentTarget = allLocationGroups.stream().filter(lg -&gt; lg.getName().equals(targetLocationGroup)).findFirst().orElseThrow(() -&gt; new NotFoundException(format(&quot;The LocationGroup with name [%s] does not exist&quot;, targetLocationGroup)));</span>
+<span class="nc bnc" id="L200" title="All 4 branches missed.">            if (currentTarget.getParent() == null || currentTarget.getParent().isEmpty()) {</span>
+<span class="nc" id="L201">                return Optional.empty();</span>
+            }
+<span class="nc" id="L203">            route = findInSourceGroupHierarchy(sourceLocationGroup, currentTarget.getParent(), allLocationGroups);</span>
+<span class="nc" id="L204">        } return route;</span>
+    }
+
+    private Optional&lt;RouteImpl&gt; findInHierarchy(String sourceLocation, String targetLocation, String targetLocationGroupName, Collection&lt;LocationGroupVO&gt; allLocationGroups) {
+<span class="nc" id="L208">        Optional&lt;RouteImpl&gt; route = repository.findBySourceLocation_LocationIdAndTargetLocation_LocationIdAndEnabled(sourceLocation, targetLocation, true);</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">        if (route.isPresent()) {</span>
+<span class="nc" id="L210">            return route;</span>
+        }
+
+        // The targetLocation may also contain a LocationGroup!! (for CREATED and INITIALIZED orders)
+<span class="nc bnc" id="L214" title="All 2 branches missed.">        if (LocationPK.isValid(targetLocation)) {</span>
+
+            // first step is target then source...
+<span class="nc" id="L217">            String targetLocationLocationGroupName = mappingLocationToParent.computeIfAbsent(targetLocation, k -&gt; locationApi.findById(k).orElseThrow(()-&gt;new NotFoundException(format(&quot;TargetLocation with coordinate [%s] does not exist&quot;, targetLocation))).getLocationGroupName());</span>
+<span class="nc" id="L218">            route = findInTargetGroupHierarchy(sourceLocation, targetLocationLocationGroupName, allLocationGroups);</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">            if (route.isPresent()) {</span>
+<span class="nc" id="L220">                return route;</span>
+            }
+        }
+
+<span class="nc" id="L224">        final String sourceLocationGroupName = mappingLocationToParent.computeIfAbsent(sourceLocation, k -&gt; locationApi.findById(k).orElseThrow(()-&gt;new NotFoundException(format(&quot;SourceLocation with locationId [%s] does not exist&quot;, sourceLocation))).getLocationGroupName());</span>
+<span class="nc" id="L225">        route = findInSourceGroupHierarchy(sourceLocationGroupName, targetLocationGroupName, allLocationGroups);</span>
+<span class="nc" id="L226">        return route;</span>
+
+    }
+
+    private Optional&lt;RouteImpl&gt; findInHierarchy2(String sourceLocation, String targetLocationGroupName, Collection&lt;LocationGroupVO&gt; allLocationGroups) {
+        // first step is target then source...
+<span class="nc" id="L232">        Optional&lt;RouteImpl&gt; route = findInTargetGroupHierarchy(sourceLocation, targetLocationGroupName, allLocationGroups);</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">        if (route.isPresent()) {</span>
+<span class="nc" id="L234">            return route;</span>
+        }
+
+<span class="nc" id="L237">        final String sourceLocationGroupName = mappingLocationToParent.computeIfAbsent(sourceLocation, k -&gt; locationApi.findById(k).orElseThrow(()-&gt;new NotFoundException(format(&quot;SourceLocation with locationId [%s] does not exist&quot;, sourceLocation))).getLocationGroupName());</span>
+<span class="nc" id="L238">        route = findInSourceGroupHierarchy(sourceLocationGroupName, targetLocationGroupName, allLocationGroups);</span>
+<span class="nc" id="L239">        return route;</span>
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

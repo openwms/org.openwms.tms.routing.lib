@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Registrator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services Library</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing.app</a> &gt; <span class="el_source">Registrator.java</span></div><h1>Registrator.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2005-2024 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.openwms.tms.routing.app;
+
+import org.openwms.common.location.api.commands.LocationReplicaRegistration;
+import org.openwms.core.SpringProfiles;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.event.ContextClosedEvent;
+import org.springframework.context.event.ContextStartedEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+/**
+ * A Registrator.
+ *
+ * @author Heiko Scherrer
+ */
+@Profile(SpringProfiles.ASYNCHRONOUS_PROFILE)
+@RefreshScope
+@Component
+class Registrator {
+
+<span class="fc" id="L42">    private static final Logger LOGGER = LoggerFactory.getLogger(Registrator.class);</span>
+    private final String exchangeName;
+    private final LocationReplicaRegistration locationReplicaRegistration;
+    private final AmqpTemplate amqpTemplate;
+
+    Registrator(@Value(&quot;${owms.commands.common.registration.exchange-name}&quot;) String exchangeName,
+            @Value(&quot;${spring.application.name}&quot;) String applicationName,
+            @Value(&quot;${owms.routing.registration.location-request-removal-path}&quot;) String locationRequestRemovalPath,
+            @Value(&quot;${owms.routing.registration.location-removal-path}&quot;) String locationRemovalPath,
+<span class="fc" id="L51">            AmqpTemplate amqpTemplate) {</span>
+<span class="fc" id="L52">        this.exchangeName = exchangeName;</span>
+<span class="fc" id="L53">        this.locationReplicaRegistration = new LocationReplicaRegistration(</span>
+                applicationName,
+                locationRequestRemovalPath,
+                locationRemovalPath
+        );
+<span class="fc" id="L58">        this.amqpTemplate = amqpTemplate;</span>
+<span class="fc" id="L59">    }</span>
+
+    @EventListener
+    public void onContextStarted(ContextStartedEvent cse) {
+<span class="nc" id="L63">        LOGGER.info(&quot;Register at business services&quot;);</span>
+<span class="nc" id="L64">        amqpTemplate.convertAndSend(exchangeName, &quot;common.registration.command.in.register.loc&quot;, locationReplicaRegistration);</span>
+<span class="nc" id="L65">    }</span>
+
+    @EventListener
+    public void onContextStopped(ContextClosedEvent cse) {
+<span class="nc" id="L69">        LOGGER.info(&quot;Stopping ApplicationContext&quot;);</span>
+        //amqpTemplate.convertAndSend(exchangeName, &quot;common.registration.command.in.unregister.loc&quot;, locationReplicaRegistration);
+<span class="nc" id="L71">    }</span>
+
+    @Scheduled(fixedDelay = 30000L)
+    public void onTimer() {
+<span class="fc" id="L75">        amqpTemplate.convertAndSend(exchangeName, &quot;common.registration.command.in.register.loc&quot;, locationReplicaRegistration);</span>
+<span class="fc" id="L76">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

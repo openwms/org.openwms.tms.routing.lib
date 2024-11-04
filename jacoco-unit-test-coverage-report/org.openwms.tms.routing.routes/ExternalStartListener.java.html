@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExternalStartListener.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services Library</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing.routes</a> &gt; <span class="el_source">ExternalStartListener.java</span></div><h1>ExternalStartListener.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2005-2022 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.openwms.tms.routing.routes;
+
+import org.ameba.annotation.Measured;
+import org.openwms.common.comm.NoRouteException;
+import org.openwms.core.SpringProfiles;
+import org.openwms.tms.api.MessageVO;
+import org.openwms.tms.api.TransportOrderApi;
+import org.openwms.tms.api.requests.state.StateChangeRequest;
+import org.openwms.tms.api.requests.state.StateChangeResponse;
+import org.openwms.tms.routing.RouteSearchAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
+import static java.lang.String.format;
+
+/**
+ * A ExternalStartListener.
+ *
+ * @author Heiko Scherrer
+ */
+@Profile({SpringProfiles.ASYNCHRONOUS_PROFILE})
+@Component
+class ExternalStartListener {
+
+<span class="fc" id="L45">    private static final Logger LOGGER = LoggerFactory.getLogger(ExternalStartListener.class);</span>
+    public static final String RESPONSE_STATE_CHANGE = &quot;response.state.change&quot;;
+    private final TransportOrderApi transportOrderApi;
+    private final RouteSearchAlgorithm routeSearch;
+    private final AmqpTemplate amqpTemplate;
+    private final String exchangeName;
+
+    ExternalStartListener(TransportOrderApi transportOrderApi, RouteSearchAlgorithm routeSearch, AmqpTemplate amqpTemplate,
+<span class="fc" id="L53">            @Value(&quot;${owms.requests.routing.to.exchange-name}&quot;) String exchangeName) {</span>
+<span class="fc" id="L54">        this.transportOrderApi = transportOrderApi;</span>
+<span class="fc" id="L55">        this.routeSearch = routeSearch;</span>
+<span class="fc" id="L56">        this.amqpTemplate = amqpTemplate;</span>
+<span class="fc" id="L57">        this.exchangeName = exchangeName;</span>
+<span class="fc" id="L58">    }</span>
+
+    @Measured
+    @RabbitListener(queues = &quot;${owms.requests.routing.to.queue-name}&quot;)
+    public void onRequest(StateChangeRequest request) {
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        if (&quot;STARTED&quot;.equals(request.getRequestedState())) {</span>
+            try {
+<span class="nc" id="L65">                var vo = transportOrderApi.findByPKey(request.getTransportOrderPkey());</span>
+<span class="nc" id="L66">                var route = routeSearch.findBy(vo.getSourceLocation(), vo.getTargetLocation(), vo.getTargetLocationGroup());</span>
+<span class="nc" id="L67">                LOGGER.debug(&quot;TransportOrder to start has a Route [{}] &quot;, route.getRouteId());</span>
+<span class="nc" id="L68">                amqpTemplate.convertAndSend(exchangeName, RESPONSE_STATE_CHANGE, new StateChangeResponse(request, &quot;STARTED&quot;, null));</span>
+<span class="nc" id="L69">            } catch (NoRouteException ex) {</span>
+
+                // not that bad we know no Route exists...
+<span class="nc" id="L72">                var msg = format(&quot;A TransportOrder was requested to start that has no Route. PKey: [%s]&quot;, request.getTransportOrderPkey());</span>
+<span class="nc" id="L73">                LOGGER.warn(msg, msg);</span>
+<span class="nc" id="L74">                amqpTemplate.convertAndSend(exchangeName, RESPONSE_STATE_CHANGE, new StateChangeResponse(request, &quot;XX&quot;,</span>
+<span class="nc" id="L75">                        MessageVO.newBuilder()</span>
+<span class="nc" id="L76">                                .messageText(msg)</span>
+<span class="nc" id="L77">                                .build()</span>
+                ));
+<span class="nc" id="L79">            } catch (Exception ex) {</span>
+<span class="nc" id="L80">                var msg = format(&quot;Generic exception. Route for TransportOrder [%s] could not be determined&quot;, request.getTransportOrderPkey());</span>
+<span class="nc" id="L81">                LOGGER.warn(msg, msg);</span>
+<span class="nc" id="L82">                amqpTemplate.convertAndSend(exchangeName, RESPONSE_STATE_CHANGE, new StateChangeResponse(request, &quot;XX&quot;,</span>
+<span class="nc" id="L83">                        MessageVO.newBuilder()</span>
+<span class="nc" id="L84">                                .messageText(msg)</span>
+<span class="nc" id="L85">                                .build()</span>
+                ));
+<span class="nc" id="L87">            }</span>
+        }
+<span class="nc" id="L89">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

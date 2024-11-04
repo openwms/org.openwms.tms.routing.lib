@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RoutingAsyncConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services Library</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing.app</a> &gt; <span class="el_source">RoutingAsyncConfiguration.java</span></div><h1>RoutingAsyncConfiguration.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2005-2022 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.openwms.tms.routing.app;
+
+import org.ameba.amqp.RabbitTemplateConfigurable;
+import org.openwms.core.SpringProfiles;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.QueueBuilder;
+import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.amqp.support.converter.SerializerMessageConverter;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
+import org.springframework.retry.backoff.ExponentialBackOffPolicy;
+import org.springframework.retry.support.RetryTemplate;
+
+import static org.ameba.LoggingCategories.BOOT;
+
+/**
+ * A RoutingAsyncConfiguration is activated when the service uses asynchronous communication to access other services.
+ *
+ * @author Heiko Scherrer
+ */
+@Profile(SpringProfiles.ASYNCHRONOUS_PROFILE)
+@EnableRabbit
+@Configuration
+<span class="fc" id="L55">public class RoutingAsyncConfiguration {</span>
+
+<span class="fc" id="L57">    private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(BOOT);</span>
+    public static final String X_DEAD_LETTER_EXCHANGE = &quot;x-dead-letter-exchange&quot;;
+    public static final String X_DEAD_LETTER_ROUTING_KEY = &quot;x-dead-letter-routing-key&quot;;
+    public static final String POISON_MESSAGE = &quot;poison-message&quot;;
+
+    @ConditionalOnExpression(&quot;'${owms.routing.serialization}'=='json'&quot;)
+    @Bean
+    MessageConverter messageConverter() {
+<span class="fc" id="L65">        var messageConverter = new Jackson2JsonMessageConverter();</span>
+<span class="fc" id="L66">        BOOT_LOGGER.info(&quot;Using JSON serialization over AMQP&quot;);</span>
+<span class="fc" id="L67">        return messageConverter;</span>
+    }
+
+    @ConditionalOnExpression(&quot;'${owms.routing.serialization}'=='barray'&quot;)
+    @Bean
+    MessageConverter serializerMessageConverter() {
+<span class="nc" id="L73">        var messageConverter = new SerializerMessageConverter();</span>
+<span class="nc" id="L74">        BOOT_LOGGER.info(&quot;Using byte array serialization over AMQP&quot;);</span>
+<span class="nc" id="L75">        return messageConverter;</span>
+    }
+
+    @Primary
+    @Bean(name = &quot;amqpTemplate&quot;)
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory,
+            ObjectProvider&lt;MessageConverter&gt; messageConverter,
+            @Autowired(required = false) RabbitTemplateConfigurable rabbitTemplateConfigurable) {
+<span class="fc" id="L83">        var rabbitTemplate = new RabbitTemplate(connectionFactory);</span>
+<span class="fc" id="L84">        var backOffPolicy = new ExponentialBackOffPolicy();</span>
+<span class="fc" id="L85">        backOffPolicy.setMultiplier(2);</span>
+<span class="fc" id="L86">        backOffPolicy.setMaxInterval(15000);</span>
+<span class="fc" id="L87">        backOffPolicy.setInitialInterval(500);</span>
+<span class="fc" id="L88">        var retryTemplate = new RetryTemplate();</span>
+<span class="fc" id="L89">        retryTemplate.setBackOffPolicy(backOffPolicy);</span>
+<span class="fc" id="L90">        rabbitTemplate.setRetryTemplate(retryTemplate);</span>
+<span class="fc" id="L91">        rabbitTemplate.setMessageConverter(messageConverter.getIfUnique());</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (rabbitTemplateConfigurable != null) {</span>
+<span class="fc" id="L93">            rabbitTemplateConfigurable.configure(rabbitTemplate);</span>
+        }
+<span class="fc" id="L95">        return rabbitTemplate;</span>
+    }
+
+    @Bean
+    TopicExchange tmsRequestsExchange(@Value(&quot;${owms.requests.routing.to.exchange-name}&quot;) String exchangeName) {
+<span class="fc" id="L100">        return new TopicExchange(exchangeName, true, false);</span>
+    }
+
+    @Bean
+    Queue tmsRequestsQueue(@Value(&quot;${owms.requests.routing.to.queue-name}&quot;) String queueName,
+            @Value(&quot;${owms.routing.dead-letter.exchange-name}&quot;) String exchangeName) {
+<span class="fc" id="L106">        return QueueBuilder.durable(queueName)</span>
+<span class="fc" id="L107">                .withArgument(X_DEAD_LETTER_EXCHANGE, exchangeName)</span>
+<span class="fc" id="L108">                .withArgument(X_DEAD_LETTER_ROUTING_KEY, POISON_MESSAGE)</span>
+<span class="fc" id="L109">                .build();</span>
+    }
+
+    @Bean
+    Binding tmsRequestsBinding(TopicExchange tmsRequestsExchange, Queue tmsRequestsQueue, @Value(&quot;${owms.requests.routing.to.routing-key}&quot;) String routingKey) {
+<span class="fc" id="L114">        return BindingBuilder</span>
+<span class="fc" id="L115">                .bind(tmsRequestsQueue)</span>
+<span class="fc" id="L116">                .to(tmsRequestsExchange)</span>
+<span class="fc" id="L117">                .with(routingKey);</span>
+    }
+
+    /*~ -------------- Location Updates --------------- */
+    @Bean
+    TopicExchange locExchange(@Value(&quot;${owms.events.common.loc.exchange-name}&quot;) String exchangeName) {
+<span class="fc" id="L123">        return new TopicExchange(exchangeName, true, false);</span>
+    }
+
+    @Bean
+    Queue locQueue(@Value(&quot;${owms.events.common.loc.queue-name}&quot;) String queueName,
+            @Value(&quot;${owms.routing.dead-letter.exchange-name}&quot;) String exchangeName) {
+<span class="fc" id="L129">        return QueueBuilder.nonDurable(queueName)</span>
+<span class="fc" id="L130">                .withArgument(X_DEAD_LETTER_EXCHANGE, exchangeName)</span>
+<span class="fc" id="L131">                .withArgument(X_DEAD_LETTER_ROUTING_KEY, POISON_MESSAGE)</span>
+<span class="fc" id="L132">                .build();</span>
+    }
+
+    @Bean
+    Binding locBinding(TopicExchange locExchange, Queue locQueue, @Value(&quot;${owms.events.common.loc.routing-key}&quot;) String routingKey) {
+<span class="fc" id="L137">        return BindingBuilder.bind(locQueue)</span>
+<span class="fc" id="L138">                .to(locExchange)</span>
+<span class="fc" id="L139">                .with(routingKey);</span>
+    }
+
+    /*~ -------------- LocationGroup Updates --------------- */
+    @Bean
+    TopicExchange lgExchange(@Value(&quot;${owms.events.common.lg.exchange-name}&quot;) String exchangeName) {
+<span class="fc" id="L145">        return new TopicExchange(exchangeName, true, false);</span>
+    }
+
+    @Bean
+    Queue lgQueue(@Value(&quot;${owms.events.common.lg.queue-name}&quot;) String queueName,
+            @Value(&quot;${owms.routing.dead-letter.exchange-name}&quot;) String exchangeName) {
+<span class="fc" id="L151">        return QueueBuilder.nonDurable(queueName)</span>
+<span class="fc" id="L152">                .withArgument(X_DEAD_LETTER_EXCHANGE, exchangeName)</span>
+<span class="fc" id="L153">                .withArgument(X_DEAD_LETTER_ROUTING_KEY, POISON_MESSAGE)</span>
+<span class="fc" id="L154">                .build();</span>
+    }
+
+    @Bean
+    Binding lgBinding(TopicExchange lgExchange, Queue lgQueue, @Value(&quot;${owms.events.common.lg.routing-key}&quot;) String routingKey) {
+<span class="fc" id="L159">        return BindingBuilder.bind(lgQueue)</span>
+<span class="fc" id="L160">                .to(lgExchange)</span>
+<span class="fc" id="L161">                .with(routingKey);</span>
+    }
+
+    @Bean
+    DirectExchange dlExchange(@Value(&quot;${owms.routing.dead-letter.exchange-name}&quot;) String exchangeName) {
+<span class="fc" id="L166">        return new DirectExchange(exchangeName);</span>
+    }
+
+    @Bean
+    Queue dlq(@Value(&quot;${owms.routing.dead-letter.queue-name}&quot;) String queueName) {
+<span class="fc" id="L171">        return QueueBuilder.durable(queueName).build();</span>
+    }
+
+    @Bean
+    Binding dlBinding(@Value(&quot;${owms.routing.dead-letter.queue-name}&quot;) String queueName,
+            @Value(&quot;${owms.routing.dead-letter.exchange-name}&quot;) String exchangeName) {
+<span class="fc" id="L177">        return BindingBuilder.bind(dlq(queueName)).to(dlExchange(exchangeName)).with(POISON_MESSAGE);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

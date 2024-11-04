@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LocationEO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services Library</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing</a> &gt; <span class="el_source">LocationEO.java</span></div><h1>LocationEO.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2005-2022 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.openwms.tms.routing;
+
+import org.ameba.integration.jpa.ApplicationEntity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
+
+/**
+ * A LocationEO is an Entity Object (EO) that represents a Location in a simple way.
+ *
+ * @author Heiko Scherrer
+ */
+@Entity
+@Table(name = &quot;TMS_RSRV_LOCATION&quot;)
+public class LocationEO extends ApplicationEntity {
+
+    /** The foreign persistent key of the Location. */
+    @Column(name = &quot;C_FOREIGN_PID&quot;)
+    private String foreignPKey;
+
+    /** The unique business key. */
+    @NotNull
+    @Column(name = &quot;C_LOCATION_ID&quot;)
+    private String locationId;
+
+    /** The name of the LocationGroup this Location belongs to. */
+    @Column(name = &quot;C_LOCATION_GROUP_NAME&quot;)
+    private String locationGroupName;
+
+    /** Flag to determine if this Location is marked for deletion and cannot be used anymore. */
+    @Column(name = &quot;C_MARKED_DELETION&quot;)
+    private boolean markForDeletion;
+
+<span class="fc" id="L52">    protected LocationEO() {}</span>
+
+    public String getForeignPKey() {
+<span class="nc" id="L55">        return foreignPKey;</span>
+    }
+
+    public void setForeignPKey(String foreignPKey) {
+<span class="nc" id="L59">        this.foreignPKey = foreignPKey;</span>
+<span class="nc" id="L60">    }</span>
+
+    public String getLocationId() {
+<span class="nc" id="L63">        return locationId;</span>
+    }
+
+    public void setLocationId(String locationId) {
+<span class="nc" id="L67">        this.locationId = locationId;</span>
+<span class="nc" id="L68">    }</span>
+
+    public String getLocationGroupName() {
+<span class="nc" id="L71">        return locationGroupName;</span>
+    }
+
+    public void setLocationGroupName(String locationGroupName) {
+<span class="nc" id="L75">        this.locationGroupName = locationGroupName;</span>
+<span class="nc" id="L76">    }</span>
+
+    public boolean isMarkForDeletion() {
+<span class="nc" id="L79">        return markForDeletion;</span>
+    }
+
+    public void setMarkForDeletion(boolean markForDeletion) {
+<span class="nc" id="L83">        this.markForDeletion = markForDeletion;</span>
+<span class="nc" id="L84">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L88">        return locationId;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        if (!(o instanceof LocationEO that)) return false;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        if (!super.equals(o)) return false;</span>
+<span class="nc bnc" id="L101" title="All 8 branches missed.">        return markForDeletion == that.markForDeletion &amp;&amp; Objects.equals(foreignPKey, that.foreignPKey) &amp;&amp; Objects.equals(locationId, that.locationId) &amp;&amp; Objects.equals(locationGroupName, that.locationGroupName);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
+    @Override
+    public int hashCode() {
+<span class="nc" id="L111">        return Objects.hash(super.hashCode(), foreignPKey, locationId, locationGroupName, markForDeletion);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

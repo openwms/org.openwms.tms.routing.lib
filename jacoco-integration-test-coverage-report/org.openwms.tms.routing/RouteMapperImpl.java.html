@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RouteMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services Library</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing</a> &gt; <span class="el_source">RouteMapperImpl.java</span></div><h1>RouteMapperImpl.java</h1><pre class="source lang-java linenums">package org.openwms.tms.routing;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.processing.Generated;
+import org.openwms.tms.routing.ui.RouteVO;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;
+)
+@Component
+<span class="nc" id="L13">public class RouteMapperImpl extends RouteMapper {</span>
+
+    @Override
+    public RouteImpl convertVO(RouteVO vo) {
+<span class="nc bnc" id="L17" title="All 2 branches missed.">        if ( vo == null ) {</span>
+<span class="nc" id="L18">            return null;</span>
+        }
+
+<span class="nc" id="L21">        String routeId = super.routeRepository.findByRouteId(vo.getName()).orElseThrow().getRouteId();</span>
+
+<span class="nc" id="L23">        RouteImpl routeImpl = new RouteImpl( routeId );</span>
+
+<span class="nc" id="L25">        routeImpl.setSourceLocation( routeVOToLocationEO( vo ) );</span>
+<span class="nc" id="L26">        routeImpl.setTargetLocation( routeVOToLocationEO1( vo ) );</span>
+<span class="nc" id="L27">        routeImpl.setPersistentKey( vo.getKey() );</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">        if ( vo.getOl() != null ) {</span>
+<span class="nc" id="L29">            routeImpl.setOl( vo.getOl() );</span>
+        }
+
+<span class="nc" id="L32">        return routeImpl;</span>
+    }
+
+    @Override
+    public RouteVO convertEO(RouteImpl eo) {
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        if ( eo == null ) {</span>
+<span class="nc" id="L38">            return null;</span>
+        }
+
+<span class="nc" id="L41">        RouteVO routeVO = new RouteVO();</span>
+
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        if ( eo.hasPersistentKey() ) {</span>
+<span class="nc" id="L44">            routeVO.setKey( eo.getPersistentKey() );</span>
+        }
+<span class="nc" id="L46">        routeVO.setName( eo.getRouteId() );</span>
+<span class="nc" id="L47">        String locationId = eoSourceLocationLocationId( eo );</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        if ( eo.hasSourceLocation() ) {</span>
+<span class="nc" id="L49">            routeVO.setSourceLocationName( locationId );</span>
+        }
+<span class="nc" id="L51">        String locationId1 = eoTargetLocationLocationId( eo );</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if ( eo.hasTargetLocation() ) {</span>
+<span class="nc" id="L53">            routeVO.setTargetLocationName( locationId1 );</span>
+        }
+<span class="nc" id="L55">        routeVO.setOl( eo.getOl() );</span>
+<span class="nc" id="L56">        routeVO.setDescription( eo.getDescription() );</span>
+<span class="nc" id="L57">        routeVO.setSourceLocationGroupName( eo.getSourceLocationGroupName() );</span>
+<span class="nc" id="L58">        routeVO.setTargetLocationGroupName( eo.getTargetLocationGroupName() );</span>
+<span class="nc" id="L59">        routeVO.setEnabled( eo.isEnabled() );</span>
+
+<span class="nc" id="L61">        return routeVO;</span>
+    }
+
+    @Override
+    public List&lt;RouteVO&gt; convertEO(List&lt;RouteImpl&gt; eos) {
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if ( eos == null ) {</span>
+<span class="nc" id="L67">            return null;</span>
+        }
+
+<span class="nc" id="L70">        List&lt;RouteVO&gt; list = new ArrayList&lt;RouteVO&gt;( eos.size() );</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        for ( RouteImpl routeImpl : eos ) {</span>
+<span class="nc" id="L72">            list.add( convertEO( routeImpl ) );</span>
+<span class="nc" id="L73">        }</span>
+
+<span class="nc" id="L75">        return list;</span>
+    }
+
+    @Override
+    public RouteImpl copy(RouteVO vo, RouteImpl target) {
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if ( vo == null ) {</span>
+<span class="nc" id="L81">            return target;</span>
+        }
+
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        if ( target.getSourceLocation() == null ) {</span>
+<span class="nc" id="L85">            target.setSourceLocation( new LocationEO() );</span>
+        }
+<span class="nc" id="L87">        routeVOToLocationEO2( vo, target.getSourceLocation() );</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        if ( target.getTargetLocation() == null ) {</span>
+<span class="nc" id="L89">            target.setTargetLocation( new LocationEO() );</span>
+        }
+<span class="nc" id="L91">        routeVOToLocationEO3( vo, target.getTargetLocation() );</span>
+<span class="nc" id="L92">        target.setPersistentKey( vo.getKey() );</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if ( vo.getOl() != null ) {</span>
+<span class="nc" id="L94">            target.setOl( vo.getOl() );</span>
+        }
+
+<span class="nc" id="L97">        target.setRouteId( super.routeRepository.findByRouteId(vo.getName()).orElseThrow().getRouteId() );</span>
+
+<span class="nc" id="L99">        return target;</span>
+    }
+
+    protected LocationEO routeVOToLocationEO(RouteVO routeVO) {
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        if ( routeVO == null ) {</span>
+<span class="nc" id="L104">            return null;</span>
+        }
+
+<span class="nc" id="L107">        LocationEO locationEO = new LocationEO();</span>
+
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        if ( routeVO.hasSourceLocationName() ) {</span>
+<span class="nc" id="L110">            locationEO.setLocationId( routeVO.getSourceLocationName() );</span>
+        }
+
+<span class="nc" id="L113">        return locationEO;</span>
+    }
+
+    protected LocationEO routeVOToLocationEO1(RouteVO routeVO) {
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        if ( routeVO == null ) {</span>
+<span class="nc" id="L118">            return null;</span>
+        }
+
+<span class="nc" id="L121">        LocationEO locationEO = new LocationEO();</span>
+
+<span class="nc bnc" id="L123" title="All 2 branches missed.">        if ( routeVO.hasTargetLocationName() ) {</span>
+<span class="nc" id="L124">            locationEO.setLocationId( routeVO.getTargetLocationName() );</span>
+        }
+
+<span class="nc" id="L127">        return locationEO;</span>
+    }
+
+    private String eoSourceLocationLocationId(RouteImpl routeImpl) {
+<span class="nc bnc" id="L131" title="All 2 branches missed.">        if ( routeImpl == null ) {</span>
+<span class="nc" id="L132">            return null;</span>
+        }
+<span class="nc bnc" id="L134" title="All 2 branches missed.">        if ( !routeImpl.hasSourceLocation() ) {</span>
+<span class="nc" id="L135">            return null;</span>
+        }
+<span class="nc" id="L137">        LocationEO sourceLocation = routeImpl.getSourceLocation();</span>
+<span class="nc" id="L138">        String locationId = sourceLocation.getLocationId();</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">        if ( locationId == null ) {</span>
+<span class="nc" id="L140">            return null;</span>
+        }
+<span class="nc" id="L142">        return locationId;</span>
+    }
+
+    private String eoTargetLocationLocationId(RouteImpl routeImpl) {
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        if ( routeImpl == null ) {</span>
+<span class="nc" id="L147">            return null;</span>
+        }
+<span class="nc bnc" id="L149" title="All 2 branches missed.">        if ( !routeImpl.hasTargetLocation() ) {</span>
+<span class="nc" id="L150">            return null;</span>
+        }
+<span class="nc" id="L152">        LocationEO targetLocation = routeImpl.getTargetLocation();</span>
+<span class="nc" id="L153">        String locationId = targetLocation.getLocationId();</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">        if ( locationId == null ) {</span>
+<span class="nc" id="L155">            return null;</span>
+        }
+<span class="nc" id="L157">        return locationId;</span>
+    }
+
+    protected void routeVOToLocationEO2(RouteVO routeVO, LocationEO mappingTarget) {
+<span class="nc bnc" id="L161" title="All 2 branches missed.">        if ( routeVO == null ) {</span>
+<span class="nc" id="L162">            return;</span>
+        }
+
+<span class="nc bnc" id="L165" title="All 2 branches missed.">        if ( routeVO.hasSourceLocationName() ) {</span>
+<span class="nc" id="L166">            mappingTarget.setLocationId( routeVO.getSourceLocationName() );</span>
+        }
+        else {
+<span class="nc" id="L169">            mappingTarget.setLocationId( null );</span>
+        }
+<span class="nc" id="L171">    }</span>
+
+    protected void routeVOToLocationEO3(RouteVO routeVO, LocationEO mappingTarget) {
+<span class="nc bnc" id="L174" title="All 2 branches missed.">        if ( routeVO == null ) {</span>
+<span class="nc" id="L175">            return;</span>
+        }
+
+<span class="nc bnc" id="L178" title="All 2 branches missed.">        if ( routeVO.hasTargetLocationName() ) {</span>
+<span class="nc" id="L179">            mappingTarget.setLocationId( routeVO.getTargetLocationName() );</span>
+        }
+        else {
+<span class="nc" id="L182">            mappingTarget.setLocationId( null );</span>
+        }
+<span class="nc" id="L184">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
