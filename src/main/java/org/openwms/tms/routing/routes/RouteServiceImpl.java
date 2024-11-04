@@ -15,6 +15,7 @@
  */
 package org.openwms.tms.routing.routes;
 
+import jakarta.validation.constraints.NotBlank;
 import org.ameba.annotation.Measured;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
@@ -26,8 +27,6 @@ import org.openwms.tms.routing.RouteImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.validation.constraints.NotBlank;
 
 import static java.lang.String.format;
 

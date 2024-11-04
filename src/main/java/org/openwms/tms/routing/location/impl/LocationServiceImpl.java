@@ -15,6 +15,8 @@
  */
 package org.openwms.tms.routing.location.impl;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.ameba.annotation.Measured;
 import org.ameba.annotation.TxService;
 import org.openwms.core.listener.RemovalNotAllowedException;
@@ -23,8 +25,6 @@ import org.openwms.tms.routing.routes.RouteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**

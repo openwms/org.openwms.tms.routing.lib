@@ -15,13 +15,13 @@
  */
 package org.openwms.tms.routing.timing;
 
+import jakarta.annotation.PostConstruct;
 import org.openwms.tms.routing.Action;
 import org.openwms.tms.routing.ProgramExecutor;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 

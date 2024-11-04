@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.parent</artifactId>
-        <version>25</version>
-        <relativePath />
+        <version>26</version>
+        <relativePath/>
     </parent>
     <artifactId>org.openwms.tms.routing</artifactId>
     <version>2.0.0-SNAPSHOT</version>
@@ -66,20 +66,20 @@
     </ciManagement>
 
     <properties>
+        <activiti-spring-boot-starter.version>8.7.0-alpha.28</activiti-spring-boot-starter.version>
         <ameba-cloud.version>2.0</ameba-cloud.version>
         <asm.version>9.3</asm.version>
         <camunda.version>7.19.0</camunda.version> <!-- Last support SpringBoot 2.x (2.7.9) -->
-        <common-service.version>2.1.0-SNAPSHOT</common-service.version>
+        <common-service.version>3.0.0-SNAPSHOT</common-service.version>
         <commons-io.version>2.6</commons-io.version>
-        <core.version>2.1.0-SNAPSHOT</core.version>
-        <core.units.version>0.5.0</core.units.version>
+        <core.units.version>0.7.0-SNAPSHOT</core.units.version>
+        <core.version>3.0.0-SNAPSHOT</core.version>
         <flowable.version>6.7.2</flowable.version>
         <groovy-jsr223.version>3.0.9</groovy-jsr223.version>
-        <guava.version>30.0-jre</guava.version>
+        <guava.version>32.0.0-jre</guava.version>
         <servo-core.version>0.12.21</servo-core.version>
-        <spring-cloud-dependencies.version>2021.0.8</spring-cloud-dependencies.version>
+        <spring-cloud-dependencies.version>2023.0.1</spring-cloud-dependencies.version>
         <transportation-service.version>2.0.0-SNAPSHOT</transportation-service.version>
-        <activiti-spring-boot-starter.version>8.7.0-alpha.28</activiti-spring-boot-starter.version>
     </properties>
 
     <reporting>
@@ -179,12 +179,12 @@
                         </configuration>
                     </execution>
                 </executions>
-				<configuration>
-					<layers>
-						<configuration>${project.basedir}/src/layers.xml</configuration>
-						<enabled>true</enabled>
-					</layers>
-				</configuration>
+                <configuration>
+                    <layers>
+                        <configuration>${project.basedir}/src/layers.xml</configuration>
+                        <enabled>true</enabled>
+                    </layers>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -199,6 +199,7 @@
             </dependency>
 
             <dependency>
+                <!-- Clash in spring-cloud-starter-netflix-eureka-client -->
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
@@ -264,7 +265,7 @@
                 <version>${commons-io.version}</version>
             </dependency>
             <dependency>
-                <!-- Clash in org.springframework.cloud:spring-cloud-starter-stream-rabbit -->
+                <!-- Clash in org.springframework.cloud:spring-cloud-starter-netflix-eureka-client -->
                 <groupId>com.netflix.servo</groupId>
                 <artifactId>servo-core</artifactId>
                 <version>${servo-core.version}</version>
@@ -408,16 +409,6 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-sleuth</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-sleuth-zipkin</artifactId>
-            <optional>true</optional>
-        </dependency>
 
         <!-- both for retry -->
         <dependency>
@@ -433,9 +424,22 @@
 
         <!-- Observability: Monitoring -->
         <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-micrometer</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
             <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-otel</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-otlp</artifactId>
             <optional>true</optional>
         </dependency>
 
