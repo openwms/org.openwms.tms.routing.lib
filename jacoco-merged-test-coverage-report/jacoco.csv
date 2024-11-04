@@ -50,7 +50,7 @@ OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,RoutingFei
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,ResourceResolverRegistrar,0,27,0,2,0,8,0,5,0,4
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,RoutingSecurityConfiguration,0,14,0,0,0,6,0,2,0,2
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,RoutingWebConfiguration,0,31,0,0,0,9,0,4,0,4
-OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,Registrator,16,30,0,0,5,8,2,3,2,3
+OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,Registrator,12,34,0,0,3,10,1,4,1,4
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,RoutingAsyncConfiguration,9,148,1,1,3,45,2,16,1,16
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,CacheJanitor,8,7,0,0,4,2,2,2,2,2
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,ConfigServerResourcePatternResolver,82,14,1,1,14,4,3,2,2,2
