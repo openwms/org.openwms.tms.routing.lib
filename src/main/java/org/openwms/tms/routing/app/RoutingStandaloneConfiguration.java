@@ -15,9 +15,6 @@
  */
 package org.openwms.tms.routing.app;
 
-import io.micrometer.core.instrument.MeterRegistry;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
@@ -39,10 +36,5 @@ public class RoutingStandaloneConfiguration {
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplateBuilder().basicAuthentication("user", "sa").build();
-    }
-
-    @Bean
-    MeterRegistryCustomizer<MeterRegistry> metricsCommonTags(@Value("${spring.application.name}") String applicationName) {
-        return registry -> registry.config().commonTags("application", applicationName);
     }
 }

@@ -19,7 +19,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.openwms.tms.routing.RoutingServiceRunner;
+import org.openwms.tms.routing.TestRoutingServiceRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @Disabled("work in progress")
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = RoutingServiceRunner.class)
+@SpringBootTest(classes = TestRoutingServiceRunner.class)
 class ConfigServerResourcePatternResolverIT {
 
     @TestConfiguration

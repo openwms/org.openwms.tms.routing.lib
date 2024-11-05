@@ -13,29 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing;
+package org.openwms.tms.routing.app;
 
-import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SpringProfiles;
 import org.ameba.http.PermitAllCorsConfigurationSource;
-import org.ameba.http.identity.EnableIdentityAwareness;
 import org.openwms.core.app.JSONConfiguration;
+import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.config.OwmsProperties;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.retry.annotation.EnableRetry;
-import org.springframework.scheduling.TaskScheduler;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.CorsFilter;
 
@@ -47,27 +36,8 @@ import javax.servlet.Filter;
  * @author Heiko Scherrer
  */
 @Configuration
-@EnableAspects(propagateRootCause = true)
-@EnableIdentityAwareness
-@EnableConfigurationProperties
-@EnableRetry
-@EnableTransactionManagement
-@EnableJpaRepositories
-@EnableJpaAuditing
-@EnableCaching
-@EnableScheduling
-@EntityScan
 @Import(JSONConfiguration.class)
 public class RoutingModuleConfiguration {
-
-    @Bean
-    public TaskScheduler taskScheduler() {
-        var scheduler = new ThreadPoolTaskScheduler();
-        scheduler.setPoolSize(5);
-        scheduler.setThreadNamePrefix("RoutingModule-");
-        scheduler.setWaitForTasksToCompleteOnShutdown(true);
-        return scheduler;
-    }
 
     @LoadBalanced @Bean RestTemplate aLoadBalanced() {
         return new RestTemplate();
@@ -83,7 +53,8 @@ public class RoutingModuleConfiguration {
         return new CorsFilter(new PermitAllCorsConfigurationSource());
     }
 
-    @Bean InputContext in() {
+    @Bean
+    InputContext in() {
         return new InputContext();
     }
 

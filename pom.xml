@@ -71,11 +71,11 @@
         <camunda.version>7.19.0</camunda.version> <!-- Last support SpringBoot 2.x (2.7.9) -->
         <common-service.version>2.1.0-SNAPSHOT</common-service.version>
         <commons-io.version>2.6</commons-io.version>
-        <core.version>2.1.0-SNAPSHOT</core.version>
         <core.units.version>0.5.0</core.units.version>
         <flowable.version>6.7.2</flowable.version>
         <groovy-jsr223.version>3.0.9</groovy-jsr223.version>
         <guava.version>30.0-jre</guava.version>
+        <routing.runtime.version>1.0.0-SNAPSHOT</routing.runtime.version>
         <servo-core.version>0.12.21</servo-core.version>
         <spring-cloud-dependencies.version>2021.0.8</spring-cloud-dependencies.version>
         <transportation-service.version>2.0.0-SNAPSHOT</transportation-service.version>
@@ -251,11 +251,6 @@
             </dependency>
             <dependency>
                 <groupId>org.openwms</groupId>
-                <artifactId>org.openwms.core.util</artifactId>
-                <version>${core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.openwms</groupId>
                 <artifactId>org.openwms.common.service.lib</artifactId>
                 <version>${common-service.version}</version>
                 <classifier>client</classifier>
@@ -265,6 +260,12 @@
                 <artifactId>org.openwms.tms.transportation</artifactId>
                 <version>${transportation-service.version}</version>
                 <classifier>client</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.openwms</groupId>
+                <artifactId>org.openwms.tms.routing.runtime</artifactId>
+                <version>${routing.runtime.version}</version>
+                <classifier>all</classifier>
             </dependency>
             <dependency>
                 <!-- Clash between activiti-spring-boot-starter and json-path -->
@@ -291,11 +292,6 @@
         </dependency>
         <dependency>
             <groupId>org.openwms</groupId>
-            <artifactId>org.openwms.core.util</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.openwms</groupId>
             <artifactId>org.openwms.common.service.lib</artifactId>
             <classifier>client</classifier>
             <optional>true</optional>
@@ -305,6 +301,11 @@
             <artifactId>org.openwms.tms.transportation</artifactId>
             <classifier>client</classifier>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.openwms</groupId>
+            <artifactId>org.openwms.tms.routing.runtime</artifactId>
+            <classifier>all</classifier>
         </dependency>
 
         <!-- Spring Dependencies -->

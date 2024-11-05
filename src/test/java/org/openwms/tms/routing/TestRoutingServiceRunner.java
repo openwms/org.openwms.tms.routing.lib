@@ -18,12 +18,13 @@ package org.openwms.tms.routing;
 import io.interface21.cloud.AmebaCloudModule;
 import org.ameba.app.SolutionApp;
 import org.openwms.common.comm.CommPackage;
+import org.openwms.tms.routing.app.RoutingModuleConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.retry.annotation.EnableRetry;
 
 /**
- * A RoutingServiceRunner.
+ * A TestRoutingServiceRunner.
  *
  * @author Heiko Scherrer
  */
@@ -36,7 +37,7 @@ import org.springframework.retry.annotation.EnableRetry;
         }
 )
 @EnableRetry
-public class RoutingServiceRunner {
+public class TestRoutingServiceRunner {
 
     /**
      * Boot up!
@@ -44,7 +45,7 @@ public class RoutingServiceRunner {
      * @param args Some args
      */
     public static void main(String[] args) {
-        var ctx = SpringApplication.run(RoutingServiceRunner.class, args);
+        var ctx = SpringApplication.run(TestRoutingServiceRunner.class, args);
         ctx.start();
     }
 }
