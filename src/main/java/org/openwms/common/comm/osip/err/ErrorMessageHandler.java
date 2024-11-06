@@ -19,10 +19,10 @@ import org.ameba.exception.NotFoundException;
 import org.openwms.common.comm.osip.OSIPComponent;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
+import org.openwms.core.process.execution.RouteImpl;
+import org.openwms.core.process.execution.spi.ProgramExecutor;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
-import org.openwms.tms.routing.ProgramExecutor;
-import org.openwms.tms.routing.RouteImpl;
 
 import static java.lang.String.format;
 
@@ -57,7 +57,7 @@ class ErrorMessageHandler {
         executor.execute(matrix.findBy(
                 msg.getType(),
                 RouteImpl.DEF_ROUTE,
-                null, locationGroup),
+                null, locationGroup).getProgramKey(),
                 new InputContext().setMsg(msg.getAll()).getMsg()
         );
     }

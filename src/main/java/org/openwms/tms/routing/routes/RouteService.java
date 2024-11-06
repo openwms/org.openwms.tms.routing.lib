@@ -15,7 +15,7 @@
  */
 package org.openwms.tms.routing.routes;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * A RouteService operates on {@code Route}s.

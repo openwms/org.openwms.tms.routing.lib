@@ -18,6 +18,7 @@ package org.openwms.tms.routing;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.openwms.core.process.execution.RouteImpl;
 import org.openwms.tms.routing.routes.RouteRepository;
 import org.openwms.tms.routing.ui.RouteVO;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -19,10 +19,10 @@ import org.ameba.exception.NotFoundException;
 import org.openwms.common.comm.osip.OSIPComponent;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
+import org.openwms.core.process.execution.RouteImpl;
+import org.openwms.core.process.execution.spi.ProgramExecutor;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
-import org.openwms.tms.routing.ProgramExecutor;
-import org.openwms.tms.routing.RouteImpl;
 
 import static java.lang.String.format;
 
@@ -50,6 +50,6 @@ class SystemUpdateMessageHandler {
         in.clear();
         LocationGroupVO locationGroupName = locationGroupApi.findByName(msg.getLocationGroupName()).orElseThrow(()->new NotFoundException(format("LocationGroup with name [%s] does not exists!", msg.getLocationGroupName())));
         in.getMsg().putAll(msg.getAll());
-        executor.execute(matrix.findBy(msg.getType(), RouteImpl.NO_ROUTE, null, locationGroupName), in.getMsg());
+        executor.execute(matrix.findBy(msg.getType(), RouteImpl.NO_ROUTE, null, locationGroupName).getProgramKey(), in.getMsg());
     }
 }

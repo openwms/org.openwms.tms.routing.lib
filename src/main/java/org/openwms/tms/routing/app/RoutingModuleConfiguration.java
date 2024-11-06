@@ -15,6 +15,7 @@
  */
 package org.openwms.tms.routing.app;
 
+import jakarta.servlet.Filter;
 import org.ameba.app.SpringProfiles;
 import org.ameba.http.PermitAllCorsConfigurationSource;
 import org.openwms.core.app.JSONConfiguration;
@@ -27,8 +28,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.CorsFilter;
-
-import javax.servlet.Filter;
 
 /**
  * A RoutingModuleConfiguration.

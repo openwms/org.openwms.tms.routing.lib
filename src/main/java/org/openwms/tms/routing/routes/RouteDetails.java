@@ -15,16 +15,16 @@
  */
 package org.openwms.tms.routing.routes;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import org.ameba.integration.jpa.BaseEntity;
-import org.openwms.tms.routing.Route;
-import org.openwms.tms.routing.RouteImpl;
+import org.openwms.core.process.execution.Route;
+import org.openwms.core.process.execution.RouteImpl;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import java.io.Serializable;
 
 /**

@@ -18,7 +18,6 @@ package org.openwms.tms.routing.routes;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openwms.common.comm.NoRouteException;
-import org.openwms.tms.routing.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -107,19 +106,19 @@ class ExplicitRouteSearchIT {
 
     @Test
     void shall_pass_when_at_least_one_target_is_given() {
-        Route result = testee.findBy("STCK/0001/0001/0000/0000", "STCK/0001/0002/0000/0000", null);
+        var result = testee.findBy("STCK/0001/0001/0000/0000", "STCK/0001/0002/0000/0000", null);
         assertNotEquals("", result.getRouteId());
     }
 
     @Test
     void shall_pass_when_at_least_one_target_is_given2() {
-        Route result = testee.findBy("STCK/0001/0001/0000/0000", null, "FGRECEIVING");
+        var result = testee.findBy("STCK/0001/0001/0000/0000", null, "FGRECEIVING");
         assertEquals("REC_CONV", result.getRouteId());
     }
 
     public @Test
     void shall_pass_when_all_targets_are_given() {
-        Route result = testee.findBy("STCK/0001/0001/0000/0000", "STCK/0001/0002/0000/0000", "FGRECEIVING");
+        var result = testee.findBy("STCK/0001/0001/0000/0000", "STCK/0001/0002/0000/0000", "FGRECEIVING");
         assertEquals("SRC_TRG", result.getRouteId());
     }
 

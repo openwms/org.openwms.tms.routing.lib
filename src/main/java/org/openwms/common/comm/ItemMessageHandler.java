@@ -19,11 +19,11 @@ import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupApi;
+import org.openwms.core.process.execution.RouteImpl;
+import org.openwms.core.process.execution.spi.ProgramExecutor;
 import org.openwms.tms.api.TransportOrderApi;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
-import org.openwms.tms.routing.ProgramExecutor;
-import org.openwms.tms.routing.RouteImpl;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
 import org.springframework.util.Assert;
 
@@ -87,6 +87,6 @@ public class ItemMessageHandler {
         in.put("route", route);
         var action = matrix.findBy(msg.getType(), route, actualLocation, locationGroup);
         in.putAll(action.getFlexVariables());
-        executor.execute(action, in.getMsg());
+        executor.execute(action.getProgramKey(), in.getMsg());
     }
 }

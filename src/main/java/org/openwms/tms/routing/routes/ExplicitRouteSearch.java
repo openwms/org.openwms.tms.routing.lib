@@ -16,7 +16,8 @@
 package org.openwms.tms.routing.routes;
 
 import org.openwms.common.comm.NoRouteException;
-import org.openwms.tms.routing.RouteImpl;
+import org.openwms.core.process.execution.Route;
+import org.openwms.core.process.execution.RouteImpl;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +50,7 @@ class ExplicitRouteSearch implements RouteSearchAlgorithm {
      * {@inheritDoc}
      */
     @Override
-    public RouteImpl findBy(String sourceLocation, String targetLocation, String targetLocationGroup) {
+    public Route findBy(String sourceLocation, String targetLocation, String targetLocationGroup) {
         Assert.hasText(sourceLocation, "The sourceLocation must be given when searching for a Route");
         final boolean targetLocExists = StringUtils.hasText(targetLocation);
 

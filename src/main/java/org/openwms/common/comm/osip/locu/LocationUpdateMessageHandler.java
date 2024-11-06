@@ -21,10 +21,10 @@ import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
 import org.openwms.common.location.api.LocationVO;
+import org.openwms.core.process.execution.RouteImpl;
+import org.openwms.core.process.execution.spi.ProgramExecutor;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
-import org.openwms.tms.routing.ProgramExecutor;
-import org.openwms.tms.routing.RouteImpl;
 import org.springframework.util.Assert;
 
 import java.util.Optional;
@@ -66,6 +66,6 @@ class LocationUpdateMessageHandler {
 
         var action = matrix.findBy(msg.getType(), RouteImpl.NO_ROUTE, locationOpt.orElse(null), locationGroupOpt.orElse(null));
         in.putAll(action.getFlexVariables());
-        executor.execute(action, in.getMsg());
+        executor.execute(action.getProgramKey(), in.getMsg());
     }
 }
