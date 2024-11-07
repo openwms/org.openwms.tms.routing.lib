@@ -69,14 +69,14 @@
         <activiti-spring-boot-starter.version>8.7.0-alpha.30</activiti-spring-boot-starter.version>
         <ameba-cloud.version>2.0</ameba-cloud.version>
         <asm.version>9.3</asm.version>
-        <camunda.version>7.19.0</camunda.version> <!-- Last support SpringBoot 2.x (2.7.9) -->
+        <camunda.version>7.22.0</camunda.version>
         <common-service.version>3.0.0-SNAPSHOT</common-service.version>
         <commons-io.version>2.6</commons-io.version>
         <core.units.version>0.7.0-SNAPSHOT</core.units.version>
         <flowable.version>6.7.2</flowable.version>
         <groovy-jsr223.version>3.0.9</groovy-jsr223.version>
         <guava.version>32.0.0-jre</guava.version>
-        <routing.runtime.version>1.0.0-SNAPSHOT</routing.runtime.version>
+        <process.runtime.version>1.0.0-SNAPSHOT</process.runtime.version>
         <servo-core.version>0.12.21</servo-core.version>
         <spring-cloud-dependencies.version>2023.0.1</spring-cloud-dependencies.version>
         <transportation-service.version>2.0.0-SNAPSHOT</transportation-service.version>
@@ -258,7 +258,7 @@
             <dependency>
                 <groupId>org.openwms</groupId>
                 <artifactId>org.openwms.core.process.execution</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>${process.runtime.version}</version>
                 <classifier>all</classifier>
             </dependency>
             <dependency>

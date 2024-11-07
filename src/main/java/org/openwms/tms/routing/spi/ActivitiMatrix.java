@@ -46,7 +46,7 @@ import java.util.Optional;
  * @author Heiko Scherrer
  */
 @Component
-class ActivitiMatrix implements Matrix {
+public class ActivitiMatrix implements Matrix {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ActivitiMatrix.class);
     public static final String MSG = "No Action found for ActionType [%s], Route [%s], Location [%s] and LocationGroup [%s]";

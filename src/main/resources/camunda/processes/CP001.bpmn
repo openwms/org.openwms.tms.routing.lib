@@ -1,49 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1sye8xn" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.1">
-  <bpmn:process id="CP001" name="Book on Location and forward" isExecutable="true">
-    <bpmn:startEvent id="start">
-      <bpmn:outgoing>startTask1</bpmn:outgoing>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1ooxq7c" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.3.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.17.0">
+  <bpmn:process id="CP001" name="Book on Location and forward" isExecutable="true" camunda:historyTimeToLive="0">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_178gian</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="startTask1" sourceRef="start" targetRef="task1" />
-    <bpmn:endEvent id="end">
-      <bpmn:incoming>task2End</bpmn:incoming>
-    </bpmn:endEvent>
+    <bpmn:serviceTask id="task1" name="Create TransportUnit if not exists" camunda:expression="#{transportUnitApi.createTU(in.msg.barcode, in.msg.actualLocation, &#39;PALLET&#39;, false)}">
+      <bpmn:incoming>Flow_178gian</bpmn:incoming>
+      <bpmn:outgoing>Flow_059y1po</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_178gian" sourceRef="StartEvent_1" targetRef="task1" />
     <bpmn:serviceTask id="task2" name="Send RES to next Location" camunda:expression="#{responder.sendToLocation(in.msg.flexField1)}">
-      <bpmn:incoming>task1Task2</bpmn:incoming>
-      <bpmn:outgoing>task2End</bpmn:outgoing>
+      <bpmn:incoming>Flow_059y1po</bpmn:incoming>
+      <bpmn:outgoing>Flow_0cumtxs</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="task1" name="Create TransportUnit if not exists" camunda:expression="#{transportUnitApi.createTU(in.msg.barcode, in.msg.actualLocation, &#34;PALLET&#34;, false)}">
-      <bpmn:incoming>startTask1</bpmn:incoming>
-      <bpmn:outgoing>task1Task2</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="task1Task2" sourceRef="task1" targetRef="task2" />
-    <bpmn:sequenceFlow id="task2End" sourceRef="task2" targetRef="end" />
+    <bpmn:sequenceFlow id="Flow_059y1po" sourceRef="task1" targetRef="task2" />
+    <bpmn:endEvent id="Event_067i1ky">
+      <bpmn:incoming>Flow_0cumtxs</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0cumtxs" sourceRef="task2" targetRef="Event_067i1ky" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="CP001">
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="start">
-        <dc:Bounds x="156" y="103" width="36" height="36" />
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_077ogv1_di" bpmnElement="startTask1">
-        <di:waypoint x="192" y="121" />
-        <di:waypoint x="318" y="121" />
+      <bpmndi:BPMNShape id="Activity_07yajgg_di" bpmnElement="task1">
+        <dc:Bounds x="290" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0tdztqe_di" bpmnElement="task2">
+        <dc:Bounds x="540" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_067i1ky_di" bpmnElement="Event_067i1ky">
+        <dc:Bounds x="712" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_178gian_di" bpmnElement="Flow_178gian">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="290" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_1hog0ye_di" bpmnElement="end">
-        <dc:Bounds x="904" y="103" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_04rxf98_di" bpmnElement="task2">
-        <dc:Bounds x="695" y="81" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_18aau7b_di" bpmnElement="task1">
-        <dc:Bounds x="318" y="81" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_1gpgza6_di" bpmnElement="task1Task2">
-        <di:waypoint x="418" y="121" />
-        <di:waypoint x="695" y="121" />
+      <bpmndi:BPMNEdge id="Flow_059y1po_di" bpmnElement="Flow_059y1po">
+        <di:waypoint x="390" y="117" />
+        <di:waypoint x="540" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_11s4j6e_di" bpmnElement="task2End">
-        <di:waypoint x="795" y="121" />
-        <di:waypoint x="904" y="121" />
+      <bpmndi:BPMNEdge id="Flow_0cumtxs_di" bpmnElement="Flow_0cumtxs">
+        <di:waypoint x="640" y="117" />
+        <di:waypoint x="712" y="117" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
