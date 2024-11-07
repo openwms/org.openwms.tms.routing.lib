@@ -82,7 +82,7 @@
 </tr>
 </thead>
 <tbody valign='top'>
-<tr class='even'>
+<tr class='odd'>
  <td class='primaryKey' title='Primary Key'>id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
@@ -91,13 +91,13 @@
  <td class='detail'></td>
  <td class='detail'>
   <table border='0' width='100%' cellspacing='0' cellpadding='0'>
-   <tr class='relative even' valign='top'>
+   <tr class='relative odd' valign='top'>
     <td class='relatedTable detail' title="act_ru_case_execution.case_def_id_ refs act_re_case_def.id_ via act_fk_case_exe_case_def"><a href='act_ru_case_execution.html'>act_ru_case_execution</a><span class='relatedKey'>.case_def_id_</span>
     </td>
     <td class='constraint detail'>act_fk_case_exe_case_def<span title='Restrict delete:
  Parent cannot be deleted if children exist'>&nbsp;R</span></td>
    </tr>
-   <tr class='relative even' valign='top'>
+   <tr class='relative odd' valign='top'>
     <td class='relatedTable detail' title="act_ru_task.case_def_id_ refs act_re_case_def.id_ via act_fk_task_case_def"><a href='act_ru_task.html'>act_ru_task</a><span class='relatedKey'>.case_def_id_</span>
     </td>
     <td class='constraint detail'>act_fk_task_case_def<span title='Restrict delete:
@@ -108,7 +108,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='detail'>rev_</td>
  <td class='detail'>int4</td>
  <td class='detail' align='right'>10</td>
@@ -119,7 +119,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>category_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>255</td>
@@ -130,7 +130,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='detail'>name_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>255</td>
@@ -141,7 +141,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>key_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>255</td>
@@ -152,7 +152,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='detail'>version_</td>
  <td class='detail'>int4</td>
  <td class='detail' align='right'>10</td>
@@ -163,7 +163,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>deployment_id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
@@ -174,7 +174,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='detail'>resource_name_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>4000</td>
@@ -185,7 +185,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>dgrm_resource_name_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>4000</td>
@@ -196,7 +196,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='indexedColumn' title='Indexed'>tenant_id_</td>
  <td class='detail'>varchar</td>
  <td class='detail' align='right'>64</td>
@@ -207,7 +207,7 @@
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>history_ttl_</td>
  <td class='detail'>int4</td>
  <td class='detail' align='right'>10</td>
@@ -219,7 +219,7 @@
  <td class='comment detail'></td>
 </tr>
 </table>
-<p title='11 columns'>Table contained 0 rows at Tue Nov 05 10:55 UTC 2024<p/>
+<p title='11 columns'>Table contained 0 rows at Thu Nov 07 20:52 UTC 2024<p/>
 </td></tr></table>
 <div class='indent'>
 <b>Indexes:</b>
@@ -253,18 +253,18 @@
 <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
 <area shape="rect" id="node1" href="act_ru_case_execution.html" title="act_ru_case_execution" alt="" coords="363,5,557,376">
 <area shape="rect" id="node2" href="act_re_case_def.html" title="act_re_case_def" alt="" coords="5,264,319,592">
-<area shape="rect" id="node3" href="act_ru_task.html" title="act_ru_task" alt="" coords="601,40,771,627">
+<area shape="rect" id="node3" href="act_ru_task.html" title="act_ru_task" alt="" coords="601,39,771,649">
 </map>
   <a name='diagram'><img id='oneDegreeImg' src='../diagrams/act_re_case_def.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>
 <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="act_ru_case_execution.html" title="act_ru_case_execution" alt="" coords="363,643,557,1013">
-<area shape="rect" id="node2" href="act_re_case_def.html" title="act_re_case_def" alt="" coords="5,509,319,837">
-<area shape="rect" id="node3" href="act_ru_case_sentry_part.html" title="act_ru_case_sentry_part" alt="" coords="601,743,808,825">
+<area shape="rect" id="node1" href="act_ru_case_execution.html" title="act_ru_case_execution" alt="" coords="363,667,557,1037">
+<area shape="rect" id="node2" href="act_re_case_def.html" title="act_re_case_def" alt="" coords="5,521,319,849">
+<area shape="rect" id="node3" href="act_ru_case_sentry_part.html" title="act_ru_case_sentry_part" alt="" coords="601,767,808,849">
 <area shape="rect" id="node4" href="act_ru_execution.html" title="act_ru_execution" alt="" coords="381,99,539,181">
 <area shape="rect" id="node5" href="act_re_procdef.html" title="act_re_procdef" alt="" coords="93,99,231,181">
 <area shape="rect" id="node6" href="act_ru_identitylink.html" title="act_ru_identitylink" alt="" coords="852,5,1015,88">
-<area shape="rect" id="node7" href="act_ru_task.html" title="act_ru_task" alt="" coords="620,39,789,625">
-<area shape="rect" id="node8" href="act_ru_variable.html" title="act_ru_variable" alt="" coords="634,643,775,725">
+<area shape="rect" id="node7" href="act_ru_task.html" title="act_ru_task" alt="" coords="620,39,789,649">
+<area shape="rect" id="node8" href="act_ru_variable.html" title="act_ru_variable" alt="" coords="634,667,775,749">
 </map>
 
   <a name='diagram'><img id='twoDegreesImg' src='../diagrams/act_re_case_def.2degrees.png' usemap='#twoDegreesRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>

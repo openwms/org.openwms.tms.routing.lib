@@ -171,6 +171,7 @@ digraph "twoDegreesRelationshipsDiagram" {
       <TR><TD PORT="error_msg_" COLSPAN="3" ALIGN="LEFT">error_msg_</TD></TR>
       <TR><TD PORT="error_details_id_" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">error_details_id_</TD></TR>
       <TR><TD PORT="lock_exp_time_" COLSPAN="3" ALIGN="LEFT">lock_exp_time_</TD></TR>
+      <TR><TD PORT="create_time_" COLSPAN="3" ALIGN="LEFT">create_time_</TD></TR>
       <TR><TD PORT="suspension_state_" COLSPAN="3" ALIGN="LEFT">suspension_state_</TD></TR>
       <TR><TD PORT="execution_id_" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">execution_id_</TD></TR>
       <TR><TD PORT="proc_inst_id_" COLSPAN="3" ALIGN="LEFT">proc_inst_id_</TD></TR>
@@ -257,6 +258,7 @@ digraph "twoDegreesRelationshipsDiagram" {
       <TR><TD PORT="follow_up_date_" COLSPAN="3" ALIGN="LEFT">follow_up_date_</TD></TR>
       <TR><TD PORT="suspension_state_" COLSPAN="3" ALIGN="LEFT">suspension_state_</TD></TR>
       <TR><TD PORT="tenant_id_" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">tenant_id_</TD></TR>
+      <TR><TD PORT="task_state_" COLSPAN="3" ALIGN="LEFT">task_state_</TD></TR>
       <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">&lt; 5</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">1 &gt;</TD></TR>
     </TABLE>>
     URL="act_ru_task.html"

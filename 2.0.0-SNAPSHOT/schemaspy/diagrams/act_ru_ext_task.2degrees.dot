@@ -125,6 +125,7 @@ digraph "twoDegreesRelationshipsDiagram" {
       <TR><TD PORT="error_msg_" COLSPAN="2" ALIGN="LEFT">error_msg_</TD><TD PORT="error_msg_.type" ALIGN="LEFT">varchar[4000]</TD></TR>
       <TR><TD PORT="error_details_id_" COLSPAN="2" BGCOLOR="#f4f7da" ALIGN="LEFT">error_details_id_</TD><TD PORT="error_details_id_.type" ALIGN="LEFT">varchar[64]</TD></TR>
       <TR><TD PORT="lock_exp_time_" COLSPAN="2" ALIGN="LEFT">lock_exp_time_</TD><TD PORT="lock_exp_time_.type" ALIGN="LEFT">timestamp[29,6]</TD></TR>
+      <TR><TD PORT="create_time_" COLSPAN="2" ALIGN="LEFT">create_time_</TD><TD PORT="create_time_.type" ALIGN="LEFT">timestamp[29,6]</TD></TR>
       <TR><TD PORT="suspension_state_" COLSPAN="2" ALIGN="LEFT">suspension_state_</TD><TD PORT="suspension_state_.type" ALIGN="LEFT">int4[10]</TD></TR>
       <TR><TD PORT="execution_id_" COLSPAN="2" BGCOLOR="#f4f7da" ALIGN="LEFT">execution_id_</TD><TD PORT="execution_id_.type" ALIGN="LEFT">varchar[64]</TD></TR>
       <TR><TD PORT="proc_inst_id_" COLSPAN="2" ALIGN="LEFT">proc_inst_id_</TD><TD PORT="proc_inst_id_.type" ALIGN="LEFT">varchar[64]</TD></TR>

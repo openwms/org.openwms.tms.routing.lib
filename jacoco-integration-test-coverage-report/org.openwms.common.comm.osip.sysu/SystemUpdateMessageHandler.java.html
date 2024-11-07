@@ -19,9 +19,9 @@ import org.ameba.exception.NotFoundException;
 import org.openwms.common.comm.osip.OSIPComponent;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
+import org.openwms.core.process.execution.spi.ProgramExecutor;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
-import org.openwms.tms.routing.ProgramExecutor;
 import org.openwms.tms.routing.RouteImpl;
 
 import static java.lang.String.format;
@@ -50,7 +50,7 @@ class SystemUpdateMessageHandler {
 <span class="nc" id="L50">        in.clear();</span>
 <span class="nc" id="L51">        LocationGroupVO locationGroupName = locationGroupApi.findByName(msg.getLocationGroupName()).orElseThrow(()-&gt;new NotFoundException(format(&quot;LocationGroup with name [%s] does not exists!&quot;, msg.getLocationGroupName())));</span>
 <span class="nc" id="L52">        in.getMsg().putAll(msg.getAll());</span>
-<span class="nc" id="L53">        executor.execute(matrix.findBy(msg.getType(), RouteImpl.NO_ROUTE, null, locationGroupName), in.getMsg());</span>
+<span class="nc" id="L53">        executor.execute(matrix.findBy(msg.getType(), RouteImpl.NO_ROUTE, null, locationGroupName).getProgramKey(), in.getMsg());</span>
 <span class="nc" id="L54">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

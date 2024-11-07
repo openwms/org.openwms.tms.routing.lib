@@ -16,6 +16,7 @@
 package org.openwms.tms.routing.routes;
 
 import org.openwms.common.comm.NoRouteException;
+import org.openwms.tms.routing.Route;
 import org.openwms.tms.routing.RouteImpl;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
 import org.slf4j.Logger;
@@ -38,43 +39,43 @@ import static java.lang.String.format;
 @Component
 class ExplicitRouteSearch implements RouteSearchAlgorithm {
 
-<span class="fc" id="L41">    private static final Logger LOGGER = LoggerFactory.getLogger(ExplicitRouteSearch.class);</span>
+<span class="fc" id="L42">    private static final Logger LOGGER = LoggerFactory.getLogger(ExplicitRouteSearch.class);</span>
     private final RouteRepository repository;
 
-<span class="fc" id="L44">    ExplicitRouteSearch(RouteRepository repository) {</span>
-<span class="fc" id="L45">        this.repository = repository;</span>
-<span class="fc" id="L46">    }</span>
+<span class="fc" id="L45">    ExplicitRouteSearch(RouteRepository repository) {</span>
+<span class="fc" id="L46">        this.repository = repository;</span>
+<span class="fc" id="L47">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public RouteImpl findBy(String sourceLocation, String targetLocation, String targetLocationGroup) {
-<span class="fc" id="L53">        Assert.hasText(sourceLocation, &quot;The sourceLocation must be given when searching for a Route&quot;);</span>
-<span class="fc" id="L54">        final boolean targetLocExists = StringUtils.hasText(targetLocation);</span>
+    public Route findBy(String sourceLocation, String targetLocation, String targetLocationGroup) {
+<span class="fc" id="L54">        Assert.hasText(sourceLocation, &quot;The sourceLocation must be given when searching for a Route&quot;);</span>
+<span class="fc" id="L55">        final boolean targetLocExists = StringUtils.hasText(targetLocation);</span>
 
         // First try explicit declaration
-<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (targetLocExists) {</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (targetLocExists) {</span>
 
             // (1) Have both. Search for a match:
-<span class="fc" id="L60">            var result = repository.findBySourceLocation_LocationIdAndTargetLocation_LocationIdAndEnabled(</span>
+<span class="fc" id="L61">            var result = repository.findBySourceLocation_LocationIdAndTargetLocation_LocationIdAndEnabled(</span>
                     sourceLocation, targetLocation, true
             );
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">            if (result.isPresent()) {</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">            if (result.isPresent()) {</span>
                 // Match with locations
-<span class="fc" id="L65">                LOGGER.debug(&quot;Route in direct location match found: {}&quot;, result.get());</span>
-<span class="fc" id="L66">                return result.get();</span>
+<span class="fc" id="L66">                LOGGER.debug(&quot;Route in direct location match found: {}&quot;, result.get());</span>
+<span class="fc" id="L67">                return result.get();</span>
             }
-<span class="nc" id="L68">            throw new NoRouteException(format(&quot;No route found for TransportOrder with sourceLocation [%s] and targetLocation [%s]&quot;,</span>
+<span class="nc" id="L69">            throw new NoRouteException(format(&quot;No route found for TransportOrder with sourceLocation [%s] and targetLocation [%s]&quot;,</span>
                     sourceLocation, targetLocation));
         }
-<span class="fc" id="L71">        Assert.hasText(targetLocationGroup, &quot;The targetLocation did not find a match, hence a TargetLocationGroup is required&quot;);</span>
-<span class="fc" id="L72">        return findInGroup(sourceLocation, targetLocationGroup)</span>
-<span class="fc" id="L73">                .orElseThrow(() -&gt; new NoRouteException(format(&quot;No route found for TransportOrder with sourceLocation [%s] and targetLocationGroup [%s]&quot;, sourceLocation, targetLocationGroup)));</span>
+<span class="fc" id="L72">        Assert.hasText(targetLocationGroup, &quot;The targetLocation did not find a match, hence a TargetLocationGroup is required&quot;);</span>
+<span class="fc" id="L73">        return findInGroup(sourceLocation, targetLocationGroup)</span>
+<span class="fc" id="L74">                .orElseThrow(() -&gt; new NoRouteException(format(&quot;No route found for TransportOrder with sourceLocation [%s] and targetLocationGroup [%s]&quot;, sourceLocation, targetLocationGroup)));</span>
     }
 
     private Optional&lt;RouteImpl&gt; findInGroup(String sourceLocation, String targetLocationGroup) {
-<span class="fc" id="L77">        return repository.findBySourceLocation_LocationIdAndTargetLocationGroupNameAndEnabled(</span>
+<span class="fc" id="L78">        return repository.findBySourceLocation_LocationIdAndTargetLocationGroupNameAndEnabled(</span>
                 sourceLocation, targetLocationGroup, true
         );
     }

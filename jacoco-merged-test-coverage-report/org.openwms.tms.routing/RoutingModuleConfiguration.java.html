@@ -15,6 +15,7 @@
  */
 package org.openwms.tms.routing;
 
+import jakarta.servlet.Filter;
 import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SpringProfiles;
 import org.ameba.http.PermitAllCorsConfigurationSource;
@@ -32,14 +33,10 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.retry.annotation.EnableRetry;
-import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.CorsFilter;
-
-import javax.servlet.Filter;
 
 /**
  * A RoutingModuleConfiguration.
@@ -48,47 +45,45 @@ import javax.servlet.Filter;
  */
 @Configuration
 @EnableAspects(propagateRootCause = true)
-@EnableIdentityAwareness
-@EnableConfigurationProperties
 @EnableRetry
 @EnableTransactionManagement
-@EnableJpaRepositories
+@EnableJpaRepositories(basePackages = {
+        &quot;org.openwms.tms.routing&quot;,
+        &quot;org.openwms.core.process.execution&quot;
+})
 @EnableJpaAuditing
 @EnableCaching
 @EnableScheduling
-@EntityScan
+@EntityScan(basePackages = {
+        &quot;org.openwms.tms.routing&quot;,
+        &quot;org.openwms.core.process.execution&quot;
+})
+@EnableIdentityAwareness
+@EnableConfigurationProperties
 @Import(JSONConfiguration.class)
-<span class="fc" id="L61">public class RoutingModuleConfiguration {</span>
-
-    @Bean
-    public TaskScheduler taskScheduler() {
-<span class="fc" id="L65">        var scheduler = new ThreadPoolTaskScheduler();</span>
-<span class="fc" id="L66">        scheduler.setPoolSize(5);</span>
-<span class="fc" id="L67">        scheduler.setThreadNamePrefix(&quot;RoutingModule-&quot;);</span>
-<span class="fc" id="L68">        scheduler.setWaitForTasksToCompleteOnShutdown(true);</span>
-<span class="fc" id="L69">        return scheduler;</span>
-    }
+<span class="fc" id="L64">public class RoutingModuleConfiguration {</span>
 
     @LoadBalanced @Bean RestTemplate aLoadBalanced() {
-<span class="fc" id="L73">        return new RestTemplate();</span>
+<span class="fc" id="L67">        return new RestTemplate();</span>
     }
 
     @Bean RestTemplate simpleRestTemplate() {
-<span class="fc" id="L77">        return new RestTemplate();</span>
+<span class="fc" id="L71">        return new RestTemplate();</span>
     }
 
     @Profile(SpringProfiles.DEVELOPMENT_PROFILE)
     public @Bean
     Filter corsFiler() {
-<span class="nc" id="L83">        return new CorsFilter(new PermitAllCorsConfigurationSource());</span>
+<span class="nc" id="L77">        return new CorsFilter(new PermitAllCorsConfigurationSource());</span>
     }
 
-    @Bean InputContext in() {
-<span class="fc" id="L87">        return new InputContext();</span>
+    @Bean
+    InputContext in() {
+<span class="fc" id="L82">        return new InputContext();</span>
     }
 
     @Bean OwmsProperties owmsProperties() {
-<span class="fc" id="L91">        return new OwmsProperties();</span>
+<span class="fc" id="L86">        return new OwmsProperties();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

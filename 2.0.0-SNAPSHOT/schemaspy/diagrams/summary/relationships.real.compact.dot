@@ -287,6 +287,7 @@ digraph "compactRelationshipsDiagram" {
       <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">act_ru_job</TD></TR>
       <TR><TD PORT="id_" COLSPAN="3" BGCOLOR="#bed1b8" ALIGN="LEFT">id_</TD></TR>
       <TR><TD PORT="execution_id_" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">execution_id_</TD></TR>
+      <TR><TD PORT="root_proc_inst_id_" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">root_proc_inst_id_</TD></TR>
       <TR><TD PORT="process_instance_id_" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">process_instance_id_</TD></TR>
       <TR><TD PORT="exception_stack_id_" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">exception_stack_id_</TD></TR>
       <TR><TD PORT="handler_type_" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">handler_type_</TD></TR>

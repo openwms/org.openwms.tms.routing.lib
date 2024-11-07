@@ -15,6 +15,8 @@
  */
 package org.openwms.tms.routing.ui;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.ameba.exception.NotFoundException;
 import org.ameba.http.MeasuredRestController;
 import org.openwms.core.http.AbstractWebController;
@@ -35,8 +37,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriTemplate;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static org.openwms.tms.routing.RoutingConstants.API_ROUTES;

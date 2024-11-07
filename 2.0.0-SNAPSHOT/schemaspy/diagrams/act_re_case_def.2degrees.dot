@@ -142,6 +142,7 @@ digraph "twoDegreesRelationshipsDiagram" {
       <TR><TD PORT="follow_up_date_" COLSPAN="3" ALIGN="LEFT">follow_up_date_</TD></TR>
       <TR><TD PORT="suspension_state_" COLSPAN="3" ALIGN="LEFT">suspension_state_</TD></TR>
       <TR><TD PORT="tenant_id_" COLSPAN="3" BGCOLOR="#f4f7da" ALIGN="LEFT">tenant_id_</TD></TR>
+      <TR><TD PORT="task_state_" COLSPAN="3" ALIGN="LEFT">task_state_</TD></TR>
       <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">&lt; 5</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">1 &gt;</TD></TR>
     </TABLE>>
     URL="act_ru_task.html"

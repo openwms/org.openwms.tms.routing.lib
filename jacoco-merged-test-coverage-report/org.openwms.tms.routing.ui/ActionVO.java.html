@@ -16,9 +16,9 @@
 package org.openwms.tms.routing.ui;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
 import org.ameba.http.AbstractBase;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Objects;
 

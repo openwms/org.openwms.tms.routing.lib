@@ -15,9 +15,6 @@
  */
 package org.openwms.tms.routing.app;
 
-import io.micrometer.core.instrument.MeterRegistry;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
@@ -34,16 +31,11 @@ import org.springframework.web.client.RestTemplate;
 @Profile(&quot;!INMEM&quot;)
 @Configuration
 @EnableDiscoveryClient
-<span class="nc" id="L37">public class RoutingStandaloneConfiguration {</span>
+<span class="nc" id="L34">public class RoutingStandaloneConfiguration {</span>
 
     @Bean
     public RestTemplate restTemplate() {
-<span class="nc" id="L41">        return new RestTemplateBuilder().basicAuthentication(&quot;user&quot;, &quot;sa&quot;).build();</span>
-    }
-
-    @Bean
-    MeterRegistryCustomizer&lt;MeterRegistry&gt; metricsCommonTags(@Value(&quot;${spring.application.name}&quot;) String applicationName) {
-<span class="nc" id="L46">        return registry -&gt; registry.config().commonTags(&quot;application&quot;, applicationName);</span>
+<span class="nc" id="L38">        return new RestTemplateBuilder().basicAuthentication(&quot;user&quot;, &quot;sa&quot;).build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

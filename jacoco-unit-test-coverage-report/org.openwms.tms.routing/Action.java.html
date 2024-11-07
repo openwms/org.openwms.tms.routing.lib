@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Action.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services Library</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing</a> &gt; <span class="el_source">Action.java</span></div><h1>Action.java</h1><pre class="source lang-java linenums">/*
- * Copyright 2005-2022 the original author or authors.
+ * Copyright 2005-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,15 @@
  */
 package org.openwms.tms.routing;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.ameba.integration.jpa.ApplicationEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -57,7 +58,7 @@ public class Action extends ApplicationEntity {
     @NotNull
     @Column(name = &quot;C_DESCRIPTION&quot;)
     private String description;
-<span class="pc" id="L60">    @Column(name = &quot;C_ENABLED&quot;)</span>
+<span class="pc" id="L61">    @Column(name = &quot;C_ENABLED&quot;)</span>
     private boolean enabled = true;
     @Column(name = &quot;C_FLEX_1&quot;)
     private String flexField1;
@@ -70,141 +71,148 @@ public class Action extends ApplicationEntity {
     @Column(name = &quot;C_FLEX_5&quot;)
     private String flexField5;
 
-    /** Dear JPA... */
-<span class="fc" id="L74">    protected Action() {</span>
-<span class="fc" id="L75">    }</span>
+    /**
+     * Just to satisfy the shitty mapper implementation this constructor needs to be public.
+     */
+<span class="fc" id="L77">    public Action() { }</span>
 
-<span class="nc" id="L77">    public Action(String programKey, String description) {</span>
-<span class="nc" id="L78">        this.name = programKey;</span>
-<span class="nc" id="L79">        this.programKey = programKey;</span>
-<span class="nc" id="L80">        this.description = description;</span>
-<span class="nc" id="L81">    }</span>
+    /**
+     * Constructs an Action instance with the specified program key and description.
+     *
+     * @param programKey The key that uniquely identifies the program. Must not be blank.
+     * @param description A textual description of the action.
+     */
+<span class="nc" id="L85">    public Action(@NotBlank String programKey, String description) {</span>
+<span class="nc" id="L86">        this.name = programKey;</span>
+<span class="nc" id="L87">        this.programKey = programKey;</span>
+<span class="nc" id="L88">        this.description = description;</span>
+<span class="nc" id="L89">    }</span>
 
-<span class="nc" id="L83">    public Action(RouteImpl route, String name, String locationKey, String locationGroupName, String actionType, String programKey, String description) {</span>
-<span class="nc" id="L84">        this.route = route;</span>
-<span class="nc" id="L85">        this.name = name;</span>
-<span class="nc" id="L86">        this.locationKey = locationKey;</span>
-<span class="nc" id="L87">        this.locationGroupName = locationGroupName;</span>
-<span class="nc" id="L88">        this.actionType = actionType;</span>
-<span class="nc" id="L89">        this.programKey = programKey;</span>
-<span class="nc" id="L90">        this.description = description;</span>
-<span class="nc" id="L91">    }</span>
+<span class="nc" id="L91">    public Action(RouteImpl route, String name, String locationKey, String locationGroupName, String actionType, String programKey, String description) {</span>
+<span class="nc" id="L92">        this.route = route;</span>
+<span class="nc" id="L93">        this.name = name;</span>
+<span class="nc" id="L94">        this.locationKey = locationKey;</span>
+<span class="nc" id="L95">        this.locationGroupName = locationGroupName;</span>
+<span class="nc" id="L96">        this.actionType = actionType;</span>
+<span class="nc" id="L97">        this.programKey = programKey;</span>
+<span class="nc" id="L98">        this.description = description;</span>
+<span class="nc" id="L99">    }</span>
 
     @Override
     public void setPersistentKey(String pKey) {
-<span class="nc" id="L95">        super.setPersistentKey(pKey);</span>
-<span class="nc" id="L96">    }</span>
+<span class="nc" id="L103">        super.setPersistentKey(pKey);</span>
+<span class="nc" id="L104">    }</span>
 
     public Map&lt;String, Object&gt; getFlexVariables() {
-<span class="nc" id="L99">        Map&lt;String, Object&gt; result = new HashMap&lt;&gt;(5);</span>
-<span class="nc" id="L100">        result.put(&quot;flexField1&quot;, flexField1);</span>
-<span class="nc" id="L101">        result.put(&quot;flexField2&quot;, flexField2);</span>
-<span class="nc" id="L102">        result.put(&quot;flexField3&quot;, flexField3);</span>
-<span class="nc" id="L103">        result.put(&quot;flexField4&quot;, flexField4);</span>
-<span class="nc" id="L104">        result.put(&quot;flexField5&quot;, flexField5);</span>
-<span class="nc" id="L105">        return result;</span>
+<span class="nc" id="L107">        Map&lt;String, Object&gt; result = new HashMap&lt;&gt;(5);</span>
+<span class="nc" id="L108">        result.put(&quot;flexField1&quot;, flexField1);</span>
+<span class="nc" id="L109">        result.put(&quot;flexField2&quot;, flexField2);</span>
+<span class="nc" id="L110">        result.put(&quot;flexField3&quot;, flexField3);</span>
+<span class="nc" id="L111">        result.put(&quot;flexField4&quot;, flexField4);</span>
+<span class="nc" id="L112">        result.put(&quot;flexField5&quot;, flexField5);</span>
+<span class="nc" id="L113">        return result;</span>
     }
 
     public RouteImpl getRoute() {
-<span class="nc" id="L109">        return route;</span>
+<span class="nc" id="L117">        return route;</span>
     }
 
     public void setRoute(RouteImpl route) {
-<span class="nc" id="L113">        this.route = route;</span>
-<span class="nc" id="L114">    }</span>
+<span class="nc" id="L121">        this.route = route;</span>
+<span class="nc" id="L122">    }</span>
 
     public String getProgramKey() {
-<span class="nc" id="L117">        return programKey;</span>
+<span class="nc" id="L125">        return programKey;</span>
     }
 
     public void setProgramKey(String programKey) {
-<span class="nc" id="L121">        this.programKey = programKey;</span>
-<span class="nc" id="L122">    }</span>
+<span class="nc" id="L129">        this.programKey = programKey;</span>
+<span class="nc" id="L130">    }</span>
 
     public String getName() {
-<span class="nc" id="L125">        return name;</span>
+<span class="nc" id="L133">        return name;</span>
     }
 
     public String getLocationKey() {
-<span class="nc" id="L129">        return locationKey;</span>
+<span class="nc" id="L137">        return locationKey;</span>
     }
 
     public void setLocationKey(String locationKey) {
-<span class="nc" id="L133">        this.locationKey = locationKey;</span>
-<span class="nc" id="L134">    }</span>
+<span class="nc" id="L141">        this.locationKey = locationKey;</span>
+<span class="nc" id="L142">    }</span>
 
     public String getLocationGroupName() {
-<span class="nc" id="L137">        return locationGroupName;</span>
+<span class="nc" id="L145">        return locationGroupName;</span>
     }
 
     public String getActionType() {
-<span class="nc" id="L141">        return actionType;</span>
+<span class="nc" id="L149">        return actionType;</span>
     }
 
     public void setActionType(String actionType) {
-<span class="nc" id="L145">        this.actionType = actionType;</span>
-<span class="nc" id="L146">    }</span>
+<span class="nc" id="L153">        this.actionType = actionType;</span>
+<span class="nc" id="L154">    }</span>
 
     public String getDescription() {
-<span class="nc" id="L149">        return description;</span>
+<span class="nc" id="L157">        return description;</span>
     }
 
     public boolean isEnabled() {
-<span class="nc" id="L153">        return enabled;</span>
+<span class="nc" id="L161">        return enabled;</span>
     }
 
     public void setEnabled(boolean enabled) {
-<span class="nc" id="L157">        this.enabled = enabled;</span>
-<span class="nc" id="L158">    }</span>
+<span class="nc" id="L165">        this.enabled = enabled;</span>
+<span class="nc" id="L166">    }</span>
 
     public String getFlexField1() {
-<span class="nc" id="L161">        return flexField1;</span>
+<span class="nc" id="L169">        return flexField1;</span>
     }
 
     public String getFlexField2() {
-<span class="nc" id="L165">        return flexField2;</span>
+<span class="nc" id="L173">        return flexField2;</span>
     }
 
     public String getFlexField3() {
-<span class="nc" id="L169">        return flexField3;</span>
+<span class="nc" id="L177">        return flexField3;</span>
     }
 
     public String getFlexField4() {
-<span class="nc" id="L173">        return flexField4;</span>
+<span class="nc" id="L181">        return flexField4;</span>
     }
 
     public String getFlexField5() {
-<span class="nc" id="L177">        return flexField5;</span>
+<span class="nc" id="L185">        return flexField5;</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L182">        return new StringJoiner(&quot;, &quot;, Action.class.getSimpleName() + &quot;[&quot;, &quot;]&quot;).add(&quot;route=&quot; + route).add(&quot;programKey='&quot; + programKey + &quot;'&quot;).add(&quot;name='&quot; + name + &quot;'&quot;).add(&quot;locationKey='&quot; + locationKey + &quot;'&quot;).add(&quot;locationGroupName='&quot; + locationGroupName + &quot;'&quot;).add(&quot;actionType='&quot; + actionType + &quot;'&quot;).add(&quot;description='&quot; + description + &quot;'&quot;).add(&quot;enabled=&quot; + enabled).add(&quot;flexField1='&quot; + flexField1 + &quot;'&quot;).add(&quot;flexField2='&quot; + flexField2 + &quot;'&quot;).add(&quot;flexField3='&quot; + flexField3 + &quot;'&quot;).add(&quot;flexField4='&quot; + flexField4 + &quot;'&quot;).add(&quot;flexField5='&quot; + flexField5 + &quot;'&quot;).toString();</span>
+<span class="nc" id="L190">        return new StringJoiner(&quot;, &quot;, Action.class.getSimpleName() + &quot;[&quot;, &quot;]&quot;).add(&quot;route=&quot; + route).add(&quot;programKey='&quot; + programKey + &quot;'&quot;).add(&quot;name='&quot; + name + &quot;'&quot;).add(&quot;locationKey='&quot; + locationKey + &quot;'&quot;).add(&quot;locationGroupName='&quot; + locationGroupName + &quot;'&quot;).add(&quot;actionType='&quot; + actionType + &quot;'&quot;).add(&quot;description='&quot; + description + &quot;'&quot;).add(&quot;enabled=&quot; + enabled).add(&quot;flexField1='&quot; + flexField1 + &quot;'&quot;).add(&quot;flexField2='&quot; + flexField2 + &quot;'&quot;).add(&quot;flexField3='&quot; + flexField3 + &quot;'&quot;).add(&quot;flexField4='&quot; + flexField4 + &quot;'&quot;).add(&quot;flexField5='&quot; + flexField5 + &quot;'&quot;).toString();</span>
     }
 
     @Override
     public boolean equals(Object o) {
-<span class="nc bnc" id="L187" title="All 2 branches missed.">        if (this == o) {</span>
-<span class="nc" id="L188">            return true;</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">        if (this == o) {</span>
+<span class="nc" id="L196">            return true;</span>
         }
-<span class="nc bnc" id="L190" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) {</span>
-<span class="nc" id="L191">            return false;</span>
+<span class="nc bnc" id="L198" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L199">            return false;</span>
         }
-<span class="nc bnc" id="L193" title="All 2 branches missed.">        if (!super.equals(o)) {</span>
-<span class="nc" id="L194">            return false;</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        if (!super.equals(o)) {</span>
+<span class="nc" id="L202">            return false;</span>
         }
-<span class="nc" id="L196">        Action action = (Action) o;</span>
-<span class="nc bnc" id="L197" title="All 6 branches missed.">        return enabled == action.enabled &amp;&amp; Objects.equals(route, action.route) &amp;&amp; Objects.equals(programKey, action.programKey)</span>
-<span class="nc bnc" id="L198" title="All 4 branches missed.">                &amp;&amp; Objects.equals(name, action.name) &amp;&amp; Objects.equals(locationKey, action.locationKey)</span>
-<span class="nc bnc" id="L199" title="All 4 branches missed.">                &amp;&amp; Objects.equals(locationGroupName, action.locationGroupName) &amp;&amp; Objects.equals(actionType, action.actionType)</span>
-<span class="nc bnc" id="L200" title="All 4 branches missed.">                &amp;&amp; Objects.equals(description, action.description) &amp;&amp; Objects.equals(flexField1, action.flexField1)</span>
-<span class="nc bnc" id="L201" title="All 4 branches missed.">                &amp;&amp; Objects.equals(flexField2, action.flexField2) &amp;&amp; Objects.equals(flexField3, action.flexField3)</span>
-<span class="nc bnc" id="L202" title="All 4 branches missed.">                &amp;&amp; Objects.equals(flexField4, action.flexField4) &amp;&amp; Objects.equals(flexField5, action.flexField5);</span>
+<span class="nc" id="L204">        Action action = (Action) o;</span>
+<span class="nc bnc" id="L205" title="All 6 branches missed.">        return enabled == action.enabled &amp;&amp; Objects.equals(route, action.route) &amp;&amp; Objects.equals(programKey, action.programKey)</span>
+<span class="nc bnc" id="L206" title="All 4 branches missed.">                &amp;&amp; Objects.equals(name, action.name) &amp;&amp; Objects.equals(locationKey, action.locationKey)</span>
+<span class="nc bnc" id="L207" title="All 4 branches missed.">                &amp;&amp; Objects.equals(locationGroupName, action.locationGroupName) &amp;&amp; Objects.equals(actionType, action.actionType)</span>
+<span class="nc bnc" id="L208" title="All 4 branches missed.">                &amp;&amp; Objects.equals(description, action.description) &amp;&amp; Objects.equals(flexField1, action.flexField1)</span>
+<span class="nc bnc" id="L209" title="All 4 branches missed.">                &amp;&amp; Objects.equals(flexField2, action.flexField2) &amp;&amp; Objects.equals(flexField3, action.flexField3)</span>
+<span class="nc bnc" id="L210" title="All 4 branches missed.">                &amp;&amp; Objects.equals(flexField4, action.flexField4) &amp;&amp; Objects.equals(flexField5, action.flexField5);</span>
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L207">        return Objects.hash(super.hashCode(), route, programKey, name, locationKey, locationGroupName, actionType, description, enabled, flexField1, flexField2, flexField3, flexField4, flexField5);</span>
+<span class="nc" id="L215">        return Objects.hash(super.hashCode(), route, programKey, name, locationKey, locationGroupName, actionType, description, enabled, flexField1, flexField2, flexField3, flexField4, flexField5);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

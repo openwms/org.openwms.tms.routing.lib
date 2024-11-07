@@ -36,7 +36,7 @@
             <column ascending="true" name="root_proc_inst_id_"/>
          </index>
       </table>
-      <table name="act_ge_property" numRows="11" remarks="" schema="public" type="TABLE">
+      <table name="act_ge_property" numRows="9" remarks="" schema="public" type="TABLE">
          <column autoUpdated="false" digits="0" id="0" name="name_" nullable="false" remarks="" size="64" type="varchar"/>
          <column autoUpdated="false" digits="0" id="1" name="value_" nullable="true" remarks="" size="300" type="varchar"/>
          <column autoUpdated="false" digits="0" id="2" name="rev_" nullable="true" remarks="" size="10" type="int4"/>
@@ -649,6 +649,7 @@
          <column autoUpdated="false" digits="0" id="21" name="tenant_id_" nullable="true" remarks="" size="64" type="varchar"/>
          <column autoUpdated="false" digits="0" id="22" name="hostname_" nullable="true" remarks="" size="255" type="varchar"/>
          <column autoUpdated="false" digits="6" id="23" name="removal_time_" nullable="true" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="0" id="24" name="batch_id_" nullable="true" remarks="" size="64" type="varchar"/>
          <primaryKey column="id_" sequenceNumberInPK="1"/>
          <index name="act_hi_job_log_pkey" unique="true">
             <column ascending="true" name="id_"/>
@@ -761,6 +762,7 @@
          <column autoUpdated="false" digits="0" id="16" name="delete_reason_" nullable="true" remarks="" size="4000" type="varchar"/>
          <column autoUpdated="false" digits="0" id="17" name="tenant_id_" nullable="true" remarks="" size="64" type="varchar"/>
          <column autoUpdated="false" digits="0" id="18" name="state_" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="19" name="restarted_proc_inst_id_" nullable="true" remarks="" size="64" type="varchar"/>
          <primaryKey column="id_" sequenceNumberInPK="1"/>
          <index name="act_hi_procinst_pkey" unique="true">
             <column ascending="true" name="id_"/>
@@ -794,6 +796,9 @@
          <index name="act_idx_hi_pro_inst_tenant_id" unique="false">
             <column ascending="true" name="tenant_id_"/>
          </index>
+         <index name="act_idx_hi_pro_rst_pro_inst_id" unique="false">
+            <column ascending="true" name="restarted_proc_inst_id_"/>
+         </index>
       </table>
       <table name="act_hi_taskinst" numRows="0" remarks="" schema="public" type="TABLE">
          <column autoUpdated="false" digits="0" id="0" name="id_" nullable="false" remarks="" size="64" type="varchar"/>
@@ -822,6 +827,7 @@
          <column autoUpdated="false" digits="6" id="23" name="follow_up_date_" nullable="true" remarks="" size="29" type="timestamp"/>
          <column autoUpdated="false" digits="0" id="24" name="tenant_id_" nullable="true" remarks="" size="64" type="varchar"/>
          <column autoUpdated="false" digits="6" id="25" name="removal_time_" nullable="true" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="0" id="26" name="task_state_" nullable="true" remarks="" size="64" type="varchar"/>
          <primaryKey column="id_" sequenceNumberInPK="1"/>
          <index name="act_hi_taskinst_pkey" unique="true">
             <column ascending="true" name="id_"/>
@@ -1431,18 +1437,19 @@
             <parent column="id_" foreignKey="act_fk_ext_task_error_details" implied="false" onDeleteCascade="false" table="act_ge_bytearray"/>
          </column>
          <column autoUpdated="false" digits="6" id="7" name="lock_exp_time_" nullable="true" remarks="" size="29" type="timestamp"/>
-         <column autoUpdated="false" digits="0" id="8" name="suspension_state_" nullable="true" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" digits="0" id="9" name="execution_id_" nullable="true" remarks="" size="64" type="varchar">
+         <column autoUpdated="false" digits="6" id="8" name="create_time_" nullable="true" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="0" id="9" name="suspension_state_" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="10" name="execution_id_" nullable="true" remarks="" size="64" type="varchar">
             <parent column="id_" foreignKey="act_fk_ext_task_exe" implied="false" onDeleteCascade="false" table="act_ru_execution"/>
          </column>
-         <column autoUpdated="false" digits="0" id="10" name="proc_inst_id_" nullable="true" remarks="" size="64" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="11" name="proc_def_id_" nullable="true" remarks="" size="64" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="12" name="proc_def_key_" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="13" name="act_id_" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="14" name="act_inst_id_" nullable="true" remarks="" size="64" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="15" name="tenant_id_" nullable="true" remarks="" size="64" type="varchar"/>
-         <column autoUpdated="false" defaultValue="0" digits="0" id="16" name="priority_" nullable="false" remarks="" size="19" type="int8"/>
-         <column autoUpdated="false" digits="0" id="17" name="last_failure_log_id_" nullable="true" remarks="" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="11" name="proc_inst_id_" nullable="true" remarks="" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="12" name="proc_def_id_" nullable="true" remarks="" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="13" name="proc_def_key_" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="14" name="act_id_" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="15" name="act_inst_id_" nullable="true" remarks="" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="16" name="tenant_id_" nullable="true" remarks="" size="64" type="varchar"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="17" name="priority_" nullable="false" remarks="" size="19" type="int8"/>
+         <column autoUpdated="false" digits="0" id="18" name="last_failure_log_id_" nullable="true" remarks="" size="64" type="varchar"/>
          <primaryKey column="id_" sequenceNumberInPK="1"/>
          <index name="act_ru_ext_task_pkey" unique="true">
             <column ascending="true" name="id_"/>
@@ -1575,28 +1582,30 @@
          <column autoUpdated="false" digits="0" id="4" name="lock_owner_" nullable="true" remarks="" size="255" type="varchar"/>
          <column autoUpdated="false" digits="0" id="5" name="exclusive_" nullable="true" remarks="" size="1" type="bool"/>
          <column autoUpdated="false" digits="0" id="6" name="execution_id_" nullable="true" remarks="" size="64" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="7" name="process_instance_id_" nullable="true" remarks="" size="64" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="8" name="process_def_id_" nullable="true" remarks="" size="64" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="9" name="process_def_key_" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="10" name="retries_" nullable="true" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" digits="0" id="11" name="exception_stack_id_" nullable="true" remarks="" size="64" type="varchar">
+         <column autoUpdated="false" digits="0" id="7" name="root_proc_inst_id_" nullable="true" remarks="" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="8" name="process_instance_id_" nullable="true" remarks="" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="9" name="process_def_id_" nullable="true" remarks="" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="10" name="process_def_key_" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="11" name="retries_" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="12" name="exception_stack_id_" nullable="true" remarks="" size="64" type="varchar">
             <parent column="id_" foreignKey="act_fk_job_exception" implied="false" onDeleteCascade="false" table="act_ge_bytearray"/>
          </column>
-         <column autoUpdated="false" digits="0" id="12" name="exception_msg_" nullable="true" remarks="" size="4000" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="13" name="failed_act_id_" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="6" id="14" name="duedate_" nullable="true" remarks="" size="29" type="timestamp"/>
-         <column autoUpdated="false" digits="0" id="15" name="repeat_" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" defaultValue="0" digits="0" id="16" name="repeat_offset_" nullable="true" remarks="" size="19" type="int8"/>
-         <column autoUpdated="false" digits="0" id="17" name="handler_type_" nullable="true" remarks="" size="255" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="18" name="handler_cfg_" nullable="true" remarks="" size="4000" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="19" name="deployment_id_" nullable="true" remarks="" size="64" type="varchar"/>
-         <column autoUpdated="false" defaultValue="1" digits="0" id="20" name="suspension_state_" nullable="false" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" digits="0" id="21" name="job_def_id_" nullable="true" remarks="" size="64" type="varchar"/>
-         <column autoUpdated="false" defaultValue="0" digits="0" id="22" name="priority_" nullable="false" remarks="" size="19" type="int8"/>
-         <column autoUpdated="false" digits="0" id="23" name="sequence_counter_" nullable="true" remarks="" size="19" type="int8"/>
-         <column autoUpdated="false" digits="0" id="24" name="tenant_id_" nullable="true" remarks="" size="64" type="varchar"/>
-         <column autoUpdated="false" digits="6" id="25" name="create_time_" nullable="true" remarks="" size="29" type="timestamp"/>
-         <column autoUpdated="false" digits="0" id="26" name="last_failure_log_id_" nullable="true" remarks="" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="13" name="exception_msg_" nullable="true" remarks="" size="4000" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="14" name="failed_act_id_" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="6" id="15" name="duedate_" nullable="true" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="0" id="16" name="repeat_" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="17" name="repeat_offset_" nullable="true" remarks="" size="19" type="int8"/>
+         <column autoUpdated="false" digits="0" id="18" name="handler_type_" nullable="true" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="19" name="handler_cfg_" nullable="true" remarks="" size="4000" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="20" name="deployment_id_" nullable="true" remarks="" size="64" type="varchar"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="21" name="suspension_state_" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="22" name="job_def_id_" nullable="true" remarks="" size="64" type="varchar"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="23" name="priority_" nullable="false" remarks="" size="19" type="int8"/>
+         <column autoUpdated="false" digits="0" id="24" name="sequence_counter_" nullable="true" remarks="" size="19" type="int8"/>
+         <column autoUpdated="false" digits="0" id="25" name="tenant_id_" nullable="true" remarks="" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="6" id="26" name="create_time_" nullable="true" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="0" id="27" name="last_failure_log_id_" nullable="true" remarks="" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="28" name="batch_id_" nullable="true" remarks="" size="64" type="varchar"/>
          <primaryKey column="id_" sequenceNumberInPK="1"/>
          <index name="act_ru_job_pkey" unique="true">
             <column ascending="true" name="id_"/>
@@ -1619,6 +1628,9 @@
          </index>
          <index name="act_idx_job_procinst" unique="false">
             <column ascending="true" name="process_instance_id_"/>
+         </index>
+         <index name="act_idx_job_root_procinst" unique="false">
+            <column ascending="true" name="root_proc_inst_id_"/>
          </index>
          <index name="act_idx_job_tenant_id" unique="false">
             <column ascending="true" name="tenant_id_"/>
@@ -1718,6 +1730,7 @@
          <column autoUpdated="false" digits="6" id="19" name="follow_up_date_" nullable="true" remarks="" size="29" type="timestamp"/>
          <column autoUpdated="false" digits="0" id="20" name="suspension_state_" nullable="true" remarks="" size="10" type="int4"/>
          <column autoUpdated="false" digits="0" id="21" name="tenant_id_" nullable="true" remarks="" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="22" name="task_state_" nullable="true" remarks="" size="64" type="varchar"/>
          <primaryKey column="id_" sequenceNumberInPK="1"/>
          <index name="act_ru_task_pkey" unique="true">
             <column ascending="true" name="id_"/>
