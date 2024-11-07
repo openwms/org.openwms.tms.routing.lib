@@ -15,8 +15,6 @@
  */
 package org.openwms.tms.routing;
 
-import org.openwms.core.process.execution.Route;
-
 /**
  * A RouteSearchAlgorithm.
  *

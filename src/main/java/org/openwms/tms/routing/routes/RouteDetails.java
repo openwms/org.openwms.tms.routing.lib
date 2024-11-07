@@ -22,8 +22,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import org.ameba.integration.jpa.BaseEntity;
-import org.openwms.core.process.execution.Route;
-import org.openwms.core.process.execution.RouteImpl;
+import org.openwms.tms.routing.Route;
+import org.openwms.tms.routing.RouteImpl;
 
 import java.io.Serializable;
 

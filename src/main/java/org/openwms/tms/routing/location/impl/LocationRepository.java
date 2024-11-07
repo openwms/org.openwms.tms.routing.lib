@@ -15,7 +15,7 @@
  */
 package org.openwms.tms.routing.location.impl;
 
-import org.openwms.core.process.execution.LocationEO;
+import org.openwms.tms.routing.LocationEO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

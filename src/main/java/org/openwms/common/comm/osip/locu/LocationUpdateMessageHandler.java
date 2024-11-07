@@ -21,10 +21,10 @@ import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
 import org.openwms.common.location.api.LocationVO;
-import org.openwms.core.process.execution.RouteImpl;
 import org.openwms.core.process.execution.spi.ProgramExecutor;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
+import org.openwms.tms.routing.RouteImpl;
 import org.springframework.util.Assert;
 
 import java.util.Optional;

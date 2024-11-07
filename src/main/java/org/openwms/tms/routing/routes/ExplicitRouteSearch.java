@@ -16,8 +16,8 @@
 package org.openwms.tms.routing.routes;
 
 import org.openwms.common.comm.NoRouteException;
-import org.openwms.core.process.execution.Route;
-import org.openwms.core.process.execution.RouteImpl;
+import org.openwms.tms.routing.Route;
+import org.openwms.tms.routing.RouteImpl;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

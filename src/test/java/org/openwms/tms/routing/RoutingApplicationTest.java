@@ -35,7 +35,9 @@ import java.lang.annotation.Target;
 @Documented
 @Inherited
 @SpringTestSupport
-@SpringBootTest(classes = {
+@SpringBootTest(
+
+        classes = {
         TestRoutingServiceRunner.class
 }, properties = {
         "spring.cloud.config.enabled=false",
