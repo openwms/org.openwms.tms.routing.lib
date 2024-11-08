@@ -20,6 +20,7 @@ import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SpringProfiles;
 import org.ameba.http.PermitAllCorsConfigurationSource;
 import org.ameba.http.identity.EnableIdentityAwareness;
+import org.ameba.integration.EnableMultiTenancy;
 import org.openwms.core.app.JSONConfiguration;
 import org.openwms.tms.routing.config.OwmsProperties;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -60,30 +61,31 @@ import org.springframework.web.filter.CorsFilter;
 })
 @EnableIdentityAwareness
 @EnableConfigurationProperties
+@EnableMultiTenancy
 @Import(JSONConfiguration.class)
-<span class="nc" id="L64">public class RoutingModuleConfiguration {</span>
+<span class="nc" id="L66">public class RoutingModuleConfiguration {</span>
 
     @LoadBalanced @Bean RestTemplate aLoadBalanced() {
-<span class="nc" id="L67">        return new RestTemplate();</span>
+<span class="nc" id="L69">        return new RestTemplate();</span>
     }
 
     @Bean RestTemplate simpleRestTemplate() {
-<span class="nc" id="L71">        return new RestTemplate();</span>
+<span class="nc" id="L73">        return new RestTemplate();</span>
     }
 
     @Profile(SpringProfiles.DEVELOPMENT_PROFILE)
     public @Bean
     Filter corsFiler() {
-<span class="nc" id="L77">        return new CorsFilter(new PermitAllCorsConfigurationSource());</span>
+<span class="nc" id="L79">        return new CorsFilter(new PermitAllCorsConfigurationSource());</span>
     }
 
     @Bean
     InputContext in() {
-<span class="nc" id="L82">        return new InputContext();</span>
+<span class="nc" id="L84">        return new InputContext();</span>
     }
 
     @Bean OwmsProperties owmsProperties() {
-<span class="nc" id="L86">        return new OwmsProperties();</span>
+<span class="nc" id="L88">        return new OwmsProperties();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
