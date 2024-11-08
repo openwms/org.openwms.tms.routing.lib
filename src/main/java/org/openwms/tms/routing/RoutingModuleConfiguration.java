@@ -20,6 +20,7 @@ import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SpringProfiles;
 import org.ameba.http.PermitAllCorsConfigurationSource;
 import org.ameba.http.identity.EnableIdentityAwareness;
+import org.ameba.integration.EnableMultiTenancy;
 import org.openwms.core.app.JSONConfiguration;
 import org.openwms.tms.routing.config.OwmsProperties;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -60,6 +61,7 @@ import org.springframework.web.filter.CorsFilter;
 })
 @EnableIdentityAwareness
 @EnableConfigurationProperties
+@EnableMultiTenancy
 @Import(JSONConfiguration.class)
 public class RoutingModuleConfiguration {
 
