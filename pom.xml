@@ -76,7 +76,7 @@
         <flowable.version>6.7.2</flowable.version>
         <groovy-jsr223.version>3.0.9</groovy-jsr223.version>
         <guava.version>32.0.0-jre</guava.version>
-        <process.runtime.version>1.0.0-SNAPSHOT</process.runtime.version>
+        <process.runtime.version>0.1.0-SNAPSHOT</process.runtime.version>
         <servo-core.version>0.12.21</servo-core.version>
         <spring-cloud-dependencies.version>2023.0.1</spring-cloud-dependencies.version>
         <transportation-service.version>2.0.0-SNAPSHOT</transportation-service.version>
