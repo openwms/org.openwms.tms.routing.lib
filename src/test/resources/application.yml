@@ -68,6 +68,10 @@ owms:
   eureka:
     url: http://user:sa@localhost:8761
     zone: ${owms.eureka.url}/eureka/
+  process:
+    execution:
+      amqp:
+        exchange-name: bpmn-exec-events
   routing:
     serialization: json
   srv:
