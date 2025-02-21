@@ -68,7 +68,7 @@
     <properties>
         <activiti-spring-boot-starter.version>8.7.0-alpha.30</activiti-spring-boot-starter.version>
         <ameba-cloud.version>2.0</ameba-cloud.version>
-        <ameba-lib.version>4.1-SNAPSHOT</ameba-lib.version>
+        <ameba-lib.version>4.1.0</ameba-lib.version>
         <asm.version>9.3</asm.version>
         <camunda.version>7.22.0</camunda.version>
         <common-service.version>3.0.0-SNAPSHOT</common-service.version>
@@ -405,6 +405,11 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
             <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-otlp</artifactId>
             <optional>true</optional>
         </dependency>
 
