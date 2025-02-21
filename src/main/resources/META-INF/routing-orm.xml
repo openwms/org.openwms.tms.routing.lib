@@ -3,6 +3,7 @@
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence/orm https://jakarta.ee/xml/ns/persistence/orm/orm_3_1.xsd"
                  version="3.1">
+
     <entity class="org.openwms.tms.routing.Action" name="Action" access="FIELD">
         <sequence-generator name="generator" sequence-name="rsrv_action_seq" allocation-size="1" />
     </entity>

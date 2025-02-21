@@ -6,33 +6,14 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.parent</artifactId>
-        <version>26</version>
-        <relativePath />
+        <version>27.2</version>
+        <relativePath/>
     </parent>
     <artifactId>org.openwms.tms.routing.lib</artifactId>
     <version>2.0.0-SNAPSHOT</version>
     <name>OpenWMS.org TMS: Routing Services Library</name>
     <description>A library to provide the routing functionality in automated warehouses</description>
     <url>https://openwms.github.io/${project.artifactId}/index.html</url>
-
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/openwms/${project.artifactId}/issues</url>
-    </issueManagement>
-
-    <distributionManagement>
-        <site>
-            <id>site</id>
-            <url>scm:git:git@github.com:openwms/${project.artifactId}.git</url>
-        </site>
-    </distributionManagement>
-
-    <scm>
-        <url>https://github.com/openwms/${project.artifactId}</url>
-        <connection>scm:git:https://github.com/openwms/${project.artifactId}.git</connection>
-        <developerConnection>scm:git:https://github.com/openwms/${project.artifactId}.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
 
     <developers>
         <developer>
@@ -52,35 +33,19 @@
         </developer>
     </developers>
 
-    <ciManagement>
-        <system>GitHub</system>
-        <url>https://github.com/openwms/${project.artifactId}/actions</url>
-        <notifiers>
-            <notifier>
-                <type>mail</type>
-                <configuration>
-                    <address>product@openwms.org</address>
-                </configuration>
-            </notifier>
-        </notifiers>
-    </ciManagement>
-
     <properties>
         <activiti-spring-boot-starter.version>8.7.0-alpha.30</activiti-spring-boot-starter.version>
-        <ameba-cloud.version>2.0</ameba-cloud.version>
-        <ameba-lib.version>4.1.0</ameba-lib.version>
         <asm.version>9.3</asm.version>
         <camunda.version>7.22.0</camunda.version>
-        <common-service.version>3.0.0-SNAPSHOT</common-service.version>
+        <common-service.version>3.0.0</common-service.version>
         <commons-io.version>2.6</commons-io.version>
-        <core.units.version>0.7.0-SNAPSHOT</core.units.version>
+        <core.test.arch.version>1.0.2</core.test.arch.version>
+        <core.units.version>0.7.0</core.units.version>
         <flowable.version>6.7.2</flowable.version>
         <groovy-jsr223.version>3.0.9</groovy-jsr223.version>
-        <guava.version>32.0.0-jre</guava.version>
         <process.runtime.version>0.1.0-SNAPSHOT</process.runtime.version>
-        <servo-core.version>0.12.21</servo-core.version>
-        <spring-cloud-dependencies.version>2023.0.1</spring-cloud-dependencies.version>
-        <transportation-service.version>2.0.0-SNAPSHOT</transportation-service.version>
+        <spring-cloud-dependencies.version>2024.0.0</spring-cloud-dependencies.version>
+        <transportation-service.version>2.0.0</transportation-service.version>
     </properties>
 
     <reporting>
@@ -117,7 +82,6 @@
                             <version>${org.mapstruct.version}</version>
                         </path>
                     </annotationProcessorPaths>
-                    <enablePreview>false</enablePreview>
                     <compilerArgs>
                         <arg>
                             -Amapstruct.defaultComponentModel=spring
@@ -135,6 +99,7 @@
                             -Amapstruct.verbose=true
                         </arg>
                     </compilerArgs>
+                    <enablePreview>false</enablePreview>
                     <showWarnings>true</showWarnings>
                 </configuration>
             </plugin>
@@ -172,17 +137,6 @@
                 <groupId>org.activiti</groupId>
                 <artifactId>activiti-spring-boot-starter</artifactId>
                 <version>${activiti-spring-boot-starter.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.interface21</groupId>
-                <artifactId>ameba-cloud</artifactId>
-                <version>${ameba-cloud.version}</version>
             </dependency>
 
             <!-- Camunda -->
@@ -234,16 +188,11 @@
                     </exclusion>
                 </exclusions>
             </dependency-->
+
             <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>${commons-io.version}</version>
-            </dependency>
-            <dependency>
-                <!-- Clash in org.springframework.cloud:spring-cloud-starter-stream-rabbit -->
-                <groupId>com.netflix.servo</groupId>
-                <artifactId>servo-core</artifactId>
-                <version>${servo-core.version}</version>
+                <groupId>org.openwms</groupId>
+                <artifactId>org.openwms.core.test.arch</artifactId>
+                <version>${core.test.arch.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.openwms</groupId>
@@ -267,12 +216,6 @@
                 <artifactId>org.openwms.tms.transportation</artifactId>
                 <version>${transportation-service.version}</version>
                 <classifier>client</classifier>
-            </dependency>
-            <dependency>
-                <!-- Clash between activiti-spring-boot-starter and json-path -->
-                <groupId>org.ow2.asm</groupId>
-                <artifactId>asm</artifactId>
-                <version>${asm.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -473,11 +416,12 @@
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-httpclient</artifactId>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>io.interface21</groupId>
-            <artifactId>ameba-cloud</artifactId>
-            <optional>true</optional>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.interface21</groupId>
@@ -493,6 +437,7 @@
         <dependency>
             <groupId>org.jolokia</groupId>
             <artifactId>jolokia-core</artifactId>
+            <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -557,42 +502,9 @@
 
     <repositories>
         <repository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Snapshot Repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
-        <repository>
             <id>sonatype-nexus-staging</id>
             <name>Staging Repository</name>
             <url>https://oss.sonatype.org/content/groups/staging/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
-            <url>https://repo.spring.io/snapshot</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
@@ -606,28 +518,4 @@
             <url>https://artifacts.alfresco.com/nexus/content/repositories/activiti-releases</url>
         </repository>
     </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </pluginRepository>
-        <pluginRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Snapshot Repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
 </project>

@@ -16,7 +16,6 @@
 package org.openwms.tms.routing.app;
 
 import feign.auth.BasicAuthRequestInterceptor;
-import io.interface21.cloud.ui.UIPackage;
 import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.transport.api.TransportUnitApi;
@@ -39,7 +38,6 @@ import org.springframework.context.annotation.Profile;
 @EnableFeignClients(
         basePackageClasses = {
                 TransportUnitApi.class,
-                UIPackage.class,
                 LocationGroupApi.class,
                 LocationApi.class,
                 TransportOrderApi.class

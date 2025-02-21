@@ -15,7 +15,6 @@
  */
 package org.openwms.tms.routing;
 
-import io.interface21.cloud.AmebaCloudModule;
 import org.ameba.app.SolutionApp;
 import org.openwms.common.comm.CommPackage;
 import org.openwms.core.process.execution.RuntimeConfiguration;
@@ -36,7 +35,6 @@ import org.springframework.retry.annotation.EnableRetry;
                 RoutingModuleConfiguration.class,
                 RuntimeConfiguration.class,
                 TestRoutingServiceRunner.class,
-                AmebaCloudModule.class,
                 CommPackage.class
         })
 @EnableRetry
