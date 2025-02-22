@@ -89,18 +89,11 @@ import org.springframework.stereotype.Component;
     }
 
     private String eoRouteRouteId(Action action) {
-<span class="nc bnc" id="L92" title="All 2 branches missed.">        if ( action == null ) {</span>
-<span class="nc" id="L93">            return null;</span>
+<span class="nc" id="L92">        RouteImpl route = action.getRoute();</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if ( route == null ) {</span>
+<span class="nc" id="L94">            return null;</span>
         }
-<span class="nc" id="L95">        RouteImpl route = action.getRoute();</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">        if ( route == null ) {</span>
-<span class="nc" id="L97">            return null;</span>
-        }
-<span class="nc" id="L99">        String routeId = route.getRouteId();</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">        if ( routeId == null ) {</span>
-<span class="nc" id="L101">            return null;</span>
-        }
-<span class="nc" id="L103">        return routeId;</span>
+<span class="nc" id="L96">        return route.getRouteId();</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -8,8 +8,8 @@ OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.location.impl,
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.config,OwmsProperties,17,18,0,0,6,6,2,4,2,4
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.config,OwmsProperties.Routing,3,7,0,0,1,3,1,2,1,2
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing,Action,385,6,34,0,61,2,42,1,25,1
-OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing,ActionMapperImpl,186,3,18,0,52,1,14,1,5,1
-OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing,RouteMapperImpl,289,3,48,0,90,1,34,1,10,1
+OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing,ActionMapperImpl,176,3,14,0,47,1,12,1,5,1
+OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing,RouteMapperImpl,269,3,40,0,80,1,30,1,10,1
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing,RouteConst,43,6,8,0,9,3,8,1,4,1
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing,ActionMapper,0,3,0,0,0,1,0,1,0,1
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing,InputContext.new InheritableThreadLocal() {...},4,3,0,0,1,1,1,1,1,1
@@ -38,15 +38,17 @@ OpenWMS.org TMS: Routing Services Library,org.openwms.common.comm.osip.locu,Loca
 OpenWMS.org TMS: Routing Services Library,org.openwms.common.comm.osip.locu,LocationUpdateVO,208,0,26,0,33,0,29,0,16,0
 OpenWMS.org TMS: Routing Services Library,org.openwms.common.comm.osip.locu,LocationUpdateMessageController,11,0,0,0,5,0,2,0,2,0
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.location,LocationController,22,10,0,0,5,4,2,2,2,2
-OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,Registrator,16,30,0,0,5,8,2,3,2,3
+OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,Registrator,12,34,0,0,3,10,1,4,1,4
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,RoutingAsyncConfiguration,9,148,1,1,3,45,2,16,1,16
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,RoutingStandaloneConfiguration,0,13,0,0,0,2,0,2,0,2
+OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,RoutingOtlpConfiguration.OtelConfiguration,0,8,0,0,0,2,0,2,0,2
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,RoutingFeignConfiguration,0,9,0,0,0,2,0,2,0,2
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,CacheJanitor,8,7,0,0,4,2,2,2,2,2
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,ConfigServerResourcePatternResolver,82,14,1,1,14,4,3,2,2,2
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,ResourceResolverRegistrar,0,27,0,2,0,8,0,5,0,4
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,LocationMessageListener,81,13,11,0,28,5,9,2,2,2
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,RoutingWebConfiguration,0,31,0,0,0,9,0,4,0,4
+OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,RoutingOtlpConfiguration,3,0,0,0,1,0,1,0,1,0
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,EntityEventListener,58,10,8,0,22,4,7,2,1,2
 OpenWMS.org TMS: Routing Services Library,org.openwms.common.comm.osip.upd,UpdateMessageConfiguration,0,41,0,0,0,13,0,7,0,7
 OpenWMS.org TMS: Routing Services Library,org.openwms.common.comm.osip.upd,UpdateMessageController,11,0,0,0,5,0,2,0,2,0
