@@ -15,5 +15,8 @@ org.openwms.tms.routing.config
 org.openwms.tms.routing.location
 org.openwms.tms.routing.location.impl
 org.openwms.tms.routing.routes
+org.openwms.tms.routing.routes.impl
 org.openwms.tms.routing.spi
 org.openwms.tms.routing.ui
+org.openwms.tms.routing.ui.api
+org.openwms.tms.routing.ui.impl

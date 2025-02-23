@@ -25,23 +25,23 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * A RoutingWebConfiguration configures Spring MVC for the service.
  */
 @Configuration
-<span class="nc" id="L28">public class RoutingWebConfiguration implements WebMvcConfigurer {</span>
+<span class="fc" id="L28">public class RoutingWebConfiguration implements WebMvcConfigurer {</span>
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-<span class="nc" id="L32">        registry.addViewController(&quot;/ui/&quot;).setViewName(&quot;forward:/ui/index.html&quot;);</span>
-<span class="nc" id="L33">    }</span>
+<span class="fc" id="L32">        registry.addViewController(&quot;/ui/&quot;).setViewName(&quot;forward:/ui/index.html&quot;);</span>
+<span class="fc" id="L33">    }</span>
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-<span class="nc" id="L37">        registry</span>
-<span class="nc" id="L38">                .addResourceHandler(&quot;/ui/**&quot;)</span>
-<span class="nc" id="L39">                .addResourceLocations(&quot;classpath:/META-INF/resources/&quot;);</span>
-<span class="nc" id="L40">    }</span>
+<span class="fc" id="L37">        registry</span>
+<span class="fc" id="L38">                .addResourceHandler(&quot;/ui/**&quot;)</span>
+<span class="fc" id="L39">                .addResourceLocations(&quot;classpath:/META-INF/resources/&quot;);</span>
+<span class="fc" id="L40">    }</span>
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-<span class="nc" id="L44">        registry.addMapping(&quot;/**&quot;);</span>
-<span class="nc" id="L45">    }</span>
+<span class="fc" id="L44">        registry.addMapping(&quot;/**&quot;);</span>
+<span class="fc" id="L45">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

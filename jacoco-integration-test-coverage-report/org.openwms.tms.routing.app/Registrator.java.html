@@ -39,7 +39,7 @@ import org.springframework.stereotype.Component;
 @Component
 class Registrator {
 
-<span class="nc" id="L42">    private static final Logger LOGGER = LoggerFactory.getLogger(Registrator.class);</span>
+<span class="fc" id="L42">    private static final Logger LOGGER = LoggerFactory.getLogger(Registrator.class);</span>
     private final String exchangeName;
     private final LocationReplicaRegistration locationReplicaRegistration;
     private final AmqpTemplate amqpTemplate;
@@ -48,15 +48,15 @@ class Registrator {
             @Value(&quot;${spring.application.name}&quot;) String applicationName,
             @Value(&quot;${owms.routing.registration.location-request-removal-path}&quot;) String locationRequestRemovalPath,
             @Value(&quot;${owms.routing.registration.location-removal-path}&quot;) String locationRemovalPath,
-<span class="nc" id="L51">            AmqpTemplate amqpTemplate) {</span>
-<span class="nc" id="L52">        this.exchangeName = exchangeName;</span>
-<span class="nc" id="L53">        this.locationReplicaRegistration = new LocationReplicaRegistration(</span>
+<span class="fc" id="L51">            AmqpTemplate amqpTemplate) {</span>
+<span class="fc" id="L52">        this.exchangeName = exchangeName;</span>
+<span class="fc" id="L53">        this.locationReplicaRegistration = new LocationReplicaRegistration(</span>
                 applicationName,
                 locationRequestRemovalPath,
                 locationRemovalPath
         );
-<span class="nc" id="L58">        this.amqpTemplate = amqpTemplate;</span>
-<span class="nc" id="L59">    }</span>
+<span class="fc" id="L58">        this.amqpTemplate = amqpTemplate;</span>
+<span class="fc" id="L59">    }</span>
 
     @EventListener
     public void onContextStarted(ContextStartedEvent cse) {
@@ -72,7 +72,7 @@ class Registrator {
 
     @Scheduled(fixedDelay = 30000L)
     public void onTimer() {
-<span class="nc" id="L75">        amqpTemplate.convertAndSend(exchangeName, &quot;common.registration.command.in.register.loc&quot;, locationReplicaRegistration);</span>
-<span class="nc" id="L76">    }</span>
+<span class="fc" id="L75">        amqpTemplate.convertAndSend(exchangeName, &quot;common.registration.command.in.register.loc&quot;, locationReplicaRegistration);</span>
+<span class="fc" id="L76">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

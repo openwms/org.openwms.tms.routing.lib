@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ActionUIServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services Library</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing.ui.impl</a> &gt; <span class="el_source">ActionUIServiceImpl.java</span></div><h1>ActionUIServiceImpl.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2005-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.openwms.tms.routing.ui.impl;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.ameba.annotation.Measured;
+import org.ameba.annotation.TxService;
+import org.ameba.exception.NotFoundException;
+import org.openwms.tms.routing.routes.RouteService;
+import org.openwms.tms.routing.ui.api.ActionVO;
+import org.springframework.data.domain.Sort;
+
+import java.util.List;
+
+/**
+ * A ActionUIServiceImpl.
+ *
+ * @author Heiko Scherrer
+ */
+@TxService
+class ActionUIServiceImpl implements ActionUIService {
+
+    private final ActionRepository actionRepository;
+    private final ActionMapper mapper;
+    private final RouteService routeService;
+
+<span class="fc" id="L41">    ActionUIServiceImpl(ActionRepository actionRepository, ActionMapper mapper, RouteService routeService) {</span>
+<span class="fc" id="L42">        this.actionRepository = actionRepository;</span>
+<span class="fc" id="L43">        this.mapper = mapper;</span>
+<span class="fc" id="L44">        this.routeService = routeService;</span>
+<span class="fc" id="L45">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Measured
+    @Override
+    public @NotNull List&lt;ActionVO&gt; findAll(@NotNull Sort sort) {
+<span class="nc" id="L53">        return mapper.convertEO(actionRepository.findAll(sort));</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Measured
+    @Override
+    public void delete(@NotBlank String pKey) {
+<span class="nc" id="L62">        actionRepository.deleteBypKey(pKey);</span>
+<span class="nc" id="L63">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Measured
+    @Override
+    public @NotNull ActionVO create(@NotNull ActionVO vo) {
+<span class="nc" id="L71">        var action = mapper.convertVO(vo);</span>
+<span class="nc" id="L72">        action.setRoute(routeService.findByRouteId(vo.getRoute()).orElseThrow(NotFoundException::new));</span>
+<span class="nc" id="L73">        return mapper.convertEO(actionRepository.save(action));</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Measured
+    @Override
+    public @NotNull ActionVO save(@NotNull ActionVO vo) {
+<span class="nc" id="L82">        var eo = actionRepository.findBypKey(vo.getKey()).orElseThrow(NotFoundException::new);</span>
+<span class="nc" id="L83">        var action = mapper.copy(vo, eo);</span>
+<span class="nc" id="L84">        action.setRoute(routeService.findByRouteId(vo.getRoute()).orElseThrow(NotFoundException::new));</span>
+<span class="nc" id="L85">        return mapper.convertEO(actionRepository.save(action));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -33,10 +33,10 @@ import org.springframework.context.annotation.Configuration;
 
     @Configuration(proxyBeanMethods = false)
     @ConditionalOnClass(name = &quot;io.opentelemetry.exporter.otlp.trace.OtlpGrpcSpanExporter&quot;)
-<span class="nc" id="L36">    public static class OtelConfiguration {</span>
+<span class="fc" id="L36">    public static class OtelConfiguration {</span>
         @ConditionalOnClass(name = &quot;io.opentelemetry.exporter.otlp.trace.OtlpGrpcSpanExporter&quot;)
         public @Bean OtlpGrpcSpanExporter otlpHttpSpanExporter(@Value(&quot;${owms.tracing.url}&quot;) String url) {
-<span class="nc" id="L39">            return OtlpGrpcSpanExporter.builder().setEndpoint(url).build();</span>
+<span class="fc" id="L39">            return OtlpGrpcSpanExporter.builder().setEndpoint(url).build();</span>
         }
     }
 }

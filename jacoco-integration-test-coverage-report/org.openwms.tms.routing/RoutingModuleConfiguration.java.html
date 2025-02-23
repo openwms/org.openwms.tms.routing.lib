@@ -63,14 +63,14 @@ import org.springframework.web.filter.CorsFilter;
 @EnableConfigurationProperties
 @EnableMultiTenancy
 @Import(JSONConfiguration.class)
-<span class="nc" id="L66">public class RoutingModuleConfiguration {</span>
+<span class="fc" id="L66">public class RoutingModuleConfiguration {</span>
 
     @LoadBalanced @Bean RestTemplate aLoadBalanced() {
-<span class="nc" id="L69">        return new RestTemplate();</span>
+<span class="fc" id="L69">        return new RestTemplate();</span>
     }
 
     @Bean RestTemplate simpleRestTemplate() {
-<span class="nc" id="L73">        return new RestTemplate();</span>
+<span class="fc" id="L73">        return new RestTemplate();</span>
     }
 
     @Profile(SpringProfiles.DEVELOPMENT_PROFILE)
@@ -81,11 +81,11 @@ import org.springframework.web.filter.CorsFilter;
 
     @Bean
     InputContext in() {
-<span class="nc" id="L84">        return new InputContext();</span>
+<span class="fc" id="L84">        return new InputContext();</span>
     }
 
     @Bean OwmsProperties owmsProperties() {
-<span class="nc" id="L88">        return new OwmsProperties();</span>
+<span class="fc" id="L88">        return new OwmsProperties();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

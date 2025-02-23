@@ -38,7 +38,7 @@ import static java.lang.String.format;
  */
 @Primary
 @Component
-public class ConfigServerResourcePatternResolver extends PathMatchingResourcePatternResolver {
+class ConfigServerResourcePatternResolver extends PathMatchingResourcePatternResolver {
 
     public static final String CONFIG_URL_PREFIX = &quot;config:&quot;;
     private  RestTemplate restTemplate;
@@ -47,7 +47,7 @@ public class ConfigServerResourcePatternResolver extends PathMatchingResourcePat
     private  String configServerUsername;
     private  String configServerPassword;
 
-<span class="nc" id="L50">    ConfigServerResourcePatternResolver(){}</span>
+<span class="fc" id="L50">    ConfigServerResourcePatternResolver(){}</span>
 
     public ConfigServerResourcePatternResolver(@Qualifier(&quot;aLoadBalanced&quot;) RestTemplate restTemplate,
                                                @Value(&quot;${spring.cloud.config.discovery.service-id}&quot;) String configServerId,
@@ -64,11 +64,11 @@ public class ConfigServerResourcePatternResolver extends PathMatchingResourcePat
 
     @Override
     public Resource getResource(String location) {
-<span class="nc" id="L67">        Assert.notNull(location, &quot;Location pattern must not be null&quot;);</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (location.startsWith(CONFIG_URL_PREFIX)) {</span>
+<span class="fc" id="L67">        Assert.notNull(location, &quot;Location pattern must not be null&quot;);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        if (location.startsWith(CONFIG_URL_PREFIX)) {</span>
 <span class="nc" id="L69">            return resolveConfiguredValue(location).orElseThrow(RuntimeException::new);</span>
         }
-<span class="nc" id="L71">        return super.getResource(location);</span>
+<span class="fc" id="L71">        return super.getResource(location);</span>
     }
 
     private Optional&lt;Resource&gt; resolveConfiguredValue(String locationPattern) {

@@ -26,9 +26,9 @@ import org.springframework.stereotype.Component;
  * @author Heiko Scherrer
  */
 @Component
-<span class="nc" id="L29">class CacheJanitor {</span>
+<span class="fc" id="L29">class CacheJanitor {</span>
 
-<span class="nc" id="L31">    private static final Logger LOGGER = LoggerFactory.getLogger(CacheJanitor.class);</span>
+<span class="fc" id="L31">    private static final Logger LOGGER = LoggerFactory.getLogger(CacheJanitor.class);</span>
 
     @CacheEvict(cacheNames = &quot;locationGroups&quot;, allEntries = true)
     public void evictLocationGroupCache() {

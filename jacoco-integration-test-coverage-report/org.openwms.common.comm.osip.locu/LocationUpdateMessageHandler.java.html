@@ -45,13 +45,13 @@ class LocationUpdateMessageHandler {
     private final Matrix matrix;
     private final ProgramExecutor executor;
 
-<span class="nc" id="L48">    LocationUpdateMessageHandler(LocationGroupApi locationGroupApi, LocationApi locationApi, InputContext in, Matrix matrix, ProgramExecutor executor) {</span>
-<span class="nc" id="L49">        this.locationGroupApi = locationGroupApi;</span>
-<span class="nc" id="L50">        this.locationApi = locationApi;</span>
-<span class="nc" id="L51">        this.in = in;</span>
-<span class="nc" id="L52">        this.matrix = matrix;</span>
-<span class="nc" id="L53">        this.executor = executor;</span>
-<span class="nc" id="L54">    }</span>
+<span class="fc" id="L48">    LocationUpdateMessageHandler(LocationGroupApi locationGroupApi, LocationApi locationApi, InputContext in, Matrix matrix, ProgramExecutor executor) {</span>
+<span class="fc" id="L49">        this.locationGroupApi = locationGroupApi;</span>
+<span class="fc" id="L50">        this.locationApi = locationApi;</span>
+<span class="fc" id="L51">        this.in = in;</span>
+<span class="fc" id="L52">        this.matrix = matrix;</span>
+<span class="fc" id="L53">        this.executor = executor;</span>
+<span class="fc" id="L54">    }</span>
 
     void handle(LocationUpdateVO msg) {
 <span class="nc" id="L57">        Assert.notNull(msg, &quot;handle called with null message&quot;);</span>

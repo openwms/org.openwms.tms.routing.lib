@@ -40,12 +40,12 @@ class ErrorMessageHandler {
     private final InputContext in;
 
     ErrorMessageHandler(LocationGroupApi locationGroupApi, Matrix matrix,
-<span class="nc" id="L43">            ProgramExecutor executor, InputContext in) {</span>
-<span class="nc" id="L44">        this.locationGroupApi = locationGroupApi;</span>
-<span class="nc" id="L45">        this.matrix = matrix;</span>
-<span class="nc" id="L46">        this.executor = executor;</span>
-<span class="nc" id="L47">        this.in = in;</span>
-<span class="nc" id="L48">    }</span>
+<span class="fc" id="L43">            ProgramExecutor executor, InputContext in) {</span>
+<span class="fc" id="L44">        this.locationGroupApi = locationGroupApi;</span>
+<span class="fc" id="L45">        this.matrix = matrix;</span>
+<span class="fc" id="L46">        this.executor = executor;</span>
+<span class="fc" id="L47">        this.in = in;</span>
+<span class="fc" id="L48">    }</span>
 
     void handle(ErrorMessageVO msg) {
 <span class="nc" id="L51">        in.clear();</span>

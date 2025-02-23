@@ -17,17 +17,15 @@ package org.openwms.tms.routing.ui;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.ameba.exception.NotFoundException;
 import org.ameba.http.MeasuredRestController;
 import org.openwms.core.http.AbstractWebController;
-import org.openwms.tms.routing.ActionMapper;
-import org.openwms.tms.routing.ActionRepository;
-import org.openwms.tms.routing.routes.RouteRepository;
+import org.openwms.tms.routing.ui.api.ActionVO;
+import org.openwms.tms.routing.ui.impl.ActionUIService;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +33,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.util.UriTemplate;
 
 import java.util.List;
 
@@ -49,55 +46,38 @@ import static org.openwms.tms.routing.RoutingConstants.API_ACTIONS;
 @MeasuredRestController
 class ActionResource extends AbstractWebController {
 
-    private final ActionRepository actionRepository;
-    private final RouteRepository routeRepository;
-    private final ActionMapper mapper;
+    private final ActionUIService actionUIService;
 
-<span class="fc" id="L56">    ActionResource(ActionRepository actionRepository, RouteRepository routeRepository, ActionMapper mapper) {</span>
-<span class="fc" id="L57">        this.actionRepository = actionRepository;</span>
-<span class="fc" id="L58">        this.routeRepository = routeRepository;</span>
-<span class="fc" id="L59">        this.mapper = mapper;</span>
-<span class="fc" id="L60">    }</span>
+    ActionResource(MessageSource messageSource, ActionUIService actionUIService) {
+<span class="fc" id="L52">        super(messageSource);</span>
+<span class="fc" id="L53">        this.actionUIService = actionUIService;</span>
+<span class="fc" id="L54">    }</span>
 
     @GetMapping(API_ACTIONS)
     public List&lt;ActionVO&gt; getAll() {
-<span class="nc" id="L64">        return mapper.convertEO(actionRepository.findAll(Sort.by(&quot;name&quot;)));</span>
+<span class="nc" id="L58">        return actionUIService.findAll(Sort.by(&quot;name&quot;));</span>
     }
 
-    @DeleteMapping(API_ACTIONS + &quot;/{persistentKey}&quot;)
+    @DeleteMapping(API_ACTIONS + &quot;/{pKey}&quot;)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CacheEvict(&quot;actions&quot;)
-    @Transactional
-    public void delete(@PathVariable(&quot;persistentKey&quot;) String persistentKey) {
-<span class="nc" id="L72">        actionRepository.findBypKey(persistentKey).ifPresent(actionRepository::delete);</span>
-<span class="nc" id="L73">    }</span>
+    public void delete(@PathVariable(&quot;pKey&quot;) String pKey) {
+<span class="nc" id="L65">        actionUIService.delete(pKey);</span>
+<span class="nc" id="L66">    }</span>
 
     @PutMapping(API_ACTIONS)
     @CacheEvict(&quot;actions&quot;)
-    @Transactional
     public ActionVO save(@RequestBody ActionVO actionVO) {
-<span class="nc" id="L79">        var eo = actionRepository.findBypKey(actionVO.getKey()).orElseThrow(NotFoundException::new);</span>
-<span class="nc" id="L80">        var action = mapper.copy(actionVO, eo);</span>
-<span class="nc" id="L81">        action.setRoute(routeRepository.findByRouteId(actionVO.getRoute()).orElseThrow(NotFoundException::new));</span>
-<span class="nc" id="L82">        return mapper.convertEO(actionRepository.save(action));</span>
+<span class="nc" id="L71">        return actionUIService.save(actionVO);</span>
     }
 
     @PostMapping(API_ACTIONS)
     @ResponseStatus(HttpStatus.CREATED)
     @CacheEvict(&quot;actions&quot;)
-    @Transactional
     public void create(@RequestBody ActionVO actionVO, HttpServletRequest req, HttpServletResponse resp) {
-<span class="nc" id="L90">        var action = mapper.convertVO(actionVO);</span>
-<span class="nc" id="L91">        action.setRoute(routeRepository.findByRouteId(actionVO.getRoute()).orElseThrow(NotFoundException::new));</span>
-<span class="nc" id="L92">        action = actionRepository.save(action);</span>
-<span class="nc" id="L93">        resp.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,HttpHeaders.LOCATION);</span>
-<span class="nc" id="L94">        resp.addHeader(HttpHeaders.LOCATION, getCreatedResourceURI(req, action.getPersistentKey()));</span>
-<span class="nc" id="L95">    }</span>
-
-    private String getCreatedResourceURI(HttpServletRequest req, String objId) {
-<span class="nc" id="L98">        StringBuffer url = req.getRequestURL();</span>
-<span class="nc" id="L99">        UriTemplate template = new UriTemplate(url.append(&quot;/{objId}&quot;).toString());</span>
-<span class="nc" id="L100">        return template.expand(objId).toASCIIString();</span>
-    }
+<span class="nc" id="L78">        var action = actionUIService.create(actionVO);</span>
+<span class="nc" id="L79">        resp.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.LOCATION);</span>
+<span class="nc" id="L80">        resp.addHeader(HttpHeaders.LOCATION, super.getLocationForCreatedResource(req, action.getKey()));</span>
+<span class="nc" id="L81">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

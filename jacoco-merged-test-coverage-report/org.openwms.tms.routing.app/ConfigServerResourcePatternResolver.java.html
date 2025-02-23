@@ -38,7 +38,7 @@ import static java.lang.String.format;
  */
 @Primary
 @Component
-public class ConfigServerResourcePatternResolver extends PathMatchingResourcePatternResolver {
+class ConfigServerResourcePatternResolver extends PathMatchingResourcePatternResolver {
 
     public static final String CONFIG_URL_PREFIX = &quot;config:&quot;;
     private  RestTemplate restTemplate;

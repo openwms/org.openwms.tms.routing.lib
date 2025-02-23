@@ -34,9 +34,9 @@ class ErrorMessageListener {
 
     private final ErrorMessageHandler handler;
 
-<span class="nc" id="L37">    ErrorMessageListener(ErrorMessageHandler handler) {</span>
-<span class="nc" id="L38">        this.handler = handler;</span>
-<span class="nc" id="L39">    }</span>
+<span class="fc" id="L37">    ErrorMessageListener(ErrorMessageHandler handler) {</span>
+<span class="fc" id="L38">        this.handler = handler;</span>
+<span class="fc" id="L39">    }</span>
 
     @Measured
     @RabbitListener(queues = &quot;${owms.driver.osip.err.queue-name}&quot;)

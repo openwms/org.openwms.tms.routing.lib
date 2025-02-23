@@ -20,12 +20,14 @@ import jakarta.validation.constraints.NotNull;
 import org.ameba.annotation.Measured;
 import org.ameba.annotation.TxService;
 import org.openwms.core.listener.RemovalNotAllowedException;
+import org.openwms.tms.routing.LocationEO;
 import org.openwms.tms.routing.location.LocationService;
 import org.openwms.tms.routing.routes.RouteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A LocationServiceImpl.
@@ -35,14 +37,14 @@ import java.util.List;
 @TxService
 class LocationServiceImpl implements LocationService {
 
-<span class="fc" id="L38">    private static final Logger LOGGER = LoggerFactory.getLogger(LocationServiceImpl.class);</span>
+<span class="fc" id="L40">    private static final Logger LOGGER = LoggerFactory.getLogger(LocationServiceImpl.class);</span>
     private final LocationRepository locationRepository;
     private final RouteService routeService;
 
-<span class="fc" id="L42">    LocationServiceImpl(LocationRepository locationRepository, RouteService routeService) {</span>
-<span class="fc" id="L43">        this.locationRepository = locationRepository;</span>
-<span class="fc" id="L44">        this.routeService = routeService;</span>
-<span class="fc" id="L45">    }</span>
+<span class="fc" id="L44">    LocationServiceImpl(LocationRepository locationRepository, RouteService routeService) {</span>
+<span class="fc" id="L45">        this.locationRepository = locationRepository;</span>
+<span class="fc" id="L46">        this.routeService = routeService;</span>
+<span class="fc" id="L47">    }</span>
 
     /**
      * {@inheritDoc}
@@ -50,27 +52,27 @@ class LocationServiceImpl implements LocationService {
     @Override
     @Measured
     public boolean isRemovalAllowed(@NotNull List&lt;String&gt; foreignPKeys) {
-<span class="nc" id="L53">        boolean result = true;</span>
-<span class="nc bnc" id="L54" title="All 2 branches missed.">        for (var foreignPKey : foreignPKeys) {</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">            if (!isRemovalAllowedInternal(foreignPKey)) {</span>
-<span class="nc" id="L56">                result = false;</span>
+<span class="nc" id="L55">        boolean result = true;</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        for (var foreignPKey : foreignPKeys) {</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">            if (!isRemovalAllowedInternal(foreignPKey)) {</span>
+<span class="nc" id="L58">                result = false;</span>
             }
-<span class="nc" id="L58">        }</span>
-<span class="nc" id="L59">        return result;</span>
+<span class="nc" id="L60">        }</span>
+<span class="nc" id="L61">        return result;</span>
     }
 
     private boolean isRemovalAllowedInternal(String foreignPKey) {
-<span class="nc" id="L63">        var optLocation = locationRepository.findByForeignPKey(foreignPKey);</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (optLocation.isEmpty()) {</span>
-<span class="nc" id="L65">            LOGGER.warn(&quot;Location with foreignPKey [{}] does not exist and therefor removal is allowed&quot;, foreignPKey);</span>
-<span class="nc" id="L66">            return true;</span>
+<span class="nc" id="L65">        var optLocation = locationRepository.findByForeignPKey(foreignPKey);</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (optLocation.isEmpty()) {</span>
+<span class="nc" id="L67">            LOGGER.warn(&quot;Location with foreignPKey [{}] does not exist and therefor removal is allowed&quot;, foreignPKey);</span>
+<span class="nc" id="L68">            return true;</span>
         }
-<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (routeService.routeExistsWithLocationId(optLocation.get().getLocationId())) {</span>
-<span class="nc" id="L69">            LOGGER.error(&quot;Location with foreignPKey [{}] is used in a route and cannot be removed&quot;, foreignPKey);</span>
-<span class="nc" id="L70">            return false;</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (routeService.routeExistsWithLocationId(optLocation.get().getLocationId())) {</span>
+<span class="nc" id="L71">            LOGGER.error(&quot;Location with foreignPKey [{}] is used in a route and cannot be removed&quot;, foreignPKey);</span>
+<span class="nc" id="L72">            return false;</span>
         }
-<span class="nc" id="L72">        LOGGER.info(&quot;Location with foreignPKey [{}] is not used in any route definitions and is allowed to be deleted&quot;, foreignPKey);</span>
-<span class="nc" id="L73">        return true;</span>
+<span class="nc" id="L74">        LOGGER.info(&quot;Location with foreignPKey [{}] is not used in any route definitions and is allowed to be deleted&quot;, foreignPKey);</span>
+<span class="nc" id="L75">        return true;</span>
     }
 
     /**
@@ -79,20 +81,20 @@ class LocationServiceImpl implements LocationService {
     @Override
     @Measured
     public void markForRemoval(@NotNull List&lt;String&gt; foreignPKeys) {
-<span class="nc bnc" id="L82" title="All 2 branches missed.">        for (var foreignPKey : foreignPKeys) {</span>
-<span class="nc" id="L83">            var optLocation = locationRepository.findByForeignPKey(foreignPKey);</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">            if (optLocation.isEmpty()) {</span>
-<span class="nc" id="L85">                LOGGER.warn(&quot;Location with foreignPKey [{}] does not exist and therefor mark for removal is fails&quot;, foreignPKey);</span>
-<span class="nc" id="L86">                continue;</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        for (var foreignPKey : foreignPKeys) {</span>
+<span class="nc" id="L85">            var optLocation = locationRepository.findByForeignPKey(foreignPKey);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">            if (optLocation.isEmpty()) {</span>
+<span class="nc" id="L87">                LOGGER.warn(&quot;Location with foreignPKey [{}] does not exist and therefor mark for removal is fails&quot;, foreignPKey);</span>
+<span class="nc" id="L88">                continue;</span>
             }
-<span class="nc bnc" id="L88" title="All 2 branches missed.">            if (isRemovalAllowedInternal(foreignPKey)) {</span>
-<span class="nc" id="L89">                optLocation.get().setMarkForDeletion(true);</span>
-<span class="nc" id="L90">                locationRepository.save(optLocation.get());</span>
-<span class="nc" id="L91">                continue;</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">            if (isRemovalAllowedInternal(foreignPKey)) {</span>
+<span class="nc" id="L91">                optLocation.get().setMarkForDeletion(true);</span>
+<span class="nc" id="L92">                locationRepository.save(optLocation.get());</span>
+<span class="nc" id="L93">                continue;</span>
             }
-<span class="nc" id="L93">            throw new RemovalNotAllowedException(&quot;Not allowed to delete Location with pKey [%s]&quot;.formatted(foreignPKey));</span>
+<span class="nc" id="L95">            throw new RemovalNotAllowedException(&quot;Not allowed to delete Location with pKey [%s]&quot;.formatted(foreignPKey));</span>
         }
-<span class="nc" id="L95">    }</span>
+<span class="nc" id="L97">    }</span>
 
     /**
      * {@inheritDoc}
@@ -101,14 +103,14 @@ class LocationServiceImpl implements LocationService {
     @Override
     public void delete(@NotBlank String foreignPKey) {
         // Only allow to delete those who where previously marked for deletion
-<span class="nc" id="L104">        var locationOpt = locationRepository.findByForeignPKeyAndDeleted(foreignPKey, true);</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">        if (locationOpt.isEmpty()) {</span>
-<span class="nc" id="L106">            LOGGER.warn(&quot;Location to delete does not exist, foreignPKey [{}]&quot;, foreignPKey);</span>
-<span class="nc" id="L107">            return;</span>
+<span class="nc" id="L106">        var locationOpt = locationRepository.findByForeignPKeyAndDeleted(foreignPKey, true);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">        if (locationOpt.isEmpty()) {</span>
+<span class="nc" id="L108">            LOGGER.warn(&quot;Location to delete does not exist, foreignPKey [{}]&quot;, foreignPKey);</span>
+<span class="nc" id="L109">            return;</span>
         }
-<span class="nc" id="L109">        locationRepository.delete(locationOpt.get());</span>
-<span class="nc" id="L110">        LOGGER.info(&quot;Deleted Location with foreignPKey [{}]&quot;, foreignPKey);</span>
-<span class="nc" id="L111">    }</span>
+<span class="nc" id="L111">        locationRepository.delete(locationOpt.get());</span>
+<span class="nc" id="L112">        LOGGER.info(&quot;Deleted Location with foreignPKey [{}]&quot;, foreignPKey);</span>
+<span class="nc" id="L113">    }</span>
 
     /**
      * {@inheritDoc}
@@ -116,13 +118,22 @@ class LocationServiceImpl implements LocationService {
     @Measured
     @Override
     public void rollbackDeletionMark(@NotBlank String foreignPKey) {
-<span class="nc" id="L119">        var locationOpt = locationRepository.findByForeignPKeyAndDeleted(foreignPKey, true);</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">        if (locationOpt.isEmpty()) {</span>
-<span class="nc" id="L121">            LOGGER.warn(&quot;Location with foreignPKey [{}] does either not exist or is not marked for deletion&quot;, foreignPKey);</span>
-<span class="nc" id="L122">            return;</span>
+<span class="nc" id="L121">        var locationOpt = locationRepository.findByForeignPKeyAndDeleted(foreignPKey, true);</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">        if (locationOpt.isEmpty()) {</span>
+<span class="nc" id="L123">            LOGGER.warn(&quot;Location with foreignPKey [{}] does either not exist or is not marked for deletion&quot;, foreignPKey);</span>
+<span class="nc" id="L124">            return;</span>
         }
-<span class="nc" id="L124">        locationOpt.get().setMarkForDeletion(false);</span>
-<span class="nc" id="L125">        locationRepository.save(locationOpt.get());</span>
-<span class="nc" id="L126">    }</span>
+<span class="nc" id="L126">        locationOpt.get().setMarkForDeletion(false);</span>
+<span class="nc" id="L127">        locationRepository.save(locationOpt.get());</span>
+<span class="nc" id="L128">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Measured
+    @Override
+    public Optional&lt;LocationEO&gt; findByLocationId(@NotBlank String locationId) {
+<span class="nc" id="L136">        return locationRepository.findByForeignPKey(locationId);</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

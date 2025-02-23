@@ -26,6 +26,7 @@ import org.openwms.tms.routing.Route;
 import org.openwms.tms.routing.RouteImpl;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A RouteDetails.
@@ -58,37 +59,61 @@ public class RouteDetails extends BaseEntity implements Serializable {
     /*~ ----------------------------- constructors ------------------- */
 
     /** Dear JPA ... */
-<span class="fc" id="L61">    protected RouteDetails() {</span>
-<span class="fc" id="L62">    }</span>
+<span class="fc" id="L62">    protected RouteDetails() {</span>
+<span class="fc" id="L63">    }</span>
 
-<span class="nc" id="L64">    public RouteDetails(RouteImpl route, int pos) {</span>
-<span class="nc" id="L65">        this.route = route;</span>
-<span class="nc" id="L66">        this.pos = pos;</span>
-<span class="nc" id="L67">    }</span>
+<span class="nc" id="L65">    public RouteDetails(RouteImpl route, int pos) {</span>
+<span class="nc" id="L66">        this.route = route;</span>
+<span class="nc" id="L67">        this.pos = pos;</span>
+<span class="nc" id="L68">    }</span>
 
     /*~ ----------------------------- accessors ------------------- */
     public Route getRoute() {
-<span class="nc" id="L71">        return route;</span>
+<span class="nc" id="L72">        return route;</span>
     }
 
     public int getPos() {
-<span class="nc" id="L75">        return pos;</span>
+<span class="nc" id="L76">        return pos;</span>
     }
 
     public String getSource() {
-<span class="nc" id="L79">        return source;</span>
+<span class="nc" id="L80">        return source;</span>
     }
 
     public void setSource(String source) {
-<span class="nc" id="L83">        this.source = source;</span>
-<span class="nc" id="L84">    }</span>
+<span class="nc" id="L84">        this.source = source;</span>
+<span class="nc" id="L85">    }</span>
 
     public String getNext() {
-<span class="nc" id="L87">        return next;</span>
+<span class="nc" id="L88">        return next;</span>
     }
 
     public void setNext(String next) {
-<span class="nc" id="L91">        this.next = next;</span>
-<span class="nc" id="L92">    }</span>
+<span class="nc" id="L92">        this.next = next;</span>
+<span class="nc" id="L93">    }</span>
+
+    /*~ ----------------------------- methods ------------------- */
+
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L104" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="nc" id="L105">        var that = (RouteDetails) o;</span>
+<span class="nc bnc" id="L106" title="All 8 branches missed.">        return pos == that.pos &amp;&amp; Objects.equals(route, that.route) &amp;&amp; Objects.equals(source, that.source) &amp;&amp; Objects.equals(next, that.next);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
+    @Override
+    public int hashCode() {
+<span class="nc" id="L116">        return Objects.hash(route, pos, source, next);</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

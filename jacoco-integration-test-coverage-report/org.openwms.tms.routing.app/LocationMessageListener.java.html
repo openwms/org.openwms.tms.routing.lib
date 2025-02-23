@@ -39,14 +39,14 @@ import org.springframework.stereotype.Component;
 @RabbitListener(queues = &quot;${owms.events.common.loc.queue-name}&quot;)
 class LocationMessageListener {
 
-<span class="nc" id="L42">    private static final Logger LOGGER = LoggerFactory.getLogger(LocationMessageListener.class);</span>
+<span class="fc" id="L42">    private static final Logger LOGGER = LoggerFactory.getLogger(LocationMessageListener.class);</span>
     private final CacheJanitor janitor;
     private final LocationService locationService;
 
-<span class="nc" id="L46">    LocationMessageListener(CacheJanitor janitor, LocationService locationService) {</span>
-<span class="nc" id="L47">        this.janitor = janitor;</span>
-<span class="nc" id="L48">        this.locationService = locationService;</span>
-<span class="nc" id="L49">    }</span>
+<span class="fc" id="L46">    LocationMessageListener(CacheJanitor janitor, LocationService locationService) {</span>
+<span class="fc" id="L47">        this.janitor = janitor;</span>
+<span class="fc" id="L48">        this.locationService = locationService;</span>
+<span class="fc" id="L49">    }</span>
 
     /** Listens on Location messages. */
     @Measured

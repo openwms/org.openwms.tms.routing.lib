@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RouteMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services Library</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing.ui.impl</a> &gt; <span class="el_source">RouteMapperImpl.java</span></div><h1>RouteMapperImpl.java</h1><pre class="source lang-java linenums">package org.openwms.tms.routing.ui.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.processing.Generated;
+import org.openwms.tms.routing.LocationEO;
+import org.openwms.tms.routing.RouteImpl;
+import org.openwms.tms.routing.ui.api.RouteVO;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;
+)
+@Component
+<span class="fc" id="L15">class RouteMapperImpl extends RouteMapper {</span>
+
+    @Override
+    public RouteImpl convertVO(RouteVO vo) {
+<span class="pc bpc" id="L19" title="1 of 2 branches missed.">        if ( vo == null ) {</span>
+<span class="nc" id="L20">            return null;</span>
+        }
+
+<span class="fc" id="L23">        String routeId = null;</span>
+
+<span class="fc" id="L25">        routeId = vo.getName();</span>
+
+<span class="fc" id="L27">        RouteImpl routeImpl = new RouteImpl( routeId );</span>
+
+<span class="fc" id="L29">        routeImpl.setPersistentKey( vo.getKey() );</span>
+<span class="fc" id="L30">        routeImpl.setDescription( vo.getDescription() );</span>
+<span class="fc" id="L31">        routeImpl.setSourceLocationGroupName( vo.getSourceLocationGroupName() );</span>
+<span class="fc" id="L32">        routeImpl.setTargetLocationGroupName( vo.getTargetLocationGroupName() );</span>
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if ( vo.getEnabled() != null ) {</span>
+<span class="fc" id="L34">            routeImpl.setEnabled( vo.getEnabled() );</span>
+        }
+
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        routeImpl.setSourceLocation( vo.hasSourceLocationName() ? srv.findByLocationId(vo.getSourceLocationName()).orElseThrow() : null );</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        routeImpl.setTargetLocation( vo.hasTargetLocationName() ? srv.findByLocationId(vo.getTargetLocationName()).orElseThrow() : null );</span>
+
+<span class="fc" id="L40">        return routeImpl;</span>
+    }
+
+    @Override
+    public RouteVO convertEO(RouteImpl eo) {
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if ( eo == null ) {</span>
+<span class="nc" id="L46">            return null;</span>
+        }
+
+<span class="fc" id="L49">        RouteVO routeVO = new RouteVO();</span>
+
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">        if ( eo.hasPersistentKey() ) {</span>
+<span class="fc" id="L52">            routeVO.setKey( eo.getPersistentKey() );</span>
+        }
+<span class="fc" id="L54">        routeVO.setName( eo.getRouteId() );</span>
+<span class="fc" id="L55">        String locationId = eoSourceLocationLocationId( eo );</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if ( eo.hasSourceLocation() ) {</span>
+<span class="fc" id="L57">            routeVO.setSourceLocationName( locationId );</span>
+        }
+<span class="fc" id="L59">        String locationId1 = eoTargetLocationLocationId( eo );</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        if ( eo.hasTargetLocation() ) {</span>
+<span class="fc" id="L61">            routeVO.setTargetLocationName( locationId1 );</span>
+        }
+<span class="fc" id="L63">        routeVO.setOl( eo.getOl() );</span>
+<span class="fc" id="L64">        routeVO.setCreateDt( eo.getCreateDt() );</span>
+<span class="fc" id="L65">        routeVO.setLastModifiedDt( eo.getLastModifiedDt() );</span>
+<span class="fc" id="L66">        routeVO.setDescription( eo.getDescription() );</span>
+<span class="fc" id="L67">        routeVO.setSourceLocationGroupName( eo.getSourceLocationGroupName() );</span>
+<span class="fc" id="L68">        routeVO.setTargetLocationGroupName( eo.getTargetLocationGroupName() );</span>
+<span class="fc" id="L69">        routeVO.setEnabled( eo.isEnabled() );</span>
+
+<span class="fc" id="L71">        return routeVO;</span>
+    }
+
+    @Override
+    public List&lt;RouteVO&gt; convertEO(List&lt;RouteImpl&gt; eos) {
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if ( eos == null ) {</span>
+<span class="nc" id="L77">            return null;</span>
+        }
+
+<span class="fc" id="L80">        List&lt;RouteVO&gt; list = new ArrayList&lt;RouteVO&gt;( eos.size() );</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        for ( RouteImpl routeImpl : eos ) {</span>
+<span class="fc" id="L82">            list.add( convertEO( routeImpl ) );</span>
+<span class="fc" id="L83">        }</span>
+
+<span class="fc" id="L85">        return list;</span>
+    }
+
+    @Override
+    public RouteImpl copy(RouteVO vo, RouteImpl target) {
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        if ( vo == null ) {</span>
+<span class="nc" id="L91">            return target;</span>
+        }
+
+<span class="fc" id="L94">        target.setPersistentKey( vo.getKey() );</span>
+<span class="fc" id="L95">        target.setRouteId( vo.getName() );</span>
+<span class="fc" id="L96">        target.setDescription( vo.getDescription() );</span>
+<span class="fc" id="L97">        target.setSourceLocationGroupName( vo.getSourceLocationGroupName() );</span>
+<span class="fc" id="L98">        target.setTargetLocationGroupName( vo.getTargetLocationGroupName() );</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if ( vo.getEnabled() != null ) {</span>
+<span class="fc" id="L100">            target.setEnabled( vo.getEnabled() );</span>
+        }
+
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        target.setSourceLocation( vo.hasSourceLocationName() ? srv.findByLocationId(vo.getSourceLocationName()).orElseThrow() : null );</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        target.setTargetLocation( vo.hasTargetLocationName() ? srv.findByLocationId(vo.getTargetLocationName()).orElseThrow() : null );</span>
+
+<span class="fc" id="L106">        return target;</span>
+    }
+
+    private String eoSourceLocationLocationId(RouteImpl routeImpl) {
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if ( !routeImpl.hasSourceLocation() ) {</span>
+<span class="fc" id="L111">            return null;</span>
+        }
+<span class="fc" id="L113">        LocationEO sourceLocation = routeImpl.getSourceLocation();</span>
+<span class="fc" id="L114">        return sourceLocation.getLocationId();</span>
+    }
+
+    private String eoTargetLocationLocationId(RouteImpl routeImpl) {
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        if ( !routeImpl.hasTargetLocation() ) {</span>
+<span class="fc" id="L119">            return null;</span>
+        }
+<span class="fc" id="L121">        LocationEO targetLocation = routeImpl.getTargetLocation();</span>
+<span class="fc" id="L122">        return targetLocation.getLocationId();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

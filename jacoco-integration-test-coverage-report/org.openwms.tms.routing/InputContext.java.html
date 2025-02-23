@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
  *
  * @author Heiko Scherrer
  */
-<span class="nc" id="L28">public class InputContext {</span>
+<span class="fc" id="L28">public class InputContext {</span>
 
-<span class="nc" id="L30">    private final InheritableThreadLocal&lt;Map&lt;String, Object&gt;&gt; msg = new InheritableThreadLocal&lt;Map&lt;String, Object&gt;&gt;() {</span>
+<span class="fc" id="L30">    private final InheritableThreadLocal&lt;Map&lt;String, Object&gt;&gt; msg = new InheritableThreadLocal&lt;Map&lt;String, Object&gt;&gt;() {</span>
         @Override
         protected Map&lt;String, Object&gt; initialValue() {
 <span class="nc" id="L33">            return new ConcurrentHashMap&lt;&gt;();</span>

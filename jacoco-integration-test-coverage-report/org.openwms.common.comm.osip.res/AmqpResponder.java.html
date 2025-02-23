@@ -47,12 +47,12 @@ class AmqpResponder implements Responder {
 
     AmqpResponder(InputContext in, AmqpTemplate amqpTemplate,
             @Value(&quot;${owms.driver.osip.res.exchange-name}&quot;) String exchangeName,
-<span class="nc" id="L50">            OwmsProperties owmsProperties) {</span>
-<span class="nc" id="L51">        this.in = in;</span>
-<span class="nc" id="L52">        this.amqpTemplate = amqpTemplate;</span>
-<span class="nc" id="L53">        this.exchangeName = exchangeName;</span>
-<span class="nc" id="L54">        this.owmsProperties = owmsProperties;</span>
-<span class="nc" id="L55">    }</span>
+<span class="fc" id="L50">            OwmsProperties owmsProperties) {</span>
+<span class="fc" id="L51">        this.in = in;</span>
+<span class="fc" id="L52">        this.amqpTemplate = amqpTemplate;</span>
+<span class="fc" id="L53">        this.exchangeName = exchangeName;</span>
+<span class="fc" id="L54">        this.owmsProperties = owmsProperties;</span>
+<span class="fc" id="L55">    }</span>
 
     /**
      * {@inheritDoc}

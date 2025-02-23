@@ -36,9 +36,9 @@ class UpdateMessageListener {
 
     private final ItemMessageHandler handler;
 
-<span class="nc" id="L39">    UpdateMessageListener(ItemMessageHandler handler) {</span>
-<span class="nc" id="L40">        this.handler = handler;</span>
-<span class="nc" id="L41">    }</span>
+<span class="fc" id="L39">    UpdateMessageListener(ItemMessageHandler handler) {</span>
+<span class="fc" id="L40">        this.handler = handler;</span>
+<span class="fc" id="L41">    }</span>
 
     @Measured
     @RabbitListener(queues = &quot;${owms.driver.osip.upd.queue-name}&quot;)

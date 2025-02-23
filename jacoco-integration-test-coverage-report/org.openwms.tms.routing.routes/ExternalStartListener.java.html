@@ -16,7 +16,6 @@
 package org.openwms.tms.routing.routes;
 
 import org.ameba.annotation.Measured;
-import org.openwms.common.comm.NoRouteException;
 import org.openwms.core.SpringProfiles;
 import org.openwms.tms.api.MessageVO;
 import org.openwms.tms.api.TransportOrderApi;
@@ -42,7 +41,7 @@ import static java.lang.String.format;
 @Component
 class ExternalStartListener {
 
-<span class="nc" id="L45">    private static final Logger LOGGER = LoggerFactory.getLogger(ExternalStartListener.class);</span>
+<span class="fc" id="L44">    private static final Logger LOGGER = LoggerFactory.getLogger(ExternalStartListener.class);</span>
     public static final String RESPONSE_STATE_CHANGE = &quot;response.state.change&quot;;
     private final TransportOrderApi transportOrderApi;
     private final RouteSearchAlgorithm routeSearch;
@@ -50,42 +49,42 @@ class ExternalStartListener {
     private final String exchangeName;
 
     ExternalStartListener(TransportOrderApi transportOrderApi, RouteSearchAlgorithm routeSearch, AmqpTemplate amqpTemplate,
-<span class="nc" id="L53">            @Value(&quot;${owms.requests.routing.to.exchange-name}&quot;) String exchangeName) {</span>
-<span class="nc" id="L54">        this.transportOrderApi = transportOrderApi;</span>
-<span class="nc" id="L55">        this.routeSearch = routeSearch;</span>
-<span class="nc" id="L56">        this.amqpTemplate = amqpTemplate;</span>
-<span class="nc" id="L57">        this.exchangeName = exchangeName;</span>
-<span class="nc" id="L58">    }</span>
+<span class="fc" id="L52">            @Value(&quot;${owms.requests.routing.to.exchange-name}&quot;) String exchangeName) {</span>
+<span class="fc" id="L53">        this.transportOrderApi = transportOrderApi;</span>
+<span class="fc" id="L54">        this.routeSearch = routeSearch;</span>
+<span class="fc" id="L55">        this.amqpTemplate = amqpTemplate;</span>
+<span class="fc" id="L56">        this.exchangeName = exchangeName;</span>
+<span class="fc" id="L57">    }</span>
 
     @Measured
     @RabbitListener(queues = &quot;${owms.requests.routing.to.queue-name}&quot;)
     public void onRequest(StateChangeRequest request) {
-<span class="nc bnc" id="L63" title="All 2 branches missed.">        if (&quot;STARTED&quot;.equals(request.getRequestedState())) {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        if (&quot;STARTED&quot;.equals(request.getRequestedState())) {</span>
             try {
-<span class="nc" id="L65">                var vo = transportOrderApi.findByPKey(request.getTransportOrderPkey());</span>
-<span class="nc" id="L66">                var route = routeSearch.findBy(vo.getSourceLocation(), vo.getTargetLocation(), vo.getTargetLocationGroup());</span>
-<span class="nc" id="L67">                LOGGER.debug(&quot;TransportOrder to start has a Route [{}] &quot;, route.getRouteId());</span>
-<span class="nc" id="L68">                amqpTemplate.convertAndSend(exchangeName, RESPONSE_STATE_CHANGE, new StateChangeResponse(request, &quot;STARTED&quot;, null));</span>
-<span class="nc" id="L69">            } catch (NoRouteException ex) {</span>
+<span class="nc" id="L64">                var vo = transportOrderApi.findByPKey(request.getTransportOrderPkey());</span>
+<span class="nc" id="L65">                var route = routeSearch.findBy(vo.getSourceLocation(), vo.getTargetLocation(), vo.getTargetLocationGroup());</span>
+<span class="nc" id="L66">                LOGGER.debug(&quot;TransportOrder to start has a Route [{}] &quot;, route.getRouteId());</span>
+<span class="nc" id="L67">                amqpTemplate.convertAndSend(exchangeName, RESPONSE_STATE_CHANGE, new StateChangeResponse(request, &quot;STARTED&quot;, null));</span>
+<span class="nc" id="L68">            } catch (NoRouteException ex) {</span>
 
                 // not that bad we know no Route exists...
-<span class="nc" id="L72">                var msg = format(&quot;A TransportOrder was requested to start that has no Route. PKey: [%s]&quot;, request.getTransportOrderPkey());</span>
-<span class="nc" id="L73">                LOGGER.warn(msg, msg);</span>
-<span class="nc" id="L74">                amqpTemplate.convertAndSend(exchangeName, RESPONSE_STATE_CHANGE, new StateChangeResponse(request, &quot;XX&quot;,</span>
-<span class="nc" id="L75">                        MessageVO.newBuilder()</span>
-<span class="nc" id="L76">                                .messageText(msg)</span>
-<span class="nc" id="L77">                                .build()</span>
+<span class="nc" id="L71">                var msg = format(&quot;A TransportOrder was requested to start that has no Route. PKey: [%s]&quot;, request.getTransportOrderPkey());</span>
+<span class="nc" id="L72">                LOGGER.warn(msg, msg);</span>
+<span class="nc" id="L73">                amqpTemplate.convertAndSend(exchangeName, RESPONSE_STATE_CHANGE, new StateChangeResponse(request, &quot;XX&quot;,</span>
+<span class="nc" id="L74">                        MessageVO.newBuilder()</span>
+<span class="nc" id="L75">                                .messageText(msg)</span>
+<span class="nc" id="L76">                                .build()</span>
                 ));
-<span class="nc" id="L79">            } catch (Exception ex) {</span>
-<span class="nc" id="L80">                var msg = format(&quot;Generic exception. Route for TransportOrder [%s] could not be determined&quot;, request.getTransportOrderPkey());</span>
-<span class="nc" id="L81">                LOGGER.warn(msg, msg);</span>
-<span class="nc" id="L82">                amqpTemplate.convertAndSend(exchangeName, RESPONSE_STATE_CHANGE, new StateChangeResponse(request, &quot;XX&quot;,</span>
-<span class="nc" id="L83">                        MessageVO.newBuilder()</span>
-<span class="nc" id="L84">                                .messageText(msg)</span>
-<span class="nc" id="L85">                                .build()</span>
+<span class="nc" id="L78">            } catch (Exception ex) {</span>
+<span class="nc" id="L79">                var msg = format(&quot;Generic exception. Route for TransportOrder [%s] could not be determined&quot;, request.getTransportOrderPkey());</span>
+<span class="nc" id="L80">                LOGGER.warn(msg, msg);</span>
+<span class="nc" id="L81">                amqpTemplate.convertAndSend(exchangeName, RESPONSE_STATE_CHANGE, new StateChangeResponse(request, &quot;XX&quot;,</span>
+<span class="nc" id="L82">                        MessageVO.newBuilder()</span>
+<span class="nc" id="L83">                                .messageText(msg)</span>
+<span class="nc" id="L84">                                .build()</span>
                 ));
-<span class="nc" id="L87">            }</span>
+<span class="nc" id="L86">            }</span>
         }
-<span class="nc" id="L89">    }</span>
+<span class="nc" id="L88">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

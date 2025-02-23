@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
  * @author Heiko Scherrer
  */
 @Component
-<span class="nc" id="L31">public class ResourceResolverRegistrar implements BeanPostProcessor, BeanFactoryPostProcessor {</span>
+<span class="fc" id="L31">class ResourceResolverRegistrar implements BeanPostProcessor, BeanFactoryPostProcessor {</span>
 
     private ResourceLoader resourceLoader;
 
@@ -37,10 +37,10 @@ import org.springframework.stereotype.Component;
      */
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) {
-<span class="nc bnc" id="L40" title="All 2 branches missed.">        if (bean instanceof ResourceLoaderAware) {</span>
-<span class="nc" id="L41">            ((ResourceLoaderAware) bean).setResourceLoader(resourceLoader);</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (bean instanceof ResourceLoaderAware) {</span>
+<span class="fc" id="L41">            ((ResourceLoaderAware) bean).setResourceLoader(resourceLoader);</span>
         }
-<span class="nc" id="L43">        return bean;</span>
+<span class="fc" id="L43">        return bean;</span>
     }
 
     /**
@@ -48,7 +48,7 @@ import org.springframework.stereotype.Component;
      */
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) {
-<span class="nc" id="L51">        return bean;</span>
+<span class="fc" id="L51">        return bean;</span>
     }
 
     /**
@@ -56,9 +56,9 @@ import org.springframework.stereotype.Component;
      */
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
-<span class="nc" id="L59">        resourceLoader = beanFactory.getBean(ConfigServerResourcePatternResolver.class);</span>
-<span class="nc" id="L60">        beanFactory.registerResolvableDependency(ResourceLoader.class, resourceLoader);</span>
-<span class="nc" id="L61">    }</span>
+<span class="fc" id="L59">        resourceLoader = beanFactory.getBean(ConfigServerResourcePatternResolver.class);</span>
+<span class="fc" id="L60">        beanFactory.registerResolvableDependency(ResourceLoader.class, resourceLoader);</span>
+<span class="fc" id="L61">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

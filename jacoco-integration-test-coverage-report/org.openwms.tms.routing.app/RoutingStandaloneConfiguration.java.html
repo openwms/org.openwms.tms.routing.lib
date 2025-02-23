@@ -31,11 +31,11 @@ import org.springframework.web.client.RestTemplate;
 @Profile(&quot;!INMEM&quot;)
 @Configuration
 @EnableDiscoveryClient
-<span class="nc" id="L34">public class RoutingStandaloneConfiguration {</span>
+<span class="fc" id="L34">public class RoutingStandaloneConfiguration {</span>
 
     @Bean
     public RestTemplate restTemplate() {
-<span class="nc" id="L38">        return new RestTemplateBuilder().basicAuthentication(&quot;user&quot;, &quot;sa&quot;).build();</span>
+<span class="fc" id="L38">        return new RestTemplateBuilder().basicAuthentication(&quot;user&quot;, &quot;sa&quot;).build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

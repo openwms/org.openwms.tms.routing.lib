@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RouteServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services Library</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing.routes.impl</a> &gt; <span class="el_source">RouteServiceImpl.java</span></div><h1>RouteServiceImpl.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2005-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.openwms.tms.routing.routes.impl;
+
+import jakarta.validation.constraints.NotBlank;
+import org.ameba.annotation.Measured;
+import org.ameba.annotation.TxService;
+import org.ameba.exception.NotFoundException;
+import org.openwms.common.comm.Responder;
+import org.openwms.tms.routing.InputContext;
+import org.openwms.tms.routing.Route;
+import org.openwms.tms.routing.RouteImpl;
+import org.openwms.tms.routing.routes.NoRouteException;
+import org.openwms.tms.routing.routes.RouteDetailsRepository;
+import org.openwms.tms.routing.routes.RouteService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
+
+import static java.lang.String.format;
+
+/**
+ * A RouteServiceImpl is a transactional Spring managed bean that operated on {@code Route}s.
+ *
+ * @author Heiko Scherrer
+ */
+@TxService(&quot;routing&quot;)
+class RouteServiceImpl implements RouteService {
+
+<span class="fc" id="L45">    private static final Logger LOGGER = LoggerFactory.getLogger(RouteServiceImpl.class);</span>
+    private final Responder responder;
+    private final RouteRepository routeRepository;
+    private final RouteDetailsRepository routeDetailsRepository;
+    private final InputContext in;
+
+    RouteServiceImpl(
+            @Autowired(required = false) Responder responder,
+            RouteRepository routeRepository,
+            RouteDetailsRepository routeDetailsRepository,
+            InputContext in
+<span class="fc" id="L56">    ) {</span>
+<span class="fc" id="L57">        this.responder = responder;</span>
+<span class="fc" id="L58">        this.routeRepository = routeRepository;</span>
+<span class="fc" id="L59">        this.routeDetailsRepository = routeDetailsRepository;</span>
+<span class="fc" id="L60">        this.in = in;</span>
+<span class="fc" id="L61">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Measured
+    public Optional&lt;RouteImpl&gt; findByRouteId(String routeId) {
+<span class="nc" id="L69">        return Optional.empty();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Measured
+    public boolean routeExistsWithLocationId(@NotBlank String locationId) {
+<span class="nc" id="L78">        var exists = routeRepository.existsWithLocation(locationId);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (exists) {</span>
+<span class="nc" id="L80">            return true;</span>
+        }
+<span class="nc" id="L82">        return routeDetailsRepository.existsWithLocation(locationId);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void sendToNextLocation() {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if (responder == null) {</span>
+<span class="nc" id="L91">            LOGGER.warn(&quot;Please provide a bean instance of Responder. Default implementations are disabled. If property 'owms.osip.enabled' is set to false a custom Responder is expected&quot;);</span>
+<span class="nc" id="L92">            return;</span>
+        }
+<span class="nc" id="L94">        var route = in.get(&quot;route&quot;, Route.class).orElseThrow(() -&gt; new NoRouteException(&quot;No Route information in current context, can't load the next Location from the RouteDetails&quot;));</span>
+<span class="nc" id="L95">        var actualLocation = in.get(&quot;actualLocation&quot;, String.class).orElseThrow(() -&gt; new NoRouteException(&quot;No information about the actual Location in the current context, can't load the next Location from the RouteDetails&quot;));</span>
+<span class="nc" id="L96">        var optAsNext = routeDetailsRepository.findByRoute_RouteId_OrderByPos(route.getRouteId())</span>
+<span class="nc" id="L97">                .stream()</span>
+<span class="nc" id="L98">                .filter(r -&gt; r.getSource().equals(actualLocation))</span>
+<span class="nc" id="L99">                .findFirst();</span>
+        String asNext;
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        if (optAsNext.isPresent()) {</span>
+<span class="nc" id="L102">            asNext = optAsNext.get().getNext();</span>
+        } else {
+<span class="nc" id="L104">            asNext = routeDetailsRepository.findByRoute_RouteId_OrderByPos(RouteImpl.DEF_ROUTE.getRouteId())</span>
+<span class="nc" id="L105">                    .stream()</span>
+<span class="nc" id="L106">                    .filter(r -&gt; r.getSource().equals(actualLocation))</span>
+<span class="nc" id="L107">                    .findFirst()</span>
+<span class="nc" id="L108">                    .orElseThrow(() -&gt; new NoRouteException(format(&quot;No entry in RouteDetails that matches the sourceLocation [%s] and route [%s]&quot;, actualLocation, route.getRouteId())))</span>
+<span class="nc" id="L109">                    .getNext();</span>
+        }
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        if (LOGGER.isDebugEnabled()) {</span>
+<span class="nc" id="L112">            LOGGER.debug(&quot;Sending to next Location [{}]&quot;, asNext);</span>
+        }
+<span class="nc" id="L114">        responder.sendToLocation(asNext);</span>
+<span class="nc" id="L115">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void changeRoute(String routeId) {
+<span class="nc" id="L122">        var route = routeRepository.findByRouteId(routeId).orElseThrow(() -&gt; new NotFoundException(format(&quot;Route with routeId [%s] was not found&quot;, routeId)));</span>
+<span class="nc" id="L123">        in.put(&quot;route&quot;, route);</span>
+<span class="nc" id="L124">        LOGGER.debug(&quot;Set Route with routeId [{}] in current call context&quot;, routeId);</span>
+<span class="nc" id="L125">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

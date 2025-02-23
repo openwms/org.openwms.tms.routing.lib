@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ActionVO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services Library</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing.ui.api</a> &gt; <span class="el_source">ActionVO.java</span></div><h1>ActionVO.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2005-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.openwms.tms.routing.ui.api;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
+import org.ameba.http.AbstractBase;
+
+import java.io.Serializable;
+import java.util.Objects;
+
+/**
+ * A ActionVO.
+ *
+ * @author Heiko Scherrer
+ */
+<span class="nc" id="L30">public class ActionVO extends AbstractBase&lt;ActionVO&gt; implements Serializable {</span>
+
+    @NotBlank
+    @JsonProperty(&quot;name&quot;)
+    private String name;
+    @JsonProperty(&quot;type&quot;)
+    private String type;
+    @JsonProperty(&quot;description&quot;)
+    private String description;
+    @JsonProperty(&quot;route&quot;)
+    private String route;
+    @JsonProperty(&quot;program&quot;)
+    private String program;
+    @JsonProperty(&quot;locationGroupName&quot;)
+    private String locationGroupName;
+    @JsonProperty(&quot;location&quot;)
+    private String location;
+    @JsonProperty(&quot;key&quot;)
+    private String key;
+    @JsonProperty(&quot;enabled&quot;)
+    private boolean enabled;
+
+    public String getName() {
+<span class="nc" id="L53">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="nc" id="L57">        this.name = name;</span>
+<span class="nc" id="L58">    }</span>
+
+    public String getType() {
+<span class="nc" id="L61">        return type;</span>
+    }
+
+    public void setType(String type) {
+<span class="nc" id="L65">        this.type = type;</span>
+<span class="nc" id="L66">    }</span>
+
+    public String getDescription() {
+<span class="nc" id="L69">        return description;</span>
+    }
+
+    public void setDescription(String description) {
+<span class="nc" id="L73">        this.description = description;</span>
+<span class="nc" id="L74">    }</span>
+
+    public String getRoute() {
+<span class="nc" id="L77">        return route;</span>
+    }
+
+    public void setRoute(String route) {
+<span class="nc" id="L81">        this.route = route;</span>
+<span class="nc" id="L82">    }</span>
+
+    public String getProgram() {
+<span class="nc" id="L85">        return program;</span>
+    }
+
+    public void setProgram(String program) {
+<span class="nc" id="L89">        this.program = program;</span>
+<span class="nc" id="L90">    }</span>
+
+    public String getLocationGroupName() {
+<span class="nc" id="L93">        return locationGroupName;</span>
+    }
+
+    public void setLocationGroupName(String locationGroupName) {
+<span class="nc" id="L97">        this.locationGroupName = locationGroupName;</span>
+<span class="nc" id="L98">    }</span>
+
+    public String getLocation() {
+<span class="nc" id="L101">        return location;</span>
+    }
+
+    public void setLocation(String location) {
+<span class="nc" id="L105">        this.location = location;</span>
+<span class="nc" id="L106">    }</span>
+
+    public String getKey() {
+<span class="nc" id="L109">        return key;</span>
+    }
+
+    public void setKey(String key) {
+<span class="nc" id="L113">        this.key = key;</span>
+<span class="nc" id="L114">    }</span>
+
+    public boolean isEnabled() {
+<span class="nc" id="L117">        return enabled;</span>
+    }
+
+    public void setEnabled(boolean enabled) {
+<span class="nc" id="L121">        this.enabled = enabled;</span>
+<span class="nc" id="L122">    }</span>
+
+    public boolean hasRoute() {
+<span class="nc bnc" id="L125" title="All 4 branches missed.">        return route != null &amp;&amp; !route.isEmpty();</span>
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        if (this == o)</span>
+<span class="nc" id="L131">            return true;</span>
+<span class="nc bnc" id="L132" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass())</span>
+<span class="nc" id="L133">            return false;</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">        if (!super.equals(o))</span>
+<span class="nc" id="L135">            return false;</span>
+<span class="nc" id="L136">        ActionVO actionVO = (ActionVO) o;</span>
+<span class="nc bnc" id="L137" title="All 18 branches missed.">        return enabled == actionVO.enabled &amp;&amp; Objects.equals(name, actionVO.name) &amp;&amp; Objects.equals(type, actionVO.type) &amp;&amp; Objects.equals(description, actionVO.description) &amp;&amp; Objects.equals(route, actionVO.route) &amp;&amp; Objects.equals(program, actionVO.program) &amp;&amp; Objects.equals(locationGroupName, actionVO.locationGroupName) &amp;&amp; Objects.equals(location, actionVO.location) &amp;&amp; Objects.equals(key, actionVO.key);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L142">        return Objects.hash(super.hashCode(), name, type, description, route, program, locationGroupName, location, key, enabled);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

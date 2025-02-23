@@ -39,12 +39,12 @@ class SystemUpdateMessageHandler {
     private final ProgramExecutor executor;
     private final InputContext in;
 
-<span class="nc" id="L42">    SystemUpdateMessageHandler(LocationGroupApi locationGroupApi, Matrix matrix, ProgramExecutor executor, InputContext in) {</span>
-<span class="nc" id="L43">        this.locationGroupApi = locationGroupApi;</span>
-<span class="nc" id="L44">        this.matrix = matrix;</span>
-<span class="nc" id="L45">        this.executor = executor;</span>
-<span class="nc" id="L46">        this.in = in;</span>
-<span class="nc" id="L47">    }</span>
+<span class="fc" id="L42">    SystemUpdateMessageHandler(LocationGroupApi locationGroupApi, Matrix matrix, ProgramExecutor executor, InputContext in) {</span>
+<span class="fc" id="L43">        this.locationGroupApi = locationGroupApi;</span>
+<span class="fc" id="L44">        this.matrix = matrix;</span>
+<span class="fc" id="L45">        this.executor = executor;</span>
+<span class="fc" id="L46">        this.in = in;</span>
+<span class="fc" id="L47">    }</span>
 
     void handle(SystemUpdateVO msg) {
 <span class="nc" id="L50">        in.clear();</span>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RouteUIServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">OpenWMS.org TMS: Routing Services Library</a> &gt; <a href="index.source.html" class="el_package">org.openwms.tms.routing.ui.impl</a> &gt; <span class="el_source">RouteUIServiceImpl.java</span></div><h1>RouteUIServiceImpl.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2005-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.openwms.tms.routing.ui.impl;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.ameba.annotation.Measured;
+import org.ameba.annotation.TxService;
+import org.ameba.exception.NotFoundException;
+import org.ameba.exception.ResourceExistsException;
+import org.openwms.tms.routing.RouteImpl;
+import org.openwms.tms.routing.location.LocationService;
+import org.openwms.tms.routing.routes.impl.RouteRepository;
+import org.openwms.tms.routing.ui.api.RouteVO;
+import org.springframework.data.domain.Sort;
+
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * A RouteUIServiceImpl.
+ *
+ * @author Heiko Scherrer
+ */
+@TxService
+class RouteUIServiceImpl implements RouteUIService {
+
+    private final RouteRepository routeRepository;
+    private final RouteMapper mapper;
+    private final LocationService locationService;
+
+<span class="fc" id="L45">    RouteUIServiceImpl(RouteRepository routeRepository, RouteMapper mapper, LocationService locationService) {</span>
+<span class="fc" id="L46">        this.routeRepository = routeRepository;</span>
+<span class="fc" id="L47">        this.mapper = mapper;</span>
+<span class="fc" id="L48">        this.locationService = locationService;</span>
+<span class="fc" id="L49">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Measured
+    @Override
+    public @NotNull List&lt;RouteVO&gt; findAll(@NotNull Sort sort) {
+<span class="nc" id="L57">        return mapper.convertEO(routeRepository.findAll(sort));</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Measured
+    @Override
+    public Optional&lt;RouteVO&gt; findBypKey(@NotBlank String pKey) {
+<span class="nc" id="L66">        return routeRepository.findBypKey(pKey).map(mapper::convertEO);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Measured
+    @Override
+    public void delete(@NotBlank String pKey) {
+<span class="nc" id="L75">        routeRepository.findBypKey(pKey).ifPresent(routeRepository::delete);</span>
+<span class="nc" id="L76">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Measured
+    @Override
+    public @NotNull RouteVO create(@NotNull RouteVO vo) {
+<span class="nc" id="L84">        routeRepository.findByRouteId(vo.getName()).ifPresent(r -&gt; {</span>
+<span class="nc" id="L85">            throw new ResourceExistsException(&quot;Route with name [%s] already exists&quot;.formatted(vo.getName()));</span>
+        });
+<span class="nc" id="L87">        var route = mapper.convertVO(vo);</span>
+<span class="nc" id="L88">        return saveInternal(vo, route);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Measured
+    @Override
+    public @NotNull RouteVO save(@NotNull RouteVO vo) {
+<span class="nc" id="L97">        var eo = routeRepository.findBypKey(vo.getKey()).orElseThrow(NotFoundException::new);</span>
+<span class="nc" id="L98">        var route = mapper.copy(vo, eo);</span>
+<span class="nc" id="L99">        return saveInternal(vo, route);</span>
+    }
+
+    private RouteVO saveInternal(RouteVO vo, RouteImpl route) {
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        route.setSourceLocation(vo.hasSourceLocationName()</span>
+<span class="nc" id="L104">                ? locationService.findByLocationId(vo.getSourceLocationName()).orElseThrow(NotFoundException::new)</span>
+<span class="nc" id="L105">                : null);</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        route.setTargetLocation(vo.hasTargetLocationName()</span>
+<span class="nc" id="L107">                ? locationService.findByLocationId(vo.getTargetLocationName()).orElseThrow(NotFoundException::new)</span>
+<span class="nc" id="L108">                : null);</span>
+<span class="nc" id="L109">        return mapper.convertEO(routeRepository.save(route));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

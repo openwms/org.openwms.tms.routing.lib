@@ -20,7 +20,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import org.ameba.integration.jpa.ApplicationEntity;
 
 import java.beans.ConstructorProperties;
@@ -39,7 +39,7 @@ public class RouteImpl extends ApplicationEntity implements Route {
 <span class="fc" id="L39">    public static final Route NO_ROUTE = new RouteConst(&quot;_NO_ROUTE&quot;);</span>
     /** For all TransportOrders with no explicitly defined Route. */
 <span class="fc" id="L41">    public static final Route DEF_ROUTE = new RouteConst(&quot;_DEFAULT&quot;);</span>
-    @NotNull
+    @NotBlank
     @Column(name = &quot;C_NAME&quot;, unique = true)
     private String routeId;
     @Column(name = &quot;C_DESCRIPTION&quot;)
@@ -88,67 +88,83 @@ public class RouteImpl extends ApplicationEntity implements Route {
 <span class="nc" id="L88">        return description;</span>
     }
 
+    public void setDescription(String description) {
+<span class="nc" id="L92">        this.description = description;</span>
+<span class="nc" id="L93">    }</span>
+
     public boolean hasSourceLocation() {
-<span class="nc bnc" id="L92" title="All 2 branches missed.">        return sourceLocation != null;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        return sourceLocation != null;</span>
     }
 
     public LocationEO getSourceLocation() {
-<span class="nc" id="L96">        return sourceLocation;</span>
+<span class="nc" id="L100">        return sourceLocation;</span>
     }
 
     public void setSourceLocation(LocationEO sourceLocation) {
-<span class="nc" id="L100">        this.sourceLocation = sourceLocation;</span>
-<span class="nc" id="L101">    }</span>
+<span class="nc" id="L104">        this.sourceLocation = sourceLocation;</span>
+<span class="nc" id="L105">    }</span>
 
     public boolean hasTargetLocation() {
-<span class="nc bnc" id="L104" title="All 2 branches missed.">        return targetLocation != null;</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">        return targetLocation != null;</span>
     }
 
     public LocationEO getTargetLocation() {
-<span class="nc" id="L108">        return targetLocation;</span>
+<span class="nc" id="L112">        return targetLocation;</span>
     }
 
     public void setTargetLocation(LocationEO targetLocation) {
-<span class="nc" id="L112">        this.targetLocation = targetLocation;</span>
-<span class="nc" id="L113">    }</span>
+<span class="nc" id="L116">        this.targetLocation = targetLocation;</span>
+<span class="nc" id="L117">    }</span>
 
     public String getSourceLocationGroupName() {
-<span class="nc" id="L116">        return sourceLocationGroupName;</span>
+<span class="nc" id="L120">        return sourceLocationGroupName;</span>
     }
+
+    public void setSourceLocationGroupName(String sourceLocationGroupName) {
+<span class="nc" id="L124">        this.sourceLocationGroupName = sourceLocationGroupName;</span>
+<span class="nc" id="L125">    }</span>
 
     public String getTargetLocationGroupName() {
-<span class="nc" id="L120">        return targetLocationGroupName;</span>
+<span class="nc" id="L128">        return targetLocationGroupName;</span>
     }
 
+    public void setTargetLocationGroupName(String targetLocationGroupName) {
+<span class="nc" id="L132">        this.targetLocationGroupName = targetLocationGroupName;</span>
+<span class="nc" id="L133">    }</span>
+
     public boolean isEnabled() {
-<span class="nc" id="L124">        return enabled;</span>
+<span class="nc" id="L136">        return enabled;</span>
     }
+
+    public void setEnabled(boolean enabled) {
+<span class="nc" id="L140">        this.enabled = enabled;</span>
+<span class="nc" id="L141">    }</span>
 
     /*~ ----------------------------- methods ------------------- */
     public static Route of(String routeId) {
-<span class="nc bnc" id="L129" title="All 4 branches missed.">        if (routeId == null || routeId.isEmpty())</span>
-<span class="nc" id="L130">            return DEF_ROUTE;</span>
-<span class="nc" id="L131">        return new RouteImpl(routeId);</span>
+<span class="nc bnc" id="L145" title="All 4 branches missed.">        if (routeId == null || routeId.isEmpty())</span>
+<span class="nc" id="L146">            return DEF_ROUTE;</span>
+<span class="nc" id="L147">        return new RouteImpl(routeId);</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L136">        return routeId;</span>
+<span class="nc" id="L152">        return routeId;</span>
     }
 
     @Override
     public boolean equals(Object o) {
-<span class="nc bnc" id="L141" title="All 2 branches missed.">        if (this == o)</span>
-<span class="nc" id="L142">            return true;</span>
-<span class="nc bnc" id="L143" title="All 6 branches missed.">        if (o == null || (getClass() != o.getClass() &amp;&amp; !o.getClass().equals(Route.class)))</span>
-<span class="nc" id="L144">            return false;</span>
-<span class="nc" id="L145">        Route route = (Route) o;</span>
-<span class="nc" id="L146">        return Objects.equals(routeId, route.getRouteId());</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">        if (this == o)</span>
+<span class="nc" id="L158">            return true;</span>
+<span class="nc bnc" id="L159" title="All 6 branches missed.">        if (o == null || (getClass() != o.getClass() &amp;&amp; !o.getClass().equals(Route.class)))</span>
+<span class="nc" id="L160">            return false;</span>
+<span class="nc" id="L161">        Route route = (Route) o;</span>
+<span class="nc" id="L162">        return Objects.equals(routeId, route.getRouteId());</span>
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L151">        return Objects.hash(routeId);</span>
+<span class="nc" id="L167">        return Objects.hash(routeId);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
