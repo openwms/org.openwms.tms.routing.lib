@@ -1,0 +1,36 @@
+[[resources-receiving-order]]
+= Route
+
+== Create a Route
+Create a new `Route` resource with a HTTP `POST` request to the primary `routes` resource:
+include::{generated}/route-create/http-request.adoc[]
+
+If the resource has been created successfully, the server responds with:
+include::{generated}/route-create/http-response.adoc[]
+
+If a `Route` with the name already exists, the server signals a conflict:
+include::{generated}/route-create-409/http-response.adoc[]
+
+== Find a Route by PKey
+An existing `Route` can be looked up with an HTTP `GET` request to the primary resource with the persistent identifier as path variable:
+include::{generated}/route-findbypkey/http-request.adoc[]
+
+If the `Route` exists the server responds with:
+include::{generated}/route-findbypkey/http-response.adoc[]
+
+otherwise an HTTP `404 NOT_FOUND` is returned.
+
+== Find all Routes
+To find all existing `Routes` a client sends an HTTP `GET` request to the primary `routes` resource without any other parameters.
+include::{generated}/route-findall/http-request.adoc[]
+
+The response looks like:
+include::{generated}/route-findall/http-response.adoc[]
+
+== Update a Route
+To change values on an existing `Route`, a client must send an HTTP `PUT` request to the identified resource with the updated `Route`
+representation in the request body:
+include::{generated}/route-save/http-request.adoc[]
+
+If the server has updated the `Route`, the response contains the updated `Route` in the body:
+include::{generated}/route-save/http-response.adoc[]

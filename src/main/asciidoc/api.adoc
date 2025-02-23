@@ -24,11 +24,8 @@ approach.
 
 [[resources-prg]]
 = Resources
-
 A description of all used API resources.
 
 include::0-preambel.adoc[]
 
-include::1-index.adoc[]
-
-include::2-receiving-order.adoc[]
+include::2-routes.adoc[]
