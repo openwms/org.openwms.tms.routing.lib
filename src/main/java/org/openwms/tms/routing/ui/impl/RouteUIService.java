@@ -13,23 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing.routes;
+package org.openwms.tms.routing.ui.impl;
 
-import org.openwms.common.location.api.LocationGroupVO;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.openwms.tms.routing.ui.api.RouteVO;
+import org.springframework.data.domain.Sort;
 
-import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 /**
- * A LocationGroupLoader.
+ * A RouteUIService.
  *
  * @author Heiko Scherrer
  */
-public interface LocationGroupLoader {
+public interface RouteUIService {
 
-    /**
-     * This public method is surrounded with a retry advice in order to retry the remote operation in case of an error.
-     *
-     * @return All LocationGroups as List implementation
-     */
-    Collection<LocationGroupVO> loadLocGroups();
+    @NotNull List<RouteVO> findAll(@NotNull Sort sort);
+
+    Optional<RouteVO> findBypKey(@NotBlank String pKey);
+
+    void delete(@NotBlank String pKey);
+
+    @NotNull RouteVO create(@NotNull RouteVO vo);
+
+    @NotNull RouteVO save(@NotNull RouteVO vo);
 }

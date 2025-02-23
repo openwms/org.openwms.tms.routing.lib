@@ -17,17 +17,15 @@ package org.openwms.tms.routing.ui;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.ameba.exception.NotFoundException;
 import org.ameba.http.MeasuredRestController;
 import org.openwms.core.http.AbstractWebController;
-import org.openwms.tms.routing.ActionMapper;
-import org.openwms.tms.routing.ActionRepository;
-import org.openwms.tms.routing.routes.RouteRepository;
+import org.openwms.tms.routing.ui.api.ActionVO;
+import org.openwms.tms.routing.ui.impl.ActionUIService;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +33,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.util.UriTemplate;
 
 import java.util.List;
 
@@ -49,54 +46,37 @@ import static org.openwms.tms.routing.RoutingConstants.API_ACTIONS;
 @MeasuredRestController
 class ActionResource extends AbstractWebController {
 
-    private final ActionRepository actionRepository;
-    private final RouteRepository routeRepository;
-    private final ActionMapper mapper;
+    private final ActionUIService actionUIService;
 
-    ActionResource(ActionRepository actionRepository, RouteRepository routeRepository, ActionMapper mapper) {
-        this.actionRepository = actionRepository;
-        this.routeRepository = routeRepository;
-        this.mapper = mapper;
+    ActionResource(MessageSource messageSource, ActionUIService actionUIService) {
+        super(messageSource);
+        this.actionUIService = actionUIService;
     }
 
     @GetMapping(API_ACTIONS)
     public List<ActionVO> getAll() {
-        return mapper.convertEO(actionRepository.findAll(Sort.by("name")));
+        return actionUIService.findAll(Sort.by("name"));
     }
 
-    @DeleteMapping(API_ACTIONS + "/{persistentKey}")
+    @DeleteMapping(API_ACTIONS + "/{pKey}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CacheEvict("actions")
-    @Transactional
-    public void delete(@PathVariable("persistentKey") String persistentKey) {
-        actionRepository.findBypKey(persistentKey).ifPresent(actionRepository::delete);
+    public void delete(@PathVariable("pKey") String pKey) {
+        actionUIService.delete(pKey);
     }
 
     @PutMapping(API_ACTIONS)
     @CacheEvict("actions")
-    @Transactional
     public ActionVO save(@RequestBody ActionVO actionVO) {
-        var eo = actionRepository.findBypKey(actionVO.getKey()).orElseThrow(NotFoundException::new);
-        var action = mapper.copy(actionVO, eo);
-        action.setRoute(routeRepository.findByRouteId(actionVO.getRoute()).orElseThrow(NotFoundException::new));
-        return mapper.convertEO(actionRepository.save(action));
+        return actionUIService.save(actionVO);
     }
 
     @PostMapping(API_ACTIONS)
     @ResponseStatus(HttpStatus.CREATED)
     @CacheEvict("actions")
-    @Transactional
     public void create(@RequestBody ActionVO actionVO, HttpServletRequest req, HttpServletResponse resp) {
-        var action = mapper.convertVO(actionVO);
-        action.setRoute(routeRepository.findByRouteId(actionVO.getRoute()).orElseThrow(NotFoundException::new));
-        action = actionRepository.save(action);
-        resp.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,HttpHeaders.LOCATION);
-        resp.addHeader(HttpHeaders.LOCATION, getCreatedResourceURI(req, action.getPersistentKey()));
-    }
-
-    private String getCreatedResourceURI(HttpServletRequest req, String objId) {
-        StringBuffer url = req.getRequestURL();
-        UriTemplate template = new UriTemplate(url.append("/{objId}").toString());
-        return template.expand(objId).toASCIIString();
+        var action = actionUIService.create(actionVO);
+        resp.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.LOCATION);
+        resp.addHeader(HttpHeaders.LOCATION, super.getLocationForCreatedResource(req, action.getKey()));
     }
 }

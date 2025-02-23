@@ -20,7 +20,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import org.ameba.integration.jpa.ApplicationEntity;
 
 import java.beans.ConstructorProperties;
@@ -39,7 +39,7 @@ public class RouteImpl extends ApplicationEntity implements Route {
     public static final Route NO_ROUTE = new RouteConst("_NO_ROUTE");
     /** For all TransportOrders with no explicitly defined Route. */
     public static final Route DEF_ROUTE = new RouteConst("_DEFAULT");
-    @NotNull
+    @NotBlank
     @Column(name = "C_NAME", unique = true)
     private String routeId;
     @Column(name = "C_DESCRIPTION")
@@ -88,6 +88,10 @@ public class RouteImpl extends ApplicationEntity implements Route {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public boolean hasSourceLocation() {
         return sourceLocation != null;
     }
@@ -116,12 +120,24 @@ public class RouteImpl extends ApplicationEntity implements Route {
         return sourceLocationGroupName;
     }
 
+    public void setSourceLocationGroupName(String sourceLocationGroupName) {
+        this.sourceLocationGroupName = sourceLocationGroupName;
+    }
+
     public String getTargetLocationGroupName() {
         return targetLocationGroupName;
     }
 
+    public void setTargetLocationGroupName(String targetLocationGroupName) {
+        this.targetLocationGroupName = targetLocationGroupName;
+    }
+
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     /*~ ----------------------------- methods ------------------- */

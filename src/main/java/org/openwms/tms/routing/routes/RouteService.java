@@ -16,6 +16,9 @@
 package org.openwms.tms.routing.routes;
 
 import jakarta.validation.constraints.NotBlank;
+import org.openwms.tms.routing.RouteImpl;
+
+import java.util.Optional;
 
 /**
  * A RouteService operates on {@code Route}s.
@@ -23,6 +26,8 @@ import jakarta.validation.constraints.NotBlank;
  * @author Heiko Scherrer
  */
 public interface RouteService {
+
+    Optional<RouteImpl> findByRouteId(String routeId);
 
     /**
      * Checks if a {@code Route} exists that uses a {@code Location} with the given {@code locationId}.

@@ -20,14 +20,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.ameba.exception.NotFoundException;
 import org.ameba.http.MeasuredRestController;
 import org.openwms.core.http.AbstractWebController;
-import org.openwms.tms.routing.RouteMapper;
-import org.openwms.tms.routing.location.impl.LocationRepository;
-import org.openwms.tms.routing.routes.RouteRepository;
+import org.openwms.tms.routing.ui.api.RouteVO;
+import org.openwms.tms.routing.ui.impl.RouteUIService;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +34,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.util.UriTemplate;
 
 import java.util.List;
 
@@ -50,64 +48,41 @@ import static org.openwms.tms.routing.RoutingConstants.API_ROUTES;
 @MeasuredRestController
 class RouteResource extends AbstractWebController {
 
-    private final LocationRepository locationRepository;
-    private final RouteRepository routeRepository;
-    private final RouteMapper mapper;
+    private final RouteUIService routeUIService;
 
-    RouteResource(LocationRepository locationRepository, RouteRepository routeRepository, RouteMapper mapper) {
-        this.locationRepository = locationRepository;
-        this.routeRepository = routeRepository;
-        this.mapper = mapper;
+    RouteResource(MessageSource messageSource, RouteUIService routeUIService) {
+        super(messageSource);
+        this.routeUIService = routeUIService;
     }
 
     @GetMapping(API_ROUTES)
     public List<RouteVO> getAll() {
-        return mapper.convertEO(routeRepository.findAll(Sort.by("pk")));
+        return routeUIService.findAll(Sort.by("pk"));
     }
 
-    @DeleteMapping(API_ROUTES + "/{persistentKey}")
+    @GetMapping(API_ROUTES + "/{pKey}")
+    public RouteVO findByPKey(@PathVariable String pKey) {
+        return routeUIService.findBypKey(pKey).orElseThrow(() -> new NotFoundException("Route with pKey [%s] not found".formatted(pKey)));
+    }
+
+    @DeleteMapping(API_ROUTES + "/{pKey}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CacheEvict("routes")
-    @Transactional
-    public void delete(@PathVariable("persistentKey") String persistentKey) {
-        routeRepository.findBypKey(persistentKey).ifPresent(routeRepository::delete);
+    public void delete(@PathVariable("pKey") String pKey) {
+        routeUIService.delete(pKey);
     }
 
     @PutMapping(API_ROUTES)
     @CacheEvict("routes")
-    @Transactional
     public RouteVO save(@RequestBody RouteVO routeVO) {
-        var eo = routeRepository.findBypKey(routeVO.getKey()).orElseThrow(NotFoundException::new);
-        var route = mapper.copy(routeVO, eo);
-        route.setSourceLocation(routeVO.hasSourceLocationName()
-                ? locationRepository.findByLocationId(routeVO.getSourceLocationName()).orElseThrow(NotFoundException::new)
-                : null);
-        route.setTargetLocation(routeVO.hasTargetLocationName()
-                ? locationRepository.findByLocationId(routeVO.getTargetLocationName()).orElseThrow(NotFoundException::new)
-                : null);
-        return mapper.convertEO(routeRepository.save(route));
+        return routeUIService.save(routeVO);
     }
 
     @PostMapping(API_ROUTES)
     @ResponseStatus(HttpStatus.CREATED)
     @CacheEvict("routes")
-    @Transactional
     public void create(@RequestBody RouteVO routeVO, HttpServletRequest req, HttpServletResponse resp) {
-        var route = mapper.convertVO(routeVO);
-        if (routeVO.hasSourceLocationName()) {
-            route.setSourceLocation(locationRepository.findByLocationId(routeVO.getSourceLocationName()).orElseThrow(NotFoundException::new));
-        }
-        if (routeVO.hasTargetLocationName()) {
-            route.setTargetLocation(locationRepository.findByLocationId(routeVO.getTargetLocationName()).orElseThrow(NotFoundException::new));
-        }
-        route = routeRepository.save(route);
         resp.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,HttpHeaders.LOCATION);
-        resp.addHeader(HttpHeaders.LOCATION, getCreatedResourceURI(req, route.getPersistentKey()));
-    }
-
-    private String getCreatedResourceURI(HttpServletRequest req, String objId) {
-        var url = req.getRequestURL();
-        var template = new UriTemplate(url.append("/{objId}").toString());
-        return template.expand(objId).toASCIIString();
+        resp.addHeader(HttpHeaders.LOCATION, super.getLocationForCreatedResource(req, routeUIService.create(routeVO).getKey()));
     }
 }

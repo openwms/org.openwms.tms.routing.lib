@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing;
+package org.openwms.tms.routing.ui.impl;
 
+import org.openwms.tms.routing.Action;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -58,4 +59,5 @@ public interface ActionRepository extends JpaRepository<Action, Long> {
             @Param("routeId") String routeId,
             @Param("locationGroupName") String locationGroupName);
 
+    void deleteBypKey(String pKey);
 }

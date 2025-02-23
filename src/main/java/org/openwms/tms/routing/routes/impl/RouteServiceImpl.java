@@ -13,20 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing.routes;
+package org.openwms.tms.routing.routes.impl;
 
 import jakarta.validation.constraints.NotBlank;
 import org.ameba.annotation.Measured;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
-import org.openwms.common.comm.NoRouteException;
 import org.openwms.common.comm.Responder;
 import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Route;
 import org.openwms.tms.routing.RouteImpl;
+import org.openwms.tms.routing.routes.NoRouteException;
+import org.openwms.tms.routing.routes.RouteDetailsRepository;
+import org.openwms.tms.routing.routes.RouteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
 
 import static java.lang.String.format;
 
@@ -54,6 +58,15 @@ class RouteServiceImpl implements RouteService {
         this.routeRepository = routeRepository;
         this.routeDetailsRepository = routeDetailsRepository;
         this.in = in;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Measured
+    public Optional<RouteImpl> findByRouteId(String routeId) {
+        return Optional.empty();
     }
 
     /**

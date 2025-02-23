@@ -17,8 +17,10 @@ package org.openwms.tms.routing.location;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.openwms.tms.routing.LocationEO;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A LocationService.
@@ -56,4 +58,12 @@ public interface LocationService {
      * @param foreignPKey The foreign persistent key of the {@code Location} instance.
      */
     void rollbackDeletionMark(@NotBlank String foreignPKey);
+
+    /**
+     * Find a Location by its given {@code locationId}.
+     *
+     * @param locationId The ID of the Location must not be blank
+     * @return Optional instance of the Location
+     */
+    Optional<LocationEO> findByLocationId(@NotBlank String locationId);
 }

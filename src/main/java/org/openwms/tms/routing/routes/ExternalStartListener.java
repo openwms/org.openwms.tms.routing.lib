@@ -16,7 +16,6 @@
 package org.openwms.tms.routing.routes;
 
 import org.ameba.annotation.Measured;
-import org.openwms.common.comm.NoRouteException;
 import org.openwms.core.SpringProfiles;
 import org.openwms.tms.api.MessageVO;
 import org.openwms.tms.api.TransportOrderApi;

@@ -20,12 +20,14 @@ import jakarta.validation.constraints.NotNull;
 import org.ameba.annotation.Measured;
 import org.ameba.annotation.TxService;
 import org.openwms.core.listener.RemovalNotAllowedException;
+import org.openwms.tms.routing.LocationEO;
 import org.openwms.tms.routing.location.LocationService;
 import org.openwms.tms.routing.routes.RouteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A LocationServiceImpl.
@@ -123,5 +125,14 @@ class LocationServiceImpl implements LocationService {
         }
         locationOpt.get().setMarkForDeletion(false);
         locationRepository.save(locationOpt.get());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Measured
+    @Override
+    public Optional<LocationEO> findByLocationId(@NotBlank String locationId) {
+        return locationRepository.findByForeignPKey(locationId);
     }
 }

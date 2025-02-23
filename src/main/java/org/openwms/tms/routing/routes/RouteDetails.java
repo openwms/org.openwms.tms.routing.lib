@@ -26,6 +26,7 @@ import org.openwms.tms.routing.Route;
 import org.openwms.tms.routing.RouteImpl;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A RouteDetails.
@@ -89,5 +90,29 @@ public class RouteDetails extends BaseEntity implements Serializable {
 
     public void setNext(String next) {
         this.next = next;
+    }
+
+    /*~ ----------------------------- methods ------------------- */
+
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        var that = (RouteDetails) o;
+        return pos == that.pos && Objects.equals(route, that.route) && Objects.equals(source, that.source) && Objects.equals(next, that.next);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(route, pos, source, next);
     }
 }

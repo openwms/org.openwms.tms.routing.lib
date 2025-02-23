@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing.routes;
+package org.openwms.tms.routing.routes.impl;
 
 import org.openwms.tms.routing.RouteImpl;
 import org.springframework.data.jpa.repository.JpaRepository;

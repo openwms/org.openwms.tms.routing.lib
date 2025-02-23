@@ -16,16 +16,16 @@
 package org.openwms.tms.routing.spi;
 
 import org.ameba.exception.NotFoundException;
-import org.openwms.common.comm.NoRouteException;
 import org.openwms.common.location.api.LocationGroupApi;
 import org.openwms.common.location.api.LocationGroupVO;
 import org.openwms.common.location.api.LocationVO;
 import org.openwms.core.SecurityUtils;
 import org.openwms.tms.routing.Action;
-import org.openwms.tms.routing.ActionRepository;
 import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.Route;
 import org.openwms.tms.routing.RouteImpl;
+import org.openwms.tms.routing.routes.NoRouteException;
+import org.openwms.tms.routing.ui.impl.ActionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -46,7 +46,7 @@ import java.util.Optional;
  * @author Heiko Scherrer
  */
 @Component
-public class ActivitiMatrix implements Matrix {
+class ActivitiMatrix implements Matrix {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ActivitiMatrix.class);
     public static final String MSG = "No Action found for ActionType [%s], Route [%s], Location [%s] and LocationGroup [%s]";

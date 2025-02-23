@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
  * @author Heiko Scherrer
  */
 @Component
-public class ResourceResolverRegistrar implements BeanPostProcessor, BeanFactoryPostProcessor {
+class ResourceResolverRegistrar implements BeanPostProcessor, BeanFactoryPostProcessor {
 
     private ResourceLoader resourceLoader;
 

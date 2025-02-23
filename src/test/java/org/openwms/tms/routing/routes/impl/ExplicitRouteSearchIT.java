@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing.routes;
+package org.openwms.tms.routing.routes.impl;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.openwms.common.comm.NoRouteException;
+import org.openwms.tms.routing.routes.NoRouteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -25,6 +25,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -39,10 +40,11 @@ import static org.junit.jupiter.api.Assertions.fail;
  * @author Heiko Scherrer
  */
 @ExtendWith(SpringExtension.class)
-@DataJpaTest(showSql = true)
+@DataJpaTest
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "org.openwms.tms.routing")
 @EntityScan(basePackages = "org.openwms.tms.routing")
+@Sql(scripts = "classpath:testdata.sql")
 @ActiveProfiles("SIMPLE")
 class ExplicitRouteSearchIT {
 

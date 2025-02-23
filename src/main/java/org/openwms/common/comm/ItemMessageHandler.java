@@ -15,6 +15,7 @@
  */
 package org.openwms.common.comm;
 
+import org.ameba.annotation.Public;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.openwms.common.location.api.LocationApi;
@@ -25,6 +26,7 @@ import org.openwms.tms.routing.InputContext;
 import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.RouteImpl;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
+import org.openwms.tms.routing.routes.NoRouteException;
 import org.springframework.util.Assert;
 
 import static java.lang.String.format;
@@ -34,6 +36,7 @@ import static java.lang.String.format;
  *
  * @author Heiko Scherrer
  */
+@Public
 @TxService
 public class ItemMessageHandler {
 

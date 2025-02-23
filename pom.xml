@@ -38,7 +38,6 @@
         <asm.version>9.3</asm.version>
         <camunda.version>7.22.0</camunda.version>
         <common-service.version>3.0.0</common-service.version>
-        <commons-io.version>2.6</commons-io.version>
         <core.test.arch.version>1.0.2</core.test.arch.version>
         <core.units.version>0.7.0</core.units.version>
         <flowable.version>6.7.2</flowable.version>
@@ -165,7 +164,7 @@
                 <version>${groovy-jsr223.version}</version>
             </dependency>
 
-            <!-- Flowable >
+            <!-- Flowable>
             <dependency>
                 <groupId>org.flowable</groupId>
                 <artifactId>flowable-spring-boot-starter</artifactId>
@@ -232,13 +231,13 @@
         <dependency>
             <groupId>org.openwms</groupId>
             <artifactId>org.openwms.core.units</artifactId>
-            <optional>true</optional>
+            <!-- Provide -->
         </dependency>
         <dependency>
             <groupId>org.openwms</groupId>
             <artifactId>org.openwms.common.service.lib</artifactId>
             <classifier>client</classifier>
-            <optional>true</optional>
+            <!-- Provide -->
         </dependency>
         <dependency>
             <groupId>org.openwms</groupId>
@@ -250,8 +249,13 @@
             <groupId>org.openwms</groupId>
             <artifactId>org.openwms.tms.transportation</artifactId>
             <classifier>client</classifier>
-            <optional>true</optional>
+            <!-- Provide -->
         </dependency>
+        <!--dependency>
+            <groupId>org.openwms</groupId>
+            <artifactId>org.openwms.core.test.arch</artifactId>
+            <scope>test</scope>
+        </dependency-->
 
         <!-- Spring Dependencies -->
         <dependency>

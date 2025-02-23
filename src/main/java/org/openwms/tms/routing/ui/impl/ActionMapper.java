@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing;
+package org.openwms.tms.routing.ui.impl;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.openwms.tms.routing.routes.RouteRepository;
-import org.openwms.tms.routing.ui.ActionVO;
+import org.openwms.tms.routing.Action;
+import org.openwms.tms.routing.routes.RouteService;
+import org.openwms.tms.routing.ui.api.ActionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -30,16 +31,20 @@ import java.util.List;
  * @author Heiko Scherrer
  */
 @Mapper
-public abstract class ActionMapper {
+abstract class ActionMapper {
+
+    protected RouteService srv;
 
     @Autowired
-    protected RouteRepository routeRepository;
+    public void setSrv(RouteService srv) {
+        this.srv = srv;
+    }
 
     @Mapping(target = "persistentKey", source = "key")
     @Mapping(target = "actionType", source = "type")
     @Mapping(target = "programKey", source = "program")
     @Mapping(target = "locationKey", source = "location")
-    @Mapping(target = "route", expression = "java( super.routeRepository.findByRouteId(vo.getRoute()).orElseThrow() )")
+    @Mapping(target = "route", expression = "java( super.srv.findByRouteId(vo.getRoute()).orElseThrow() )")
     public abstract Action convertVO(ActionVO vo);
 
     @Mapping(target = "key", source = "persistentKey")
@@ -55,6 +60,6 @@ public abstract class ActionMapper {
     @Mapping(target = "actionType", source = "type")
     @Mapping(target = "programKey", source = "program")
     @Mapping(target = "locationKey", source = "location")
-    @Mapping(target = "route", expression = "java( super.routeRepository.findByRouteId(vo.getRoute()).orElseThrow() )")
+    @Mapping(target = "route", expression = "java( super.srv.findByRouteId(vo.getRoute()).orElseThrow() )")
     public abstract Action copy(ActionVO vo, @MappingTarget Action target);
 }

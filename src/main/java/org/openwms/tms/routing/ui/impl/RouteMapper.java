@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing;
+package org.openwms.tms.routing.ui.impl;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.openwms.tms.routing.routes.RouteRepository;
-import org.openwms.tms.routing.ui.RouteVO;
+import org.openwms.tms.routing.RouteImpl;
+import org.openwms.tms.routing.location.LocationService;
+import org.openwms.tms.routing.ui.api.RouteVO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -30,15 +31,19 @@ import java.util.List;
  * @author Heiko Scherrer
  */
 @Mapper
-public abstract class RouteMapper {
+abstract class RouteMapper {
+
+    protected LocationService srv;
 
     @Autowired
-    protected RouteRepository routeRepository;
+    public void setSrv(LocationService srv) {
+        this.srv = srv;
+    }
 
     @Mapping(target = "persistentKey", source = "key")
-    @Mapping(target = "routeId", expression = "java( super.routeRepository.findByRouteId(vo.getName()).orElseThrow().getRouteId() )")
-    @Mapping(target = "sourceLocation.locationId", source = "sourceLocationName")
-    @Mapping(target = "targetLocation.locationId", source = "targetLocationName")
+    @Mapping(target = "routeId", source = "name")
+    @Mapping(target = "sourceLocation", expression = "java( vo.hasSourceLocationName() ? srv.findByLocationId(vo.getSourceLocationName()).orElseThrow() : null )")
+    @Mapping(target = "targetLocation", expression = "java( vo.hasTargetLocationName() ? srv.findByLocationId(vo.getTargetLocationName()).orElseThrow() : null )")
     public abstract RouteImpl convertVO(RouteVO vo);
 
     @Mapping(target = "key", source = "persistentKey")
@@ -50,8 +55,8 @@ public abstract class RouteMapper {
     public abstract List<RouteVO> convertEO(List<RouteImpl> eos);
 
     @Mapping(target = "persistentKey", source = "key")
-    @Mapping(target = "routeId", expression = "java( super.routeRepository.findByRouteId(vo.getName()).orElseThrow().getRouteId() )")
-    @Mapping(target = "sourceLocation.locationId", source = "sourceLocationName")
-    @Mapping(target = "targetLocation.locationId", source = "targetLocationName")
+    @Mapping(target = "routeId", source = "name")
+    @Mapping(target = "sourceLocation", expression = "java( vo.hasSourceLocationName() ? srv.findByLocationId(vo.getSourceLocationName()).orElseThrow() : null )")
+    @Mapping(target = "targetLocation", expression = "java( vo.hasTargetLocationName() ? srv.findByLocationId(vo.getTargetLocationName()).orElseThrow() : null )")
     public abstract RouteImpl copy(RouteVO vo, @MappingTarget RouteImpl target);
 }

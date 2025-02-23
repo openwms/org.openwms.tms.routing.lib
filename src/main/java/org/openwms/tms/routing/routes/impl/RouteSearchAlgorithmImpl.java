@@ -13,16 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing.routes;
+package org.openwms.tms.routing.routes.impl;
 
 import org.ameba.exception.NotFoundException;
-import org.openwms.common.comm.NoRouteException;
 import org.openwms.common.location.LocationPK;
 import org.openwms.common.location.api.LocationApi;
 import org.openwms.common.location.api.LocationGroupVO;
 import org.openwms.tms.routing.Route;
 import org.openwms.tms.routing.RouteImpl;
 import org.openwms.tms.routing.RouteSearchAlgorithm;
+import org.openwms.tms.routing.routes.LocationGroupLoader;
+import org.openwms.tms.routing.routes.NoRouteException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;

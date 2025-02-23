@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.tms.routing.ui;
+package org.openwms.tms.routing.ui.api;
 
 import org.ameba.http.AbstractBase;
 
@@ -35,7 +35,7 @@ public class RouteVO extends AbstractBase<RouteVO> implements Serializable {
     private String targetLocationName;
     private String targetLocationGroupName;
     private String key;
-    private boolean enabled;
+    private Boolean enabled;
 
     public String getName() {
         return name;
@@ -93,11 +93,11 @@ public class RouteVO extends AbstractBase<RouteVO> implements Serializable {
         this.targetLocationGroupName = targetLocationGroupName;
     }
 
-    public boolean isEnabled() {
+    public Boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -117,8 +117,8 @@ public class RouteVO extends AbstractBase<RouteVO> implements Serializable {
             return false;
         if (!super.equals(o))
             return false;
-        RouteVO routeVO = (RouteVO) o;
-        return enabled == routeVO.enabled && Objects.equals(name, routeVO.name) && Objects.equals(description, routeVO.description) && Objects.equals(sourceLocationName, routeVO.sourceLocationName) && Objects.equals(sourceLocationGroupName, routeVO.sourceLocationGroupName) && Objects.equals(targetLocationName, routeVO.targetLocationName) && Objects.equals(targetLocationGroupName, routeVO.targetLocationGroupName) && Objects.equals(key, routeVO.key);
+        var routeVO = (RouteVO) o;
+        return Objects.equals(enabled, routeVO.enabled)  && Objects.equals(name, routeVO.name) && Objects.equals(description, routeVO.description) && Objects.equals(sourceLocationName, routeVO.sourceLocationName) && Objects.equals(sourceLocationGroupName, routeVO.sourceLocationGroupName) && Objects.equals(targetLocationName, routeVO.targetLocationName) && Objects.equals(targetLocationGroupName, routeVO.targetLocationGroupName) && Objects.equals(key, routeVO.key);
     }
 
     @Override
