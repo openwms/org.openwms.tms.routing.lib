@@ -23,7 +23,7 @@
             <url>https://openwms.github.io/</url>
             <organization>Interface21.io</organization>
             <organizationUrl>https://www.interface21.io</organizationUrl>
-            <timezone>+2</timezone>
+            <timezone>+1</timezone>
             <roles>
                 <role>Project Lead</role>
                 <role>Architect</role>
@@ -34,9 +34,9 @@
     </developers>
 
     <properties>
-        <activiti-spring-boot-starter.version>8.7.0-alpha.30</activiti-spring-boot-starter.version>
+        <activiti-spring-boot-starter.version>8.8.0-alpha.7</activiti-spring-boot-starter.version>
         <asm.version>9.3</asm.version>
-        <camunda.version>7.22.0</camunda.version>
+        <camunda.version>7.23.0-alpha3</camunda.version>
         <common-service.version>3.0.0</common-service.version>
         <core.test.arch.version>1.0.2</core.test.arch.version>
         <core.units.version>0.7.0</core.units.version>
