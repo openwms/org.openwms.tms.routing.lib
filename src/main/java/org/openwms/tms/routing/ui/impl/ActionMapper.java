@@ -41,25 +41,33 @@ abstract class ActionMapper {
     }
 
     @Mapping(target = "persistentKey", source = "key")
-    @Mapping(target = "actionType", source = "type")
-    @Mapping(target = "programKey", source = "program")
-    @Mapping(target = "locationKey", source = "location")
     @Mapping(target = "route", expression = "java( super.srv.findByRouteId(vo.getRoute()).orElseThrow() )")
+    @Mapping(target = "programKey", source = "program")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "locationKey", source = "location")
+    @Mapping(target = "locationGroupName", source = "locationGroupName")
+    @Mapping(target = "actionType", source = "type")
+    @Mapping(target = "description", source = "description")
+    @Mapping(target = "enabled", source = "enabled")
     public abstract Action convertVO(ActionVO vo);
 
     @Mapping(target = "key", source = "persistentKey")
+    @Mapping(target = "route", source = "route.routeId")
     @Mapping(target = "type", source = "actionType")
     @Mapping(target = "program", source = "programKey")
     @Mapping(target = "location", source = "locationKey")
-    @Mapping(target = "route", source = "route.routeId")
     public abstract ActionVO convertEO(Action eo);
 
     public abstract List<ActionVO> convertEO(List<Action> eos);
 
     @Mapping(target = "persistentKey", source = "key")
-    @Mapping(target = "actionType", source = "type")
-    @Mapping(target = "programKey", source = "program")
-    @Mapping(target = "locationKey", source = "location")
     @Mapping(target = "route", expression = "java( super.srv.findByRouteId(vo.getRoute()).orElseThrow() )")
+    @Mapping(target = "programKey", source = "program")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "locationKey", source = "location")
+    @Mapping(target = "locationGroupName", source = "locationGroupName")
+    @Mapping(target = "actionType", source = "type")
+    @Mapping(target = "description", source = "description")
+    @Mapping(target = "enabled", source = "enabled")
     public abstract Action copy(ActionVO vo, @MappingTarget Action target);
 }

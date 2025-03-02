@@ -21,6 +21,7 @@ import org.openwms.tms.routing.ui.api.ActionVO;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A ActionUIService.
@@ -30,6 +31,8 @@ import java.util.List;
 public interface ActionUIService {
 
     @NotNull List<ActionVO> findAll(@NotNull Sort sort);
+
+    Optional<ActionVO> findBypKey(@NotBlank String pKey);
 
     void delete(@NotBlank String pKey);
 

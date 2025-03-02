@@ -20,11 +20,13 @@ import jakarta.validation.constraints.NotNull;
 import org.ameba.annotation.Measured;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
+import org.ameba.exception.ResourceExistsException;
 import org.openwms.tms.routing.routes.RouteService;
 import org.openwms.tms.routing.ui.api.ActionVO;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A ActionUIServiceImpl.
@@ -58,6 +60,15 @@ class ActionUIServiceImpl implements ActionUIService {
      */
     @Measured
     @Override
+    public Optional<ActionVO> findBypKey(@NotBlank String pKey) {
+        return actionRepository.findBypKey(pKey).map(mapper::convertEO);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Measured
+    @Override
     public void delete(@NotBlank String pKey) {
         actionRepository.deleteBypKey(pKey);
     }
@@ -68,8 +79,10 @@ class ActionUIServiceImpl implements ActionUIService {
     @Measured
     @Override
     public @NotNull ActionVO create(@NotNull ActionVO vo) {
+        actionRepository.findByName(vo.getName()).ifPresent(r -> {
+            throw new ResourceExistsException("Action with name [%s] already exists".formatted(vo.getName()));
+        });
         var action = mapper.convertVO(vo);
-        action.setRoute(routeService.findByRouteId(vo.getRoute()).orElseThrow(NotFoundException::new));
         return mapper.convertEO(actionRepository.save(action));
     }
 

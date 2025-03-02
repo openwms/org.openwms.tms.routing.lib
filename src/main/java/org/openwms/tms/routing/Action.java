@@ -20,6 +20,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.ameba.integration.jpa.ApplicationEntity;
@@ -35,27 +36,27 @@ import java.util.StringJoiner;
  * @author Heiko Scherrer
  */
 @Entity
-@Table(name = "TMS_RSRV_ACTION")
+@Table(name = "TMS_RSRV_ACTION", uniqueConstraints = {@UniqueConstraint(name = "UC_RSRV_ACTION_NAME", columnNames = "C_NAME")})
 public class Action extends ApplicationEntity {
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "C_ROUTE_ID")
     private RouteImpl route;
-    @NotNull
+    @NotBlank
     @Column(name = "C_PROGRAM_NAME")
     private String programKey;
-    @NotNull
-    @Column(name = "C_NAME", unique = true)
+    @NotBlank
+    @Column(name = "C_NAME")
     private String name;
     @Column(name = "C_LOCATION_KEY")
     private String locationKey;
     @Column(name = "C_LOCATION_GROUP_NAME")
     private String locationGroupName;
-    @NotNull
+    @NotBlank
     @Column(name = "C_ACTION_TYPE")
     private String actionType;
-    @NotNull
+    @NotBlank
     @Column(name = "C_DESCRIPTION")
     private String description;
     @Column(name = "C_ENABLED")
@@ -133,6 +134,10 @@ public class Action extends ApplicationEntity {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getLocationKey() {
         return locationKey;
     }
@@ -145,6 +150,10 @@ public class Action extends ApplicationEntity {
         return locationGroupName;
     }
 
+    public void setLocationGroupName(String locationGroupName) {
+        this.locationGroupName = locationGroupName;
+    }
+
     public String getActionType() {
         return actionType;
     }
@@ -155,6 +164,10 @@ public class Action extends ApplicationEntity {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public boolean isEnabled() {

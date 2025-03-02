@@ -31,6 +31,8 @@ public interface ActionRepository extends JpaRepository<Action, Long> {
 
     Optional<Action> findBypKey(String pKey);
 
+    Optional<Action> findByName(String name);
+
     @Query("""
             select a 
               from Action a 

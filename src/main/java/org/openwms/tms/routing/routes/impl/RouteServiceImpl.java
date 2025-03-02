@@ -65,8 +65,8 @@ class RouteServiceImpl implements RouteService {
      */
     @Override
     @Measured
-    public Optional<RouteImpl> findByRouteId(String routeId) {
-        return Optional.empty();
+    public Optional<RouteImpl> findByRouteId(@NotBlank String routeId) {
+        return routeRepository.findByRouteId(routeId);
     }
 
     /**

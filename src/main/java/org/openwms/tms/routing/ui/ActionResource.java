@@ -17,6 +17,7 @@ package org.openwms.tms.routing.ui;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.ameba.exception.NotFoundException;
 import org.ameba.http.MeasuredRestController;
 import org.openwms.core.http.AbstractWebController;
 import org.openwms.tms.routing.ui.api.ActionVO;
@@ -56,6 +57,11 @@ class ActionResource extends AbstractWebController {
     @GetMapping(API_ACTIONS)
     public List<ActionVO> getAll() {
         return actionUIService.findAll(Sort.by("name"));
+    }
+
+    @GetMapping(API_ACTIONS + "/{pKey}")
+    public ActionVO findByPKey(@PathVariable String pKey) {
+        return actionUIService.findBypKey(pKey).orElseThrow(() -> new NotFoundException("Action with pKey [%s] not found".formatted(pKey)));
     }
 
     @DeleteMapping(API_ACTIONS + "/{pKey}")

@@ -1,3 +1,4 @@
+delete from tms_rsrv_action;
 delete from tms_rsrv_route;
 delete from tms_rsrv_location;
 
@@ -15,3 +16,7 @@ insert into tms_rsrv_route (c_name,c_description,c_source_location,c_target_loca
 insert into tms_rsrv_route (c_name,c_description,c_source_location,c_target_location,c_source_loc_group_name,c_target_loc_group_name, c_enabled, c_pk, c_ol, c_created, c_updated,c_pid) values ('FG__ERR_','Cartons from anywhere in the flatgood area to the error location',null,1001,'FLATGOOD_AREA','', true,'10007',1000,now(),now(),'613429031593');
 insert into tms_rsrv_route (c_name,c_description,c_source_location,c_target_location,c_source_loc_group_name,c_target_loc_group_name, c_enabled, c_pk, c_ol, c_created, c_updated,c_pid) values ('_NO_ROUTE','No Route',1000,null,null,null, true,'99998',0,now(),now(),'956033651143');
 insert into tms_rsrv_route (c_name,c_description,c_source_location,c_target_location,c_source_loc_group_name,c_target_loc_group_name, c_enabled, c_pk, c_ol, c_created, c_updated,c_pid) values ('_DEFAULT','Route All',1000,null,null,null, true,'99999',0,now(),now(),'222590552091');
+
+-- Actions
+insert into tms_rsrv_action (c_pk,c_created,c_ol,c_pid,c_action_type,c_description,c_enabled,c_flex_1,c_flex_2,c_flex_3,c_flex_4,c_flex_5,c_location_group_name,c_name,c_program_name,c_route_id) values (1000, now(), 0, '1000', 'REQ_', 'Common action for the whole project on REQ telegrams', true, 'param1', 'param2', 'param3', 'param4', 'param5', 'ZILE', 'A0001', 'CP001', 99999) ;
+insert into tms_rsrv_action (c_pk,c_created,c_ol,c_pid,c_action_type,c_description,c_enabled,c_flex_1,c_flex_2,c_flex_3,c_flex_4,c_flex_5,c_location_key,c_name,c_program_name,c_route_id) values (1001, now(), 0, '1001', 'REQ_', 'Specific action for the Stock Location on REQ telegrams', true, 'param1', 'param2', 'param3', 'param4', 'param5', 'STCK/0001/0002/0000/0000', 'A0002', 'CP002', 99998) ;

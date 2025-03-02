@@ -27,7 +27,13 @@ import java.util.Optional;
  */
 public interface RouteService {
 
-    Optional<RouteImpl> findByRouteId(String routeId);
+    /**
+     * Find and return a {@code Route} identified by its given {@code routeId}.
+     *
+     * @param routeId The route id
+     * @return The instance (optional)
+     */
+    Optional<RouteImpl> findByRouteId(@NotBlank String routeId);
 
     /**
      * Checks if a {@code Route} exists that uses a {@code Location} with the given {@code locationId}.
