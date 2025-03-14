@@ -23,79 +23,85 @@ import org.springframework.stereotype.Component;
 <span class="nc" id="L23">        Action action = new Action();</span>
 
 <span class="nc" id="L25">        action.setPersistentKey( vo.getKey() );</span>
-<span class="nc" id="L26">        action.setActionType( vo.getType() );</span>
-<span class="nc" id="L27">        action.setProgramKey( vo.getProgram() );</span>
+<span class="nc" id="L26">        action.setProgramKey( vo.getProgram() );</span>
+<span class="nc" id="L27">        action.setName( vo.getName() );</span>
 <span class="nc" id="L28">        action.setLocationKey( vo.getLocation() );</span>
-<span class="nc" id="L29">        action.setEnabled( vo.isEnabled() );</span>
+<span class="nc" id="L29">        action.setLocationGroupName( vo.getLocationGroupName() );</span>
+<span class="nc" id="L30">        action.setActionType( vo.getType() );</span>
+<span class="nc" id="L31">        action.setDescription( vo.getDescription() );</span>
+<span class="nc" id="L32">        action.setEnabled( vo.isEnabled() );</span>
 
-<span class="nc" id="L31">        action.setRoute( super.srv.findByRouteId(vo.getRoute()).orElseThrow() );</span>
+<span class="nc" id="L34">        action.setRoute( super.srv.findByRouteId(vo.getRoute()).orElseThrow() );</span>
 
-<span class="nc" id="L33">        return action;</span>
+<span class="nc" id="L36">        return action;</span>
     }
 
     @Override
     public ActionVO convertEO(Action eo) {
-<span class="nc bnc" id="L38" title="All 2 branches missed.">        if ( eo == null ) {</span>
-<span class="nc" id="L39">            return null;</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        if ( eo == null ) {</span>
+<span class="nc" id="L42">            return null;</span>
         }
 
-<span class="nc" id="L42">        ActionVO actionVO = new ActionVO();</span>
+<span class="nc" id="L45">        ActionVO actionVO = new ActionVO();</span>
 
-<span class="nc bnc" id="L44" title="All 2 branches missed.">        if ( eo.hasPersistentKey() ) {</span>
-<span class="nc" id="L45">            actionVO.setKey( eo.getPersistentKey() );</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        if ( eo.hasPersistentKey() ) {</span>
+<span class="nc" id="L48">            actionVO.setKey( eo.getPersistentKey() );</span>
         }
-<span class="nc" id="L47">        actionVO.setType( eo.getActionType() );</span>
-<span class="nc" id="L48">        actionVO.setProgram( eo.getProgramKey() );</span>
-<span class="nc" id="L49">        actionVO.setLocation( eo.getLocationKey() );</span>
 <span class="nc" id="L50">        actionVO.setRoute( eoRouteRouteId( eo ) );</span>
-<span class="nc" id="L51">        actionVO.setOl( eo.getOl() );</span>
-<span class="nc" id="L52">        actionVO.setCreateDt( eo.getCreateDt() );</span>
-<span class="nc" id="L53">        actionVO.setLastModifiedDt( eo.getLastModifiedDt() );</span>
-<span class="nc" id="L54">        actionVO.setName( eo.getName() );</span>
-<span class="nc" id="L55">        actionVO.setDescription( eo.getDescription() );</span>
-<span class="nc" id="L56">        actionVO.setLocationGroupName( eo.getLocationGroupName() );</span>
-<span class="nc" id="L57">        actionVO.setEnabled( eo.isEnabled() );</span>
+<span class="nc" id="L51">        actionVO.setType( eo.getActionType() );</span>
+<span class="nc" id="L52">        actionVO.setProgram( eo.getProgramKey() );</span>
+<span class="nc" id="L53">        actionVO.setLocation( eo.getLocationKey() );</span>
+<span class="nc" id="L54">        actionVO.setOl( eo.getOl() );</span>
+<span class="nc" id="L55">        actionVO.setCreateDt( eo.getCreateDt() );</span>
+<span class="nc" id="L56">        actionVO.setLastModifiedDt( eo.getLastModifiedDt() );</span>
+<span class="nc" id="L57">        actionVO.setName( eo.getName() );</span>
+<span class="nc" id="L58">        actionVO.setDescription( eo.getDescription() );</span>
+<span class="nc" id="L59">        actionVO.setLocationGroupName( eo.getLocationGroupName() );</span>
+<span class="nc" id="L60">        actionVO.setEnabled( eo.isEnabled() );</span>
 
-<span class="nc" id="L59">        return actionVO;</span>
+<span class="nc" id="L62">        return actionVO;</span>
     }
 
     @Override
     public List&lt;ActionVO&gt; convertEO(List&lt;Action&gt; eos) {
-<span class="nc bnc" id="L64" title="All 2 branches missed.">        if ( eos == null ) {</span>
-<span class="nc" id="L65">            return null;</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if ( eos == null ) {</span>
+<span class="nc" id="L68">            return null;</span>
         }
 
-<span class="nc" id="L68">        List&lt;ActionVO&gt; list = new ArrayList&lt;ActionVO&gt;( eos.size() );</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">        for ( Action action : eos ) {</span>
-<span class="nc" id="L70">            list.add( convertEO( action ) );</span>
-<span class="nc" id="L71">        }</span>
+<span class="nc" id="L71">        List&lt;ActionVO&gt; list = new ArrayList&lt;ActionVO&gt;( eos.size() );</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        for ( Action action : eos ) {</span>
+<span class="nc" id="L73">            list.add( convertEO( action ) );</span>
+<span class="nc" id="L74">        }</span>
 
-<span class="nc" id="L73">        return list;</span>
+<span class="nc" id="L76">        return list;</span>
     }
 
     @Override
     public Action copy(ActionVO vo, Action target) {
-<span class="nc bnc" id="L78" title="All 2 branches missed.">        if ( vo == null ) {</span>
-<span class="nc" id="L79">            return target;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if ( vo == null ) {</span>
+<span class="nc" id="L82">            return target;</span>
         }
 
-<span class="nc" id="L82">        target.setPersistentKey( vo.getKey() );</span>
-<span class="nc" id="L83">        target.setActionType( vo.getType() );</span>
-<span class="nc" id="L84">        target.setProgramKey( vo.getProgram() );</span>
-<span class="nc" id="L85">        target.setLocationKey( vo.getLocation() );</span>
-<span class="nc" id="L86">        target.setEnabled( vo.isEnabled() );</span>
+<span class="nc" id="L85">        target.setPersistentKey( vo.getKey() );</span>
+<span class="nc" id="L86">        target.setProgramKey( vo.getProgram() );</span>
+<span class="nc" id="L87">        target.setName( vo.getName() );</span>
+<span class="nc" id="L88">        target.setLocationKey( vo.getLocation() );</span>
+<span class="nc" id="L89">        target.setLocationGroupName( vo.getLocationGroupName() );</span>
+<span class="nc" id="L90">        target.setActionType( vo.getType() );</span>
+<span class="nc" id="L91">        target.setDescription( vo.getDescription() );</span>
+<span class="nc" id="L92">        target.setEnabled( vo.isEnabled() );</span>
 
-<span class="nc" id="L88">        target.setRoute( super.srv.findByRouteId(vo.getRoute()).orElseThrow() );</span>
+<span class="nc" id="L94">        target.setRoute( super.srv.findByRouteId(vo.getRoute()).orElseThrow() );</span>
 
-<span class="nc" id="L90">        return target;</span>
+<span class="nc" id="L96">        return target;</span>
     }
 
     private String eoRouteRouteId(Action action) {
-<span class="nc" id="L94">        RouteImpl route = action.getRoute();</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">        if ( route == null ) {</span>
-<span class="nc" id="L96">            return null;</span>
+<span class="nc" id="L100">        RouteImpl route = action.getRoute();</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        if ( route == null ) {</span>
+<span class="nc" id="L102">            return null;</span>
         }
-<span class="nc" id="L98">        return route.getRouteId();</span>
+<span class="nc" id="L104">        return route.getRouteId();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

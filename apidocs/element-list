@@ -1,12 +1,5 @@
 org.openwms.common
 org.openwms.common.comm
-org.openwms.common.comm.osip
-org.openwms.common.comm.osip.err
-org.openwms.common.comm.osip.locu
-org.openwms.common.comm.osip.req
-org.openwms.common.comm.osip.res
-org.openwms.common.comm.osip.sysu
-org.openwms.common.comm.osip.upd
 org.openwms.common.location
 org.openwms.tms
 org.openwms.tms.routing

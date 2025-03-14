@@ -41,26 +41,34 @@ import java.util.List;
 <span class="fc" id="L41">    }</span>
 
     @Mapping(target = &quot;persistentKey&quot;, source = &quot;key&quot;)
-    @Mapping(target = &quot;actionType&quot;, source = &quot;type&quot;)
-    @Mapping(target = &quot;programKey&quot;, source = &quot;program&quot;)
-    @Mapping(target = &quot;locationKey&quot;, source = &quot;location&quot;)
     @Mapping(target = &quot;route&quot;, expression = &quot;java( super.srv.findByRouteId(vo.getRoute()).orElseThrow() )&quot;)
+    @Mapping(target = &quot;programKey&quot;, source = &quot;program&quot;)
+    @Mapping(target = &quot;name&quot;, source = &quot;name&quot;)
+    @Mapping(target = &quot;locationKey&quot;, source = &quot;location&quot;)
+    @Mapping(target = &quot;locationGroupName&quot;, source = &quot;locationGroupName&quot;)
+    @Mapping(target = &quot;actionType&quot;, source = &quot;type&quot;)
+    @Mapping(target = &quot;description&quot;, source = &quot;description&quot;)
+    @Mapping(target = &quot;enabled&quot;, source = &quot;enabled&quot;)
     public abstract Action convertVO(ActionVO vo);
 
     @Mapping(target = &quot;key&quot;, source = &quot;persistentKey&quot;)
+    @Mapping(target = &quot;route&quot;, source = &quot;route.routeId&quot;)
     @Mapping(target = &quot;type&quot;, source = &quot;actionType&quot;)
     @Mapping(target = &quot;program&quot;, source = &quot;programKey&quot;)
     @Mapping(target = &quot;location&quot;, source = &quot;locationKey&quot;)
-    @Mapping(target = &quot;route&quot;, source = &quot;route.routeId&quot;)
     public abstract ActionVO convertEO(Action eo);
 
     public abstract List&lt;ActionVO&gt; convertEO(List&lt;Action&gt; eos);
 
     @Mapping(target = &quot;persistentKey&quot;, source = &quot;key&quot;)
-    @Mapping(target = &quot;actionType&quot;, source = &quot;type&quot;)
-    @Mapping(target = &quot;programKey&quot;, source = &quot;program&quot;)
-    @Mapping(target = &quot;locationKey&quot;, source = &quot;location&quot;)
     @Mapping(target = &quot;route&quot;, expression = &quot;java( super.srv.findByRouteId(vo.getRoute()).orElseThrow() )&quot;)
+    @Mapping(target = &quot;programKey&quot;, source = &quot;program&quot;)
+    @Mapping(target = &quot;name&quot;, source = &quot;name&quot;)
+    @Mapping(target = &quot;locationKey&quot;, source = &quot;location&quot;)
+    @Mapping(target = &quot;locationGroupName&quot;, source = &quot;locationGroupName&quot;)
+    @Mapping(target = &quot;actionType&quot;, source = &quot;type&quot;)
+    @Mapping(target = &quot;description&quot;, source = &quot;description&quot;)
+    @Mapping(target = &quot;enabled&quot;, source = &quot;enabled&quot;)
     public abstract Action copy(ActionVO vo, @MappingTarget Action target);
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
