@@ -66,9 +66,9 @@ class Registrator {
 
     @EventListener
     public void onContextStopped(ContextClosedEvent cse) {
-<span class="nc" id="L69">        LOGGER.info(&quot;Stopping ApplicationContext&quot;);</span>
+<span class="fc" id="L69">        LOGGER.info(&quot;Stopping ApplicationContext&quot;);</span>
         //amqpTemplate.convertAndSend(exchangeName, &quot;common.registration.command.in.unregister.loc&quot;, locationReplicaRegistration);
-<span class="nc" id="L71">    }</span>
+<span class="fc" id="L71">    }</span>
 
     @Scheduled(fixedDelay = 30000L)
     public void onTimer() {

@@ -25,7 +25,7 @@ OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.routes.impl,Ro
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.routes.impl,ExplicitRouteSearch,16,73,1,3,1,15,1,6,0,5
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.routes.impl,RouteServiceImpl,157,24,8,0,29,8,13,3,9,3
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.routes.impl,FeignLocationGroupLoader,4,6,0,0,1,3,1,1,1,1
-OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,Registrator,16,30,0,0,5,8,2,3,2,3
+OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,Registrator,12,34,0,0,3,10,1,4,1,4
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,RoutingAsyncConfiguration,9,148,1,1,3,45,2,16,1,16
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,RoutingStandaloneConfiguration,0,13,0,0,0,2,0,2,0,2
 OpenWMS.org TMS: Routing Services Library,org.openwms.tms.routing.app,RoutingOtlpConfiguration.OtelConfiguration,0,8,0,0,0,2,0,2,0,2
