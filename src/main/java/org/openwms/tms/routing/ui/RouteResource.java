@@ -57,7 +57,7 @@ class RouteResource extends AbstractWebController {
 
     @GetMapping(API_ROUTES)
     public List<RouteVO> getAll() {
-        return routeUIService.findAll(Sort.by("pk"));
+        return routeUIService.findAll(Sort.by("routeId")); // For proper UI sorting
     }
 
     @GetMapping(API_ROUTES + "/{pKey}")

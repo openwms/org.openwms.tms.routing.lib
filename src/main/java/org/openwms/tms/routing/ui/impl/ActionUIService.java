@@ -34,6 +34,8 @@ public interface ActionUIService {
 
     Optional<ActionVO> findBypKey(@NotBlank String pKey);
 
+    @NotBlank String findByName(@NotBlank String name);
+
     void delete(@NotBlank String pKey);
 
     @NotNull ActionVO create(@NotNull ActionVO action);

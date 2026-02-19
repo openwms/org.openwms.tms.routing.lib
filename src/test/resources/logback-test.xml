@@ -27,9 +27,6 @@
     <logger name="INTEGRATION_LAYER_EXCEPTION" level="OFF" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
-    <logger name="CORE_INTEGRATION_MESSAGING" level="OFF">
-        <appender-ref ref="STDOUT"/>
-    </logger>
     <logger name="MEASURED" level="OFF" />
 
     <root level="ERROR">

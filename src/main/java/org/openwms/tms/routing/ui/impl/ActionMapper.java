@@ -49,6 +49,7 @@ abstract class ActionMapper {
     @Mapping(target = "actionType", source = "type")
     @Mapping(target = "description", source = "description")
     @Mapping(target = "enabled", source = "enabled")
+    @Mapping(target = "flexVariables", ignore = true)
     public abstract Action convertVO(ActionVO vo);
 
     @Mapping(target = "key", source = "persistentKey")
@@ -69,5 +70,6 @@ abstract class ActionMapper {
     @Mapping(target = "actionType", source = "type")
     @Mapping(target = "description", source = "description")
     @Mapping(target = "enabled", source = "enabled")
+    @Mapping(target = "flexVariables", ignore = true)
     public abstract Action copy(ActionVO vo, @MappingTarget Action target);
 }

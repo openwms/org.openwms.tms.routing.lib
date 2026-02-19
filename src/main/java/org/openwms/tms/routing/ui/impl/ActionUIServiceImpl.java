@@ -23,8 +23,11 @@ import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ResourceExistsException;
 import org.openwms.tms.routing.routes.RouteService;
 import org.openwms.tms.routing.ui.api.ActionVO;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Sort;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,6 +65,24 @@ class ActionUIServiceImpl implements ActionUIService {
     @Override
     public Optional<ActionVO> findBypKey(@NotBlank String pKey) {
         return actionRepository.findBypKey(pKey).map(mapper::convertEO);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Measured
+    @Override
+    public @NotBlank String findByName(@NotBlank String name) {
+        var result = actionRepository.findByName(name);
+        if (result.isPresent()) {
+            try {
+                var cr = new ClassPathResource("activiti/" + result.get().getProgramKey() + ".bpmn");
+                return new String(cr.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        throw new NotFoundException("No action with name [" + name + "] found");
     }
 
     /**

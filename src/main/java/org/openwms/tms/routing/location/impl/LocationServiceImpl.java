@@ -133,6 +133,6 @@ class LocationServiceImpl implements LocationService {
     @Measured
     @Override
     public Optional<LocationEO> findByLocationId(@NotBlank String locationId) {
-        return locationRepository.findByForeignPKey(locationId);
+        return locationRepository.findByLocationId(locationId);
     }
 }

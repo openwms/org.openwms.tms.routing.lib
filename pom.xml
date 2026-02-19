@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.parent</artifactId>
-        <version>27.2</version>
+        <version>27.7.1</version>
         <relativePath/>
     </parent>
     <artifactId>org.openwms.tms.routing.lib</artifactId>
@@ -34,17 +34,16 @@
     </developers>
 
     <properties>
-        <activiti-spring-boot-starter.version>8.8.0-alpha.7</activiti-spring-boot-starter.version>
+        <activiti-spring-boot-starter.version>8.8.0-alpha.156</activiti-spring-boot-starter.version>
         <asm.version>9.3</asm.version>
-        <camunda.version>7.23.0-alpha3</camunda.version>
+        <camunda.version>7.24.0</camunda.version>
         <common-service.version>3.0.0</common-service.version>
         <core.test.arch.version>1.0.2</core.test.arch.version>
         <core.units.version>0.7.0</core.units.version>
-        <flowable.version>6.7.2</flowable.version>
+        <flowable.version>7.2.0</flowable.version>
         <groovy-jsr223.version>3.0.9</groovy-jsr223.version>
-        <process.runtime.version>0.1.0</process.runtime.version>
-        <schemaspy-maven-plugin.version>5.3.1</schemaspy-maven-plugin.version>
-        <spring-cloud-dependencies.version>2024.0.0</spring-cloud-dependencies.version>
+        <process.runtime.version>0.2.0-SNAPSHOT</process.runtime.version>
+        <spring-cloud-dependencies.version>2025.0.0</spring-cloud-dependencies.version>
         <transportation-service.version>2.0.0</transportation-service.version>
     </properties>
 
@@ -193,7 +192,6 @@
                 <groupId>org.openwms</groupId>
                 <artifactId>org.openwms.core.process.execution</artifactId>
                 <version>${process.runtime.version}</version>
-                <classifier>all</classifier>
             </dependency>
             <dependency>
                 <groupId>org.openwms</groupId>
@@ -227,7 +225,6 @@
         <dependency>
             <groupId>org.openwms</groupId>
             <artifactId>org.openwms.core.process.execution</artifactId>
-            <classifier>all</classifier>
             <!-- Provide -->
         </dependency>
         <dependency>
@@ -491,14 +488,14 @@
 
     <repositories>
         <repository>
-            <id>sonatype-nexus-staging</id>
-            <name>Staging Repository</name>
-            <url>https://oss.sonatype.org/content/groups/staging/</url>
+            <id>central-portal-snapshots</id>
+            <name>Central Portal Snapshots</name>
+            <url>https://central.sonatype.com/repository/maven-snapshots/</url>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
             <releases>
-                <enabled>true</enabled>
+                <enabled>false</enabled>
             </releases>
         </repository>
         <repository>

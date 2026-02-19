@@ -28,6 +28,8 @@ public final class RoutingConstants {
     public static final String API_ROUTES = "/" + API_VERSION + "/api/routes";
     /** API root to hit Actions (plural). */
     public static final String API_ACTIONS = "/" + API_VERSION + "/api/actions";
+    /** API root to hit Workflows (plural). */
+    public static final String API_WORKFLOWS = "/" + API_VERSION + "/api/workflows";
 
     private RoutingConstants() {
     }
